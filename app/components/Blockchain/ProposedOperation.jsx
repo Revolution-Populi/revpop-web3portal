@@ -10,7 +10,10 @@ import LinkToAccountById from "../Utility/LinkToAccountById";
 import LinkToAssetById from "../Utility/LinkToAssetById";
 import BindToChainState from "../Utility/BindToChainState";
 import FormattedPrice from "../Utility/FormattedPrice";
-import {ChainStore, ChainTypes as grapheneChainTypes} from "bitsharesjs";
+import {
+    ChainStore,
+    ChainTypes as grapheneChainTypes
+} from "@revolutionpopuli/revpopjs";
 import account_constants from "chain/account_constants";
 import MemoText from "./MemoText";
 import TranslateWithLinks from "../Utility/TranslateWithLinks";

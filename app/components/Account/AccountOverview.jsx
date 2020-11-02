@@ -6,7 +6,7 @@ import AssetName from "../Utility/AssetName";
 import MarginPositionsTable from "./MarginPositionsTable";
 import {RecentTransactions} from "./RecentTransactions";
 import Proposals from "components/Account/Proposals";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import SettingsActions from "actions/SettingsActions";
 import utils from "common/utils";
 import {Tabs, Tab} from "../Utility/Tabs";

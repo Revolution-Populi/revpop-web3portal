@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "alt-react";
 import cname from "classnames";
-import {PrivateKey, Aes, PublicKey, hash} from "bitsharesjs";
+import {PrivateKey, Aes, PublicKey, hash} from "@revolutionpopuli/revpopjs";
 import {ChainConfig} from "bitsharesjs-ws";
 import PrivateKeyStore from "stores/PrivateKeyStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";

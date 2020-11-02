@@ -15,7 +15,7 @@ import {
 import AccountSelector from "../Account/AccountSelector";
 import counterpart from "counterpart";
 import AccountStore from "stores/AccountStore";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import AmountSelector from "../Utility/AmountSelector";
 import {Asset} from "common/MarketClasses";
 import utils from "common/utils";

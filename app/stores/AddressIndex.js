@@ -1,6 +1,6 @@
 import alt from "alt-instance";
 import iDB from "idb-instance";
-import {key} from "bitsharesjs";
+import {key} from "@revolutionpopuli/revpopjs";
 import {ChainConfig} from "bitsharesjs-ws";
 import Immutable from "immutable";
 import BaseStore from "stores/BaseStore";

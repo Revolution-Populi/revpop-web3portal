@@ -8,7 +8,7 @@ import {
     TransactionHelper,
     FetchChain,
     ChainStore
-} from "bitsharesjs";
+} from "@revolutionpopuli/revpopjs";
 import counterpart from "counterpart";
 import {Notification} from "bitshares-ui-style-guide";
 

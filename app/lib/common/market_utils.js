@@ -1,5 +1,5 @@
 import utils from "./utils";
-import {ChainStore, ChainTypes} from "bitsharesjs";
+import {ChainStore, ChainTypes} from "@revolutionpopuli/revpopjs";
 let {object_type} = ChainTypes;
 let opTypes = Object.keys(object_type);
 import {Asset} from "./MarketClasses";

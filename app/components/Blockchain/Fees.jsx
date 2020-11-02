@@ -8,7 +8,10 @@ import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import FormattedAsset from "../Utility/FormattedAsset";
 import {EquivalentValueComponent} from "../Utility/EquivalentValueComponent";
-import {ChainStore, ChainTypes as grapheneChainTypes} from "bitsharesjs";
+import {
+    ChainStore,
+    ChainTypes as grapheneChainTypes
+} from "@revolutionpopuli/revpopjs";
 import {Card} from "bitshares-ui-style-guide";
 const {operations} = grapheneChainTypes;
 let ops = Object.keys(operations);

@@ -1,4 +1,4 @@
-import {SerializerValidation, types} from "bitsharesjs";
+import {SerializerValidation, types} from "@revolutionpopuli/revpopjs";
 var config = require("chain/serializer_config");
 
 class DebugApi {

@@ -6,7 +6,11 @@ import SettingsActions from "actions/SettingsActions";
 import WalletActions from "actions/WalletActions";
 import iDB from "idb-instance";
 import PrivateKeyStore from "./PrivateKeyStore";
-import {ChainStore, ChainValidation, FetchChain} from "bitsharesjs";
+import {
+    ChainStore,
+    ChainValidation,
+    FetchChain
+} from "@revolutionpopuli/revpopjs";
 import {Apis} from "bitsharesjs-ws";
 import AccountRefsStore from "stores/AccountRefsStore";
 import AddressIndex from "stores/AddressIndex";

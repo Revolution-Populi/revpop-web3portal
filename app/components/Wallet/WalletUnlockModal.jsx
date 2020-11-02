@@ -27,7 +27,7 @@ import {
 } from "bitshares-ui-style-guide";
 import utils from "common/utils";
 import AccountSelector from "../Account/AccountSelectorAnt";
-import {PrivateKey} from "bitsharesjs";
+import {PrivateKey} from "@revolutionpopuli/revpopjs";
 import {saveAs} from "file-saver";
 import LoginTypeSelector from "./LoginTypeSelector";
 import counterpart from "counterpart";

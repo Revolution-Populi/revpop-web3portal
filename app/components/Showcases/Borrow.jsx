@@ -5,7 +5,7 @@ import {Button, Card, Steps, Tooltip} from "bitshares-ui-style-guide";
 import debounceRender from "react-debounce-render";
 import AssetWrapper from "../Utility/AssetWrapper";
 import {connect} from "alt-react";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 
 import BorrowModal from "../Modal/BorrowModal";

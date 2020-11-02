@@ -12,7 +12,7 @@ import {
     Table
 } from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import utils from "common/utils";
 import DirectDebitModal from "../Modal/DirectDebitModal";
 import DirectDebitClaimModal from "../Modal/DirectDebitClaimModal";

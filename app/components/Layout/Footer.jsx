@@ -18,7 +18,7 @@ import {routerTransitioner} from "../../routerTransition";
 import LoadingIndicator from "../LoadingIndicator";
 import counterpart from "counterpart";
 import ChoiceModal from "../Modal/ChoiceModal";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import ifvisible from "ifvisible";
 import {getWalletName} from "branding";
 import {Tooltip} from "bitshares-ui-style-guide";
@@ -56,8 +56,12 @@ class Footer extends React.Component {
     }
 
     _showOutOfSyncModal() {
+        // @todo temporary disabled
+        // this.setState({
+        //     isOutOfSyncModalVisible: true
+        // });
         this.setState({
-            isOutOfSyncModalVisible: true
+            isOutOfSyncModalVisible: false
         });
     }
 
@@ -122,9 +126,10 @@ class Footer extends React.Component {
                         let newVersion = String(APP_VERSION);
                         let isReleaseCandidate =
                             APP_VERSION.indexOf("rc") !== -1;
-                        if (!isReleaseCandidate && oldVersion !== newVersion) {
-                            this.setState({newVersion});
-                        }
+                        // @todo temporary disabled
+                        // if (!isReleaseCandidate && oldVersion !== newVersion) {
+                        //     this.setState({newVersion});
+                        // }
                     }.bind(this)
                 );
         }

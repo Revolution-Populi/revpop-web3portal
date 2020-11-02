@@ -1,5 +1,5 @@
 import {Apis, Manager} from "bitsharesjs-ws";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import hirestime from "hirestime";
 
 // Stores

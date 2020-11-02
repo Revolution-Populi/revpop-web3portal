@@ -12,7 +12,7 @@ import HelpContent from "../Utility/HelpContent";
 import assetUtils from "common/asset_utils";
 import utils from "common/utils";
 import FormattedTime from "../Utility/FormattedTime";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {Apis} from "bitsharesjs-ws";
 import {CallOrder, CollateralBid, FeedPrice} from "common/MarketClasses";
 import Page404 from "../Page404/Page404";

@@ -12,7 +12,7 @@ import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import TranslateWithLinks from "../Utility/TranslateWithLinks";
 import {RecentTransactions} from "../Account/RecentTransactions";
 import Immutable from "immutable";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {connect} from "alt-react";
 import {
     checkFeeStatusAsync,

@@ -10,7 +10,7 @@ import assetUtils from "common/asset_utils";
 import counterpart from "counterpart";
 import FormattedAsset from "../Utility/FormattedAsset";
 import AssetName from "../Utility/AssetName";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import utils from "common/utils";
 import ls from "common/localStorage";
 import PaginatedList from "../Utility/PaginatedList";

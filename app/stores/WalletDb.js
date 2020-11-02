@@ -12,7 +12,7 @@ import TransactionConfirmActions from "actions/TransactionConfirmActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import PrivateKeyActions from "actions/PrivateKeyActions";
 import AccountActions from "actions/AccountActions";
-import {ChainStore, PrivateKey, key, Aes} from "bitsharesjs";
+import {ChainStore, PrivateKey, key, Aes} from "@revolutionpopuli/revpopjs";
 import {Apis, ChainConfig} from "bitsharesjs-ws";
 import AddressIndex from "stores/AddressIndex";
 import SettingsActions from "actions/SettingsActions";

@@ -18,7 +18,7 @@ import {debounce} from "lodash-es";
 import AssetSelector from "../Utility/AssetSelector";
 import counterpart from "counterpart";
 import LoadingIndicator from "../LoadingIndicator";
-import {ChainValidation, ChainStore} from "bitsharesjs";
+import {ChainValidation, ChainStore} from "@revolutionpopuli/revpopjs";
 import debounceRender from "react-debounce-render";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import {getPossibleGatewayPrefixes, gatewayPrefixes} from "common/gateways";

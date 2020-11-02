@@ -11,7 +11,7 @@ import TransitionWrapper from "../Utility/TransitionWrapper";
 import SettingsActions from "actions/SettingsActions";
 import AssetName from "../Utility/AssetName";
 import Icon from "../Icon/Icon";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {LimitOrder, CallOrder} from "common/MarketClasses";
 import {EquivalentValueComponent} from "../Utility/EquivalentValueComponent";
 import {MarketPrice} from "../Utility/MarketPrice";

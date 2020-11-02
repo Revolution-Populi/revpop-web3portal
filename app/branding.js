@@ -27,7 +27,7 @@ export function getWalletURL() {
  */
 export function getFaucet() {
     return {
-        url: "https://faucet.bitshares.eu/onboarding", // 2017-12-infrastructure worker proposal
+        url: "http://localhost:3000/", // 2017-12-infrastructure worker proposal
         show: true,
         editable: false
     };
@@ -69,7 +69,7 @@ export function getUnits(chainId = "4018d784") {
         return ["BTS", "USD", "CNY", "BTC", "EUR", "GBP"];
     else if (chainId === "39f5e2ed") return ["TEST"];
     // unknown chain id: (need to return at least one unit)
-    else return ["BTS"];
+    else return ["REV"];
 }
 
 /**

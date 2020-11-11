@@ -4,7 +4,7 @@ import FormattedAsset from "../Utility/FormattedAsset";
 import {ChainStore} from "@revolutionpopuli/revpopjs";
 import utils from "common/utils";
 import WalletActions from "actions/WalletActions";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {Tabs, Tab} from "../Utility/Tabs";
 
 class VestingBalance extends React.Component {

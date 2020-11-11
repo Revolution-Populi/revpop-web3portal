@@ -2,7 +2,7 @@ import alt from "alt-instance";
 import Immutable from "immutable";
 import BaseStore from "stores/BaseStore";
 import {key} from "@revolutionpopuli/revpopjs";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import iDB from "idb-instance";
 import BalanceClaimActiveActions from "actions/BalanceClaimActiveActions";
 import TransactionConfirmActions from "actions/TransactionConfirmActions";

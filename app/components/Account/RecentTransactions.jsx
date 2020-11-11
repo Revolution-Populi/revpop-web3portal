@@ -17,7 +17,7 @@ import PropTypes from "prop-types";
 import PaginatedList from "../Utility/PaginatedList";
 const {operations} = grapheneChainTypes;
 const alignLeft = {textAlign: "left"};
-import report from "bitshares-report";
+import report from "@revolutionpopuli/revpop-report";
 import LoadingIndicator from "../LoadingIndicator";
 import {Tooltip} from "bitshares-ui-style-guide";
 const ops = Object.keys(operations);

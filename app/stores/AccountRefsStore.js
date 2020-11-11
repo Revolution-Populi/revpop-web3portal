@@ -3,7 +3,7 @@ import iDB from "idb-instance";
 import Immutable from "immutable";
 import BaseStore from "./BaseStore";
 import {ChainStore} from "@revolutionpopuli/revpopjs";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import PrivateKeyStore from "stores/PrivateKeyStore";
 import PrivateKeyActions from "actions/PrivateKeyActions";
 import chainIds from "chain/chainIds";

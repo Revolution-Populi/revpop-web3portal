@@ -10,7 +10,7 @@ import {
     Aes,
     key
 } from "@revolutionpopuli/revpopjs";
-import {Apis, ChainConfig} from "bitsharesjs-ws";
+import {Apis, ChainConfig} from "@revolutionpopuli/revpopjs-ws";
 import BackupActions from "actions/BackupActions";
 import WalletActions from "actions/WalletActions";
 

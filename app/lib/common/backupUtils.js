@@ -1,4 +1,4 @@
-import {ChainConfig} from "bitsharesjs-ws";
+import {ChainConfig} from "@revolutionpopuli/revpopjs-ws";
 
 export function backupName(walletName, date = new Date()) {
     let name = walletName;

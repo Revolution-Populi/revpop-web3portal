@@ -19,7 +19,7 @@ import WalletManagerStore from "stores/WalletManagerStore";
 import cnames from "classnames";
 import TotalBalanceValue from "../Utility/TotalBalanceValue";
 import ReactTooltip from "react-tooltip";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import AccountImage from "../Account/AccountImage";
 import {ChainStore} from "@revolutionpopuli/revpopjs";
 import WithdrawModal from "../Modal/WithdrawModalNew";

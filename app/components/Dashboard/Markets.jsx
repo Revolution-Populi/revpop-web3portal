@@ -1,5 +1,5 @@
 import React from "react";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {connect} from "alt-react";
 
 import utils from "common/utils";

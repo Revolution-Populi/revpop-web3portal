@@ -14,7 +14,7 @@ import {ChainStore} from "@revolutionpopuli/revpopjs";
 import utils from "common/utils";
 import ls from "common/localStorage";
 import PaginatedList from "../Utility/PaginatedList";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {Radio, Table, Select, Input, Icon} from "bitshares-ui-style-guide";
 
 let accountStorage = new ls("__graphene__");

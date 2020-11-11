@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 
 import AssetWrapper from "./AssetWrapper";
 import {Asset, Price} from "common/MarketClasses";

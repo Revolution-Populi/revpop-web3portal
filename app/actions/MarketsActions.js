@@ -2,7 +2,7 @@ import alt from "alt-instance";
 import WalletApi from "api/WalletApi";
 import WalletDb from "stores/WalletDb";
 import {ChainStore} from "@revolutionpopuli/revpopjs";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import marketUtils from "common/market_utils";
 import accountUtils from "common/account_utils";
 import Immutable from "immutable";

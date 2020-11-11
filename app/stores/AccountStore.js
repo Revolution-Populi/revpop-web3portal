@@ -11,7 +11,7 @@ import {
     ChainValidation,
     FetchChain
 } from "@revolutionpopuli/revpopjs";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import AccountRefsStore from "stores/AccountRefsStore";
 import AddressIndex from "stores/AddressIndex";
 import ls from "common/localStorage";

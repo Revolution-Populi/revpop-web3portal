@@ -56,7 +56,7 @@ export function getDefaultTheme() {
  */
 export function getDefaultLogin() {
     // possible: one of "password", "wallet"
-    return "password";
+    return "wallet";
 }
 
 /**
@@ -335,5 +335,5 @@ export function getSupportedLanguages() {
 
 export function getAllowedLogins() {
     // possible: list containing any combination of ["password", "wallet"]
-    return ["password", "wallet"];
+    return ["wallet"];
 }

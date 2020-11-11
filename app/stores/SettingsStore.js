@@ -140,10 +140,7 @@ class SettingsStore {
             showSettles: [{translate: "yes"}, {translate: "no"}],
             showAssetPercent: [{translate: "yes"}, {translate: "no"}],
             themes: ["darkTheme", "lightTheme", "midnightTheme"],
-            passwordLogin: [
-                {translate: "cloud_login"},
-                {translate: "local_wallet"}
-            ],
+            passwordLogin: [{translate: "local_wallet"}],
             browser_notifications: {
                 allow: [true, false],
                 additional: {

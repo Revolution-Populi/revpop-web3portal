@@ -7,7 +7,9 @@ import {
     TransactionBuilder,
     TransactionHelper,
     FetchChain,
-    ChainStore
+    ChainStore,
+    CloudStorage,
+    PersonalData
 } from "@revolutionpopuli/revpopjs";
 import counterpart from "counterpart";
 import {Notification} from "bitshares-ui-style-guide";
@@ -78,6 +80,33 @@ const ApplicationApi = {
                     });
             });
         });
+    },
+
+    _get_active_keys(account, with_private_keys = true) {
+        let res = {
+            public_key: null,
+            private_key: null
+        };
+        res.public_key = account.getIn(["options", "active_key"]);
+        // The 1s are base58 for all zeros (null)
+        if (/111111111111111111111/.test(res.public_key)) {
+            res.public_key = null;
+        }
+        if (with_private_keys) {
+            res.private_key = WalletDb.getPrivateKey(res.public_key);
+            if (!res.private_key) {
+                Notification.error({
+                    message: counterpart.translate(
+                        "account.errors.active_missing"
+                    )
+                });
+                throw new Error(
+                    "Missing private active key for sender: " +
+                        account.get("name")
+                );
+            }
+        }
+        return res;
     },
 
     _get_memo_keys(account, with_private_keys = true) {
@@ -753,6 +782,34 @@ const ApplicationApi = {
 
         transactionBuilder.add_operation(op);
         await WalletDb.process_transaction(transactionBuilder, null, broadcast);
+        if (!transactionBuilder.tr_buffer) {
+            throw "Something went finalization the transaction, this should not happen";
+        }
+    },
+
+    async updatePersonalData(account, props) {
+        account = this._ensureAccount(account);
+        const pd = new PersonalData();
+        pd.assign(props);
+        // const cs = new CloudStorage();
+        // const keypair = this._get_active_keys(account, true);
+        // @todo
+        //const pd_url = cs.crypto_save_object(pd.getAllParts(), keypair.private_key, keypair.public_key);
+        const pd_url = "http://localhost:3000/storage/pd-" + account;
+        const root_hash = pd.getRootHash();
+
+        let txb = new TransactionBuilder();
+        txb.add_type_operation("personal_data_create", {
+            fee: {
+                amount: 0,
+                asset_id: 0
+            },
+            subject_account: account.get("id"),
+            operator_account: account.get("id"),
+            url: pd_url,
+            hash: root_hash
+        });
+        await WalletDb.process_transaction(txb, null, true);
         if (!transactionBuilder.tr_buffer) {
             throw "Something went finalization the transaction, this should not happen";
         }

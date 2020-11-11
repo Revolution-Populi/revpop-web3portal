@@ -108,6 +108,29 @@ class AccountActions {
         }
     }
 
+    updatePersonalData(account_name, name, surname) {
+        try {
+            return dispatch => {
+                return ApplicationApi.updatePersonalData(account_name, {
+                    first_name: name,
+                    last_name: surname
+                }).then(result => {
+                    console.log("updatePersonalData result: ", result);
+
+                    dispatch(result);
+                });
+            };
+        } catch (error) {
+            console.log(
+                "[AccountActions.js:111] ----- updatePersonalData error ----->",
+                error
+            );
+            return new Promise((resolve, reject) => {
+                reject(error);
+            });
+        }
+    }
+
     /**
      *  This method exists ont he AccountActions because after creating the account via the wallet, the account needs
      *  to be linked and added to the local database.

@@ -473,6 +473,23 @@ class AccountOverview extends React.Component {
                             tabsClass="account-overview no-padding bordered-header content-block"
                         >
                             <Tab
+                                title="account.activity"
+                                subText={hiddenSubText}
+                            >
+                                <RecentTransactions
+                                    accountsList={Immutable.fromJS([
+                                        account.get("id")
+                                    ])}
+                                    compactView={false}
+                                    showMore={true}
+                                    fullHeight={true}
+                                    limit={100}
+                                    showFilters={true}
+                                    dashboard
+                                />
+                            </Tab>
+
+                            <Tab
                                 title="account.portfolio"
                                 subText={portfolioActiveAssetsBalance}
                             >
@@ -561,84 +578,6 @@ class AccountOverview extends React.Component {
                                         balanceObjects={includedBalancesList}
                                     />
                                 )}
-                            </Tab>
-
-                            <Tab
-                                title="account.open_orders"
-                                subText={ordersValue}
-                            >
-                                <AccountOrders {...this.props}>
-                                    <tr className="total-value">
-                                        <td
-                                            colSpan="8"
-                                            style={{textAlign: "right"}}
-                                        >
-                                            {totalValueText}
-                                        </td>
-                                        <td
-                                            colSpan="1"
-                                            style={{textAlign: "right"}}
-                                        >
-                                            {ordersValue}
-                                        </td>
-                                        {this.props.isMyAccount ? <td /> : null}
-                                    </tr>
-                                </AccountOrders>
-                            </Tab>
-
-                            <Tab
-                                title="account.collaterals"
-                                subText={
-                                    <span
-                                        className={
-                                            this.state.globalMarginStatus
-                                        }
-                                    >
-                                        {marginValue}
-                                    </span>
-                                }
-                            >
-                                <div className="content-block">
-                                    <div className="generic-bordered-box">
-                                        <MarginPositionsTable
-                                            preferredUnit={preferredUnit}
-                                            className="dashboard-table"
-                                            callOrders={call_orders}
-                                            account={account}
-                                        >
-                                            <tr className="total-value">
-                                                <td>{totalValueText}</td>
-                                                <td />
-                                                <td>{debtValue}</td>
-                                                <td className="column-hide-medium">
-                                                    {collateralValue}
-                                                </td>
-                                                <td />
-                                                <td>{marginValue}</td>
-                                                <td className="column-hide-small" />
-                                                <td className="column-hide-small" />
-                                                <td colSpan="4" />
-                                            </tr>
-                                        </MarginPositionsTable>
-                                    </div>
-                                </div>
-                            </Tab>
-
-                            <Tab
-                                title="account.activity"
-                                subText={hiddenSubText}
-                            >
-                                <RecentTransactions
-                                    accountsList={Immutable.fromJS([
-                                        account.get("id")
-                                    ])}
-                                    compactView={false}
-                                    showMore={true}
-                                    fullHeight={true}
-                                    limit={100}
-                                    showFilters={true}
-                                    dashboard
-                                />
                             </Tab>
 
                             {account.get("proposals") &&

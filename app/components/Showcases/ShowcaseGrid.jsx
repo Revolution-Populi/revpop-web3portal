@@ -59,49 +59,6 @@ class ShowcaseGrid extends Component {
                 disabled: hasAccount
                     ? false
                     : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.barter.title",
-                target: event => {
-                    thiz.props.history.push("/barter");
-                },
-                description: "showcases.barter.description",
-                icon: "barter",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.borrow.title",
-                target: () => {
-                    if (hasAccount) {
-                        thiz.props.history.push("/borrow");
-                    }
-                },
-                description: "showcases.borrow.description",
-                icon: "borrow",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.direct_debit.title",
-                target: event => {
-                    thiz.props.history.push("/direct-debit");
-                },
-                description: "showcases.direct_debit.description",
-                icon: "direct_debit",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.timed_transfer.title",
-                target: () => {},
-                description: "showcases.timed_transfer.description",
-                icon: "alarm",
-                disabled: true,
-                comingSoon: true
             }
             // .... even more tiles in this list
         ];

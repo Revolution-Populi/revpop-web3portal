@@ -8,10 +8,6 @@ import SettingsActions from "actions/SettingsActions";
 const LoginTypeSelectorView = ({value, onChange}) => (
     <Form.Item label={counterpart.translate("account.login_with")}>
         <Select onChange={onChange} value={value}>
-            <Select.Option value="cloud">
-                {counterpart.translate("account.name")}(
-                {counterpart.translate("wallet.password_model").toLowerCase()})
-            </Select.Option>
             <Select.Option value="local">
                 {counterpart.translate("wallet.key_file")} (
                 {counterpart.translate("wallet.wallet_model").toLowerCase()})

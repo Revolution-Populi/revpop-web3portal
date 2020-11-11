@@ -39,7 +39,7 @@ class Assets extends React.Component {
                         ? 3000
                         : 50, // mainnet has 3000+ assets, other chains may not have that many
             assetsFetched: 0,
-            activeFilter: "market",
+            activeFilter: "user",
             filterSearch: props.filterSearch || "",
             rowsOnPage: "25"
         };
@@ -497,24 +497,6 @@ class Assets extends React.Component {
                                     onChange={this.handleFilterChange}
                                     addonAfter={<Icon type="search" />}
                                 />
-                                <Radio.Group
-                                    value={this.state.activeFilter}
-                                    onChange={this._toggleFilter}
-                                    style={{
-                                        marginBottom: "7px",
-                                        marginLeft: "24px"
-                                    }}
-                                >
-                                    <Radio value={"market"}>
-                                        <Translate content="explorer.assets.market" />
-                                    </Radio>
-                                    <Radio value={"user"}>
-                                        <Translate content="explorer.assets.user" />
-                                    </Radio>
-                                    <Radio value={"prediction"}>
-                                        <Translate content="explorer.assets.prediction" />
-                                    </Radio>
-                                </Radio.Group>
 
                                 <Select
                                     style={{width: "150px", marginLeft: "24px"}}

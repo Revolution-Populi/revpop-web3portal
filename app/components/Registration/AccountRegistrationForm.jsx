@@ -89,7 +89,7 @@ class AccountRegistrationForm extends React.Component {
     }
 
     isValid() {
-        const firstAccount = AccountStore.getMyAccounts().length === 0;
+        const firstAccount = true; //AccountStore.getMyAccounts().length === 0;
         let valid = this.state.validAccountName;
         if (!WalletDb.getWallet()) {
             valid = valid;
@@ -104,7 +104,7 @@ class AccountRegistrationForm extends React.Component {
         const {registrarAccount} = this.state;
 
         const myAccounts = AccountStore.getMyAccounts();
-        const firstAccount = myAccounts.length === 0;
+        const firstAccount = true; //myAccounts.length === 0;
         const valid = this.isValid();
         let isLTM = false;
         const registrar = registrarAccount
@@ -266,7 +266,7 @@ class AccountRegistrationForm extends React.Component {
 
     renderAccountCreateText() {
         const myAccounts = AccountStore.getMyAccounts();
-        const firstAccount = myAccounts.length === 0;
+        let firstAccount = true; //my_accounts.length === 0;
 
         return (
             <div>

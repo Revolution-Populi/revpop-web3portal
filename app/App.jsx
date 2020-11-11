@@ -357,6 +357,7 @@ class App extends React.Component {
             let accountName =
                 AccountStore.getState().currentAccount ||
                 AccountStore.getState().passwordAccount;
+            const loggedIn = accountName && accountName !== "null";
             accountName =
                 accountName && accountName !== "null"
                     ? accountName
@@ -367,10 +368,14 @@ class App extends React.Component {
                     <div id="mainContainer" className="grid-block">
                         <div className="grid-block vertical">
                             <Switch>
-                                <Route
-                                    path="/"
+                                <Redirect
+                                    from={"/"}
                                     exact
-                                    component={DashboardPage}
+                                    to={{
+                                        pathname: loggedIn
+                                            ? `/account/${accountName}`
+                                            : "/explorer/blocks"
+                                    }}
                                 />
                                 <Route
                                     path="/account/:account_name"

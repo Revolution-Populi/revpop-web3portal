@@ -64,12 +64,12 @@ export function getDefaultLogin() {
  *
  * @returns {[string,string,string,string,string,string]}
  */
-export function getUnits(chainId = "4018d784") {
+export function getUnits(chainId = "3da3a128") {
     if (chainId === "4018d784")
         return ["BTS", "USD", "CNY", "BTC", "EUR", "GBP"];
-    else if (chainId === "39f5e2ed") return ["TEST"];
+    else if (chainId === "3da3a128") return ["RVP"];
     // unknown chain id: (need to return at least one unit)
-    else return ["REV"];
+    else return ["RVP"];
 }
 
 /**

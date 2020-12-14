@@ -75,8 +75,11 @@ export function getDefaultLogin() {
  *
  * @returns {[string,string,string,string,string,string]}
  */
-export function getUnits() {
-    return ["RVP"];
+export function getUnits(chainId = "3da3a128") {
+    if (chainId === "4018d784") return ["RVP"];
+    else if (chainId === "3da3a128") return ["RVP"];
+    // unknown chain id: (need to return at least one unit)
+    else return ["RVP"];
 }
 
 export function getDefaultMarket() {

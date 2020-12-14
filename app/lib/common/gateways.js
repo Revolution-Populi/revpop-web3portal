@@ -9,11 +9,12 @@ import {
     widechainAPIs,
     openledgerAPIs,
     cryptoBridgeAPIs,
-    gdex2APIs,
     xbtsxAPIs,
     citadelAPIs
 } from "api/apiConfig";
 import {allowedGateway} from "branding";
+
+const gdex2APIs = {};
 
 export const availableGateways = {
     OPEN: {

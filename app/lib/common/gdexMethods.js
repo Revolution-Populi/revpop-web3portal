@@ -1,6 +1,6 @@
 import ls from "./localStorage";
-import {gdexAPIs} from "api/apiConfig";
 
+const gdexAPIs = {};
 const gdexStorage = new ls("");
 
 let assetsRequest = {};

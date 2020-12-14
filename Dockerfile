@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:10
 
 # Install nginx
 RUN apt-get update \
@@ -13,8 +13,9 @@ RUN npm install -g cross-env
 CMD mkdir /bitshares-ui
 WORKDIR /bitshares-ui
 
-ADD package.json .
+COPY package* ./
 RUN cross-env npm install --env.prod
+COPY . .
 
 EXPOSE 80
 

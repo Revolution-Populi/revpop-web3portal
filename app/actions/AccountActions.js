@@ -108,10 +108,11 @@ class AccountActions {
         }
     }
 
-    updatePersonalData(account_name, name, surname) {
+    updatePersonalData(account_name, email, name, surname) {
         try {
             return dispatch => {
                 return ApplicationApi.updatePersonalData(account_name, {
+                    email: email,
                     first_name: name,
                     last_name: surname
                 }).then(result => {

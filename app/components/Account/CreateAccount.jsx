@@ -110,8 +110,9 @@ class CreateAccount extends React.Component {
     onAccountCreated(accountName) {
         AccountActions.updatePersonalData(
             accountName,
-            "test_name",
-            "test_surname"
+            this.refs.email ? this.refs.email.value : null,
+            this.refs.first_name ? this.refs.first_name.value : null,
+            this.refs.last_name ? this.refs.last_name.value : null
         );
     }
 
@@ -313,6 +314,36 @@ class CreateAccount extends React.Component {
                         ) : null}
                     </div>
                 )}
+
+                <div className="divider" />
+
+                <div>
+                    <Translate content="account.optional_data" />
+                </div>
+
+                <div
+                    className="full-width-content form-group no-overflow"
+                    style={{paddingTop: 20}}
+                >
+                    <label>
+                        <Translate content="account.email" />
+                    </label>
+                    <input type="email" ref="email" />
+                </div>
+
+                <div className="full-width-content form-group no-overflow">
+                    <label>
+                        <Translate content="account.first_name" />
+                    </label>
+                    <input type="text" ref="first_name" />
+                </div>
+
+                <div className="full-width-content form-group no-overflow">
+                    <label>
+                        <Translate content="account.last_name" />
+                    </label>
+                    <input type="text" ref="last_name" />
+                </div>
 
                 <div className="divider" />
 

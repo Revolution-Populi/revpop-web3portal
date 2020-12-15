@@ -7,9 +7,10 @@ import {
     TransactionBuilder,
     TransactionHelper,
     FetchChain,
-    ChainStore
-    // CloudStorage,
-    // PersonalData
+    ChainStore,
+    CloudStorage,
+    PersonalData,
+    S3Adapter
 } from "@revolutionpopuli/revpopjs";
 import counterpart from "counterpart";
 import {Notification} from "bitshares-ui-style-guide";
@@ -83,11 +84,13 @@ const ApplicationApi = {
     },
 
     _get_active_keys(account, with_private_keys = true) {
+        const first_public_key = account.getIn(["active", "key_auths"]).get(0);
+        const public_key_string = first_public_key.get(0);
         let res = {
             public_key: null,
             private_key: null
         };
-        res.public_key = account.getIn(["options", "active_key"]);
+        res.public_key = public_key_string;
         // The 1s are base58 for all zeros (null)
         if (/111111111111111111111/.test(res.public_key)) {
             res.public_key = null;
@@ -787,32 +790,55 @@ const ApplicationApi = {
         }
     },
 
-    async updatePersonalData(account, props) {
-        account = this._ensureAccount(account);
-        // const pd = new PersonalData();
-        // pd.assign(props);
-        // const cs = new CloudStorage();
-        // const keypair = this._get_active_keys(account, true);
-        // @todo
-        //const pd_url = cs.crypto_save_object(pd.getAllParts(), keypair.private_key, keypair.public_key);
-        // const pd_url = "http://localhost:3000/storage/pd-" + account;
-        // const root_hash = pd.getRootHash();
+    async updatePersonalData(account_name, props) {
+        const account = await this._ensureAccount(account_name);
+        const keypair = this._get_active_keys(account, true);
+        const pd = new PersonalData();
+        pd.assign(props);
+        const pd_parts = pd.getAllParts();
+        const root_hash = pd.getRootHash();
 
-        // let txb = new TransactionBuilder();
-        // txb.add_type_operation("personal_data_create", {
-        //     fee: {
-        //         amount: 0,
-        //         asset_id: 0
-        //     },
-        //     subject_account: account.get("id"),
-        //     operator_account: account.get("id"),
-        //     url: pd_url,
-        //     hash: root_hash
-        // });
-        // await WalletDb.process_transaction(txb, null, true);
-        // if (!transactionBuilder.tr_buffer) {
-        //     throw "Something went finalization the transaction, this should not happen";
-        // }
+        const cs_client = this._getStorageClient();
+        cs_client.open();
+        const cs = new CloudStorage(cs_client);
+        const pd_url = await cs.crypto_save_object(
+            pd_parts,
+            keypair.private_key,
+            keypair.public_key
+        );
+        cs_client.close();
+
+        let txb = new TransactionBuilder();
+        txb.add_type_operation("personal_data_create", {
+            fee: {
+                amount: 0,
+                asset_id: 0
+            },
+            subject_account: account.get("id"),
+            operator_account: account.get("id"),
+            url: pd_url,
+            hash: root_hash
+        });
+        await WalletDb.process_transaction(txb, null, true);
+        if (!txb.tr_buffer) {
+            throw "Something went finalization the transaction, this should not happen";
+        }
+    },
+
+    _getStorageClient() {
+        return new S3Adapter({
+            credentials: {
+                accessKeyId: "65f6c1bc7db0539856cec919ca2640bc",
+                secretAccessKey:
+                    "9ef7a86d0c94ff9eaeac531424958065cac8ec903b6cdffd50b0d8a824e056d5"
+            },
+            params: {
+                Bucket: "bucket"
+            },
+            endpoint: "localhost:8098",
+            sslEnabled: false,
+            s3ForcePathStyle: true
+        });
     }
 };
 

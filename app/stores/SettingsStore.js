@@ -137,18 +137,7 @@ class SettingsStore {
      */
     _getDefaultChoices() {
         return {
-            locale: [
-                "en",
-                "zh",
-                "fr",
-                "ko",
-                "de",
-                "es",
-                "it",
-                "tr",
-                "ru",
-                "ja"
-            ],
+            locale: ["en"],
             apiServer: settingsAPIs.WS_NODE_LIST.slice(0), // clone all default servers as configured in apiConfig.js
             filteredApiServers: [[]],
             filteredServiceProviders: [[]],

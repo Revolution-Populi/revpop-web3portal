@@ -123,18 +123,7 @@ class SettingsStore {
      */
     _getDefaultChoices() {
         return {
-            locale: [
-                "en",
-                "zh",
-                "fr",
-                "ko",
-                "de",
-                "es",
-                "it",
-                "tr",
-                "ru",
-                "ja"
-            ],
+            locale: ["en"],
             apiServer: settingsAPIs.WS_NODE_LIST.slice(0), // clone all default servers as configured in apiConfig.js
             unit: getUnits(this._getChainId()),
             showSettles: [{translate: "yes"}, {translate: "no"}],
@@ -435,9 +424,9 @@ class SettingsStore {
             };
             let coreAsset = coreAssets[this.starredKey] || "BTS";
             /*
-            * Update units depending on the chain, also make sure the 0 index
-            * asset is always the correct CORE asset name
-            */
+             * Update units depending on the chain, also make sure the 0 index
+             * asset is always the correct CORE asset name
+             */
             this.onUpdateUnits();
             this.defaults.unit[0] = coreAsset;
 

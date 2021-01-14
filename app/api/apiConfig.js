@@ -134,7 +134,7 @@ export const settingsAPIs = {
     ],
     ES_WRAPPER_LIST: [
         {
-            url: "https://api.bitshares.ws/openexplorer",
+            url: "https://api.revolutionpopuli.ws/openexplorer",
             region: "Western Europe",
             country: "Germany",
             operator: "blocksights.info",

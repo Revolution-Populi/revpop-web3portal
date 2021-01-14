@@ -10,13 +10,7 @@ import React from "react";
 
 class BaseModal extends React.Component {
     render() {
-        return (
-            <div>
-                Base Modal was removed by task following below:
-                <br />
-                https://github.com/bitshares/bitshares-ui/issues/1942
-            </div>
-        );
+        return <div>Base Modal was removed</div>;
     }
 }
 

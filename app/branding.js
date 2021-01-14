@@ -1,23 +1,9 @@
-import {Apis} from "@revolutionpopuli/revpopjs-ws";
-/** This file centralized customization and branding efforts throughout the whole wallet and is meant to facilitate
- *  the process.
+/**
+ * This file centralized customization and branding efforts throughout the whole wallet and is meant to facilitate
+ * the process.
  *
  *  @author Stefan Schiessl <stefan.schiessl@blockchainprojectsbv.com>
  */
-
-/**
- * Determine if we are running on testnet or mainnet
- * @private
- */
-function _isTestnet() {
-    const testnet =
-        "39f5e2ede1f8bc1a3a54a7914414e3779e33193f1f5693510e73cb7a87617447"; // just for the record
-    const mainnet =
-        "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8";
-
-    // treat every other chain as testnet
-    return Apis.instance().chain_id !== mainnet;
-}
 
 /**
  * Wallet name that is used throughout the UI and also in translations
@@ -90,17 +76,11 @@ export function getDefaultLogin() {
  * @returns {[string,string,string,string,string,string]}
  */
 export function getUnits() {
-    if (_isTestnet()) {
-        return ["RVP"];
-    }
-    return ["BTS", "USD", "CNY", "BTC", "EUR", "GBP"];
+    return ["RVP"];
 }
 
 export function getDefaultMarket() {
-    if (_isTestnet()) {
-        return "RVETH_RVP";
-    }
-    return "BTS_CNY";
+    return "BTS_USD";
 }
 
 /**
@@ -108,11 +88,9 @@ export function getDefaultMarket() {
  *
  * @returns {[string]}
  */
+
 export function getMyMarketsBases() {
-    if (_isTestnet()) {
-        return ["RVP"];
-    }
-    return ["BTS", "BTC", "CNY", "USD", "USDT", "ETH"];
+    return ["RVP"];
 }
 
 /**
@@ -121,9 +99,6 @@ export function getMyMarketsBases() {
  * @returns {[string]}
  */
 export function getMyMarketsQuotes() {
-    if (_isTestnet()) {
-        return ["RVP"];
-    }
     let tokens = {
         nativeTokens: [
             "BTC",
@@ -208,9 +183,6 @@ export function getMyMarketsQuotes() {
  * @returns {list of string tuples}
  */
 export function getFeaturedMarkets(quotes = []) {
-    if (_isTestnet()) {
-        return [["RVETH", "RVP"]];
-    }
     return [
         ["USD", "BTS"],
         ["USD", "GOLD"],
@@ -272,9 +244,6 @@ export function getFeaturedMarkets(quotes = []) {
  * @returns {[string,string,string,string,string,string,string]}
  */
 export function getAssetNamespaces() {
-    if (_isTestnet()) {
-        return [];
-    }
     return ["XBTSX.", "GDEX.", "HONEST.", "IOB."];
 }
 
@@ -317,16 +286,11 @@ export function getSupportedLanguages() {
 
 export function getAllowedLogins() {
     // possible: list containing any combination of ["password", "wallet"]
-    return ["password", "wallet"];
+    return ["wallet"];
 }
 
 export function getConfigurationAsset() {
-    let assetSymbol = null;
-    if (_isTestnet()) {
-        assetSymbol = "NOTIFICATIONS";
-    } else {
-        assetSymbol = "TEST";
-    }
+    let assetSymbol = "RVP";
     // explanation will be parsed out of the asset description (via split)
     return {
         symbol: assetSymbol,
@@ -336,5 +300,5 @@ export function getConfigurationAsset() {
 }
 
 export function getSteemNewsTag() {
-    return null;
+    return "revolutionpopuli.fdn";
 }

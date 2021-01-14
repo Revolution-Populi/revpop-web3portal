@@ -9,10 +9,6 @@
  * [Proposed Transactions](accounts/proposed.md)
  * [Permissions](accounts/permissions.md)
  * [Memberships](accounts/membership.md)
- * [Market Pegged Assets](assets/mpa.md)
-    * bitUSD
-    * bitEUR
-    * bitGOLD
  * [User Issued Assets](assets/uia.md)
  * [Privatized BitAssets](assets/privbitassets.md)
  * [Decentralized Exchange](dex/introduction.md)

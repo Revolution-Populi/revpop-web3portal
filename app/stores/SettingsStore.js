@@ -13,7 +13,7 @@ import {
     getUnits
 } from "branding";
 
-const CORE_ASSET = "RVP"; // Setting this to BTS to prevent loading issues when used with BTS chain which is the most usual case currently
+const CORE_ASSET = "RVP"; // Setting this to RVP to prevent loading issues when used with RVP chain which is the most usual case currently
 
 const STORAGE_KEY = "__graphene__";
 let ss = ls(STORAGE_KEY);

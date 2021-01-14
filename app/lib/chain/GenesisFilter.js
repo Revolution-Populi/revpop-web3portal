@@ -10,7 +10,7 @@ try {
 } catch (e) {
     // webpack deployment exception (not run time)
     console.log(
-        "WARN: Will be unable to filter BTS 1.0 wallet imports, did not find assets/bts_genesiskeys_bloom.dat",
+        "WARN: Will be unable to filter RVP 1.0 wallet imports, did not find assets/bts_genesiskeys_bloom.dat",
         e
     );
 }
@@ -88,7 +88,7 @@ export default class GenesisFilter {
 
     filter(account_keys, status) {
         if (!this.isAvailable()) {
-            console.log("WARN: Missing bloom filter for BTS 0.9.x wallets");
+            console.log("WARN: Missing bloom filter for RVP 0.9.x wallets");
             status({error: "missing_bloom"});
             return;
         }

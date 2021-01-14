@@ -178,7 +178,7 @@ class RecentTransactions extends React.Component {
     }
 
     _getAccountHistoryES(account_id, limit, start) {
-        var esNode = "https://wrapper.elasticsearch.bitshares.ws";
+        var esNode = "https://elasticsearch.revolutionpopuli.com";
 
         console.log(
             "query",
@@ -327,7 +327,7 @@ class RecentTransactions extends React.Component {
         let today = new Date();
         saveAs(
             blob,
-            "bitshares-account-history-" +
+            "revpop-account-history-" +
                 accountName +
                 "-" +
                 today.getFullYear() +

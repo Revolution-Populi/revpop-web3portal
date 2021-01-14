@@ -21,14 +21,12 @@ class AccountVotingProxy extends React.Component {
             "baozi",
             "bitcrab",
             "laomao",
-            "bitshares-munich-wallet",
             "abit",
             "dahu",
             "bts1988",
             "harvey",
             "fav",
             "jonnybitcoin",
-            "bitsharesblocks",
             "customminer"
         ]),
         existingProxy: "1.2.5", // proxy-to-self
@@ -68,8 +66,8 @@ class AccountVotingProxy extends React.Component {
     // }
 
     /*
-    * Ensure that state is cleared when new proxy props are passed down
-    */
+     * Ensure that state is cleared when new proxy props are passed down
+     */
     componentWillUpdate(nextProps) {
         let newProxy = nextProps.existingProxy.get("name");
         let oldProxy = this.props.existingProxy.get("name");
@@ -164,8 +162,8 @@ class AccountVotingProxy extends React.Component {
                 return a.get("name") > b.get("name")
                     ? 1
                     : a.get("name") < b.get("name")
-                        ? -1
-                        : 0;
+                    ? -1
+                    : 0;
             })
             .map(proxy => {
                 return (
@@ -209,9 +207,8 @@ class AccountVotingProxy extends React.Component {
                     <div>
                         <p>
                             <Translate content="account.votes.proxy_current" />:
-                            &nbsp;<Link
-                                to={`account/${existingProxy.get("name")}`}
-                            >
+                            &nbsp;
+                            <Link to={`account/${existingProxy.get("name")}`}>
                                 {existingProxy.get("name")}
                             </Link>
                         </p>

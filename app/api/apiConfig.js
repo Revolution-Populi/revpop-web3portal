@@ -114,17 +114,25 @@ export const nodeRegions = [
 export const settingsAPIs = {
     // If you want a location to be translated, add the translation to settings in locale-xx.js
     // and use an object {translate: key} in WS_NODE_LIST
-    DEFAULT_WS_NODE: "ws://localhost:8090",
+    DEFAULT_WS_NODE: "wss://testnet.revolutionpopuli.com:8090",
     WS_NODE_LIST: [
         {
-            url: "ws://localhost:8090",
+            url: "wss://testnet.revolutionpopuli.com:8090",
             location: "Revolution Populi Testnet"
         },
+        // {
+        //     url: "wss://testnet2.revolutionpopuli.com:8090",
+        //     location: "Revolution Populi Testnet node 2"
+        // },
+        // {
+        //     url: "ws://testnet3.revolutionpopuli.com:8090",
+        //     location: "Revolution Populi Testnet node 3"
+        // },
         {
             url: "ws://localhost:8090",
             location: "Locally hosted"
         }
     ],
     DEFAULT_FAUCET: getFaucet().url,
-    TESTNET_FAUCET: "https://faucet.testnet.bitshares.eu"
+    TESTNET_FAUCET: "https://testnet.revolutionpopuli.com:8443"
 };

@@ -264,15 +264,14 @@ export default class DropDownMenu extends React.Component {
                     className={cnames(
                         {
                             active:
-                                active.indexOf(
-                                    "/help/introduction/bitshares"
-                                ) !== -1
+                                active.indexOf("/help/introduction/revpop") !==
+                                -1
                         },
                         "divider"
                     )}
                     onClick={this.props.onNavigate.bind(
                         this,
-                        "/help/introduction/bitshares"
+                        "/help/introduction/revpop"
                     )}
                 >
                     <div className="table-cell">

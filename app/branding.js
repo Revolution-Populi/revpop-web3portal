@@ -27,7 +27,7 @@ export function getWalletURL() {
  */
 export function getFaucet() {
     return {
-        url: "http://localhost:3000/", // 2017-12-infrastructure worker proposal
+        url: "https://testnet.revolutionpopuli.com:8443/", // 2017-12-infrastructure worker proposal
         show: true,
         editable: false
     };
@@ -65,8 +65,7 @@ export function getDefaultLogin() {
  * @returns {[string,string,string,string,string,string]}
  */
 export function getUnits(chainId = "3da3a128") {
-    if (chainId === "4018d784")
-        return ["BTS", "USD", "CNY", "BTC", "EUR", "GBP"];
+    if (chainId === "4018d784") return ["RVP"];
     else if (chainId === "3da3a128") return ["RVP"];
     // unknown chain id: (need to return at least one unit)
     else return ["RVP"];
@@ -79,7 +78,7 @@ export function getUnits(chainId = "3da3a128") {
  */
 
 export function getMyMarketsBases() {
-    return ["BTC", "ETH", "BTS", "USD", "CNY"];
+    return ["RVP"];
 }
 
 /**

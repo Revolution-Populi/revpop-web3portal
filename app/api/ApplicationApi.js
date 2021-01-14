@@ -7,9 +7,9 @@ import {
     TransactionBuilder,
     TransactionHelper,
     FetchChain,
-    ChainStore,
-    CloudStorage,
-    PersonalData
+    ChainStore
+    // CloudStorage,
+    // PersonalData
 } from "@revolutionpopuli/revpopjs";
 import counterpart from "counterpart";
 import {Notification} from "bitshares-ui-style-guide";
@@ -198,8 +198,8 @@ const ApplicationApi = {
                                       memo
                                   )
                                 : Buffer.isBuffer(memo)
-                                    ? memo.toString("utf-8")
-                                    : memo
+                                ? memo.toString("utf-8")
+                                : memo
                         };
                     }
                 }
@@ -420,8 +420,8 @@ const ApplicationApi = {
                               memo
                           )
                         : Buffer.isBuffer(memo)
-                            ? memo.toString("utf-8")
-                            : memo
+                        ? memo.toString("utf-8")
+                        : memo
                 };
             }
 
@@ -717,8 +717,8 @@ const ApplicationApi = {
                               memo
                           )
                         : Buffer.isBuffer(memo)
-                            ? memo.toString("utf-8")
-                            : memo
+                        ? memo.toString("utf-8")
+                        : memo
                 };
             }
         }
@@ -789,30 +789,30 @@ const ApplicationApi = {
 
     async updatePersonalData(account, props) {
         account = this._ensureAccount(account);
-        const pd = new PersonalData();
-        pd.assign(props);
+        // const pd = new PersonalData();
+        // pd.assign(props);
         // const cs = new CloudStorage();
         // const keypair = this._get_active_keys(account, true);
         // @todo
         //const pd_url = cs.crypto_save_object(pd.getAllParts(), keypair.private_key, keypair.public_key);
-        const pd_url = "http://localhost:3000/storage/pd-" + account;
-        const root_hash = pd.getRootHash();
+        // const pd_url = "http://localhost:3000/storage/pd-" + account;
+        // const root_hash = pd.getRootHash();
 
-        let txb = new TransactionBuilder();
-        txb.add_type_operation("personal_data_create", {
-            fee: {
-                amount: 0,
-                asset_id: 0
-            },
-            subject_account: account.get("id"),
-            operator_account: account.get("id"),
-            url: pd_url,
-            hash: root_hash
-        });
-        await WalletDb.process_transaction(txb, null, true);
-        if (!transactionBuilder.tr_buffer) {
-            throw "Something went finalization the transaction, this should not happen";
-        }
+        // let txb = new TransactionBuilder();
+        // txb.add_type_operation("personal_data_create", {
+        //     fee: {
+        //         amount: 0,
+        //         asset_id: 0
+        //     },
+        //     subject_account: account.get("id"),
+        //     operator_account: account.get("id"),
+        //     url: pd_url,
+        //     hash: root_hash
+        // });
+        // await WalletDb.process_transaction(txb, null, true);
+        // if (!transactionBuilder.tr_buffer) {
+        //     throw "Something went finalization the transaction, this should not happen";
+        // }
     }
 };
 

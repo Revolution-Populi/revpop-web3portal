@@ -214,12 +214,7 @@ class Assets extends React.Component {
                     title: "",
                     dataIndex: "marketId",
                     render: item => {
-                        return (
-                            <Link to={`/market/${item}`}>
-                                <Icon type={"line-chart"} />{" "}
-                                <Translate content="header.exchange" />
-                            </Link>
-                        );
+                        return <div></div>;
                     }
                 }
             ];
@@ -322,12 +317,7 @@ class Assets extends React.Component {
                     title: "",
                     dataIndex: "marketId",
                     render: item => {
-                        return (
-                            <Link to={`/market/${item}`}>
-                                <Icon type={"line-chart"} />{" "}
-                                <Translate content="header.exchange" />
-                            </Link>
-                        );
+                        return <div></div>;
                     }
                 }
             ];
@@ -453,12 +443,7 @@ class Assets extends React.Component {
                                 </div>
                             </td>
                             <td style={{width: "20%"}}>
-                                <Link
-                                    className="button outline"
-                                    to={`/market/${marketID}`}
-                                >
-                                    <Translate content="header.exchange" />
-                                </Link>
+                                <div></div>
                             </td>
                         </tr>
                     );

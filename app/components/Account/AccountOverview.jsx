@@ -31,7 +31,7 @@ class AccountOverview extends React.Component {
             ), // alphabetical A -> B, numbers high to low
             shownAssets: props.viewSettings.get("shownAssets", "active"),
             alwaysShowAssets: [
-                "BTS"
+                "RVP"
                 // "USD",
                 // "CNY",
                 // "OPEN.BTC",
@@ -295,7 +295,7 @@ class AccountOverview extends React.Component {
                 let balanceObject = ChainStore.getObject(a);
                 if (
                     balanceObject &&
-                    (!balanceObject.get("balance") && !orders[index])
+                    !balanceObject.get("balance") && !orders[index]
                 ) {
                     return false;
                 } else {

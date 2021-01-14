@@ -25,7 +25,7 @@ If you would like to get involved, we have a [Telegram chatroom](https://t.me/Bi
 ## Coding style guideline
 
 ### Guidelines on UI Related Tasks
-Please review our Wiki on [Guidelines for Issues with UI related work](https://github.com/bitshares/bitshares-ui/wiki/Guidelines-for-Issues-with-UI-related-work)
+Please review our Wiki on [Guidelines for Issues with UI related work](https://github.com/Revolution-Populi/revpop-core/wiki/Guidelines-for-Issues-with-UI-related-work)
 
 ### General Guidelines
 Our style guideline is based on 'Airbnb JavaScript Style Guide' (https://github.com/airbnb/javascript), with few exceptions:

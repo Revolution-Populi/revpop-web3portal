@@ -94,9 +94,9 @@ class AccountPortfolioList extends React.Component {
 
     _checkRefAssignments() {
         /*
-        * In order for sorting to work all refs must be assigned, so we check
-        * this here and update the state to trigger a rerender
-        */
+         * In order for sorting to work all refs must be assigned, so we check
+         * this here and update the state to trigger a rerender
+         */
         if (!this.state.allRefsAssigned) {
             let refKeys = ["qtyRefs", "priceRefs", "valueRefs", "changeRefs"];
             const allRefsAssigned = refKeys.reduce((a, b) => {
@@ -325,8 +325,8 @@ class AccountPortfolioList extends React.Component {
                 [action === "bridge_modal"
                     ? "bridgeAsset"
                     : action === "deposit_modal"
-                        ? "depositAsset"
-                        : "withdrawAsset"]: asset,
+                    ? "depositAsset"
+                    : "withdrawAsset"]: asset,
                 fiatModal
             },
             () => {
@@ -350,7 +350,7 @@ class AccountPortfolioList extends React.Component {
     }
 
     _renderBuy = (symbol, canBuy, assetName, emptyCell, balance) => {
-        if (symbol === "BTS" && balance <= 1000000) {
+        if (symbol === "RVP" && balance <= 1000000) {
             // Precision of 5, 1 = 10^5
             return (
                 <span>
@@ -580,12 +580,12 @@ class AccountPortfolioList extends React.Component {
             );
             const canDeposit =
                 (backedCoin && backedCoin.depositAllowed) ||
-                asset.get("symbol") == "BTS";
+                asset.get("symbol") == "RVP";
 
             const canWithdraw =
                 backedCoin &&
                 backedCoin.withdrawalAllowed &&
-                (hasBalance && balanceObject.get("balance") != 0);
+                hasBalance && balanceObject.get("balance") != 0;
 
             const canBuy = !!this.props.bridgeCoins.get(symbol);
             const assetAmount = balanceObject.get("balance");
@@ -879,7 +879,7 @@ class AccountPortfolioList extends React.Component {
                                 .find(
                                     a => a.backingCoin === thisAssetName[1]
                                 ) ||
-                            asset.get("symbol") == "BTS";
+                            asset.get("symbol") == "RVP";
 
                         const canBuy = !!this.props.bridgeCoins.get(
                             asset.get("symbol")
@@ -1190,24 +1190,21 @@ class AccountPortfolioList extends React.Component {
     }
 }
 
-AccountPortfolioList = connect(
-    AccountPortfolioList,
-    {
-        listenTo() {
-            return [SettingsStore, GatewayStore, MarketsStore];
-        },
-        getProps() {
-            return {
-                settings: SettingsStore.getState().settings,
-                viewSettings: SettingsStore.getState().viewSettings,
-                backedCoins: GatewayStore.getState().backedCoins,
-                bridgeCoins: GatewayStore.getState().bridgeCoins,
-                gatewayDown: GatewayStore.getState().down,
-                allMarketStats: MarketsStore.getState().allMarketStats
-            };
-        }
+AccountPortfolioList = connect(AccountPortfolioList, {
+    listenTo() {
+        return [SettingsStore, GatewayStore, MarketsStore];
+    },
+    getProps() {
+        return {
+            settings: SettingsStore.getState().settings,
+            viewSettings: SettingsStore.getState().viewSettings,
+            backedCoins: GatewayStore.getState().backedCoins,
+            bridgeCoins: GatewayStore.getState().bridgeCoins,
+            gatewayDown: GatewayStore.getState().down,
+            allMarketStats: MarketsStore.getState().allMarketStats
+        };
     }
-);
+});
 
 AccountPortfolioList = debounceRender(AccountPortfolioList, 50, {
     leading: false

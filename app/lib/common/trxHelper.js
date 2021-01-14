@@ -127,9 +127,9 @@ function checkFeeStatusAsync({
                     let hasValidCER = true;
 
                     /*
-                ** If the fee is to be paid in a non-core asset, check the fee
-                ** pool and convert the amount using the CER
-                */
+                     ** If the fee is to be paid in a non-core asset, check the fee
+                     ** pool and convert the amount using the CER
+                     */
                     if (feeID !== "1.3.0") {
                         // Convert the amount using the CER
                         let cer = feeAsset.getIn([
@@ -151,9 +151,9 @@ function checkFeeStatusAsync({
                         let quote = new Asset(q);
 
                         /*
-                    ** If the CER is incorrectly configured, the multiplication
-                    ** will fail, so catch the error and default to core
-                    */
+                         ** If the CER is incorrectly configured, the multiplication
+                         ** will fail, so catch the error and default to core
+                         */
                         try {
                             let price = new Price({base, quote});
                             fee = fee.times(price, true);
@@ -209,9 +209,9 @@ let _feeCache = {};
 function estimateFee(op_type, options, globalObject, data = {}) {
     // console.time("estimateFee");
     /*
-    * The actual content doesn't matter, only the length of it, so we use a
-    * string of equal length to improve caching
-    */
+     * The actual content doesn't matter, only the length of it, so we use a
+     * string of equal length to improve caching
+     */
     if (!!data.content)
         data.content = new Array(data.content.length + 1).join("a");
     if (!globalObject) return 0;
@@ -254,11 +254,11 @@ function estimateFee(op_type, options, globalObject, data = {}) {
                     let pKey = _privKey || PrivateKey.fromWif(privKey);
                     if (_privKey) _privKey = pKey;
                     let memoFromKey =
-                        "BTS6B1taKXkDojuC1qECjvC7g186d8AdeGtz8wnqWAsoRGC6RY8Rp";
+                        "RVP6B1taKXkDojuC1qECjvC7g186d8AdeGtz8wnqWAsoRGC6RY8Rp";
 
                     // Memos are optional, but if you have one you need to encrypt it
                     let memoToKey =
-                        "BTS8eLeqSZZtB1YHdw7KjQxRSRmaKAseCxhUSqaLxUdqvdGpp6nck";
+                        "RVP8eLeqSZZtB1YHdw7KjQxRSRmaKAseCxhUSqaLxUdqvdGpp6nck";
 
                     /* Encryption is very expensive so we cache the result for reuse */
                     let message;

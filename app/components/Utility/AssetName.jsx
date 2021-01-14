@@ -83,8 +83,8 @@ class AssetName extends React.Component {
                 prefix && prefix === "bit"
                     ? prefix
                     : !!prefix
-                        ? prefix.toUpperCase()
-                        : prefix;
+                    ? prefix.toUpperCase()
+                    : prefix;
             let assetDiv = (
                 <div
                     className={
@@ -134,8 +134,8 @@ class AssetName extends React.Component {
                 return assetDiv;
             } else {
                 let desc = null;
-                if (replacedName == "BTS") {
-                    desc = {main: counterpart.translate("assets.BTS")};
+                if (replacedName == "RVP") {
+                    desc = {main: counterpart.translate("assets.RVP")};
                 } else {
                     desc = asset_utils.parseDescription(
                         asset.getIn(["options", "description"])

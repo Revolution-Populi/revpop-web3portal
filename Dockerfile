@@ -1,28 +1,18 @@
-FROM node:10
-
-# Install nginx
-RUN apt-get update \
-  && apt-get install -y nginx --no-install-recommends \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+FROM node:10 AS build
+MAINTAINER The Revolution Populi Project
 
 RUN npm install -g cross-env
 
-# We copy the code from the docker-compose-yml
-# RUN git clone https://github.com/bitshares/bitshares-ui.git /bitshares-ui
-CMD mkdir /bitshares-ui
 WORKDIR /bitshares-ui
+ENV BRANCH master
 
 COPY package* ./
 RUN cross-env npm install --env.prod
 COPY . .
+RUN npm run build
 
-EXPOSE 80
+FROM nginx:1.19 as run
+MAINTAINER The Revolution Populi Project
 
-## Copying default configuration
-ADD conf/nginx.conf /etc/nginx/nginx.conf
-ADD conf/start.sh /start.sh
-RUN chmod a+x /start.sh
-
-## Entry point
-ENTRYPOINT ["/start.sh"]
+COPY --from=build /bitshares-ui/build/dist /usr/share/nginx/html
+COPY conf/nginx.conf /etc/nginx/nginx.conf

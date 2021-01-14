@@ -1,5 +1,5 @@
 require("./stylesheets/app.scss");
-require("file-loader?name=favicon.ico!./favicon.ico");
+require("file-loader?name=favicon.png!./favicon.png");
 require("babel-polyfill");
 require("whatwg-fetch");
 require("indexeddbshim");

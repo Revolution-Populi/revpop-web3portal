@@ -14,7 +14,6 @@ of this application.
  * [Backups](introduction/backups.md)
  * [Blockchain](introduction/blockchain.md)
  * [Witnesses](introduction/witness.md)
- * [Workers](introduction/workers.md)
  * [Committe Members](introduction/committee.md)
 
 ## Accounts
@@ -23,17 +22,10 @@ of this application.
  * [Memberships](accounts/membership.md)
 
 ## Assets
- * [Market Pegged Assets](assets/mpa.md) (BitUSD, BitEUR, BitGOLD, Bit\*,...)
  * [User Issued Assets](assets/uia.md)
- * [Privatized BitAssets](assets/privbitassets.md)
-
-## Decentralized Exchange
- * [Introduction](dex/introduction.md)
- * [Trading](dex/trading.md)
- * [Short Selling BitAssets](dex/shorting.md)
 
 ## Development
- * [RevPop UI Github](https://github.com/Revolution-Populi/revpop-core)
+ * [RevPop Github](https://github.com/Revolution-Populi/revpop-core)
 
 ----------
 [Glossary](glossary.md)

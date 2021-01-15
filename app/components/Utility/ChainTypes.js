@@ -191,7 +191,7 @@ function accountNameChecker(props, propName, componentName) {
     componentName = componentName || "ANONYMOUS";
     if (props[propName]) {
         let value = props[propName];
-        if (ChainValidation.is_account_name(value)) {
+        if (ChainValidation.is_account_name(value, true)) {
             return null;
         } else {
             return new Error(

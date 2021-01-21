@@ -295,7 +295,8 @@ class AccountOverview extends React.Component {
                 let balanceObject = ChainStore.getObject(a);
                 if (
                     balanceObject &&
-                    !balanceObject.get("balance") && !orders[index]
+                    !balanceObject.get("balance") &&
+                    !orders[index]
                 ) {
                     return false;
                 } else {
@@ -547,22 +548,6 @@ class AccountOverview extends React.Component {
                                                 <Translate content="account.show_hidden" />
                                             </div>
                                         ) : null}
-                                        <div
-                                            className={cnames("inline-block", {
-                                                inactive:
-                                                    shownAssets != "visual"
-                                            })}
-                                            onClick={
-                                                shownAssets != "visual"
-                                                    ? this._changeShownAssets.bind(
-                                                          this,
-                                                          "visual"
-                                                      )
-                                                    : () => {}
-                                            }
-                                        >
-                                            <Translate content="account.show_visual" />
-                                        </div>
                                     </div>
                                 </div>
 

@@ -59,3 +59,7 @@ th.is-sortable {
         text-underline-position: under;
     }
 }
+
+.ant-table .ant-table-placeholder {
+    min-height: 130px !important;
+}

@@ -674,6 +674,7 @@ class Footer extends React.Component {
                                             <Translate content="modal.report.button" />
                                         </div>
                                     </Tooltip>
+                                    {/*
                                     <Tooltip
                                         title={counterpart.translate(
                                             "tooltip.self_help"
@@ -690,6 +691,7 @@ class Footer extends React.Component {
                                             <Translate content="global.help" />
                                         </div>
                                     </Tooltip>
+                                    */}
                                 </div>
                             </div>
                         ) : (

@@ -16,12 +16,7 @@ export default class RestoreSettings extends React.Component {
         };
     }
 
-    _setWalletMode() {
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: false
-        });
-    }
+    _setWalletMode() {}
 
     _changeType(e) {
         this.setState({

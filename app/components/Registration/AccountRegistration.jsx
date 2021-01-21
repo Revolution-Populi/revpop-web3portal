@@ -16,12 +16,7 @@ class AccountRegistration extends React.Component {
         this.toggleConfirmed = this.toggleConfirmed.bind(this);
     }
 
-    componentWillMount() {
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: true
-        });
-    }
+    componentWillMount() {}
 
     componentDidMount() {
         ReactTooltip.rebuild();

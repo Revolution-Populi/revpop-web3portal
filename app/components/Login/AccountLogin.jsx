@@ -101,10 +101,6 @@ class AccountLogin extends React.Component {
             });
 
             AccountActions.setPasswordAccount(account);
-            SettingsActions.changeSetting({
-                setting: "passwordLogin",
-                value: true
-            });
             this.props.history.push("/");
             WalletUnlockActions.change();
         }, 550);
@@ -246,7 +242,6 @@ class AccountLogin extends React.Component {
                 <div className="overflow-bg-block show-for-small-only">
                     <span className="content" />
                 </div>
-
                 <Form
                     layout="vertical"
                     className={!this.props.active ? "display-none" : ""}

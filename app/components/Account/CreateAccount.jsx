@@ -44,12 +44,7 @@ class CreateAccount extends React.Component {
         this.scrollToInput = this.scrollToInput.bind(this);
     }
 
-    componentWillMount() {
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: false
-        });
-    }
+    componentWillMount() {}
 
     componentDidMount() {
         ReactTooltip.rebuild();

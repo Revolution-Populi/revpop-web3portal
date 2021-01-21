@@ -51,14 +51,7 @@ class CreateAccountPassword extends React.Component {
         this.scrollToInput = this.scrollToInput.bind(this);
     }
 
-    componentWillMount() {
-        if (!WalletDb.getWallet()) {
-            SettingsActions.changeSetting({
-                setting: "passwordLogin",
-                value: true
-            });
-        }
-    }
+    componentWillMount() {}
 
     componentDidMount() {
         ReactTooltip.rebuild();
@@ -117,11 +110,6 @@ class CreateAccountPassword extends React.Component {
     }
 
     _unlockAccount(name, password) {
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: true
-        });
-
         WalletDb.validatePassword(password, true, name);
         WalletUnlockActions.checkLock.defer();
     }
@@ -584,9 +572,7 @@ class CreateAccountPassword extends React.Component {
                             </td>
                             <td>
                                 <Link
-                                    to={`/account/${
-                                        this.state.accountName
-                                    }/overview`}
+                                    to={`/account/${this.state.accountName}/overview`}
                                 >
                                     <Translate content="wallet.link_account" />
                                 </Link>
@@ -699,14 +685,11 @@ class CreateAccountPassword extends React.Component {
 
 CreateAccountPassword = withRouter(CreateAccountPassword);
 
-export default connect(
-    CreateAccountPassword,
-    {
-        listenTo() {
-            return [AccountStore];
-        },
-        getProps() {
-            return {};
-        }
+export default connect(CreateAccountPassword, {
+    listenTo() {
+        return [AccountStore];
+    },
+    getProps() {
+        return {};
     }
-);
+});

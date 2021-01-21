@@ -53,10 +53,7 @@ class BackupCreate extends Component {
         );
     }
 }
-BackupCreate = connect(
-    BackupCreate,
-    connectObject
-);
+BackupCreate = connect(BackupCreate, connectObject);
 
 // layout is a small project
 // class WalletObjectInspector extends Component {
@@ -121,10 +118,7 @@ class BackupRestore extends Component {
     }
 }
 
-BackupRestore = connect(
-    BackupRestore,
-    connectObject
-);
+BackupRestore = connect(BackupRestore, connectObject);
 
 class Restore extends Component {
     constructor() {
@@ -186,16 +180,9 @@ class Restore extends Component {
             this.props.wallet.new_wallet,
             this.props.backup.wallet_object
         );
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: false
-        });
     }
 }
-Restore = connect(
-    Restore,
-    connectObject
-);
+Restore = connect(Restore, connectObject);
 
 class NewWalletName extends Component {
     constructor() {
@@ -285,10 +272,7 @@ class NewWalletName extends Component {
         this.setState(state);
     }
 }
-NewWalletName = connect(
-    NewWalletName,
-    connectObject
-);
+NewWalletName = connect(NewWalletName, connectObject);
 
 class Download extends Component {
     componentWillMount() {
@@ -377,10 +361,7 @@ class Download extends Component {
         }
     }
 }
-Download = connect(
-    Download,
-    connectObject
-);
+Download = connect(Download, connectObject);
 
 class Create extends Component {
     getBackupName() {
@@ -433,10 +414,7 @@ class Create extends Component {
         });
     }
 }
-Create = connect(
-    Create,
-    connectObject
-);
+Create = connect(Create, connectObject);
 
 class LastBackupDate extends Component {
     render() {
@@ -538,10 +516,7 @@ class Upload extends Component {
         this.forceUpdate();
     }
 }
-Upload = connect(
-    Upload,
-    connectObject
-);
+Upload = connect(Upload, connectObject);
 
 class NameSizeModified extends Component {
     render() {
@@ -559,10 +534,7 @@ class NameSizeModified extends Component {
         );
     }
 }
-NameSizeModified = connect(
-    NameSizeModified,
-    connectObject
-);
+NameSizeModified = connect(NameSizeModified, connectObject);
 
 class DecryptBackup extends Component {
     static propTypes = {
@@ -642,10 +614,7 @@ class DecryptBackup extends Component {
         this.setState(state);
     }
 }
-DecryptBackup = connect(
-    DecryptBackup,
-    connectObject
-);
+DecryptBackup = connect(DecryptBackup, connectObject);
 
 class Sha1 extends Component {
     render() {
@@ -659,10 +628,7 @@ class Sha1 extends Component {
         );
     }
 }
-Sha1 = connect(
-    Sha1,
-    connectObject
-);
+Sha1 = connect(Sha1, connectObject);
 
 export {
     BackupCreate,

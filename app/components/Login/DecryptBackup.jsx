@@ -56,10 +56,6 @@ class DecryptBackup extends Component {
         const {backupPassword} = this.state;
         WalletDb.validatePassword(backupPassword || "", true);
         WalletUnlockActions.change();
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: false
-        });
         BackupActions.reset();
     }
 
@@ -151,8 +147,8 @@ class DecryptBackup extends Component {
                                     this.state.passwordError
                                         ? "input-warning"
                                         : this.state.backupPassword
-                                            ? "input-success"
-                                            : ""
+                                        ? "input-success"
+                                        : ""
                                 } input create-account-input`}
                                 type={
                                     !this.state.passwordVisible
@@ -217,7 +213,4 @@ const connectObject = {
     }
 };
 
-export default connect(
-    DecryptBackup,
-    connectObject
-);
+export default connect(DecryptBackup, connectObject);

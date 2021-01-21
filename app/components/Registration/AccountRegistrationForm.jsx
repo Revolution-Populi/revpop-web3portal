@@ -40,12 +40,7 @@ class AccountRegistrationForm extends React.Component {
         this.accountNameInput = null;
     }
 
-    componentWillMount() {
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: true
-        });
-    }
+    componentWillMount() {}
 
     componentDidMount() {
         ReactTooltip.rebuild();
@@ -296,14 +291,11 @@ class AccountRegistrationForm extends React.Component {
     }
 }
 
-export default connect(
-    AccountRegistrationForm,
-    {
-        listenTo() {
-            return [AccountStore];
-        },
-        getProps() {
-            return {};
-        }
+export default connect(AccountRegistrationForm, {
+    listenTo() {
+        return [AccountStore];
+    },
+    getProps() {
+        return {};
     }
-);
+});

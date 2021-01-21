@@ -29,10 +29,6 @@ const LoginTypeSelector = props => (
                 const validValues = ["cloud", "local"];
                 if (!newType in validValues)
                     throw new Error("Invalid login type value");
-                return SettingsActions.changeSetting({
-                    setting: "passwordLogin",
-                    value: newType === "cloud"
-                });
             }
         })}
     >

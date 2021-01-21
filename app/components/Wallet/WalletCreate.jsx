@@ -75,10 +75,6 @@ class CreateNewWallet extends Component {
             valid_password,
             this.state.brnkey
         );
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: false
-        });
         this.setState({create_submitted: true});
     }
 

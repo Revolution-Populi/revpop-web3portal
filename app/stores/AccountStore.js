@@ -59,7 +59,7 @@ class AccountStore extends BaseStore {
         // can't use settings store due to possible initialization race conditions
         const storedSettings = ss.get("settings_v4", {});
         if (storedSettings.passwordLogin === undefined) {
-            storedSettings.passwordLogin = true;
+            storedSettings.passwordLogin = false;
         }
         const referralAccount = this._checkReferrer();
         this.state = {
@@ -267,10 +267,10 @@ class AccountStore extends BaseStore {
                     ).toSet();
 
                     /*
-                    * If we're in cloud wallet mode, only fetch the currently
-                    * used cloud mode account, if in wallet mode fetch all the
-                    * accounts of that wallet for the current chain
-                    */
+                     * If we're in cloud wallet mode, only fetch the currently
+                     * used cloud mode account, if in wallet mode fetch all the
+                     * accounts of that wallet for the current chain
+                     */
 
                     let accountPromises =
                         !!this.state.passwordLogin &&
@@ -282,21 +282,18 @@ class AccountStore extends BaseStore {
                                   )
                               ]
                             : !!this.state.passwordLogin
-                                ? []
-                                : data
-                                      .filter(a => {
-                                          if (a.chainId) {
-                                              return a.chainId === chainId;
-                                          } else {
-                                              return true;
-                                          }
-                                      })
-                                      .map(a => {
-                                          return FetchChain(
-                                              "getAccount",
-                                              a.name
-                                          );
-                                      });
+                            ? []
+                            : data
+                                  .filter(a => {
+                                      if (a.chainId) {
+                                          return a.chainId === chainId;
+                                      } else {
+                                          return true;
+                                      }
+                                  })
+                                  .map(a => {
+                                      return FetchChain("getAccount", a.name);
+                                  });
 
                     Promise.all(accountPromises)
                         .then(accounts => {
@@ -392,9 +389,9 @@ class AccountStore extends BaseStore {
                     });
 
                     /*
-                    * Some wallets contain deprecated entries with no chain
-                    * ids, remove these then write new entries with chain ids
-                    */
+                     * Some wallets contain deprecated entries with no chain
+                     * ids, remove these then write new entries with chain ids
+                     */
                     const nameOnlyEntry = this.state.linkedAccounts.findKey(
                         a => {
                             return (
@@ -429,9 +426,9 @@ class AccountStore extends BaseStore {
         );
 
         /*
-        * If we're in cloud wallet mode, simply set myActiveAccounts to the current
-        * cloud wallet account
-        */
+         * If we're in cloud wallet mode, simply set myActiveAccounts to the current
+         * cloud wallet account
+         */
         if (!!this.state.passwordLogin) {
             myActiveAccounts = Immutable.Set(
                 !!this.state.passwordAccount ? [this.state.passwordAccount] : []
@@ -477,9 +474,9 @@ class AccountStore extends BaseStore {
         }
 
         /*
-        * If we're in cloud wallet mode, simply return the current
-        * cloud wallet account
-        */
+         * If we're in cloud wallet mode, simply return the current
+         * cloud wallet account
+         */
         if (this.state.passwordLogin)
             return !!this.state.passwordAccount
                 ? [this.state.passwordAccount]
@@ -559,12 +556,12 @@ class AccountStore extends BaseStore {
         return final.get("full") && final.size === 1
             ? "full"
             : final.get("partial") && final.size === 1
-                ? "partial"
-                : final.get("none") && final.size === 1
-                    ? "none"
-                    : final.get("full") || final.get("partial")
-                        ? "partial"
-                        : undefined;
+            ? "partial"
+            : final.get("none") && final.size === 1
+            ? "none"
+            : final.get("full") || final.get("partial")
+            ? "partial"
+            : undefined;
     }
 
     isMyAccount(account) {

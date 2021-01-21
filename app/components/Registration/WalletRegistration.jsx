@@ -18,12 +18,7 @@ class WalletRegistration extends React.Component {
         this.toggleConfirmed = this.toggleConfirmed.bind(this);
     }
 
-    componentWillMount() {
-        SettingsActions.changeSetting({
-            setting: "passwordLogin",
-            value: false
-        });
-    }
+    componentWillMount() {}
 
     componentDidMount() {
         ReactTooltip.rebuild();

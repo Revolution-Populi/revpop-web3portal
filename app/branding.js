@@ -28,7 +28,7 @@ export function getWalletURL() {
 export function getFaucet() {
     return {
         url: "https://testnet.revolutionpopuli.com:8443/", // 2017-12-infrastructure worker proposal
-        show: true,
+        show: false,
         editable: false
     };
 }

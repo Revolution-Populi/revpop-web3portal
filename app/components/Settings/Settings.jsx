@@ -150,7 +150,7 @@ class Settings extends React.Component {
 
         if (getFaucet().show) menuEntries.push("faucet_address");
 
-        menuEntries.push("reset");
+        // menuEntries.push("reset");
 
         return menuEntries;
     }
@@ -437,9 +437,7 @@ class Settings extends React.Component {
                                 <Translate
                                     unsafe
                                     style={{paddingTop: 5, marginBottom: 30}}
-                                    content={`settings.${
-                                        menuEntries[activeSetting]
-                                    }_text`}
+                                    content={`settings.${menuEntries[activeSetting]}_text`}
                                     className="panel-bg-color"
                                 />
                             )}

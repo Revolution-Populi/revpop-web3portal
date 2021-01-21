@@ -590,28 +590,30 @@ class AccessSettings extends React.Component {
                     }}
                 >
                     <div className="grid-block shrink" style={{marginLeft: 0}}>
-                        {[
-                            "available_nodes",
-                            "my_nodes",
-                            "hidden_nodes",
-                            "testnet_nodes"
-                        ].map(key => {
-                            return (
-                                <div
-                                    key={key}
-                                    className={cnames(
-                                        "nodes-header clickable",
-                                        {
-                                            inactive:
-                                                this.state.activeTab !== key
-                                        }
-                                    )}
-                                    onClick={this._changeTab.bind(this, key)}
-                                >
-                                    <Translate content={"settings." + key} />
-                                </div>
-                            );
-                        })}
+                        {["available_nodes", "my_nodes", "hidden_nodes"].map(
+                            key => {
+                                return (
+                                    <div
+                                        key={key}
+                                        className={cnames(
+                                            "nodes-header clickable",
+                                            {
+                                                inactive:
+                                                    this.state.activeTab !== key
+                                            }
+                                        )}
+                                        onClick={this._changeTab.bind(
+                                            this,
+                                            key
+                                        )}
+                                    >
+                                        <Translate
+                                            content={"settings." + key}
+                                        />
+                                    </div>
+                                );
+                            }
+                        )}
                     </div>
                     {this.state.activeTab === "my_nodes" && (
                         <div
@@ -654,26 +656,19 @@ class AccessSettings extends React.Component {
     }
 }
 
-AccessSettings = connect(
-    AccessSettings,
-    {
-        listenTo() {
-            return [SettingsStore];
-        },
-        getProps() {
-            return {
-                // apiServer and activeNode are ambiguous definition when dealing with isActive, autoSelectionActive etc..
-                // using distinct names
-                selectedNode: SettingsStore.getState().settings.get(
-                    "apiServer"
-                ),
-                connectedNode: SettingsStore.getState().settings.get(
-                    "activeNode"
-                ),
-                apiLatencies: SettingsStore.getState().apiLatencies
-            };
-        }
+AccessSettings = connect(AccessSettings, {
+    listenTo() {
+        return [SettingsStore];
+    },
+    getProps() {
+        return {
+            // apiServer and activeNode are ambiguous definition when dealing with isActive, autoSelectionActive etc..
+            // using distinct names
+            selectedNode: SettingsStore.getState().settings.get("apiServer"),
+            connectedNode: SettingsStore.getState().settings.get("activeNode"),
+            apiLatencies: SettingsStore.getState().apiLatencies
+        };
     }
-);
+});
 
 export default AccessSettings;

@@ -389,12 +389,6 @@ class Asset extends React.Component {
                     hide_issuer="true"
                 />
                 {short_name ? <p>{short_name}</p> : null}
-                <Link
-                    className="button market-button"
-                    to={`/market/${asset.symbol}_${preferredMarket}`}
-                >
-                    <Translate content="exchange.market" />
-                </Link>
             </div>
         );
     }
@@ -1921,9 +1915,11 @@ class Asset extends React.Component {
                                         {this.renderPermissions(asset)}
                                     </div>
 
+                                    {/*
                                     <div className="grid-content small-no-padding">
                                         {this.renderFeePool(asset)}
                                     </div>
+                                    */}
 
                                     {priceFeed ? (
                                         <div className="grid-content small-no-padding">
@@ -1945,6 +1941,7 @@ class Asset extends React.Component {
                                 </div>
                                 {priceFeedData ? priceFeedData : null}
                             </Tab>
+                            {/*
                             <Tab title="explorer.asset.actions">
                                 <div
                                     className="grid-block vertical large-horizontal medium-up-1 large-up-2"
@@ -1962,6 +1959,7 @@ class Asset extends React.Component {
                                         this.renderCollateralBid(asset)}
                                 </div>
                             </Tab>
+                            */}
                         </Tabs>
                     </div>
                 </div>

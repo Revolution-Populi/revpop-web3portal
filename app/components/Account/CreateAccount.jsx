@@ -401,7 +401,7 @@ class CreateAccount extends React.Component {
                     <Translate
                         style={{textAlign: "left"}}
                         component="p"
-                        content="wallet.first_account_paid"
+                        content="wallet.first_account_paid_testnet"
                     />
                 ) : (
                     <Translate
@@ -483,9 +483,7 @@ class CreateAccount extends React.Component {
                             </td>
                             <td>
                                 <Link
-                                    to={`/account/${
-                                        this.state.accountName
-                                    }/overview`}
+                                    to={`/account/${this.state.accountName}/overview`}
                                 >
                                     <Translate content="wallet.link_account" />
                                 </Link>
@@ -567,6 +565,8 @@ class CreateAccount extends React.Component {
                 id="scrollToInput"
                 name="scrollToInput"
             >
+                <div className="divider" />
+
                 <div style={{maxWidth: "95vw"}}>
                     {step !== 1 ? (
                         <p
@@ -583,16 +583,16 @@ class CreateAccount extends React.Component {
                     {step === 1
                         ? this._renderAccountCreateForm()
                         : step === 2
-                            ? this._renderBackup()
-                            : this._renderGetStarted()}
+                        ? this._renderBackup()
+                        : this._renderGetStarted()}
                 </div>
 
                 <div style={{maxWidth: "95vw", paddingTop: "2rem"}}>
                     {step === 1
                         ? this._renderAccountCreateText()
                         : step === 2
-                            ? this._renderBackupText()
-                            : this._renderGetStartedText()}
+                        ? this._renderBackupText()
+                        : this._renderGetStartedText()}
                 </div>
                 <Link to="/">
                     <button className="button primary hollow">
@@ -606,14 +606,11 @@ class CreateAccount extends React.Component {
 
 CreateAccount = withRouter(CreateAccount);
 
-export default connect(
-    CreateAccount,
-    {
-        listenTo() {
-            return [AccountStore];
-        },
-        getProps() {
-            return {};
-        }
+export default connect(CreateAccount, {
+    listenTo() {
+        return [AccountStore];
+    },
+    getProps() {
+        return {};
     }
-);
+});

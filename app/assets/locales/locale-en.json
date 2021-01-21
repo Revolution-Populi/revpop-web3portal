@@ -106,9 +106,8 @@
         "no_price": "--",
         "open_orders": "Open Orders",
         "optional": {
-            "formatter": "Optionally, {restore_link} or create an account using the {restore_form}.",
-            "restore_form": "advanced form",
-            "restore_link": "restore your account"
+            "formatter": "{restore_link}",
+            "restore_link": "Restore your existing account"
         },
         "options": {
             "memo_key": "Memo Key",
@@ -2328,6 +2327,7 @@
         "enter_password": "Password",
         "existing_password": "Existing Password",
         "first_account_paid": "Since this is your first account, a faucet will pay the registration fee for you.",
+        "first_account_paid_testnet": "A faucet will pay the registration fee for you in the Testnet. You will also be credited with a few coins to start with.",
         "generated": "Generated password",
         "go_get_started": "Getting Started",
         "has_wallet": "When you create your first %(wallet_name)s account, a %(wallet_name)s local wallet will be automatically created as well and stored in your browser. This local wallet is encrypted with your password, and will contain any private keys belonging to your accounts. It is important that you take the time to backup this wallet once created!",

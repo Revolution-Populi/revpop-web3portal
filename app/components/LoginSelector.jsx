@@ -163,7 +163,7 @@ class LoginSelector extends React.Component {
                         <div className="grid-block account-login-options">
                             <Link
                                 id="account_login_button"
-                                to="/create-account/password"
+                                to="/create-account/wallet"
                                 className="button primary"
                                 data-intro={translator.translate(
                                     "walkthrough.create_cloud_wallet"
@@ -189,7 +189,7 @@ class LoginSelector extends React.Component {
                         </div>
 
                         <div className="additional-account-options">
-                            <h5 style={{textAlign: "center"}}>
+                            <h5 style={{textAlign: "left"}}>
                                 <TranslateWithLinks
                                     string="account.optional.formatter"
                                     keys={[
@@ -202,16 +202,6 @@ class LoginSelector extends React.Component {
                                                 "walkthrough.restore_account"
                                             ),
                                             arg: "restore_link"
-                                        },
-                                        {
-                                            type: "link",
-                                            value: "/create-account/wallet",
-                                            translation:
-                                                "account.optional.restore_form",
-                                            dataIntro: translator.translate(
-                                                "walkthrough.create_local_wallet"
-                                            ),
-                                            arg: "restore_form"
                                         }
                                     ]}
                                 />
@@ -223,11 +213,6 @@ class LoginSelector extends React.Component {
                             exact
                             component={CreateAccount}
                         />
-                        <Route
-                            path="/create-account/password"
-                            exact
-                            component={CreateAccountPassword}
-                        />
                     </div>
                 </div>
             </div>
@@ -235,18 +220,15 @@ class LoginSelector extends React.Component {
     }
 }
 
-export default connect(
-    LoginSelector,
-    {
-        listenTo() {
-            return [AccountStore];
-        },
-        getProps() {
-            return {
-                currentAccount:
-                    AccountStore.getState().currentAccount ||
-                    AccountStore.getState().passwordAccount
-            };
-        }
+export default connect(LoginSelector, {
+    listenTo() {
+        return [AccountStore];
+    },
+    getProps() {
+        return {
+            currentAccount:
+                AccountStore.getState().currentAccount ||
+                AccountStore.getState().passwordAccount
+        };
     }
-);
+});

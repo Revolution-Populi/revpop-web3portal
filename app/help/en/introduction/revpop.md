@@ -23,8 +23,3 @@ effortlessly secure the company from arbitrary control.
 RevPop does for business what bitcoin did for money by utilizing distributed
 consensus technology to create companies that are inherently global,
 transparent, trustworthy, efficient and most importantly profitable.
-
-## Wallet
-This wallet allows access most features of the RevPop network including
-
-- [User-Issued Assets](/help/assets/uia)

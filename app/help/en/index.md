@@ -4,23 +4,19 @@ This help section gives a brief overview and describes the most basic concepts
 of this application.
 
 ## Introduction 
- * [Revpop](introduction/revpop.md)
  * [Wallet](introduction/wallets.md)
  * [Backups](introduction/backups.md)
  * [Blockchain](introduction/blockchain.md)
- * [Witnesses](introduction/witness.md)
- * [Committe Members](introduction/committee.md)
+ * [Voting](voting.md)
 
 ## Accounts
  * [Introduction](accounts/general.md)
  * [Permissions](accounts/permissions.md)
- * [Memberships](accounts/membership.md)
-
-## Assets
- * [User Issued Assets](assets/uia.md)
+ <!-- * [Memberships](accounts/membership.md) -->
 
 ## Development
  * [RevPop Github](https://github.com/Revolution-Populi/revpop-core)
+ * [RevPop Website](https://revolutionpopuli.com/)
 
 ----------
-[Glossary](glossary.md)
+<!-- [Glossary](glossary.md) -->

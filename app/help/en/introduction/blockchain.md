@@ -1,27 +1,7 @@
-# Blockchain
-
-As most crypto currencies, Graphene makes use of a blockchain to update
-participants about transfers and market activities. Since blocks always refer to
-the previous block, we get a chain of blocks (blockchain) that contains all
-transactions every made in the network. Because the blockchain is a publicly
-accessible and auditable ledger, everyone can take a closer look and verify
-transfers as well as market orders and order books.
-
-Of course, this web wallet offers a block explorer to assist you with your
-audit.
-
 ## Consensus Mechanism
 
-Who exactly is allows to *produce* a block at which time instant is defined by a
-consensus mechanism called *Delegated Proof of Stake*. In essence, the
-token holders of RevPop (holders of the RVP token) can cast a vote for their
-preferred block producers on the blockchain. Those so called *witnesses* with
-the most votes are allowed to produce blocks.
+This Test Net demonstrates a new open source innovation designed by RevPop called "rdPOS" or "Random Delegated Proof Of Stake". A consensus mechanism with 63 pre-elected nodes, but with 21 randomly selected pre-determined nodes serving at any given time, can mean fast transaction speeds along with security, scalability and elected accountability. Due to the maturation of consensus algorithms, along with ongoing innovation and technological improvements, a modern social network, or any modern application for that matter, should have no problem operating on a blockchain technology foundation that functions as a database.
 
-## Transactions
+rdPOS behaves like its predecessor, Delegated Proof Of Stake (dPOS). At the final stage, during the vote counting phase, 21 active witnesses are chosen randomly from the list of TOP 63 candidates. This attracts more nodes to the production of blocks while keeping the number of active producers small, speeding up the blockchain.
 
-The Graphene blockchain technology offers a variety of transaction types. Users
-are not only able to simply transfer assets between each other, but there are
-also transactions to interact with the decentralized exchange. Most of these
-transaction types are labeled with a self-explaining tag, others require more
-knowledge about the inner workings of the company.
+In essence, the token holders of RevPop (holders of the RVP token) can cast a vote for their preferred block producers on the blockchain. Those so called *witnesses* with the most votes are allowed to produce blocks.

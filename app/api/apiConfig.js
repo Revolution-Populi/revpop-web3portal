@@ -117,17 +117,26 @@ export const settingsAPIs = {
     DEFAULT_WS_NODE: "wss://testnet.revolutionpopuli.com:8090",
     WS_NODE_LIST: [
         {
-            url: "wss://testnet.revolutionpopuli.com:8090",
-            location: "Revolution Populi Testnet"
+            url: "wss://testnet1.revolutionpopuli.com:8090",
+            location: "Revolution Populi Testnet",
+            region: "Northern America",
+            country: "USA",
+            location: "Oregon"
         },
-        // {
-        //     url: "wss://testnet2.revolutionpopuli.com:8090",
-        //     location: "Revolution Populi Testnet node 2"
-        // },
-        // {
-        //     url: "ws://testnet3.revolutionpopuli.com:8090",
-        //     location: "Revolution Populi Testnet node 3"
-        // },
+        {
+            url: "wss://testnet2.revolutionpopuli.com:8090",
+            location: "Revolution Populi Testnet node 2",
+            region: "Northern America",
+            country: "USA",
+            location: "Virginia"
+        },
+        {
+            url: "wss://testnet3.revolutionpopuli.com:8090",
+            location: "Revolution Populi Testnet node 3",
+            region: "Western Europe",
+            country: "Germany",
+            location: "Frankfurt"
+        },
         {
             url: "ws://localhost:8090",
             location: "Locally hosted"

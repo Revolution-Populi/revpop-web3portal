@@ -22,8 +22,6 @@ import utils from "common/utils";
 import SendModal from "../Modal/SendModal";
 import SettingsActions from "actions/SettingsActions";
 import SettleModal from "../Modal/SettleModal";
-import DepositModal from "../Modal/DepositModal";
-import SimpleDepositBlocktradesBridge from "../Dashboard/SimpleDepositBlocktradesBridge";
 import WithdrawModal from "../Modal/WithdrawModalNew";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import ReserveAssetModal from "../Modal/ReserveAssetModal";
@@ -311,147 +309,9 @@ class AccountPortfolioList extends React.Component {
         this.showBurnModal();
     }
 
-    _showDepositModal(asset, e) {
-        e.preventDefault();
-        this.setState({depositAsset: asset}, () => {
-            this.showDepositModal();
-        });
-    }
-
-    _showDepositWithdraw(action, asset, fiatModal, e) {
-        e.preventDefault();
-        this.setState(
-            {
-                [action === "bridge_modal"
-                    ? "bridgeAsset"
-                    : action === "deposit_modal"
-                    ? "depositAsset"
-                    : "withdrawAsset"]: asset,
-                fiatModal
-            },
-            () => {
-                if (action === "bridge_modal") {
-                    this.showBridgeModal();
-                    return true;
-                }
-
-                if (action === "deposit_modal") {
-                    this.showDepositModal();
-                    return true;
-                }
-
-                this.showWithdrawModal();
-            }
-        );
-    }
-
     _getSeparator(render) {
         return render ? <span>&nbsp;|&nbsp;</span> : null;
     }
-
-    _renderBuy = (symbol, canBuy, assetName, emptyCell, balance) => {
-        if (symbol === "RVP" && balance <= 1000000) {
-            // Precision of 5, 1 = 10^5
-            return (
-                <span>
-                    <a
-                        onClick={this._showDepositWithdraw.bind(
-                            this,
-                            "bridge_modal",
-                            assetName,
-                            false
-                        )}
-                    >
-                        <PulseIcon
-                            onIcon="dollar"
-                            offIcon="dollar-green"
-                            title="icons.dollar.buy"
-                            duration={1000}
-                            className="icon-14px"
-                        />
-                    </a>
-                </span>
-            );
-        } else {
-            let modalAction = this._showDepositWithdraw.bind(
-                this,
-                "bridge_modal",
-                assetName,
-                false
-            );
-
-            let linkElement = (
-                <span>
-                    <Icon
-                        style={{
-                            cursor: this.props.isMyAccount ? "pointer" : "help"
-                        }}
-                        name="dollar"
-                        title="icons.dollar.buy"
-                        className="icon-14px"
-                        onClick={this.props.isMyAccount ? modalAction : null}
-                    />
-                </span>
-            );
-
-            if (canBuy && this.props.isMyAccount) {
-                return linkElement;
-            } else if (canBuy && !this.props.isMyAccount) {
-                return (
-                    <Tooltip
-                        title={counterpart.translate("tooltip.login_required")}
-                    >
-                        {linkElement}
-                    </Tooltip>
-                );
-            } else {
-                return emptyCell;
-            }
-        }
-    };
-
-    _renderGatewayAction = (type, allowed, assetName, emptyCell) => {
-        let modalAction =
-            type == "deposit"
-                ? this._showDepositModal.bind(this, assetName)
-                : this._showDepositWithdraw.bind(
-                      this,
-                      "withdraw_modal_new",
-                      assetName,
-                      false
-                  );
-
-        let actionTitle =
-            type == "deposit" ? `icons.${type}.${type}` : `icons.${type}`;
-
-        let linkElement = (
-            <span>
-                <Icon
-                    style={{
-                        cursor: this.props.isMyAccount ? "pointer" : "help"
-                    }}
-                    name={type}
-                    title={actionTitle}
-                    className="icon-14x"
-                    onClick={this.props.isMyAccount ? modalAction : null}
-                />
-            </span>
-        );
-
-        if (allowed && this.props.isMyAccount) {
-            return linkElement;
-        } else if (allowed && !this.props.isMyAccount) {
-            return (
-                <Tooltip
-                    title={counterpart.translate("tooltip.login_required")}
-                >
-                    {linkElement}
-                </Tooltip>
-            );
-        } else {
-            return emptyCell;
-        }
-    };
 
     _renderBalances(balanceList, optionalAssets, visible) {
         const {
@@ -578,16 +438,11 @@ class AccountPortfolioList extends React.Component {
                 asset.get("symbol"),
                 this.props.backedCoins
             );
-            const canDeposit =
-                (backedCoin && backedCoin.depositAllowed) ||
-                asset.get("symbol") == "RVP";
+            const canDeposit = false;
 
-            const canWithdraw =
-                backedCoin &&
-                backedCoin.withdrawalAllowed &&
-                hasBalance && balanceObject.get("balance") != 0;
+            const canWithdraw = false;
 
-            const canBuy = !!this.props.bridgeCoins.get(symbol);
+            const canBuy = false;
             const assetAmount = balanceObject.get("balance");
 
             /* Sorting refs */
@@ -705,82 +560,6 @@ class AccountPortfolioList extends React.Component {
                         </td>
                     ) : null}
                     <td>{transferLink}</td>
-                    <td>
-                        {this._renderBuy(
-                            asset.get("symbol"),
-                            canBuy,
-                            assetName,
-                            emptyCell,
-                            balanceObject.get("balance")
-                        )}
-                    </td>
-                    <td>
-                        {this._renderGatewayAction(
-                            "deposit",
-                            canDeposit,
-                            assetName,
-                            emptyCell
-                        )}
-                    </td>
-                    <td>
-                        {this._renderGatewayAction(
-                            "withdraw",
-                            canWithdraw,
-                            assetName,
-                            emptyCell
-                        )}
-                    </td>
-                    <td>{directMarketLink}</td>
-                    <td>
-                        {isBitAsset && borrowLink ? (
-                            <Tooltip
-                                title={counterpart.translate("tooltip.borrow", {
-                                    asset: isAssetBitAsset
-                                        ? "bit" + symbol
-                                        : symbol
-                                })}
-                            >
-                                {borrowLink}
-                            </Tooltip>
-                        ) : isBitAsset && !borrowLink ? (
-                            <Tooltip
-                                title={counterpart.translate(
-                                    "tooltip.borrow_disabled",
-                                    {
-                                        asset: isAssetBitAsset
-                                            ? "bit" + symbol
-                                            : symbol
-                                    }
-                                )}
-                            >
-                                <AntIcon type={"question-circle"} />
-                            </Tooltip>
-                        ) : (
-                            emptyCell
-                        )}
-                    </td>
-                    <td>
-                        {isBitAsset && backingAsset ? (
-                            <Tooltip
-                                placement="bottom"
-                                title={counterpart.translate(settlePriceTitle, {
-                                    asset: isAssetBitAsset
-                                        ? "bit" + symbol
-                                        : symbol,
-                                    backingAsset: isBackingBitAsset
-                                        ? "bit" + backingAsset.get("symbol")
-                                        : backingAsset.get("symbol"),
-                                    settleDelay:
-                                        options.force_settlement_delay_sec /
-                                        3600
-                                })}
-                            >
-                                <div className="inline-block">{settleLink}</div>
-                            </Tooltip>
-                        ) : (
-                            emptyCell
-                        )}
-                    </td>
                     <td
                         style={{textAlign: "center"}}
                         className="column-hide-small"
@@ -868,22 +647,9 @@ class AccountPortfolioList extends React.Component {
                         );
 
                         const thisAssetName = asset.get("symbol").split(".");
-                        const canDeposit =
-                            !!this.props.backedCoins
-                                .get("OPEN", [])
-                                .find(
-                                    a => a.backingCoinType === thisAssetName[1]
-                                ) ||
-                            !!this.props.backedCoins
-                                .get("RUDEX", [])
-                                .find(
-                                    a => a.backingCoin === thisAssetName[1]
-                                ) ||
-                            asset.get("symbol") == "RVP";
+                        const canDeposit = false;
 
-                        const canBuy = !!this.props.bridgeCoins.get(
-                            asset.get("symbol")
-                        );
+                        const canBuy = false;
 
                         const notCore = asset.get("id") !== "1.3.0";
                         let {market} = assetUtils.parseDescription(
@@ -938,69 +704,6 @@ class AccountPortfolioList extends React.Component {
                                     </td>
                                     <td className="column-hide-small">
                                         {emptyCell}
-                                    </td>
-                                    <td>{emptyCell}</td>
-                                    <td style={{textAlign: "center"}}>
-                                        {canBuy && this.props.isMyAccount ? (
-                                            <span>
-                                                <a
-                                                    onClick={this._showDepositWithdraw.bind(
-                                                        this,
-                                                        "bridge_modal",
-                                                        a,
-                                                        false
-                                                    )}
-                                                >
-                                                    <Icon
-                                                        name="dollar"
-                                                        title="icons.dollar.buy"
-                                                        className="icon-14px"
-                                                    />
-                                                </a>
-                                            </span>
-                                        ) : (
-                                            emptyCell
-                                        )}
-                                    </td>
-                                    <td>
-                                        {canDeposit &&
-                                        this.props.isMyAccount ? (
-                                            <span>
-                                                <Icon
-                                                    style={{cursor: "pointer"}}
-                                                    name="deposit"
-                                                    title="icons.deposit.deposit"
-                                                    className="icon-14x"
-                                                    onClick={this._showDepositModal.bind(
-                                                        this,
-                                                        asset.get("symbol")
-                                                    )}
-                                                />
-                                            </span>
-                                        ) : (
-                                            emptyCell
-                                        )}
-                                    </td>
-                                    <td>{emptyCell}</td>
-                                    <td style={{textAlign: "center"}}>
-                                        {directMarketLink}
-                                    </td>
-                                    <td>
-                                        {isBitAsset ? (
-                                            <Tooltip
-                                                placement="bottom"
-                                                title={counterpart.translate(
-                                                    "tooltip.borrow",
-                                                    {asset: asset.get("symbol")}
-                                                )}
-                                            >
-                                                <div className="inline-block">
-                                                    {borrowLink}
-                                                </div>
-                                            </Tooltip>
-                                        ) : (
-                                            emptyCell
-                                        )}
                                     </td>
                                     <td>{emptyCell}</td>
                                     <td
@@ -1138,36 +841,6 @@ class AccountPortfolioList extends React.Component {
                             visible={this.state.isWithdrawModalVisible}
                             backedCoins={this.props.backedCoins}
                             initialSymbol={this.state.withdrawAsset}
-                        />
-                    )}
-
-                    {/* Deposit Modal */}
-                    {(this.state.isDepositModalVisible ||
-                        this.state.isDepositModalVisibleBefore) && (
-                        <DepositModal
-                            visible={this.state.isDepositModalVisible}
-                            showModal={this.showDepositModal}
-                            hideModal={this.hideDepositModal}
-                            asset={this.state.depositAsset}
-                            account={this.props.account.get("name")}
-                            backedCoins={this.props.backedCoins}
-                        />
-                    )}
-
-                    {/* Bridge modal */}
-                    {(this.state.isBridgeModalVisible ||
-                        this.state.isBridgeModalVisibleBefore) && (
-                        <SimpleDepositBlocktradesBridge
-                            visible={this.state.isBridgeModalVisible}
-                            showModal={this.showBridgeModal}
-                            hideModal={this.hideBridgeModal}
-                            action="deposit"
-                            account={this.props.account.get("name")}
-                            sender={this.props.account.get("id")}
-                            asset={this.state.bridgeAsset}
-                            balances={this.props.balances}
-                            bridges={currentBridges}
-                            isDown={this.props.gatewayDown.get("TRADE")}
                         />
                     )}
 

@@ -804,6 +804,7 @@
                 "max_market_fee": "Max market fee",
                 "stealth_supply": "Stealth supply"
             },
+            "testnet_warning": "The RVP token used in this Test Net is purely for test purposes, and is not the token that will be used in Main Net.",
             "title": "Asset",
             "whitelist": {
                 "blacklist_authorities": "Blacklist authorities",

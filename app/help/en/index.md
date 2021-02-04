@@ -3,6 +3,9 @@
 This help section gives a brief overview and describes the most basic concepts
 of this application.
 
+The RVP token used in this Test Net is purely for test purposes,
+and is not the token that will be used in Main Net.
+
 ## Introduction 
  * [Wallet](introduction/wallets.md)
  * [Backups](introduction/backups.md)

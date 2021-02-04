@@ -1895,6 +1895,15 @@ class Asset extends React.Component {
                             {this.renderAboutBox(asset, this.props.asset)}
                         </div>
 
+                        <div className="grid-block vertical">
+                            <div className="text-center explore-testnet-warning">
+                                <Translate
+                                    component="span"
+                                    content="explorer.asset.testnet_warning"
+                                />
+                            </div>
+                        </div>
+
                         <Tabs
                             setting="assetDataTabs"
                             className="grid-block vertical"

@@ -206,6 +206,11 @@ module.exports = function(env) {
                     ),
                     to: path.join(outputPath, "outdated_browser.css"),
                     toType: "file"
+                },
+                {
+                    from: path.join(root_dir, "static"),
+                    to: path.join(outputPath),
+                    flatten: true
                 }
             ],
             {}

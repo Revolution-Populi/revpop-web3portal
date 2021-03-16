@@ -365,6 +365,19 @@ class CreateAccount extends React.Component {
 
         return (
             <div className="confirm-checks">
+                <p>
+                    <a href="/privacy-notice.html" target="_blank">
+                        <Translate content="wallet.privacy_notice" />
+                    </a>
+                    <br />
+                    <a
+                        href="https://revolutionpopuli.com/terms-and-conditions/"
+                        target="_blank"
+                    >
+                        <Translate content="wallet.terms_of_use" />
+                    </a>
+                </p>
+
                 <h4
                     style={{
                         fontWeight: "normal",

@@ -325,6 +325,12 @@ class CreateAccount extends React.Component {
                     </button>
                 )}
 
+                <div style={{paddingTop: 40}}>
+                    <p style={{marginBottom: 0}}>
+                        <Translate unsafe content="account.privacy_agreement" />
+                    </p>
+                </div>
+
                 {/* Backup restore option */}
                 <div style={{paddingTop: 40}}>
                     <label>

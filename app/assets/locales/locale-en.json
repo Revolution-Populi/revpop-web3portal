@@ -169,6 +169,7 @@
         },
         "permissions": "Permissions",
         "please_create_account": "Please create an account",
+        "privacy_agreement": "By creating an account, you agree that you have read and accept the <a href='https://revolutionpopuli.com/terms-and-conditions/' target='blank'>Terms of Use</a> and <a href='/privacy-notice.html' target='blank'>Testnet Privacy Notice</a>.",
         "polo_scam": "This account is not the real Poloniex account, please send to this account: poloniexwallet.",
         "portfolio": "Portfolio",
         "propose_from": "Propose From",

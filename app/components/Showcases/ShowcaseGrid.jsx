@@ -31,14 +31,14 @@ class ShowcaseGrid extends Component {
         let thiz = this;
         const tiles = [
             {
-                title: "showcases.paper_wallet.title",
+                title: "showcases.personal_data.title",
                 target: () => {
                     if (hasAccount) {
-                        createPaperWalletAsPDF(this.state.currentAccount);
+                        thiz.props.history.push("/spotlight/personal");
                     }
                 },
-                description: "showcases.paper_wallet.description",
-                icon: "wallet", // see Icons app/compoentns/Icon/Icon
+                description: "showcases.personal_data.description",
+                icon: "user", // see Icons app/compoentns/Icon/Icon
                 disabled: hasAccount
                     ? false
                     : "Please login to use this functionality"
@@ -102,20 +102,17 @@ class ShowcaseGrid extends Component {
     }
 }
 
-ShowcaseGrid = connect(
-    ShowcaseGrid,
-    {
-        listenTo() {
-            return [AccountStore];
-        },
-        getProps() {
-            return {
-                currentAccount:
-                    AccountStore.getState().currentAccount ||
-                    AccountStore.getState().passwordAccount
-            };
-        }
+ShowcaseGrid = connect(ShowcaseGrid, {
+    listenTo() {
+        return [AccountStore];
+    },
+    getProps() {
+        return {
+            currentAccount:
+                AccountStore.getState().currentAccount ||
+                AccountStore.getState().passwordAccount
+        };
     }
-);
+});
 
 export default ShowcaseGrid;

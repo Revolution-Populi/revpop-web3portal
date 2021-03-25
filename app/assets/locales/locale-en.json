@@ -113,6 +113,7 @@
             "restore_link": "Restore your existing account"
         },
         "optional_data": "Specify optional personal information",
+        "optional_data_notice": "You may provide FAKE information here. It's not verified in any way and is used for demonstration purposes only.",
         "options": {
             "memo_key": "Memo Key",
             "num_committee": "Desired Committee Members",
@@ -1873,6 +1874,46 @@
             "description": "Create a PDF with your account's keys printed (plain text and barcode). If the wallet is unlocked, the private keys are added as well.",
             "title": "Paper Wallet"
         },
+        "personal_data": {
+            "description": "Manage your personal data, grant permission to view some of your personal data to others. View personal data of other users by their permission.",
+            "form": {
+                "email": "Email",
+                "first_name": "First Name",
+                "full_name": "Full name",
+                "last_name": "Last Name",
+                "phone": "Phone",
+                "photo": "Photo"
+            },
+            "my": {
+                "account": "My account",
+                "delete": "Delete data",
+                "load": "Load data",
+                "save": "Save data",
+                "title": "Manage my data"
+            },
+            "share": {
+                "account": "Share with account",
+                "delete": "Remove permission",
+                "load_data": "To start sharing, load your personal data on the form above and select the account you want to share with.",
+                "same_user": "You cannot share data with yourself.",
+                "save": "Grant permission",
+                "select_parts": "Select personal data to share",
+                "title": "Share my data"
+            },
+            "title": "Personal Data",
+            "view": {
+                "account": "View account",
+                "invalid": "The data provided doesn't match the original user data.",
+                "load": "View data",
+                "load_data": "To view someone else's data, select your account and another user account.",
+                "load_error": "<error>",
+                "loading": "<loading...>",
+                "no_data": "This account has not been sharing information with you.",
+                "missing_part": "<not available>",
+                "title": "Viewing other users' data",
+                "valid": "The data provided matches the original user data."
+            }
+        },
         "timed_transfer": {
             "description": "Initiate a transfer that will execute at a specified time.",
             "title": "Timed transfer"
@@ -2094,9 +2135,15 @@
             "bid_collateral": "Collateral bid",
             "blind_transfer": "Blinded transfer",
             "call_order_update": "Update margin",
+            "commit_create": "Commit",
             "committee_member_create": "Create committee member",
             "committee_member_update": "Update committee member",
             "committee_member_update_global_parameters": "Global parameters update",
+            "content_card_create": "Create content card",
+            "content_card_update": "Update content card",
+            "content_card_remove": "Remove content card",
+            "content_vote_create": "Create content vote",
+            "content_vote_remove": "Remove content vote",
             "custom": "Custom",
             "execute_bid": "Execute bid",
             "fba_distribute": "Fee backed asset distribution",
@@ -2104,14 +2151,20 @@
             "limit_order_cancel": "Cancel order",
             "limit_order_create": "Place order",
             "override_transfer": "Override transfer",
+            "permission_create": "Create permission",
+            "permission_remove": "Remove permission",
+            "personal_data_create": "Create personal data",
+            "personal_data_remove": "Remove personal data",
             "proposal_create": "Create proposal",
             "proposal_delete": "Delete proposal",
             "proposal_update": "Update proposal",
+            "reveal_create": "Reveal",
             "transfer": "Transfer",
             "transfer_from_blind": "Transfer from blinded account",
             "transfer_to_blind": "Transfer to blinded account",
             "vesting_balance_create": "Create vesting balance",
             "vesting_balance_withdraw": "Withdraw vesting balance",
+            "vote_counter_update": "Update content vote counter",
             "withdraw_permission_claim": "Claim withdrawal permission",
             "withdraw_permission_create": "Create withdrawal permission",
             "withdraw_permission_delete": "Delete withdrawal permission",

@@ -111,11 +111,15 @@ class AccountActions {
     updatePersonalData(account_name, email, name, surname) {
         try {
             return dispatch => {
-                return ApplicationApi.updatePersonalData(account_name, {
-                    email: email,
-                    first_name: name,
-                    last_name: surname
-                }).then(result => {
+                return ApplicationApi.updatePersonalData(
+                    account_name,
+                    account_name,
+                    {
+                        email: email,
+                        first_name: name,
+                        last_name: surname
+                    }
+                ).then(result => {
                     console.log("updatePersonalData result: ", result);
 
                     dispatch(result);

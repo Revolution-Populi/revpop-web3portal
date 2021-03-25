@@ -1,8 +1,10 @@
 import WalletUnlockActions from "actions/WalletUnlockActions";
 
+import {storageAPIs} from "./apiConfig";
 import WalletDb from "stores/WalletDb";
 import {
     Aes,
+    PublicKey,
     ChainValidation,
     TransactionBuilder,
     TransactionHelper,
@@ -10,8 +12,11 @@ import {
     ChainStore,
     CloudStorage,
     PersonalData,
-    S3Adapter
+    IPFSAdapter,
+    S3Adapter,
+    ops
 } from "@revolutionpopuli/revpopjs";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import counterpart from "counterpart";
 import {Notification} from "bitshares-ui-style-guide";
 
@@ -790,42 +795,234 @@ const ApplicationApi = {
         }
     },
 
-    async updatePersonalData(account_name, props) {
-        const account = await this._ensureAccount(account_name);
-        const keypair = this._get_active_keys(account, true);
-        const pd = new PersonalData();
-        pd.assign(props);
+    async loadPersonalData(subject_name, operator_name) {
+        const subject_account = await this._ensureAccount(subject_name);
+        const operator_account = await this._ensureAccount(operator_name);
+        let db = Apis.instance().db_api();
+        const bdata = await db.exec("get_last_personal_data", [
+            subject_account.get("id"),
+            operator_account.get("id")
+        ]);
+        if (!bdata) {
+            return {};
+        }
+
+        // account must be unlocked
+        await WalletUnlockActions.unlock();
+
+        const subject_keypair = this._get_active_keys(subject_account, false);
+        const operator_keypair = this._get_active_keys(operator_account, true);
+        const cs_client = this._getStorageClientIPFS();
+        let cdata;
+        cs_client.open();
+        try {
+            const cs = new CloudStorage(cs_client);
+            cdata = await cs.crypto_load_object(
+                bdata.url,
+                subject_keypair.public_key,
+                operator_keypair.private_key
+            );
+        } catch (e) {
+            console.log(
+                `loadPersonalData(${subject_name}, ${operator_name}) failed: ${e}`
+            );
+            return {};
+        } finally {
+            cs_client.close();
+        }
+
+        return {
+            blockchain: bdata,
+            cloud: cdata,
+            data: PersonalData.fromAllParts(cdata)
+        };
+    },
+
+    async searchBlockchainPersonalData(subject_name, operator_name, root_hash) {
+        const subject_account = await this._ensureAccount(subject_name);
+        const operator_account = await this._ensureAccount(operator_name);
+        let db = Apis.instance().db_api();
+        const bdata = await db.exec("get_personal_data", [
+            subject_account.get("id"),
+            operator_account.get("id")
+        ]);
+        if (!bdata) {
+            return null;
+        }
+
+        return bdata.find(item => item.hash === root_hash) || null;
+    },
+
+    async updatePersonalData(subject_name, operator_name, props) {
+        const subject_account = await this._ensureAccount(subject_name);
+        const operator_account = await this._ensureAccount(operator_name);
+
+        // account must be unlocked
+        await WalletUnlockActions.unlock();
+
+        const subject_keypair = this._get_active_keys(subject_account, true);
+        const operator_keypair = this._get_active_keys(operator_account, false);
+        let pd;
+        if (props instanceof PersonalData) {
+            pd = props;
+        } else {
+            pd = new PersonalData();
+            pd.assign(props);
+        }
+
         const pd_parts = pd.getAllParts();
         const root_hash = pd.getRootHash();
 
-        const cs_client = this._getStorageClient();
+        let pd_url;
+        const cs_client = this._getStorageClientIPFS();
         cs_client.open();
-        const cs = new CloudStorage(cs_client);
-        const pd_url = await cs.crypto_save_object(
-            pd_parts,
-            keypair.private_key,
-            keypair.public_key
-        );
-        cs_client.close();
+        try {
+            const cs = new CloudStorage(cs_client);
+            pd_url = await cs.crypto_save_object(
+                pd_parts,
+                subject_keypair.private_key,
+                operator_keypair.public_key
+            );
+        } finally {
+            cs_client.close();
+        }
 
         let txb = new TransactionBuilder();
+
+        // remove info about already shared personal data
+        if (subject_name != operator_name) {
+            const bdata = await Apis.instance()
+                .db_api()
+                .exec("get_last_personal_data", [
+                    subject_account.get("id"),
+                    operator_account.get("id")
+                ]);
+            if (bdata) {
+                txb.add_type_operation("personal_data_remove", {
+                    fee: {
+                        amount: 0,
+                        asset_id: 0
+                    },
+                    subject_account: subject_account.get("id"),
+                    operator_account: operator_account.get("id"),
+                    hash: bdata.hash
+                });
+            }
+        }
+
         txb.add_type_operation("personal_data_create", {
             fee: {
                 amount: 0,
                 asset_id: 0
             },
-            subject_account: account.get("id"),
-            operator_account: account.get("id"),
+            subject_account: subject_account.get("id"),
+            operator_account: operator_account.get("id"),
             url: pd_url,
             hash: root_hash
         });
         await WalletDb.process_transaction(txb, null, true);
+        // const serialized_tx = await WalletDb.process_transaction(txb, null, false);
+        // const tr_object = ops.signed_transaction.fromObject(serialized_tx);
+        // await tr_object.broadcast();
+
         if (!txb.tr_buffer) {
             throw "Something went finalization the transaction, this should not happen";
         }
     },
 
-    _getStorageClient() {
+    async deletePersonalData(subject_name, operator_name) {
+        const subject_account = await this._ensureAccount(subject_name);
+        const operator_account = await this._ensureAccount(operator_name);
+        let db = Apis.instance().db_api();
+        const bdata = await db.exec("get_last_personal_data", [
+            subject_account.get("id"),
+            operator_account.get("id")
+        ]);
+        if (!bdata) {
+            return;
+        }
+
+        let txb = new TransactionBuilder();
+        txb.add_type_operation("personal_data_remove", {
+            fee: {
+                amount: 0,
+                asset_id: 0
+            },
+            subject_account: subject_account.get("id"),
+            operator_account: operator_account.get("id"),
+            hash: bdata.hash
+        });
+        await WalletDb.process_transaction(txb, null, true);
+
+        if (!txb.tr_buffer) {
+            throw "Something went finalization the transaction, this should not happen";
+        }
+    },
+
+    async loadContent(account_name, meta) {
+        // account must be unlocked
+        await WalletUnlockActions.unlock();
+
+        const account = await this._ensureAccount(account_name);
+        const keypair = this._get_active_keys(account, true);
+
+        const cs_client = this._getStorageClientIPFS();
+        let cdata;
+        cs_client.open();
+        try {
+            const cs = new CloudStorage(cs_client);
+            cdata = await cs.crypto_load_buffer(
+                meta.url,
+                keypair.public_key,
+                keypair.private_key
+            );
+            const pd = new PersonalData();
+            const computedHash = pd._computeSha256(cdata);
+        } catch (e) {
+            console.log(`loadContent(${account_name}, ${meta}) failed: ${e}`);
+            return null;
+        } finally {
+            cs_client.close();
+        }
+
+        return cdata;
+    },
+
+    async saveContent(subject_name, operator_name, buffer) {
+        // account must be unlocked
+        await WalletUnlockActions.unlock();
+        const subject_account = await this._ensureAccount(subject_name);
+        const operator_account = await this._ensureAccount(operator_name);
+        const subject_keypair = this._get_active_keys(subject_account, true);
+        const operator_keypair = this._get_active_keys(operator_account, false);
+
+        let url;
+        const cs_client = this._getStorageClientIPFS();
+        cs_client.open();
+        try {
+            const cs = new CloudStorage(cs_client);
+            url = await cs.crypto_save_buffer(
+                buffer,
+                subject_keypair.private_key,
+                operator_keypair.public_key
+            );
+        } catch (e) {
+            console.log(
+                `saveContent(${subject_name}, ${operator_name}, buffer) failed: ${e}`
+            );
+            return {};
+        } finally {
+            cs_client.close();
+        }
+
+        return url;
+    },
+
+    _getStorageClientIPFS() {
+        return new IPFSAdapter(storageAPIs.API_NODE_LIST[0].connection);
+    },
+
+    _getStorageClientS3() {
         return new S3Adapter({
             credentials: {
                 accessKeyId: "65f6c1bc7db0539856cec919ca2640bc",

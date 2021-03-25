@@ -319,6 +319,9 @@ class CreateAccount extends React.Component {
 
                 <div>
                     <Translate content="account.optional_data" />
+                    <p style={{fontSize: "14px", margin: "10px 0"}}>
+                        <Translate content="account.optional_data_notice" />
+                    </p>
                 </div>
 
                 <div

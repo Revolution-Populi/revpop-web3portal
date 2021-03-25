@@ -83,6 +83,34 @@ export const xbtsxAPIs = {
     COINS_LIST: "/coin"
 };
 
+// Currently IPFS node doesn't make blockchain related checks.
+// These checks are simulated by the Basic Authentication.
+// In the future, IPFS node will look into the blockchain to restrict unwanted uploads.
+export const storageAPIs = {
+    API_NODE_LIST: [
+        {
+            connection: {
+                host: "ipfstest.revolutionpopuli.com",
+                port: 443,
+                protocol: "https",
+                headers: {
+                    authorization:
+                        "Basic Z0pUUndOYkw5VWpTaHB2dDo2WmpBQmFzVVk5M0hxQks4"
+                }
+            }
+        }
+        // {
+        //     connection: 'http://localhost:5001'
+        // }
+    ],
+    // Not used now
+    GATEWAY_NODE_LIST: [
+        {
+            connection: "https://ipfstest.revolutionpopuli.com:8080/"
+        }
+    ]
+};
+
 export const nodeRegions = [
     // region of the node follows roughly https://en.wikipedia.org/wiki/Subregion#/media/File:United_Nations_geographical_subregions.png
     "Northern Europe",

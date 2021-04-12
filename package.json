@@ -196,7 +196,7 @@
         "react-transition-group": "^1.2.0",
         "react-translate-component": "^0.15.1",
         "@revolutionpopuli/revpop-report": "^0.1.0",
-        "@revolutionpopuli/revpopjs": "^0.4.5",
+        "@revolutionpopuli/revpopjs": "^0.4.7",
         "@revolutionpopuli/revpopjs-ws": "^0.4.5",
         "steem-js-api": "^0.7.1",
         "string-similarity": "^2.0.0",

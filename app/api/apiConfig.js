@@ -171,5 +171,5 @@ export const settingsAPIs = {
         }
     ],
     DEFAULT_FAUCET: getFaucet().url,
-    TESTNET_FAUCET: "https://testnet.revolutionpopuli.com:8443"
+    TESTNET_FAUCET: "https://testnet.revolutionpopuli.com"
 };

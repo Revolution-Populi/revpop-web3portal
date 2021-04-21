@@ -27,7 +27,7 @@ export function getWalletURL() {
  */
 export function getFaucet() {
     return {
-        url: "https://testnet.revolutionpopuli.com:8443/", // 2017-12-infrastructure worker proposal
+        url: "https://testnet.revolutionpopuli.com", // 2017-12-infrastructure worker proposal
         // url: "http://localhost:3000/",
         show: false,
         editable: false

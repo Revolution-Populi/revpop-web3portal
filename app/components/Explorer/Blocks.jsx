@@ -342,6 +342,7 @@ class Blocks extends React.Component {
                     </div>
                     <div className="grid-block text-center small-6 medium-3">
                         <div className="grid-content no-overflow">
+                            {/*
                             <span className="txtlabel">
                                 <Translate
                                     component="span"
@@ -349,6 +350,7 @@ class Blocks extends React.Component {
                                 />
                             </span>
                             <h2>{utils.format_number(trxPerSec, 2)}</h2>
+                            */}
                         </div>
                     </div>
                     <div className="grid-block text-center small-6 medium-3">
@@ -399,6 +401,7 @@ class Blocks extends React.Component {
 
                     <div className="grid-block text-center small-6 medium-3">
                         <div className="grid-content no-overflow clear-fix">
+                            {/*
                             <span className="txtlabel">
                                 <Translate
                                     component="span"
@@ -411,6 +414,7 @@ class Blocks extends React.Component {
                                     2
                                 )}
                             </h2>
+                            */}
                         </div>
                     </div>
                     <div className="grid-block text-center small-6 medium-3">

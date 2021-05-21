@@ -355,6 +355,7 @@ class Blocks extends React.Component {
                     </div>
                     <div className="grid-block text-center small-6 medium-3">
                         <div className="grid-content no-overflow">
+                            {/*
                             <span className="txtlabel">
                                 <Translate
                                     component="span"
@@ -362,6 +363,7 @@ class Blocks extends React.Component {
                                 />
                             </span>
                             <h2>{utils.format_number(avgTime / 2, 2)}s</h2>
+                            */}
                         </div>
                     </div>
                 </div>

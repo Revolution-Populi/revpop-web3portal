@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+.vscode
 */node_modules
 */npm-debug.log
 *.map
@@ -24,5 +25,3 @@ yarn.lock
 charting_library/*
 !charting_library/scss
 !charting_library/charting_library.17.025.02b61a1c.zip.md5
-!charting_library/package-charting-library.js
-!charting_library/install-charting-library.js

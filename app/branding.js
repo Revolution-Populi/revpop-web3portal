@@ -24,7 +24,7 @@ function _isTestnet() {
  * @returns {string}
  */
 export function getWalletName() {
-    return "BitShares";
+    return "RevPop";
 }
 
 /**
@@ -32,7 +32,7 @@ export function getWalletName() {
  * @returns {string}
  */
 export function getWalletURL() {
-    return "https://wallet.bitshares.org";
+    return "http://localhost:8080";
 }
 
 /**
@@ -42,7 +42,7 @@ export function getWalletURL() {
  */
 export function getFaucet() {
     return {
-        url: "https://faucet.bitshares.eu/onboarding", // 2017-12-infrastructure worker proposal
+        url: "http://localhost:3000", // 2017-12-infrastructure worker proposal
         show: true,
         editable: false,
         referrer: "onboarding.bitshares.foundation"
@@ -52,7 +52,7 @@ export function getFaucet() {
 export function getTestFaucet() {
     // fixme should be solved by introducing _isTestnet into getFaucet and fixing the mess in the Settings when fetching faucet address
     return {
-        url: "https://faucet.testnet.bitshares.eu", // operated as a contribution by BitShares EU
+        url: "http://localhost:3000", // operated as a contribution by BitShares EU
         show: true,
         editable: false
     };
@@ -91,14 +91,14 @@ export function getDefaultLogin() {
  */
 export function getUnits() {
     if (_isTestnet()) {
-        return ["TEST"];
+        return ["RVP"];
     }
     return ["BTS", "USD", "CNY", "BTC", "EUR", "GBP"];
 }
 
 export function getDefaultMarket() {
     if (_isTestnet()) {
-        return "USD_TEST";
+        return "WETH_RVP";
     }
     return "BTS_CNY";
 }
@@ -110,7 +110,7 @@ export function getDefaultMarket() {
  */
 export function getMyMarketsBases() {
     if (_isTestnet()) {
-        return ["TEST"];
+        return ["RVP"];
     }
     return ["BTS", "BTC", "CNY", "USD", "USDT", "ETH"];
 }
@@ -122,7 +122,7 @@ export function getMyMarketsBases() {
  */
 export function getMyMarketsQuotes() {
     if (_isTestnet()) {
-        return ["TEST"];
+        return ["RVP"];
     }
     let tokens = {
         nativeTokens: [
@@ -222,7 +222,7 @@ export function getMyMarketsQuotes() {
  */
 export function getFeaturedMarkets(quotes = []) {
     if (_isTestnet()) {
-        return [["USD", "TEST"]];
+        return [["WETH", "RVP"]];
     }
     return [
         ["USD", "BTS"],

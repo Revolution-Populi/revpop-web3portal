@@ -9,7 +9,7 @@ import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {Form, Select, Button, Input} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 
-const optionalApis = {enableCrypto: true, enableOrders: true};
+const optionalApis = {enableCrypto: true, enableOrders: false};
 class InitError extends React.Component {
     constructor(props) {
         super(props);

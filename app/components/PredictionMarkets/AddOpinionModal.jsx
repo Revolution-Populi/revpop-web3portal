@@ -7,7 +7,7 @@ import counterpart from "counterpart";
 import {Asset, Price, LimitOrderCreate} from "common/MarketClasses";
 import MarketsActions from "actions/MarketsActions";
 import {Notification, Radio} from "bitshares-ui-style-guide";
-import {ChainStore, FetchChain} from "bitsharesjs";
+import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
 import ExchangeInput from "components/Exchange/ExchangeInput";
 import ChainTypes from "../Utility/ChainTypes";
 import utils from "common/utils";

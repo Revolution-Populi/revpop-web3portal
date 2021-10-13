@@ -1,6 +1,9 @@
 import {saveAs} from "file-saver";
-import {ChainTypes as grapheneChainTypes, FetchChain} from "bitsharesjs";
-import report from "bitshares-report";
+import {
+    ChainTypes as grapheneChainTypes,
+    FetchChain
+} from "@revolutionpopuli/revpopjs";
+import report from "@revolutionpopuli/revpop-report";
 const {operations} = grapheneChainTypes;
 const ops = Object.keys(operations);
 

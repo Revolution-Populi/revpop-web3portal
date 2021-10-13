@@ -1,4 +1,4 @@
-import {key} from "bitsharesjs";
+import {key} from "@revolutionpopuli/revpopjs";
 
 onmessage = function(event) {
     try {

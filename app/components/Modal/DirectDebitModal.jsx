@@ -1,6 +1,6 @@
 import React from "react";
 import Translate from "react-translate-component";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import AmountSelector from "../Utility/AmountSelector";
 import PeriodSelector from "../Utility/PeriodSelector";
 import FeeAssetSelector from "components/Utility/FeeAssetSelector";

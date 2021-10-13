@@ -424,9 +424,9 @@ module.exports = function(env) {
                     root_dir,
                     "node_modules/moment/moment.js"
                 ),
-                bitsharesjs$: path.resolve(
+                "@revolutionpopuli/revpopjs$": path.resolve(
                     root_dir,
-                    "node_modules/bitsharesjs/"
+                    "node_modules/@revolutionpopuli/revpopjs/"
                 ),
                 "bitshares-ui-style-guide$": path.resolve(
                     root_dir,

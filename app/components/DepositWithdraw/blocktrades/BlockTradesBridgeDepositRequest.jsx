@@ -36,7 +36,7 @@ const REDIRECT_URI = POST_LOGOUT_REDIRECT_URI;
 const SCOPE =
     "offline openid email profile create_new_mappings view_client_transaction_history view_price_estimates";
 import SettingsStore from "stores/SettingsStore";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 
 class ButtonConversion extends React.Component {
     static propTypes = {
@@ -75,8 +75,8 @@ class ButtonConversion extends React.Component {
         let feeID = balances.has(defaultFeeAssetId)
             ? defaultFeeAssetId
             : balance
-            ? balance.get("asset_type")
-            : "1.3.0";
+                ? balance.get("asset_type")
+                : "1.3.0";
         return feeID;
     }
 

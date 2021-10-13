@@ -10,7 +10,7 @@ import AccountActions from "actions/AccountActions";
 import {validateAddress, WithdrawAddresses} from "common/gdexMethods";
 import {connect} from "alt-react";
 import SettingsStore from "stores/SettingsStore";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {checkFeeStatusAsync, checkBalance} from "common/trxHelper";
 import {Asset, Price} from "common/MarketClasses";
 import {debounce} from "lodash-es";

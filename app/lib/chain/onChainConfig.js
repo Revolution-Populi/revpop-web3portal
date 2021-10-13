@@ -1,4 +1,4 @@
-import {FetchChain} from "bitsharesjs";
+import {FetchChain} from "@revolutionpopuli/revpopjs";
 import {getConfigurationAsset} from "branding";
 import asset_utils from "common/asset_utils";
 

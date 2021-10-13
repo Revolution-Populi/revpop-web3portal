@@ -9,7 +9,7 @@ import {
     ChainTypes as grapheneChainTypes,
     FetchChain,
     ChainStore
-} from "bitsharesjs";
+} from "@revolutionpopuli/revpopjs";
 //import ps from "perfect-scrollbar";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";

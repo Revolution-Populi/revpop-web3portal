@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import ApplicationApi from "api/ApplicationApi";
 import WalletApi from "api/WalletApi";
 import DebugApi from "api/DebugApi";
@@ -45,7 +45,8 @@ export default class Console extends Component {
                     ref="console_form"
                     onSubmit={this.on_cmd_submit.bind(this)}
                 >
-                    <div>{this.state.cmd_console}</div>&nbsp;
+                    <div>{this.state.cmd_console}</div>
+                    &nbsp;
                     <textarea
                         id="console_input"
                         ref="console_input"
@@ -154,7 +155,8 @@ export default class Console extends Component {
             <div>
                 <br />
                 <div className="console_result monospace">
-                    &gt;&nbsp;{this.state.cmd}
+                    &gt;&nbsp;
+                    {this.state.cmd}
                 </div>
             </div>
         );

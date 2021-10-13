@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import counterpart from "counterpart";
 import LinkToAccountById from "../Utility/LinkToAccountById";
 import {Button, Icon, Tooltip} from "bitshares-ui-style-guide";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import PaginatedList from "components/Utility/PaginatedList";
 import ChainTypes from "../Utility/ChainTypes";
 import FormattedAsset from "../Utility/FormattedAsset";

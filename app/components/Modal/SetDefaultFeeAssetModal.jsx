@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import counterpart from "counterpart";
 import Translate from "react-translate-component";
 import SettingsActions from "actions/SettingsActions";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {connect} from "alt-react";
 import {Link} from "react-router-dom";
 import {Table, Button, Radio, Modal, Checkbox} from "bitshares-ui-style-guide";

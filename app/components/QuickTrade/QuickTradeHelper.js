@@ -1,5 +1,5 @@
 import utils from "common/utils";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {checkFeeStatusAsync} from "common/trxHelper";
 
 // Returns a list of dicts with keys id, seller amount and price and respective values

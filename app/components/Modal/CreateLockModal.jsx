@@ -2,7 +2,7 @@ import React from "react";
 import BalanceComponent from "../Utility/BalanceComponent";
 import counterpart from "counterpart";
 import AmountSelector from "../Utility/AmountSelectorStyleGuide";
-import {ChainStore, ChainTypes} from "bitsharesjs";
+import {ChainStore, ChainTypes} from "@revolutionpopuli/revpopjs";
 import {Asset} from "common/MarketClasses";
 import AssetWrapper from "../Utility/AssetWrapper";
 import {

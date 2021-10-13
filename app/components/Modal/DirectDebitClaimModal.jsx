@@ -1,6 +1,6 @@
 import React from "react";
 import Translate from "react-translate-component";
-import {ChainStore, FetchChain} from "bitsharesjs";
+import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
 import AmountSelector from "../Utility/AmountSelectorStyleGuide";
 import debounceRender from "react-debounce-render";
 import AccountStore from "stores/AccountStore";

@@ -1,5 +1,5 @@
-import {Apis} from "bitsharesjs-ws";
-import {ChainStore, FetchChain} from "bitsharesjs";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
+import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
 import {
     Tabs,
     Collapse,

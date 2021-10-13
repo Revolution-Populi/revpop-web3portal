@@ -13,7 +13,7 @@ import {citadelAPIs} from "api/apiConfig";
 import {debounce} from "lodash-es";
 import {checkFeeStatusAsync, checkBalance} from "common/trxHelper";
 import {Asset} from "common/MarketClasses";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "@revolutionpopuli/revpopjs/es";
 import {getConversionJson} from "common/gatewayMethods";
 import PropTypes from "prop-types";
 import {Modal} from "bitshares-ui-style-guide";

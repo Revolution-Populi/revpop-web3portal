@@ -3,7 +3,11 @@ import FormattedAsset from "../Utility/FormattedAsset";
 import AccountActions from "actions/AccountActions";
 import AccountSelector from "../Account/AccountSelector";
 import BalanceComponent from "../Utility/BalanceComponent";
-import {ChainStore, FetchChain, FetchChainObjects} from "bitsharesjs/es";
+import {
+    ChainStore,
+    FetchChain,
+    FetchChainObjects
+} from "@revolutionpopuli/revpopjs/es";
 import NotificationActions from "actions/NotificationActions";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import {decompress, compress} from "lzma";

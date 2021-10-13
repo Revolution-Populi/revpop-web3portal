@@ -11,7 +11,7 @@ import {
     ChainValidation,
     FetchChain,
     FetchChainObjects
-} from "bitsharesjs";
+} from "@revolutionpopuli/revpopjs";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import counterpart from "counterpart";

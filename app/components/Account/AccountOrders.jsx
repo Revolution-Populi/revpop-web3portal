@@ -1,7 +1,7 @@
 import React from "react";
 import counterpart from "counterpart";
 import MarketsActions from "actions/MarketsActions";
-import {ChainStore, FetchChain} from "bitsharesjs";
+import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
 import {LimitOrder, SettleOrder, FeedPrice} from "common/MarketClasses";
 import {connect} from "alt-react";
 import SettingsStore from "stores/SettingsStore";

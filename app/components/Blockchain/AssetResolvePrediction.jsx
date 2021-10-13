@@ -6,7 +6,7 @@ import AssetActions from "actions/AssetActions";
 import counterpart from "counterpart";
 import {Radio, Tooltip, Button, Form} from "bitshares-ui-style-guide";
 import AmountSelector from "../Utility/AmountSelectorStyleGuide";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {Asset, Price} from "../../lib/common/MarketClasses";
 import assetUtils from "../../lib/common/asset_utils";
 

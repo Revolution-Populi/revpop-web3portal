@@ -6,7 +6,7 @@ import AssetStore from "stores/AssetStore";
 import PredictionMarkets from "./PredictionMarkets";
 import MarketsStore from "../../stores/MarketsStore";
 import {getPredictionMarketIssuers} from "../../lib/chain/onChainConfig";
-import {ChainStore, FetchChainObjects} from "bitsharesjs";
+import {ChainStore, FetchChainObjects} from "@revolutionpopuli/revpopjs";
 import assetUtils from "common/asset_utils";
 
 const _convertPredictionMarketForUI = asset => {

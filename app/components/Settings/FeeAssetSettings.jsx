@@ -2,7 +2,7 @@ import React from "react";
 import counterpart from "counterpart";
 import {connect} from "alt-react";
 import SettingsStore from "../../stores/SettingsStore";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {Button} from "bitshares-ui-style-guide";
 import Translate from "react-translate-component";
 import AssetName from "../Utility/AssetName";

@@ -2,7 +2,7 @@ import {
     SerializerValidation,
     TransactionBuilder,
     TransactionHelper
-} from "bitsharesjs";
+} from "@revolutionpopuli/revpopjs";
 import ApplicationApi from "./ApplicationApi";
 
 const WalletApi = {

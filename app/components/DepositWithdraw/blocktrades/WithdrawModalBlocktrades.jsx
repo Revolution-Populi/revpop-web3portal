@@ -12,7 +12,7 @@ import {
     WithdrawAddresses,
     getMappingData
 } from "common/gatewayMethods";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {checkFeeStatusAsync, checkBalance} from "common/trxHelper";
 import {debounce} from "lodash-es";
 import {Price, Asset} from "common/MarketClasses";
@@ -276,7 +276,8 @@ class WithdrawModalBlocktrades extends React.Component {
     onSubmit() {
         if (
             !this.state.withdraw_address_check_in_progress &&
-            this.state.withdraw_address && this.state.withdraw_address.length &&
+            this.state.withdraw_address &&
+            this.state.withdraw_address.length &&
             this.state.withdraw_amount !== null
         ) {
             if (!this.state.withdraw_address_is_valid) {
@@ -613,7 +614,8 @@ class WithdrawModalBlocktrades extends React.Component {
 
         if (
             !this.state.withdraw_address_check_in_progress &&
-            this.state.withdraw_address && this.state.withdraw_address.length
+            this.state.withdraw_address &&
+            this.state.withdraw_address.length
         ) {
             if (!this.state.withdraw_address_is_valid) {
                 invalid_address_message = (
@@ -876,13 +878,18 @@ class WithdrawModalBlocktrades extends React.Component {
 
 WithdrawModalBlocktrades = BindToChainState(WithdrawModalBlocktrades);
 
-export default connect(WithdrawModalBlocktrades, {
-    listenTo() {
-        return [SettingsStore];
-    },
-    getProps(props) {
-        return {
-            fee_asset_symbol: SettingsStore.getState().settings.get("fee_asset")
-        };
+export default connect(
+    WithdrawModalBlocktrades,
+    {
+        listenTo() {
+            return [SettingsStore];
+        },
+        getProps(props) {
+            return {
+                fee_asset_symbol: SettingsStore.getState().settings.get(
+                    "fee_asset"
+                )
+            };
+        }
     }
-});
+);

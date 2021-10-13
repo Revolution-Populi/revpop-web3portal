@@ -2,8 +2,8 @@ import WalletDb from "stores/WalletDb";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import CachedPropertyActions from "actions/CachedPropertyActions";
 import ApplicationApi from "api/ApplicationApi";
-import {TransactionBuilder, FetchChain} from "bitsharesjs";
-import {Apis} from "bitsharesjs-ws";
+import {TransactionBuilder, FetchChain} from "@revolutionpopuli/revpopjs";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import alt from "alt-instance";
 import SettingsStore from "stores/SettingsStore";
 

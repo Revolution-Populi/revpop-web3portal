@@ -1,5 +1,5 @@
 import {connect} from "alt-react";
-import {ChainValidation} from "bitsharesjs";
+import {ChainValidation} from "@revolutionpopuli/revpopjs";
 import counterpart from "counterpart";
 import {debounce} from "lodash-es";
 import React, {Component} from "react";

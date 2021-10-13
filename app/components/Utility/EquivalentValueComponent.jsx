@@ -12,7 +12,7 @@ import MarketStatsCheck from "./MarketStatsCheck";
 import MarketUtils from "common/market_utils";
 import {Tooltip} from "bitshares-ui-style-guide";
 import PropTypes from "prop-types";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 
 const getEquivalentValue = function(
     amount,

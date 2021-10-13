@@ -1,5 +1,5 @@
 import React from "react";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 import SettingsStore from "stores/SettingsStore";
 import {connect} from "alt-react";
 import {Tabs, Tab} from "../Utility/Tabs";

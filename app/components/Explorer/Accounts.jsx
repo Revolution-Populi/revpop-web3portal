@@ -11,7 +11,7 @@ import AccountStore from "stores/AccountStore";
 import LoadingIndicator from "../LoadingIndicator";
 import {Table, Select, Icon as IconStyleGuide} from "bitshares-ui-style-guide";
 import SearchInput from "../Utility/SearchInput";
-import {ChainStore} from "bitsharesjs";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
 
 class Accounts extends React.Component {
     constructor(props) {

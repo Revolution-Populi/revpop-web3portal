@@ -356,7 +356,7 @@ class RouterTransitioner {
             url: connectionString,
             urls: urls,
             closeCb: this._onConnectionClose.bind(this),
-            optionalApis: {enableOrders: false},
+            optionalApis: {enableOrders: true},
             urlChangeCallback: url => {
                 console.log("fallback to new url:", url);
                 if (!!url) {
@@ -687,7 +687,7 @@ class RouterTransitioner {
     _attemptReconnect(resolve, reject) {
         this._oldChain = "old";
         Apis.reset(this._connectionManager.url, true, undefined, {
-            enableOrders: false
+            enableOrders: true
         }).then(instance => {
             instance.init_promise
                 .then(this._onConnect.bind(this, resolve, reject))

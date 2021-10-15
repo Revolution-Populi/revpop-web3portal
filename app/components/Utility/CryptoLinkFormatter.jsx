@@ -26,6 +26,10 @@ class CryptoLinkFormatter extends React.Component {
         super(params);
 
         this.assetTemplates = {
+            RVP: {
+                template: "{address}",
+                params: []
+            },
             BTS: {
                 template: "{address}",
                 params: []

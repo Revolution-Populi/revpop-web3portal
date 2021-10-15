@@ -68,7 +68,7 @@ class InvoicePay extends React.Component {
         let invoice = {
             to: "sschiessl",
             to_label: "Stefan S.",
-            currency: "BTS",
+            currency: "RVP",
             memo: "Invoice #1234",
             line_items: [
                 {label: "Something to Buy", quantity: 1, price: "0.1"},

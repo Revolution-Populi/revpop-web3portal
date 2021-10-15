@@ -51,7 +51,7 @@ class DepositWithdrawAssetSelector extends React.Component {
                     return item;
                 })
                 .filter(item => {
-                    if (item.id == "BTS") {
+                    if (item.id == "RVP") {
                         return true;
                     }
                     if (include) {
@@ -62,7 +62,7 @@ class DepositWithdrawAssetSelector extends React.Component {
         });
 
         if (!(includeBTS === false)) {
-            assets.push({id: "BTS", label: "BTS", gateway: ""});
+            assets.push({id: "RVP", label: "RVP", gateway: ""});
         }
 
         this.setState({
@@ -124,9 +124,9 @@ class DepositWithdrawAssetSelector extends React.Component {
                 showSearch
                 style={{width: "100%"}}
             >
-                {/* 
+                {/*
                     NOTE
-                    On Deposit, it would be useful to view Min Deposit 
+                    On Deposit, it would be useful to view Min Deposit
                     and Gateway Fee to the right of the selection so the
                     user doesn't have to select a specific gateway to view
                     this information.

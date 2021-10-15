@@ -1,4 +1,4 @@
-import {Apis, Manager} from "@revolutionpopuli/revpopjs-ws";
+import {Apis, ChainConfig, Manager} from "@revolutionpopuli/revpopjs-ws";
 import {ChainStore} from "@revolutionpopuli/revpopjs";
 import hirestime from "hirestime";
 
@@ -740,6 +740,7 @@ class RouterTransitioner {
             this._connectInProgress = false;
             return this._transitionDone(reject);
         }
+        ChainConfig.setPrefix("RVP");
 
         return Promise.all([dbPromise, SettingsStore.init()])
             .then(() => {

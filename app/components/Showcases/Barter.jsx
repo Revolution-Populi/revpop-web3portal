@@ -1278,7 +1278,7 @@ export default class Barter extends Component {
                             fee={
                                 fee(true) + this.state.proposal_fee._real_amount
                             }
-                            asset={"BTS"}
+                            asset={"RVP"}
                         />
                     </span>
                 </Tooltip>

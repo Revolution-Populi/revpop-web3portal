@@ -336,8 +336,8 @@ class MyMarkets extends React.Component {
             lookupBase: null,
             inputValue: "",
             minWidth: "100%",
-            findBaseInput: "BTS",
-            activeFindBase: "BTS"
+            findBaseInput: "RVP",
+            activeFindBase: "RVP"
         };
 
         this._setMinWidth = this._setMinWidth.bind(this);

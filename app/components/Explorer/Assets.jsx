@@ -244,7 +244,7 @@ class Assets extends React.Component {
                             ? description.market
                             : coreAsset
                                 ? coreAsset.get("symbol")
-                                : "BTS");
+                                : "RVP");
 
                     dataSource.push({
                         symbol: asset.symbol,
@@ -353,7 +353,7 @@ class Assets extends React.Component {
                             ? description.market
                             : coreAsset
                                 ? coreAsset.get("symbol")
-                                : "BTS");
+                                : "RVP");
 
                     dataSource.push({
                         symbol: asset.symbol,
@@ -406,7 +406,7 @@ class Assets extends React.Component {
                             ? description.market
                             : coreAsset
                                 ? coreAsset.get("symbol")
-                                : "BTS");
+                                : "RVP");
 
                     return {
                         asset,

@@ -11,8 +11,8 @@ class QuickTradeSubscriber extends Component {
     };
 
     static defaultProps = {
-        assetToSell: "CNY",
-        assetToReceive: "BTS"
+        assetToSell: "WETH",
+        assetToReceive: "RVP"
     };
 
     render() {

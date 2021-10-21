@@ -32,7 +32,7 @@ export function getWalletName() {
  * @returns {string}
  */
 export function getWalletURL() {
-    return "http://localhost:8080";
+    return "https://revpop-blockchain.axioma.lv";
 }
 
 /**
@@ -42,7 +42,7 @@ export function getWalletURL() {
  */
 export function getFaucet() {
     return {
-        url: "http://localhost:3000", // 2017-12-infrastructure worker proposal
+        url: "https://revpop-api.axioma.lv", // 2017-12-infrastructure worker proposal
         show: true,
         editable: false,
         referrer: "onboarding.bitshares.foundation"
@@ -52,7 +52,7 @@ export function getFaucet() {
 export function getTestFaucet() {
     // fixme should be solved by introducing _isTestnet into getFaucet and fixing the mess in the Settings when fetching faucet address
     return {
-        url: "http://localhost:3000", // operated as a contribution by BitShares EU
+        url: "https://revpop-api.axioma.lv", // operated as a contribution by BitShares EU
         show: true,
         editable: false
     };

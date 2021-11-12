@@ -303,6 +303,29 @@ export default class DropDownMenu extends React.Component {
                     </div>
                 </li>
 
+                {isMyAccount ? (
+                    <li
+                        className={cnames({
+                            active: active.indexOf("/vesting") !== -1
+                        })}
+                        onClick={this.props.onNavigate.bind(
+                            this,
+                            `/account/${currentAccount}/vesting`
+                        )}
+                    >
+                        <div className="table-cell">
+                            <Icon
+                                size="2x"
+                                name="hourglass"
+                                title="icons.hourglass"
+                            />
+                        </div>
+                        <div className="table-cell">
+                            <Translate content="account.vesting.title" />
+                        </div>
+                    </li>
+                ) : null}
+
                 <li
                     className={cnames("divider", {
                         active: active.indexOf("/permissions") !== -1,

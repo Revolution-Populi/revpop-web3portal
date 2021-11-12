@@ -630,30 +630,6 @@ class Header extends React.Component {
                 </a>
             );
         }
-        {isMyAccount ? (
-            <li
-                className={cnames({
-                    active:
-                        active.indexOf("/vesting") !==
-                        -1
-                })}
-                onClick={this._onNavigate.bind(
-                    this,
-                    `/account/${currentAccount}/vesting`
-                )}
-            >
-                <div className="table-cell">
-                    <Icon
-                        size="2x"
-                        name="hourglass"
-                        title="icons.hourglass"
-                    />
-                </div>
-                <div className="table-cell">
-                    <Translate content="account.vesting.title" />
-                </div>
-            </li>
-        ) : null}
         if (
             active.indexOf("/assets") !== -1 &&
             active.indexOf("explorer") === -1

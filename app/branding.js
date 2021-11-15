@@ -98,7 +98,7 @@ export function getUnits() {
 
 export function getDefaultMarket() {
     if (_isTestnet()) {
-        return "WETH_RVP";
+        return "RVETH_RVP";
     }
     return "BTS_CNY";
 }
@@ -222,7 +222,7 @@ export function getMyMarketsQuotes() {
  */
 export function getFeaturedMarkets(quotes = []) {
     if (_isTestnet()) {
-        return [["WETH", "RVP"]];
+        return [["RVETH", "RVP"]];
     }
     return [
         ["USD", "BTS"],

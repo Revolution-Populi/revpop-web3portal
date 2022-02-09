@@ -2055,7 +2055,6 @@
         "backup_favoritesbtn": "Backup favorites",
         "backup_favoritestext": "Back up your favorites to restore them later after updates.",
         "backup_key": "Importa chiave privata",
-        "backup_legacy": "Importa un file di esportazione della chiave di BTS 0.9.3c (.json)",
         "backup_text": "Crea qui i backup.",
         "backupcreate_backup": "Crea backup del portafoglio",
         "backupcreate_brainkey": "Crea backup della brainkey",

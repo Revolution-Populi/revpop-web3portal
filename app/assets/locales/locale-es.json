@@ -2061,7 +2061,6 @@
         "backup_favoritesbtn": "Favoritos de respaldo",
         "backup_favoritestext": "Haga una copia de seguridad de sus favoritos para restaurarlos más tarde después de las actualizaciones.",
         "backup_key": "Importar una clave privada",
-        "backup_legacy": "Importar un BTS 0.9.3c archivo clave de exportación(.json)",
         "backup_text": "Crea copias de seguridad aquí.",
         "backupcreate_backup": "Crear una copia de seguridad local de la billetera",
         "backupcreate_brainkey": "Crear una copia de seguridad de brainkey",

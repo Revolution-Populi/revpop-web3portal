@@ -2055,7 +2055,6 @@
         "backup_favoritesbtn": "お気に入りのバックアップ",
         "backup_favoritestext": "アップデート後に復元するために、お気に入りをバックアップする。",
         "backup_key": "秘密キーをインポートする",
-        "backup_legacy": "BTS 0.9.3cキーエクスポートファイル (.json) をインポートする。",
         "backup_text": "ここでバックアップを作成する。",
         "backupcreate_backup": "ウォレットのバックアップを作成する",
         "backupcreate_brainkey": "ブレインキーバックアップを作成する",

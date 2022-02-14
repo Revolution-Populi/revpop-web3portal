@@ -2061,7 +2061,6 @@
         "backup_favoritesbtn": "Sicherung der Favoriten",
         "backup_favoritestext": "Sicherung der Favoriten, zur Wiederherstellung nach einer Aktualisierung.",
         "backup_key": "Einen privaten Schlüssel importieren",
-        "backup_legacy": "Eine BTS 0.9.3c Schlüsselexportdatei (.json) importieren",
         "backup_text": "Erstellen Sie hier eine Sicherungen!",
         "backupcreate_backup": "Erstellen Sie eine lokale Wallet zur Sicherung!",
         "backupcreate_brainkey": "Erstellen Sie einen Gedächtnisschlüssel zur Sicherung!",

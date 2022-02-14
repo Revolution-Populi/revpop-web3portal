@@ -2055,7 +2055,6 @@
         "backup_favoritesbtn": "Backup favorites",
         "backup_favoritestext": "Back up your favorites to restore them later after updates.",
         "backup_key": "Özel anahtar aktar",
-        "backup_legacy": "BTS 0.9.3c .json dosyası ile cüzdan kurtar",
         "backup_text": "Cüzdan yedekleme",
         "backupcreate_backup": "Cüzdanı yedekle",
         "backupcreate_brainkey": "TekAnahtar yedeği oluştur",

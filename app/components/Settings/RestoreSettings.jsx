@@ -15,7 +15,7 @@ export default class RestoreSettings extends React.Component {
         super();
         this.state = {
             restoreType: 0,
-            types: ["backup", "key", "legacy", "brainkey", "favorites"]
+            types: ["backup", "key", "brainkey", "favorites"]
         };
     }
 
@@ -95,7 +95,7 @@ export default class RestoreSettings extends React.Component {
                 );
                 break;
 
-            default:
+            case "key":
                 content = <ImportKeys privateKey={restoreType === 1} />;
                 break;
         }

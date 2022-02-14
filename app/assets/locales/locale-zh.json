@@ -2061,7 +2061,6 @@
         "backup_favoritesbtn": "备份市场收藏夹",
         "backup_favoritestext": "将收藏的市场进行备份，以便在更新后进行恢复。",
         "backup_key": "导入私钥",
-        "backup_legacy": "从BTS 0.9.3c 版本客户端导出的JSON钱包文件导入 (.json)",
         "backup_text": "创建钱包备份。",
         "backupcreate_backup": "创建本地钱包备份",
         "backupcreate_brainkey": "创建脑钱包备份",

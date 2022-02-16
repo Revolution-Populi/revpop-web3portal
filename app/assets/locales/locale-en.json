@@ -1882,7 +1882,8 @@
                 "full_name": "Full name",
                 "last_name": "Last Name",
                 "phone": "Phone",
-                "photo": "Photo"
+                "photo": "Photo",
+                "storage": "Storage"
             },
             "my": {
                 "account": "My account",

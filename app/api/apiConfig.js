@@ -87,22 +87,32 @@ export const xbtsxAPIs = {
 // These checks are simulated by the Basic Authentication.
 // In the future, IPFS node will look into the blockchain to restrict unwanted uploads.
 export const storageAPIs = {
-    API_NODE_LIST: [
-        {
-            connection: {
-                host: "ipfstest.revolutionpopuli.com",
-                port: 443,
-                protocol: "https",
-                headers: {
-                    authorization:
-                        "Basic Z0pUUndOYkw5VWpTaHB2dDo2WmpBQmFzVVk5M0hxQks4"
+    API_NODE_LIST: {
+        ipfs: [
+            {
+                connection: {
+                    // host: "ipfstest.revolutionpopuli.com",
+                    // host: "ipfs.io",
+                    host: "localhost",
+                    port: 5001,
+                    protocol: "http"
+                    // headers: {
+                    //     Authorization:
+                    //         "Basic Z0pUUndOYkw5VWpTaHB2dDo2WmpBQmFzVVk5M0hxQks4"
+                    // }
                 }
             }
-        }
+        ],
+        google_drive: [
+            {
+                apiKey: "api_key",
+                client_id: "client_id"
+            }
+        ]
         // {
         //     connection: 'http://localhost:5001'
         // }
-    ],
+    },
     // Not used now
     GATEWAY_NODE_LIST: [
         {

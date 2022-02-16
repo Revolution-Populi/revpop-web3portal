@@ -1019,7 +1019,7 @@ const ApplicationApi = {
     },
 
     _getStorageClientIPFS() {
-        return new IPFSAdapter(storageAPIs.API_NODE_LIST[0].connection);
+        return new IPFSAdapter(storageAPIs.API_NODE_LIST.ipfs[0].connection);
     },
 
     _getStorageClientS3() {

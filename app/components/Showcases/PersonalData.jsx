@@ -18,6 +18,7 @@ import {
     Tooltip,
     Icon
 } from "bitshares-ui-style-guide";
+import StorageSelector from "./StorageSelector";
 const CheckboxGroup = Checkbox.Group;
 
 export default class PersonalData extends Component {
@@ -399,6 +400,9 @@ export default class PersonalData extends Component {
                         data={my_data}
                         onChange={this.handleMyDataChange.bind(this)}
                     />
+                    <div>
+                        <StorageSelector />
+                    </div>
                     <div className="pd-buttons">
                         <Button
                             onClick={this.saveMyData.bind(this)}

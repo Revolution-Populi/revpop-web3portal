@@ -7,7 +7,6 @@ import counterpart from "counterpart";
 import AccountStore from "stores/AccountStore";
 import {PersonalData as PersonalDataObject} from "@revolutionpopuli/revpopjs";
 import ApplicationApi from "../../api/ApplicationApi";
-import {map} from "lodash-es";
 import {
     Card,
     Checkbox,
@@ -41,7 +40,8 @@ export default class PersonalData extends Component {
             view_data_loaded: false,
             view_data_missing: false,
             from_error: null,
-            to_error: null
+            to_error: null,
+            storage: null
         };
 
         this.share_options_available = [
@@ -81,6 +81,10 @@ export default class PersonalData extends Component {
 
     fromChanged(from_name) {
         this.setState({from_name});
+    }
+
+    storageChanged(storage) {
+        this.setState({storage});
     }
 
     onFromAccountChanged(from_account) {
@@ -156,7 +160,7 @@ export default class PersonalData extends Component {
     }
 
     async saveMyData() {
-        let {from_name, my_data} = this.state;
+        let {from_name, my_data, storage} = this.state;
 
         if (!from_name) {
             return;
@@ -177,7 +181,8 @@ export default class PersonalData extends Component {
         return await ApplicationApi.updatePersonalData(
             from_name,
             from_name,
-            my_data
+            my_data,
+            storage
         );
     }
 
@@ -401,7 +406,9 @@ export default class PersonalData extends Component {
                         onChange={this.handleMyDataChange.bind(this)}
                     />
                     <div>
-                        <StorageSelector />
+                        <StorageSelector
+                            onChange={this.storageChanged.bind(this)}
+                        />
                     </div>
                     <div className="pd-buttons">
                         <Button

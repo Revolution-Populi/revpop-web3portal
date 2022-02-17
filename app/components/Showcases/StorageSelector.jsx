@@ -3,9 +3,32 @@ import React, {Component} from "react";
 import {Select, Form} from "bitshares-ui-style-guide";
 import Translate from "react-translate-component";
 
+import StorageRepository from "../../services/Repository/Storage/Repository";
+import PropTypes from "prop-types";
+
 export default class StorageSelector extends Component {
-    constructor() {
-        super();
+    static propTypes = {
+        onChange: PropTypes.func
+    };
+
+    constructor(props) {
+        super(props);
+
+        const storages = StorageRepository.findAll();
+
+        this.state = {
+            storages: storages,
+            defaultStorage: storages[0]
+        };
+    }
+
+    componentDidMount() {
+        this.onSelect(this.state.defaultStorage.id);
+    }
+
+    onSelect(storageId) {
+        const storage = StorageRepository.find(storageId);
+        this.props.onChange(storage);
     }
 
     render() {
@@ -13,11 +36,15 @@ export default class StorageSelector extends Component {
             <Form>
                 <Translate content={"showcases.personal_data.form.storage"} />
                 <Form.Item>
-                    <Select defaultValue="ipfs">
-                        <Select.Option value="ipfs">IPFS</Select.Option>
-                        <Select.Option value="google-drive">
-                            Google drive
-                        </Select.Option>
+                    <Select
+                        onSelect={this.onSelect.bind(this)}
+                        defaultValue={this.state.defaultStorage.id}
+                    >
+                        {this.state.storages.map(storage => (
+                            <Select.Option key={storage.id} value={storage.id}>
+                                {storage.name}
+                            </Select.Option>
+                        ))}
                     </Select>
                 </Form.Item>
             </Form>

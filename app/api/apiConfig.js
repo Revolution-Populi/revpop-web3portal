@@ -90,28 +90,41 @@ export const storageAPIs = {
     API_NODE_LIST: {
         ipfs: [
             {
+                id: "ipfs-local",
+                name: "IPFS local node",
+                active: true,
                 connection: {
-                    // host: "ipfstest.revolutionpopuli.com",
-                    // host: "ipfs.io",
                     host: "localhost",
                     port: 5001,
                     protocol: "http"
-                    // headers: {
-                    //     Authorization:
-                    //         "Basic Z0pUUndOYkw5VWpTaHB2dDo2WmpBQmFzVVk5M0hxQks4"
-                    // }
+                }
+            },
+            {
+                id: "ipfs",
+                name: "IPFS",
+                active: false,
+                connection: {
+                    host: "ipfstest.revolutionpopuli.com",
+                    port: 443,
+                    protocol: "https",
+                    headers: {
+                        authorization:
+                            "Basic Z0pUUndOYkw5VWpTaHB2dDo2WmpBQmFzVVk5M0hxQks4"
+                    }
                 }
             }
         ],
         google_drive: [
             {
-                apiKey: "api_key",
-                client_id: "client_id"
+                id: "google-drive",
+                name: "Google drive",
+                active: true,
+                connection: {
+                    apiKey: "api_key",
+                    clientId: "client_id"
+                }
             }
         ]
-        // {
-        //     connection: 'http://localhost:5001'
-        // }
     },
     // Not used now
     GATEWAY_NODE_LIST: [

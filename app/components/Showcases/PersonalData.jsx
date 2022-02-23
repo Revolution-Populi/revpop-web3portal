@@ -34,7 +34,7 @@ export default class PersonalData extends Component {
             share_options: [],
             share_exists: false,
             my_data: pd,
-            my_data_parts: pd.getAllParts(),
+            my_data_parts: pd.toBuffer(),
             my_data_save: false,
             view_data: null,
             view_data_loaded: false,
@@ -119,40 +119,31 @@ export default class PersonalData extends Component {
             my_data_save:
                 from_account &&
                 JSON.stringify(my_data_parts) !==
-                    JSON.stringify(data.getAllParts())
+                    JSON.stringify(data.toBuffer())
         });
     }
 
     async loadMyData() {
         let {from_name} = this.state;
-        let my_data = new PersonalDataObject();
-        let my_data_parts = my_data.getAllParts();
-        if (!from_name) {
-            this.setState({my_data, my_data_parts});
-            return;
-        }
 
-        const {data} = await ApplicationApi.loadPersonalData(
+        const personal_data = await ApplicationApi.loadPersonalData(
             from_name,
-            from_name
+            from_name,
+            this.state.storage
         );
-        if (!data) {
-            this.setState({my_data, my_data_parts});
-            this.my_personal_data_ref.current.setData(my_data);
+
+        if (!personal_data) {
             return;
         }
 
-        my_data = data;
-        my_data_parts = my_data.getAllParts();
         this.setState({
-            my_data,
-            my_data_parts,
+            my_data: personal_data,
             my_data_save: false,
             my_data_delete: true
         });
-        this.my_personal_data_ref.current.setData(my_data);
+        this.my_personal_data_ref.current.setData(personal_data);
 
-        if (my_data.getPhoto()) {
+        if (personal_data.getPhoto()) {
             this.loadMyPhoto();
         }
 
@@ -197,23 +188,24 @@ export default class PersonalData extends Component {
     }
 
     clearMyData() {
-        const my_data = new PersonalDataObject();
-        this.setState({
-            my_data,
-            my_data_parts: my_data.getAllParts(),
-            my_data_save: false,
-            my_data_delete: false
-        });
-        if (this.my_personal_data_ref.current) {
-            this.my_personal_data_ref.current.setData(my_data);
-        }
+        // const my_data = new PersonalDataObject();
+        // this.setState({
+        //     my_data,
+        //     my_data_parts: my_data.getAllParts(),
+        //     my_data_save: false,
+        //     my_data_delete: false
+        // });
+        // if (this.my_personal_data_ref.current) {
+        //     this.my_personal_data_ref.current.setData(my_data);
+        // }
     }
 
     async loadMyPhoto() {
         let {from_name, my_data} = this.state;
         const buffer = await ApplicationApi.loadContent(
             from_name,
-            my_data.getPhoto()
+            my_data.getPhoto(),
+            this.state.storage
         );
         this.my_personal_data_ref.current.readPhoto(buffer);
     }

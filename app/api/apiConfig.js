@@ -92,7 +92,7 @@ export const storageAPIs = {
             {
                 id: "ipfs-local",
                 name: "IPFS local node",
-                active: true,
+                active: false,
                 connection: {
                     host: "localhost",
                     port: 5001,
@@ -102,7 +102,7 @@ export const storageAPIs = {
             {
                 id: "ipfs",
                 name: "IPFS",
-                active: false,
+                active: true,
                 connection: {
                     host: "ipfstest.revolutionpopuli.com",
                     port: 443,
@@ -114,15 +114,23 @@ export const storageAPIs = {
                 }
             }
         ],
-        google_drive: [
+        google_drive_web: [
             {
                 id: "google-drive",
-                name: "Google drive",
+                name: "Google Drive",
                 active: true,
                 connection: {
-                    apiKey: "api_key",
-                    clientId: "client_id"
+                    apiKey: "apiKey",
+                    clientId: "clientId"
                 }
+            }
+        ],
+        amazon_s3: [
+            {
+                id: "amazon_s3",
+                name: "Amazon S3",
+                active: false,
+                connection: {}
             }
         ]
     },

@@ -143,7 +143,7 @@ export default class PersonalData extends Component {
         });
         this.my_personal_data_ref.current.setData(personal_data);
 
-        if (personal_data.getPhoto()) {
+        if (personal_data.getPhoto().url !== "") {
             this.loadMyPhoto();
         }
 

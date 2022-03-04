@@ -13,7 +13,8 @@ import {
     CloudStorage,
     PersonalData,
     IPFSAdapter,
-    PersonalDataRepository
+    PersonalDataBlockchainRepository,
+    PersonalDataStorageRepository
 } from "@revolutionpopuli/revpopjs";
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import counterpart from "counterpart";
@@ -800,19 +801,24 @@ const ApplicationApi = {
 
         const subject_keypair = this._get_active_keys(subject_account, false);
         const operator_keypair = this._get_active_keys(operator_account, true);
+        const blockchain_repository = new PersonalDataBlockchainRepository(
+            Apis.instance()
+        );
+        const blockchain_transaction = await blockchain_repository.getTransaction(
+            subject_account,
+            operator_account
+        );
 
         const cloud_storage = await CloudStorageFactory.create(
             storage.type,
             storage.options
         );
-        const personal_data_repository = new PersonalDataRepository(
-            Apis.instance(),
+        const storage_repository = new PersonalDataStorageRepository(
             cloud_storage
         );
-        return await personal_data_repository.findBySubjectAndOperator(
-            subject_account,
+        return await storage_repository.getByKey(
+            blockchain_transaction.storageData.key,
             subject_keypair.public_key,
-            operator_account,
             operator_keypair.private_key
         );
     },
@@ -912,30 +918,32 @@ const ApplicationApi = {
     async deletePersonalData(subject_name, operator_name) {
         const subject_account = await this._ensureAccount(subject_name);
         const operator_account = await this._ensureAccount(operator_name);
-        let db = Apis.instance().db_api();
-        const bdata = await db.exec("get_last_personal_data", [
-            subject_account.get("id"),
-            operator_account.get("id")
-        ]);
-        if (!bdata) {
-            return;
-        }
+
+        const personal_data_repository = new PersonalDataBlockchainRepository(
+            Apis.instance()
+        );
+        const tx = await personal_data_repository.getTransaction(
+            subject_account,
+            operator_account
+        );
 
         let txb = new TransactionBuilder();
-        txb.add_type_operation("personal_data_remove", {
+        txb.add_type_operation("personal_data_v2_remove", {
             fee: {
                 amount: 0,
                 asset_id: 0
             },
             subject_account: subject_account.get("id"),
             operator_account: operator_account.get("id"),
-            hash: bdata.hash
+            hash: tx.hash
         });
         await WalletDb.process_transaction(txb, null, true);
 
         if (!txb.tr_buffer) {
             throw "Something went finalization the transaction, this should not happen";
         }
+
+        //TODO::remove from storage?
     },
 
     async loadContent(account_name, meta, storage) {

@@ -108,7 +108,8 @@ export const storageAPIs = {
                     port: 443,
                     protocol: "https",
                     headers: {
-                        authorization: ""
+                        authorization:
+                            "Basic Z0pUUndOYkw5VWpTaHB2dDo2WmpBQmFzVVk5M0hxQks4"
                     }
                 }
             }

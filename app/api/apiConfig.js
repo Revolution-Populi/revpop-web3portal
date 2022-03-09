@@ -108,8 +108,7 @@ export const storageAPIs = {
                     port: 443,
                     protocol: "https",
                     headers: {
-                        authorization:
-                            "Basic Z0pUUndOYkw5VWpTaHB2dDo2WmpBQmFzVVk5M0hxQks4"
+                        authorization: ""
                     }
                 }
             }
@@ -118,19 +117,36 @@ export const storageAPIs = {
             {
                 id: "google-drive",
                 name: "Google Drive",
-                active: true,
+                active: false,
                 connection: {
-                    apiKey: "apiKey",
-                    clientId: "clientId"
+                    apiKey: "",
+                    clientId: ""
                 }
             }
         ],
-        amazon_s3: [
+        amazon_s3_node: [
             {
                 id: "amazon_s3",
                 name: "Amazon S3",
                 active: false,
-                connection: {}
+                connection: {
+                    region: "",
+                    access_key_id: "",
+                    secret_access_key: "",
+                    bucket: "revpop"
+                }
+            }
+        ],
+        amazon_s3_web: [
+            {
+                id: "amazon_s3",
+                name: "Amazon S3",
+                active: false,
+                connection: {
+                    region: "",
+                    identity_pool_id: "",
+                    bucket: "revpop"
+                }
             }
         ]
     },

@@ -87,22 +87,69 @@ export const xbtsxAPIs = {
 // These checks are simulated by the Basic Authentication.
 // In the future, IPFS node will look into the blockchain to restrict unwanted uploads.
 export const storageAPIs = {
-    API_NODE_LIST: [
-        {
-            connection: {
-                host: "ipfstest.revolutionpopuli.com",
-                port: 443,
-                protocol: "https",
-                headers: {
-                    authorization:
-                        "Basic Z0pUUndOYkw5VWpTaHB2dDo2WmpBQmFzVVk5M0hxQks4"
+    API_NODE_LIST: {
+        ipfs: [
+            {
+                id: "ipfs-local",
+                name: "IPFS local node",
+                active: false,
+                connection: {
+                    host: "localhost",
+                    port: 5001,
+                    protocol: "http"
+                }
+            },
+            {
+                id: "ipfs",
+                name: "IPFS",
+                active: true,
+                connection: {
+                    host: "ipfstest.revolutionpopuli.com",
+                    port: 443,
+                    protocol: "https",
+                    headers: {
+                        authorization: ""
+                    }
                 }
             }
-        }
-        // {
-        //     connection: 'http://localhost:5001'
-        // }
-    ],
+        ],
+        google_drive_web: [
+            {
+                id: "google-drive",
+                name: "Google Drive",
+                active: false,
+                connection: {
+                    apiKey: "",
+                    clientId: ""
+                }
+            }
+        ],
+        amazon_s3_node: [
+            {
+                id: "amazon_s3",
+                name: "Amazon S3",
+                active: false,
+                connection: {
+                    region: "",
+                    access_key_id: "",
+                    secret_access_key: "",
+                    bucket: "revpop"
+                }
+            }
+        ],
+        amazon_s3_web: [
+            {
+                id: "amazon_s3",
+                name: "Amazon S3",
+                active: false,
+                connection: {
+                    region: "",
+                    identity_pool_id: "",
+                    bucket: "revpop"
+                }
+            }
+        ]
+    },
     // Not used now
     GATEWAY_NODE_LIST: [
         {

@@ -4,17 +4,17 @@ import {storageAPIs} from "./apiConfig";
 import WalletDb from "stores/WalletDb";
 import {
     Aes,
-    PublicKey,
     ChainValidation,
     TransactionBuilder,
     TransactionHelper,
     FetchChain,
     ChainStore,
+    CloudStorageFactory,
     CloudStorage,
     PersonalData,
     IPFSAdapter,
-    S3Adapter,
-    ops
+    PersonalDataBlockchainRepository,
+    PersonalDataStorageRepository
 } from "@revolutionpopuli/revpopjs";
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import counterpart from "counterpart";
@@ -795,47 +795,32 @@ const ApplicationApi = {
         }
     },
 
-    async loadPersonalData(subject_name, operator_name) {
+    async loadPersonalData(subject_name, operator_name, storage) {
         const subject_account = await this._ensureAccount(subject_name);
         const operator_account = await this._ensureAccount(operator_name);
-        let db = Apis.instance().db_api();
-        const bdata = await db.exec("get_last_personal_data", [
-            subject_account.get("id"),
-            operator_account.get("id")
-        ]);
-        if (!bdata) {
-            return {};
-        }
-
-        // account must be unlocked
-        await WalletUnlockActions.unlock();
 
         const subject_keypair = this._get_active_keys(subject_account, false);
         const operator_keypair = this._get_active_keys(operator_account, true);
-        const cs_client = this._getStorageClientIPFS();
-        let cdata;
-        cs_client.open();
-        try {
-            const cs = new CloudStorage(cs_client);
-            cdata = await cs.crypto_load_object(
-                bdata.url,
-                subject_keypair.public_key,
-                operator_keypair.private_key
-            );
-        } catch (e) {
-            console.log(
-                `loadPersonalData(${subject_name}, ${operator_name}) failed: ${e}`
-            );
-            return {};
-        } finally {
-            cs_client.close();
-        }
+        const blockchain_repository = new PersonalDataBlockchainRepository(
+            Apis.instance()
+        );
+        const blockchain_transaction = await blockchain_repository.getTransaction(
+            subject_account,
+            operator_account
+        );
 
-        return {
-            blockchain: bdata,
-            cloud: cdata,
-            data: PersonalData.fromAllParts(cdata)
-        };
+        const cloud_storage = await CloudStorageFactory.create(
+            storage.type,
+            storage.options
+        );
+        const storage_repository = new PersonalDataStorageRepository(
+            cloud_storage
+        );
+        return await storage_repository.getByKey(
+            blockchain_transaction.storageData.key,
+            subject_keypair.public_key,
+            operator_keypair.private_key
+        );
     },
 
     async searchBlockchainPersonalData(subject_name, operator_name, root_hash) {
@@ -853,7 +838,7 @@ const ApplicationApi = {
         return bdata.find(item => item.hash === root_hash) || null;
     },
 
-    async updatePersonalData(subject_name, operator_name, props) {
+    async updatePersonalData(subject_name, operator_name, props, storage) {
         const subject_account = await this._ensureAccount(subject_name);
         const operator_account = await this._ensureAccount(operator_name);
 
@@ -870,35 +855,35 @@ const ApplicationApi = {
             pd.assign(props);
         }
 
-        const pd_parts = pd.getAllParts();
-        const root_hash = pd.getRootHash();
+        storage = await CloudStorageFactory.create(
+            storage.type,
+            storage.options
+        );
 
+        storage.connect();
         let pd_url;
-        const cs_client = this._getStorageClientIPFS();
-        cs_client.open();
         try {
-            const cs = new CloudStorage(cs_client);
-            pd_url = await cs.crypto_save_object(
-                pd_parts,
+            pd_url = await storage.crypto_save_buffer(
+                pd.toBuffer(),
                 subject_keypair.private_key,
                 operator_keypair.public_key
             );
         } finally {
-            cs_client.close();
+            storage.disconnect();
         }
 
         let txb = new TransactionBuilder();
 
         // remove info about already shared personal data
-        if (subject_name != operator_name) {
+        if (subject_name !== operator_name) {
             const bdata = await Apis.instance()
                 .db_api()
-                .exec("get_last_personal_data", [
+                .exec("get_last_personal_data_v2", [
                     subject_account.get("id"),
                     operator_account.get("id")
                 ]);
             if (bdata) {
-                txb.add_type_operation("personal_data_remove", {
+                txb.add_type_operation("personal_data_v2_remove", {
                     fee: {
                         amount: 0,
                         asset_id: 0
@@ -910,20 +895,20 @@ const ApplicationApi = {
             }
         }
 
-        txb.add_type_operation("personal_data_create", {
+        const root_hash = pd.getRootHash();
+        txb.add_type_operation("personal_data_v2_create", {
             fee: {
                 amount: 0,
                 asset_id: 0
             },
             subject_account: subject_account.get("id"),
             operator_account: operator_account.get("id"),
-            url: pd_url,
+            url: pd_url.url,
+            storage_data: pd_url.storage_data,
             hash: root_hash
         });
+
         await WalletDb.process_transaction(txb, null, true);
-        // const serialized_tx = await WalletDb.process_transaction(txb, null, false);
-        // const tr_object = ops.signed_transaction.fromObject(serialized_tx);
-        // await tr_object.broadcast();
 
         if (!txb.tr_buffer) {
             throw "Something went finalization the transaction, this should not happen";
@@ -933,56 +918,60 @@ const ApplicationApi = {
     async deletePersonalData(subject_name, operator_name) {
         const subject_account = await this._ensureAccount(subject_name);
         const operator_account = await this._ensureAccount(operator_name);
-        let db = Apis.instance().db_api();
-        const bdata = await db.exec("get_last_personal_data", [
-            subject_account.get("id"),
-            operator_account.get("id")
-        ]);
-        if (!bdata) {
-            return;
-        }
+
+        const personal_data_repository = new PersonalDataBlockchainRepository(
+            Apis.instance()
+        );
+        const tx = await personal_data_repository.getTransaction(
+            subject_account,
+            operator_account
+        );
 
         let txb = new TransactionBuilder();
-        txb.add_type_operation("personal_data_remove", {
+        txb.add_type_operation("personal_data_v2_remove", {
             fee: {
                 amount: 0,
                 asset_id: 0
             },
             subject_account: subject_account.get("id"),
             operator_account: operator_account.get("id"),
-            hash: bdata.hash
+            hash: tx.hash
         });
         await WalletDb.process_transaction(txb, null, true);
 
         if (!txb.tr_buffer) {
             throw "Something went finalization the transaction, this should not happen";
         }
+
+        //TODO::remove from storage?
     },
 
-    async loadContent(account_name, meta) {
+    async loadContent(account_name, meta, storage) {
         // account must be unlocked
         await WalletUnlockActions.unlock();
 
         const account = await this._ensureAccount(account_name);
         const keypair = this._get_active_keys(account, true);
 
-        const cs_client = this._getStorageClientIPFS();
+        const cloud_storage = await CloudStorageFactory.create(
+            storage.type,
+            storage.options
+        );
+
+        cloud_storage.connect();
+        const storage_data = JSON.parse(meta.url.storage_data);
         let cdata;
-        cs_client.open();
         try {
-            const cs = new CloudStorage(cs_client);
-            cdata = await cs.crypto_load_buffer(
-                meta.url,
+            cdata = await cloud_storage.crypto_load_buffer(
+                storage_data[2],
                 keypair.public_key,
                 keypair.private_key
             );
-            const pd = new PersonalData();
-            const computedHash = pd._computeSha256(cdata);
         } catch (e) {
             console.log(`loadContent(${account_name}, ${meta}) failed: ${e}`);
             return null;
         } finally {
-            cs_client.close();
+            cloud_storage.disconnect();
         }
 
         return cdata;
@@ -1019,23 +1008,7 @@ const ApplicationApi = {
     },
 
     _getStorageClientIPFS() {
-        return new IPFSAdapter(storageAPIs.API_NODE_LIST[0].connection);
-    },
-
-    _getStorageClientS3() {
-        return new S3Adapter({
-            credentials: {
-                accessKeyId: "65f6c1bc7db0539856cec919ca2640bc",
-                secretAccessKey:
-                    "9ef7a86d0c94ff9eaeac531424958065cac8ec903b6cdffd50b0d8a824e056d5"
-            },
-            params: {
-                Bucket: "bucket"
-            },
-            endpoint: "localhost:8098",
-            sslEnabled: false,
-            s3ForcePathStyle: true
-        });
+        return new IPFSAdapter(storageAPIs.API_NODE_LIST.ipfs[0].connection);
     }
 };
 

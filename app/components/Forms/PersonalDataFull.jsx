@@ -9,6 +9,7 @@ class PersonalDataFull extends Component {
         super(props);
 
         this.photo = React.createRef();
+
         this.state = {
             data: props.data || new PersonalData(),
             photo: null,
@@ -124,8 +125,9 @@ class PersonalDataFull extends Component {
 
         const uploadButton = photo ? (
             [
-                <img src={photo} alt="" className="avatar" />,
+                <img key={photo} src={photo} alt="" className="avatar" />,
                 <AntIcon
+                    key="delete"
                     type="delete"
                     className="avatar-delete-trigger"
                     onClick={this.deletePhoto}

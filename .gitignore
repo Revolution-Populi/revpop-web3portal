@@ -13,6 +13,7 @@ hash-history
 docs/_build/
 *.swp
 *.python-version
+charting_library
 app/.sass-cache
 node_modules
 app/bower_components

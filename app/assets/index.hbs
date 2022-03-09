@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="format-detection" content="telephone=no">
     <title>{{title}}</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob:; worker-src 'self' blob:; script-src https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/ 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' *; font-src 'self' data: https://at.alicdn.com; img-src 'self' data:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob:; worker-src 'self' blob:; script-src https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/ https://apis.google.com 'self' 'unsafe-eval' 'unsafe-inline'; frame-src 'self' *; style-src 'self' 'unsafe-inline'; connect-src 'self' *; font-src 'self' data: https://at.alicdn.com; img-src 'self' data:;">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <style>
         body {
@@ -55,6 +55,7 @@
     <main id="content">
         <h1 class="centerDiv" style="">Loading...</h1>
     </main>
+    <script src="https://apis.google.com/js/api.js"></script>
     <script>
         function ieVersion(uaString) {
             uaString = uaString || navigator.userAgent;

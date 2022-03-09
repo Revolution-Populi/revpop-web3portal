@@ -1,6 +1,6 @@
 {
     "name": "@revolutionpopuli/revpop-ui",
-    "version": "0.6.3",
+    "version": "0.7.1",
     "description": "Advanced wallet interface for the RevPop blockchain.",
     "homepage": "https://github.com/Revolution-Populi/revpop-ui",
     "author": "Revolution Populi Limited <robert.b.rosenthal@gmail.com>",
@@ -137,7 +137,7 @@
     },
     "dependencies": {
         "@revolutionpopuli/revpop-report": "^0.1.0",
-        "@revolutionpopuli/revpopjs": "^0.4.8",
+        "@revolutionpopuli/revpopjs": "^0.4.12",
         "@revolutionpopuli/revpopjs-ws": "^0.4.5",
         "alt": "git+https://github.com/bitshares/alt.git#b6b42ceb790ca321402e9add95b9f77af8a7657d",
         "alt-container": "git+https://github.com/bitshares/alt-container.git#cf4e2c690a54e49fc9fe2dc99ab8816e6c3e5a86",

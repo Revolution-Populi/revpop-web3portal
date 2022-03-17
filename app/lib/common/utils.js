@@ -7,6 +7,7 @@ import {ChainTypes} from "@revolutionpopuli/revpopjs";
 var {object_type} = ChainTypes;
 
 import {getAssetNamespaces, getAssetHideNamespaces} from "../../branding";
+import sanitize from "xss";
 
 var Utils = {
     is_object_id: obj_id => {
@@ -465,6 +466,20 @@ var Utils = {
             prefix,
             isBitAsset: !!isBitAsset
         };
+    },
+
+    sanitize(string) {
+        // sanitize with package
+        string = sanitize(string, {
+            whiteList: [], // empty, means filter out all tags
+            stripIgnoreTag: true // remove all tags instead of escaping
+        });
+        string = string.replace(/%3A/gi, ":"); // resolve to : to not break links
+        string = string.replace(/javascript:/gi, "");
+        string = string.replace(/vbscript:/gi, "");
+        string = string.replace(/data:/gi, "");
+        string = string.replace(/tcl:/gi, "");
+        return string;
     }
 };
 

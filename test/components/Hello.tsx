@@ -1,43 +1,35 @@
 import React from "react";
-import {render, unmountComponentAtNode} from "react-dom";
-import {act} from "react-dom/test-utils";
-import Hello from "../../app/components/Hello";
+import Hello, {Header} from "../../app/components/Hello";
 import {expect} from "chai";
+import {shallow} from "enzyme";
 
-let container: HTMLDivElement;
-
-beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-});
-
-afterEach(() => {
-    unmountComponentAtNode(container);
-    container.remove();
-});
-
-describe("Hello", () => {
-    it("renders without a name", () => {
-        act(() => {
-            render(<Hello />, container);
-        });
-
-        const h1 = container.querySelector("h1");
-
-        if (h1 !== null) {
-            expect(h1.textContent).to.equal("Hey, stranger");
-        }
+describe("Hello testing by enzyme", () => {
+    it("renders the Counter wrapper", () => {
+        const wrapper = shallow(<Hello />);
+        expect(wrapper.find(Header)).to.have.length(1);
     });
 
-    it("renders with a name", () => {
-        act(() => {
-            render(<Hello name="Alex" />, container);
-        });
+    it("with name", () => {
+        const wrapper = shallow(<Hello name="Fake name" />);
+        const headerWrapper = wrapper.find(Header);
 
-        const h1 = container.querySelector("h1");
+        expect(headerWrapper.prop("title")).to.equal("Hello, Fake name!");
+    });
 
-        if (h1 !== null) {
-            expect(h1.textContent).to.equal("Hello, Alex!");
-        }
+    it("without name", () => {
+        const wrapper = shallow(<Hello />);
+        const headerWrapper = wrapper.find(Header);
+
+        expect(headerWrapper.prop("title")).to.equal("Hey, stranger!");
+    });
+});
+
+describe("Header", () => {
+    it("renders title", () => {
+        const wrapper = shallow(<Header title="fake title" />);
+
+        const h1 = wrapper.find("h1");
+        expect(h1).to.have.length(1);
+        expect(h1.text()).to.equal("fake title");
     });
 });

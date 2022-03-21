@@ -24,7 +24,8 @@
     "main": "build/electron/index.js",
     "scripts": {
         "compile-tv-css": "node-sass ./charting_library/static/scss/ --output ./charting_library/static/ --output-style compressed",
-        "test": "cross-env NODE_ENV=test mocha --require ts-node/register --require ./test/components/browser.js ./test --recursive --extension ts,tsx",
+        "test": "cross-env NODE_ENV=test mocha --require ts-node/register -r ./test/components/setup.js ./test --recursive --extension ts,tsx",
+        "test:watch": "npm run test -- --watch",
         "test:market": "cross-env NODE_ENV=test mocha --require babel-core/register --watch --extension js ./app/test/marketTests",
         "bench:market": "cross-env NODE_ENV=test babel ./lib/common/MarketClasses.js -o ./app/test/MarketClasses.js && cross-env NODE_ENV=test node --harmony ./test/marketBenchmark",
         "profile-dev": "webpack --env.dev --env.profile --profile --json > stats-dev.json",
@@ -208,6 +209,7 @@
     },
     "devDependencies": {
         "@types/chai": "^4.3.0",
+        "@types/enzyme": "^3.10.11",
         "@types/mocha": "^9.1.0",
         "@types/react-dom": "^17.0.13",
         "babel-core": "^6.26.3",
@@ -232,6 +234,8 @@
         "css-loader": "^0.28.11",
         "electron": "^2.0.13",
         "electron-builder": "^20.39.0",
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.6",
         "es6-promise": "^3.0.2",
         "eslint": "^4.19.0",
         "eslint-plugin-json": "^1.2.0",

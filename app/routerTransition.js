@@ -13,7 +13,7 @@ import AccountStore from "stores/AccountStore";
 import ls from "common/localStorage";
 
 const STORAGE_KEY = "__graphene__";
-const ss = new ls(STORAGE_KEY);
+const ss = ls(STORAGE_KEY);
 
 import counterpart from "counterpart";
 
@@ -356,7 +356,7 @@ class RouterTransitioner {
             url: connectionString,
             urls: urls,
             closeCb: this._onConnectionClose.bind(this),
-            optionalApis: {enableOrders: true},
+            optionalApis: {enableOrders: false},
             urlChangeCallback: url => {
                 console.log("fallback to new url:", url);
                 if (!!url) {

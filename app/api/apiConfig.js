@@ -1,5 +1,13 @@
 import {getFaucet, getTestFaucet} from "../branding";
 
+export const ioxbankAPIs = {
+    BASE: "https://api.ioxbank.com/bitshares",
+    COINS_LIST: "/coins",
+    ACTIVE_WALLETS: "/active-wallets",
+    TRADING_PAIRS: "/trading-pairs",
+    NEW_DEPOSIT_ADDRESS: "/simple-api/initiate-trade"
+};
+
 export const blockTradesAPIs = {
     BASE: "https://api.blocktrades.us/v2",
     COINS_LIST: "/coins",
@@ -130,7 +138,7 @@ export const settingsAPIs = {
             region: "Western Europe",
             country: "Germany",
             operator: "blocksights.info",
-            contact: "bitshares:blocksights"
+            contact: "telegram:blocksights"
         }
     ],
     DEFAULT_FAUCET: getFaucet().url,

@@ -68,7 +68,7 @@ class AccountSelector extends React.Component {
             this.onInputChanged(accountName);
     }
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (newProps.account && newProps.account !== this.props.account) {
             if (this.props.onAccountChanged)
                 this.props.onAccountChanged(newProps.account);
@@ -252,8 +252,8 @@ class AccountSelector extends React.Component {
                 account.accountType === "name"
                     ? "#" + account.get("id").substring(4)
                     : account.accountType === "id"
-                        ? account.get("name")
-                        : null;
+                    ? account.get("name")
+                    : null;
         }
 
         // Without Typeahead Error Handling
@@ -339,8 +339,8 @@ class AccountSelector extends React.Component {
         });
 
         let linked_status = !this.props.account ? null : myActiveAccounts.has(
-            account.get("name")
-        ) || contacts.has(account.get("name")) ? (
+              account.get("name")
+          ) || contacts.has(account.get("name")) ? (
             <Tooltip
                 placement="top"
                 title={counterpart.translate("tooltip.follow_user")}
@@ -420,19 +420,16 @@ class AccountSelector extends React.Component {
 
 AccountSelector = BindToChainState(AccountSelector);
 
-AccountSelector = connect(
-    AccountSelector,
-    {
-        listenTo() {
-            return [AccountStore];
-        },
-        getProps() {
-            return {
-                myActiveAccounts: AccountStore.getState().myActiveAccounts,
-                contacts: AccountStore.getState().accountContacts
-            };
-        }
+AccountSelector = connect(AccountSelector, {
+    listenTo() {
+        return [AccountStore];
+    },
+    getProps() {
+        return {
+            myActiveAccounts: AccountStore.getState().myActiveAccounts,
+            contacts: AccountStore.getState().accountContacts
+        };
     }
-);
+});
 
 export default AccountSelector;

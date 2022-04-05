@@ -112,9 +112,7 @@ class Row extends React.Component {
                         >
                             <Link
                                 className="inline-block"
-                                to={`/block/${this.props.block}/${
-                                    this.props.txIndex
-                                }`}
+                                to={`/block/${this.props.block}/${this.props.txIndex}`}
                             >
                                 <TransactionLabel color={color} type={type} />
                             </Link>
@@ -184,7 +182,7 @@ class Operation extends React.Component {
         csvExportMode: PropTypes.bool
     };
 
-    componentWillReceiveProps(np) {
+    UNSAFE_componentWillReceiveProps(np) {
         if (np.marketDirections !== this.props.marketDirections) {
             this.forceUpdate();
         }
@@ -283,18 +281,15 @@ class Operation extends React.Component {
     }
 }
 
-Operation = connect(
-    Operation,
-    {
-        listenTo() {
-            return [SettingsStore];
-        },
-        getProps() {
-            return {
-                marketDirections: SettingsStore.getState().marketDirections
-            };
-        }
+Operation = connect(Operation, {
+    listenTo() {
+        return [SettingsStore];
+    },
+    getProps() {
+        return {
+            marketDirections: SettingsStore.getState().marketDirections
+        };
     }
-);
+});
 
 export default Operation;

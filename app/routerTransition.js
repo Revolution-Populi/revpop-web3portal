@@ -356,7 +356,7 @@ class RouterTransitioner {
             url: connectionString,
             urls: urls,
             closeCb: this._onConnectionClose.bind(this),
-            optionalApis: {enableOrders: false},
+            optionalApis: {enableOrders: true},
             urlChangeCallback: url => {
                 console.log("fallback to new url:", url);
                 if (!!url) {

@@ -8,6 +8,7 @@ import AccountsContainer from "./AccountsContainer";
 import counterpart from "counterpart";
 import MarketsContainer from "../Exchange/MarketsContainer";
 import {Tabs} from "bitshares-ui-style-guide";
+import NetworkParameters from "../Blockchain/NetworkParameters/NetworkParameters";
 
 class Explorer extends React.Component {
     constructor(props) {
@@ -56,6 +57,12 @@ class Explorer extends React.Component {
                     link: "/explorer/fees",
                     translate: "fees.title",
                     content: FeesContainer
+                },
+                {
+                    name: "network_parameters",
+                    link: "/explorer/network-parameters",
+                    translate: "network_parameters.title",
+                    content: NetworkParameters
                 }
             ]
         };

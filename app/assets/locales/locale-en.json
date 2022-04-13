@@ -1118,6 +1118,12 @@
     "fees": {
         "title": "Fee Schedule"
     },
+    "network_parameters": {
+        "title": "Network parameters",
+        "name": "Name",
+        "value": "Value",
+        "filter_by_name": "Filter..."
+    },
     "footer": {
         "advanced_settings": "Advanced settings",
         "backup": "A Backup is Required",

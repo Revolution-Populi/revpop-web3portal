@@ -63,7 +63,7 @@ export function getTestFaucet() {
  * @returns {*}
  */
 export function getLogo() {
-    return require("assets/logo-ico-blue.png");
+    return require("assets/logo-ico-blue.png").default;
 }
 
 /**
@@ -159,23 +159,8 @@ export function getMyMarketsQuotes() {
             "GDEX.NULS",
             "GDEX.USDT"
         ],
-        openledgerTokens: ["OBITS"],
-        rudexTokens: [
-            "PPY",
-            "RUDEX.BTC",
-            "RUDEX.ETH",
-            "RUDEX.USDT",
-            "RUDEX.EOS",
-            "RUDEX.GOLOS",
-            "RUDEX.GBG",
-            "RUDEX.STEEM",
-            "RUDEX.SBD",
-            "RUDEX.KRM",
-            "RUDEX.WLS",
-            "RUDEX.SMOKE",
-            "RUDEX.GRC",
-            "RUDEX.PZM"
-        ],
+        openledgerTokens: [],
+        rudexTokens: [],
         xbtsxTokens: [
             "XBTSX.STH",
             "XBTSX.POST",
@@ -205,6 +190,8 @@ export function getMyMarketsQuotes() {
             "XBTSX.EOS",
             "XBTSX.BAT"
         ],
+        honestTokens: ["HONEST.BTC", "HONEST.USD"],
+        ioxbankTokens: ["IOB.XRP"],
         otherTokens: ["CVCOIN", "HERO", "OCT", "HERTZ", "YOYOW"]
     };
 
@@ -232,6 +219,8 @@ export function getFeaturedMarkets(quotes = []) {
         ["USD", "GDEX.ETH"],
         ["USD", "GDEX.EOS"],
         ["USD", "GDEX.BTO"],
+        ["USD", "HONEST.BTC"],
+        ["USD", "HONEST.USD"],
         ["CNY", "BTS"],
         ["CNY", "USD"],
         ["CNY", "YOYOW"],
@@ -244,6 +233,8 @@ export function getFeaturedMarkets(quotes = []) {
         ["CNY", "GDEX.BKBT"],
         ["CNY", "GDEX.USDT"],
         ["CNY", "GDEX.GXC"],
+        ["CNY", "HONEST.BTC"],
+        ["CNY", "HONEST.USD"],
         ["BTS", "RUBLE"],
         ["BTS", "HERO"],
         ["BTS", "OCT"],
@@ -265,6 +256,9 @@ export function getFeaturedMarkets(quotes = []) {
         ["BTS", "XBTSX.USDC"],
         ["BTS", "XBTSX.USDN"],
         ["BTS", "XBTSX.USDT"],
+        ["BTS", "HONEST.BTC"],
+        ["BTS", "HONEST.USD"],
+        ["BTS", "IOB.XRP"],
         ["BTS", "HERTZ"]
     ].filter(a => {
         if (!quotes.length) return true;
@@ -281,7 +275,7 @@ export function getAssetNamespaces() {
     if (_isTestnet()) {
         return [];
     }
-    return ["OPEN.", "RUDEX.", "GDEX.", "XBTSX.", "CITADEL."];
+    return ["XBTSX.", "GDEX.", "HONEST.", "IOB."];
 }
 
 /**
@@ -289,7 +283,7 @@ export function getAssetNamespaces() {
  * @returns {[string,string]}
  */
 export function getAssetHideNamespaces() {
-    // e..g "OPEN.", "bit"
+    // e..g "XBTSX.", "bit"
     return [];
 }
 
@@ -305,7 +299,8 @@ export function allowedGateway(gateway) {
         "RUDEX", // keep to display the warning icon, permanently disabled in gateways.js
         "GDEX",
         "XBTSX",
-        "CITADEL",
+        "IOB",
+        "CITADEL", // keep to display the warning icon, permanently disabled in gateways.js
         "BRIDGE", // keep to display the warning icon, permanently disabled in gateways.js
         "SPARKDEX" // keep to display the warning icon, permanently disabled in gateways.js
     ];

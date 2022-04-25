@@ -1,15 +1,15 @@
-BitShares-UI
+Revpop-Web3Portal
 ============
 [中文版](README_zh.md)
 
-This is the reference wallet of BitShares Blockchain which connects to BitShares Blockchain nodes (*bitshares-core*).
+This is the reference wallet of Revpop Blockchain which connects to Revpop Blockchain nodes (*revpop-core*).
 
 This reference wallet is a browser based wallet, which means *your keys are stored locally* in your browser and *never leaves it* while using the wallet. 
 You should *never expose your keys to anyone* as transactions are signed locally before transmitting them to a node.
 
 ## Getting started
 
-Building BitShares-UI browser based reference wallet depends on node version 10.
+Building Revpop-UI browser based reference wallet depends on node version 10.
 
 On Ubuntu or OSX, the easiest way to install node is to use [Node Version Manager](https://github.com/creationix/nvm).
 
@@ -24,8 +24,8 @@ nvm use v10
 Once you have node installed, clone the repo using the following commands using a non-root user:
 
 ```
-git clone https://github.com/bitshares/bitshares-ui.git
-cd bitshares-ui
+git clone https://github.com/Revolution-Populi/revpop-web3portal.git
+cd revpop-web3portal
 ```
 
 Before launching the GUI you will need to install the npm packages using a non-root user:
@@ -48,7 +48,7 @@ Once the compilation is done the GUI will be available in your browser at: `loca
 
 ## Testnet
 
-By default bitshares-ui connects to the live BitShares network, but it's very easy to switch it to the testnet run by Xeroc. To do so, open the UI in a browser, go to Settings, then under Access, select the *Public Testnet Server* in the dropdown menu. You should also change the faucet if you need to create an account, the testnet faucet address is https://testnet.revolutionpopuli.com.
+By default revpop-web3portal connects to the live Revpop network, but it's very easy to switch it to the testnet run by Xeroc. To do so, open the UI in a browser, go to Settings, then under Access, select the *Public Testnet Server* in the dropdown menu. You should also change the faucet if you need to create an account, the testnet faucet address is https://testnet.revolutionpopuli.com.
 
 The UI will reload and connect to the testnet, where you can use the faucet to create an account and receive an initial sum of test BTS.
 
@@ -101,7 +101,7 @@ Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ## BrowserStack 
 
-The BitShares UI is integrated with BrowserStack (https://www.browserstack.com) to allow manual compatibility testing across devices and browser versions. In the future we will switch to a automated Selenium testing framework.
+The Revpop Web3Portal is integrated with BrowserStack (https://www.browserstack.com) to allow manual compatibility testing across devices and browser versions. In the future we will switch to a automated Selenium testing framework.
 ![image](https://user-images.githubusercontent.com/33128181/48697885-05f8d880-ebe6-11e8-95a2-d87516cbb3d9.png)
 
 ## Release Branches
@@ -114,21 +114,15 @@ There are three branches that forms the current release process.
 All PRs should be pushed to the `develop` branch. At the end of each milestone this branch is pushed to `staging`.
 New commits are automatically deployed to this branch and published for review.
 
-Available for browsing on https://develop.bitshares.org
-
 ### Staging (Current Release Candidate)
 
 At the end of each milestone, `develop` branch is pushed to staging and forms the Release Candidate. The date of the RC forms the name, ie. 190214-RC*.
 
 Application breaking issues and bugs should be submitted to the issue tracker and PRs should be pushed to `staging`.
 
-Available for browsing on https://staging.bitshares.org
-
 ### Master (stable)
 
 When all issues to the current RC are fixed, `staging` branch is released to the stable `master` branch.
-
-Available for browsing on https://wallet.bitshares.org which is the official reference wallet for Bitshares.
 
 
 

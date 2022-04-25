@@ -83,7 +83,7 @@ export function getUnits(chainId = "3da3a128") {
 }
 
 export function getDefaultMarket() {
-    return "BTS_USD";
+    return "RVP_USD";
 }
 
 /**

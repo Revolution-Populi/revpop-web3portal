@@ -1122,7 +1122,9 @@
         "title": "Network parameters",
         "name": "Name",
         "value": "Value",
-        "filter_by_name": "Filter..."
+        "new_value": "New value",
+        "filter_by_name": "Filter...",
+        "edit": "Edit"
     },
     "footer": {
         "advanced_settings": "Advanced settings",

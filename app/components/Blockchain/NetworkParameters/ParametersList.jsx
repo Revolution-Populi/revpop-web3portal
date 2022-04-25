@@ -1,31 +1,37 @@
 import React from "react";
-import {Apis} from "@revolutionpopuli/revpopjs-ws";
-import Parameter from "./Parameter";
-import {Card, Table} from "bitshares-ui-style-guide";
-import Translate from "react-translate-component";
+import {Table} from "bitshares-ui-style-guide";
 import {isObject} from "lodash-es";
 import SearchInput from "../../Utility/SearchInput";
 import counterpart from "counterpart";
+import ParameterActions from "./Parameter";
+import EditModal from "./EditModal";
+import NetworkParametersContext from "./Context";
+import repository from "./Repository";
+import {Map} from "immutable";
 
 class ParametersList extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            parameters: {},
+            parameters: new Map(),
+            changingParameter: undefined,
             filter: {
                 byName: ""
-            }
+            },
+            showEditModal: false
         };
+
+        this.showEditModal = this.showEditModal.bind(this);
+        this.saveEditModal = this.saveEditModal.bind(this);
+        this.cancelEditModal = this.cancelEditModal.bind(this);
     }
 
     async componentDidMount() {
+        const parameters = await repository.load();
+
         this.setState({
-            parameters: (
-                await Apis.instance()
-                    .db_api()
-                    .exec("get_global_properties", [])
-            ).parameters
+            parameters: new Map(Object.entries(parameters))
         });
     }
 
@@ -36,14 +42,61 @@ class ParametersList extends React.Component {
         }));
     }
 
-    render() {
-        const parameters = this.state.parameters;
-        let parametersKeys = Object.keys(parameters);
+    prepareParameters() {
+        let parameters = Array.from(this.state.parameters, ([key, value]) => {
+            return {
+                name: key,
+                value: value.value,
+                newValue: value.newValue
+            };
+        });
+
         if (this.state.filter.byName !== "") {
-            parametersKeys = parametersKeys.filter(key =>
-                key.includes(this.state.filter.byName)
+            parameters = parameters.filter(parameter =>
+                parameter.name.includes(this.state.filter.byName)
             );
         }
+
+        return parameters.map(parameter => {
+            return {
+                key: parameter.name,
+                name: parameter.name,
+                value: !isObject(parameter.value) ? parameter.value : "Object",
+                newValue: parameter.newValue,
+                actions: <ParameterActions parameter={parameter} />
+            };
+        });
+    }
+
+    showEditModal(parameter) {
+        this.setState({
+            isVisibleEditModal: true,
+            changingParameter: parameter
+        });
+    }
+
+    saveEditModal(newValue) {
+        this.setState({
+            isVisibleEditModal: false
+        });
+
+        this.setState(state => ({
+            parameters: state.parameters.set(state.changingParameter.name, {
+                ...state.changingParameter,
+                ...{newValue}
+            }),
+            changingParameter: undefined
+        }));
+    }
+
+    cancelEditModal() {
+        this.setState({
+            isVisibleEditModal: false
+        });
+    }
+
+    render() {
+        const rows = this.prepareParameters();
 
         const columns = [
             {
@@ -55,21 +108,28 @@ class ParametersList extends React.Component {
                 key: "value",
                 title: counterpart.translate("network_parameters.value"),
                 dataIndex: "value"
+            },
+            {
+                key: "newValue",
+                title: counterpart.translate("network_parameters.new_value"),
+                dataIndex: "newValue"
+            },
+            {
+                key: "actions",
+                dataIndex: "actions"
             }
         ];
 
-        const rows = parametersKeys.map(parameter => {
-            return {
-                key: parameter,
-                name: parameter,
-                value: !isObject(parameters[parameter])
-                    ? parameters[parameter]
-                    : "Object"
-            };
-        });
-
         return (
-            <div>
+            <NetworkParametersContext.Provider
+                value={{
+                    isVisibleEditModal: false,
+                    changingParameter: this.state.changingParameter,
+                    showEditModal: this.showEditModal,
+                    saveEditModal: this.saveEditModal,
+                    cancelEditModal: this.cancelEditModal
+                }}
+            >
                 <SearchInput
                     placeholder={counterpart.translate(
                         "network_parameters.filter_by_name"
@@ -83,10 +143,13 @@ class ParametersList extends React.Component {
                     }}
                 />
 
+                <EditModal isVisible={this.state.isVisibleEditModal} />
                 <Table columns={columns} dataSource={rows} pagination={false} />
-            </div>
+            </NetworkParametersContext.Provider>
         );
     }
 }
+
+ParametersList.contextType = NetworkParametersContext;
 
 export default ParametersList;

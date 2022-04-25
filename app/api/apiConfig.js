@@ -121,24 +121,29 @@ export const nodeRegions = [
 export const settingsAPIs = {
     // If you want a location to be translated, add the translation to settings in locale-xx.js
     // and use an object {translate: key} in WS_NODE_LIST
-    DEFAULT_WS_NODE: "ws://172.20.20.6:8090",
+    DEFAULT_WS_NODE: "wss://testnet1.revolutionpopuli.com:8090",
     WS_NODE_LIST: [
         {
-            url: "ws://172.20.20.6:8090",
-            location: "Revolution Populi Testnet"
+            url: "wss://testnet1.revolutionpopuli.com:8090",
+            location: "Revolution Populi Testnet",
+            region: "Northern America",
+            country: "USA"
+        },
+        {
+            url: "wss://testnet2.revolutionpopuli.com:8090",
+            location: "Revolution Populi Testnet node 2",
+            region: "Northern America",
+            country: "USA"
+        },
+        {
+            url: "wss://testnet3.revolutionpopuli.com:8090",
+            location: "Revolution Populi Testnet node 3",
+            region: "Western Europe",
+            country: "Germany"
         },
         {
             url: "ws://localhost:8090",
             location: "Locally hosted"
-        }
-    ],
-    ES_WRAPPER_LIST: [
-        {
-            url: "https://api.revolutionpopuli.ws/openexplorer",
-            region: "Western Europe",
-            country: "Germany",
-            operator: "blocksights.info",
-            contact: "telegram:blocksights"
         }
     ],
     DEFAULT_FAUCET: getFaucet().url,

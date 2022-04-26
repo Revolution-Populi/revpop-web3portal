@@ -13,7 +13,7 @@ import {
     getUnits
 } from "branding";
 
-const CORE_ASSET = "RVP"; // Setting this to BTS to prevent loading issues when used with BTS chain which is the most usual case currently
+const CORE_ASSET = "RVP"; // Setting this to RVP to prevent loading issues when used with RVP chain which is the most usual case currently
 
 const STORAGE_KEY = "__graphene__";
 let ss = ls(STORAGE_KEY);
@@ -137,18 +137,7 @@ class SettingsStore {
      */
     _getDefaultChoices() {
         return {
-            locale: [
-                "en",
-                "zh",
-                "fr",
-                "ko",
-                "de",
-                "es",
-                "it",
-                "tr",
-                "ru",
-                "ja"
-            ],
+            locale: ["en"],
             apiServer: settingsAPIs.WS_NODE_LIST.slice(0), // clone all default servers as configured in apiConfig.js
             filteredApiServers: [[]],
             filteredServiceProviders: [[]],

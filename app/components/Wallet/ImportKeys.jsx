@@ -342,7 +342,7 @@ class ImportKeys extends Component {
                 }
             }
             if (!encrypted_brainkey)
-                throw "Please use a BTS 1.0 wallet_export_keys file instead";
+                throw "Please use a RVP 1.0 wallet_export_keys file instead";
 
             if (!password_checksum)
                 throw file.name + " is missing password_checksum";
@@ -411,9 +411,7 @@ class ImportKeys extends Component {
         let format_error1_once = true;
         for (let account of this.state.account_keys) {
             if (!account.encrypted_private_keys) {
-                let error = `Account ${
-                    account.account_name
-                } missing encrypted_private_keys`;
+                let error = `Account ${account.account_name} missing encrypted_private_keys`;
                 console.error(error);
                 if (format_error1_once) {
                     Notification.error({
@@ -1032,18 +1030,15 @@ class ImportKeys extends Component {
     }
 }
 
-ImportKeys = connect(
-    ImportKeys,
-    {
-        listenTo() {
-            return [ImportKeysStore];
-        },
-        getProps() {
-            return {
-                importing: ImportKeysStore.getState().importing
-            };
-        }
+ImportKeys = connect(ImportKeys, {
+    listenTo() {
+        return [ImportKeysStore];
+    },
+    getProps() {
+        return {
+            importing: ImportKeysStore.getState().importing
+        };
     }
-);
+});
 
 export default ImportKeys;

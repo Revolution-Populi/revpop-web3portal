@@ -272,17 +272,6 @@ function BindToChainState(Component, options = {}) {
                     else if (new_obj === null) new_state[key] = new_obj;
                     ++all_objects_counter;
                     if (new_obj !== undefined) ++resolved_objects_counter;
-                    if (prop === "bitsharesblocksazdazdz")
-                        console.log(
-                            "account:",
-                            prop,
-                            "new_obj",
-                            new_obj,
-                            "all_objects_counter",
-                            all_objects_counter,
-                            "resolved_objects_counter",
-                            resolved_objects_counter
-                        );
                 } else {
                     if (this.state[key]) new_state[key] = null;
                 }

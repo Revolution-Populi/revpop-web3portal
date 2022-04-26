@@ -1,10 +1,10 @@
 # Voting
 
-> Voting is important in Bitshares in the same way it is important to the community in which you live. The weight of your vote is directly correlated to the number of BTS you own. If you aren't heavily involved in the community, you are encouraged to choose a proxy who represents your interests. If you would like to be more involved in the community, check out these [channels](/help/introduction/bitshares).
+> Voting is important in RevPop in the same way it is important to the community in which you live. The weight of your vote is directly correlated to the number of RVP you own. If you aren't heavily involved in the community, you are encouraged to choose a proxy who represents your interests. If you would like to be more involved in the community, check out these [channels](/help/introduction/revpop).
 
 ## Proxy
 
-You may choose to **not** be active in the governance of Bitshares. If this is the case, it's important that you choose someone in the Bitshares community who you identify with and set that entity as your proxy. This gives them to the power to vote on your behalf with your BTS shares backing their vote. This is similar to electing a representative.
+You may choose to **not** be active in the governance of RevPop. If this is the case, it's important that you choose someone in the RevPop community who you identify with and set that entity as your proxy. This gives them to the power to vote on your behalf with your RVP shares backing their vote. This is similar to electing a representative.
 
 ## Witnesses
 
@@ -14,12 +14,12 @@ Witnesses are entities that work for the blockchain by constructing new blocks. 
 
 Who exactly is allowed to *produce* a block at which time instant is defined by a
 consensus mechanism called *Delegated Proof of Stake*. In essence, you, the
-shareholders of BitShares can cast a vote for your preferred block producers on the blockchain. Those *witnesses* with the most votes are allowed to produce blocks.
+shareholders of RevPop can cast a vote for your preferred block producers on the blockchain. Those *witnesses* with the most votes are allowed to produce blocks.
 
 
 ## Committee
 
-The committee is a set of entities that are approved by the shareholders and set policy for the Bitshares blockchain including:
+The committee is a set of entities that are approved by the shareholders and set policy for the RevPop blockchain including:
 
 * Transaction and trading fees
 * Blockchain parameters, such as block size, block interval
@@ -46,8 +46,8 @@ These worker proposals are displayed for historical purposes. You will find prop
 ### Worker budget mechanics
 Workers receive pay from a fixed daily budget on a first-come, first-serve basis until there are no more funds left.
 
-* A daily total budget of 400k BTS for all workers
-* 5 worker proposals with a positive votes total, with daily pay requests of 100k BTS each
+* A daily total budget of 400k RVP for all workers
+* 5 worker proposals with a positive votes total, with daily pay requests of 100k RVP each
 
-Now the four workers with the most votes will all receive 100k BTS each per day, but once they've been paid the worker budget is empty. Therefore the fifth worker will receive nothing.
+Now the four workers with the most votes will all receive 100k RVP each per day, but once they've been paid the worker budget is empty. Therefore the fifth worker will receive nothing.
 

@@ -10,7 +10,6 @@ import {
     FetchChain,
     ChainStore
 } from "@revolutionpopuli/revpopjs";
-//import ps from "perfect-scrollbar";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
 import cnames from "classnames";
@@ -654,19 +653,16 @@ class RecentTransactions extends React.Component {
 }
 RecentTransactions = BindToChainState(RecentTransactions);
 
-RecentTransactions = connect(
-    RecentTransactions,
-    {
-        listenTo() {
-            return [SettingsStore];
-        },
-        getProps() {
-            return {
-                marketDirections: SettingsStore.getState().marketDirections
-            };
-        }
+RecentTransactions = connect(RecentTransactions, {
+    listenTo() {
+        return [SettingsStore];
+    },
+    getProps() {
+        return {
+            marketDirections: SettingsStore.getState().marketDirections
+        };
     }
-);
+});
 
 class TransactionWrapper extends React.Component {
     static propTypes = {

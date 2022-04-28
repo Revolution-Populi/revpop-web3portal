@@ -8,7 +8,7 @@ class NetworkParameters extends React.Component {
             <div className="grid-block">
                 <div className="grid-block vertical medium-horizontal">
                     <div className="grid-block vertical">
-                        <div className="grid-content">
+                        <div className="grid-content network-parameters">
                             <HelpContent
                                 path={"components/NetworkParameters"}
                             />

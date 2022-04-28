@@ -1,10 +1,12 @@
 import React from "react";
+import {Map} from "immutable";
 
 const NetworkParametersDefaults = {
-    isVisibleEditModal: false,
-    showEditModal: () => {},
-    saveEditModal: () => {},
-    cancelEditModal: () => {}
+    parameters: new Map()
+
+    // showEditModal: () => {},
+    // saveEditModal: () => {},
+    // cancelEditModal: () => {}
 };
 
 const NetworkParametersContext = React.createContext(NetworkParametersDefaults);

@@ -142,8 +142,8 @@
         }
     },
     "dependencies": {
-        "@revolutionpopuli/revpop-report": "link:../revpop-report-devnet",
-        "@revolutionpopuli/revpopjs": "link:../revpopjs-devnet",
+        "@revolutionpopuli/revpop-report": "link:../revpop-report",
+        "@revolutionpopuli/revpopjs": "link:../revpopjs",
         "alt": "https://github.com/bitshares/alt.git",
         "alt-container": "https://github.com/bitshares/alt-container.git",
         "alt-react": "https://github.com/bitshares/alt-react.git",

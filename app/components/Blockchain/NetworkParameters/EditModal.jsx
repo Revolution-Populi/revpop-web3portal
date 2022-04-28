@@ -1,70 +1,47 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Form, Modal, Input} from "bitshares-ui-style-guide";
-import NetworkParametersContext from "./Context";
+import counterpart from "counterpart";
 
-class EditModal extends React.Component {
-    constructor(props) {
-        super(props);
+export default function EditModal({changingParameter, save, cancel}) {
+    const [newValue, setNewValue] = useState("");
+    useEffect(() => {
+        setNewValue(changingParameter ? changingParameter.newValue : "");
+    }, [changingParameter]);
 
-        this.state = {
-            newValue: ""
-        };
+    const isVisible = changingParameter !== null;
+    if (!isVisible) {
+        return null;
     }
 
-    componentDidMount() {
-        const newValue = this.context.changingParameter
-            ? this.context.changingParameter.newValue
-            : "";
-        this.setState({
-            newValue: newValue
-        });
+    function onChangeNewValue(event) {
+        setNewValue(event.currentTarget.value);
     }
 
-    onChangeNewValue(event) {
-        this.setState({
-            newValue: event.currentTarget.value
-        });
+    function onSave() {
+        setNewValue("");
+        save(newValue);
     }
 
-    render() {
-        return (
-            <NetworkParametersContext.Consumer>
-                {({changingParameter, saveEditModal, cancelEditModal}) => (
-                    <Modal
-                        title={changingParameter ? changingParameter.name : ""}
-                        visible={this.props.isVisible}
-                        onOk={() => {
-                            saveEditModal(this.state.newValue);
-                        }}
-                        onCancel={() => {
-                            cancelEditModal();
-                        }}
-                    >
-                        {changingParameter !== undefined && (
-                            <>
-                                <div>Value: {changingParameter.value}</div>
-                                <Form.Item label="New value">
-                                    <Input
-                                        defaultValue={
-                                            changingParameter.newValue
-                                        }
-                                        onChange={event => {
-                                            this.onChangeNewValue(
-                                                event,
-                                                changingParameter
-                                            );
-                                        }}
-                                    />
-                                </Form.Item>
-                            </>
-                        )}
-                    </Modal>
+    function onCancel() {
+        setNewValue("");
+        cancel();
+    }
+
+    return (
+        <Modal
+            title={changingParameter ? changingParameter.name : ""}
+            visible={isVisible}
+            onOk={onSave}
+            onCancel={onCancel}
+        >
+            <div>Value: {changingParameter.value}</div>
+            <Form.Item
+                label={counterpart.translate(
+                    "network_parameters.edit_modal.new_value"
                 )}
-            </NetworkParametersContext.Consumer>
-        );
-    }
+            >
+                <Input defaultValue={newValue} onChange={onChangeNewValue} />
+            </Form.Item>
+        </Modal>
+    );
 }
-
-EditModal.contextType = NetworkParametersContext;
-
-export default EditModal;

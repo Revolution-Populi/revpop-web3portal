@@ -1124,7 +1124,18 @@
         "value": "Value",
         "new_value": "New value",
         "filter_by_name": "Filter...",
-        "edit": "Edit"
+        "edit": "Edit",
+        "edit_modal": {
+            "new_value": "New value"
+        },
+        "create_proposal": {
+            "button": "Create proposal",
+            "modal_title": "Create proposal",
+            "parameters_title": "Parameters to change",
+            "errors": {
+                "empty": "No parameters for saving"
+            }
+        }
     },
     "footer": {
         "advanced_settings": "Advanced settings",

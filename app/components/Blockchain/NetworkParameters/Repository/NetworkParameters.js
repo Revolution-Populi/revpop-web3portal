@@ -1,6 +1,6 @@
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
 
-class Repository {
+class NetworkParametersRepository {
     async load() {
         const data = (
             await Apis.instance()
@@ -22,4 +22,4 @@ class Repository {
     }
 }
 
-export default new Repository();
+export default new NetworkParametersRepository();

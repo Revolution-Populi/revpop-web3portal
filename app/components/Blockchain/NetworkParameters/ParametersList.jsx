@@ -1,155 +1,130 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Table} from "bitshares-ui-style-guide";
-import {isObject} from "lodash-es";
 import SearchInput from "../../Utility/SearchInput";
 import counterpart from "counterpart";
-import ParameterActions from "./Parameter";
+import ParameterActions from "./ParameterActions";
 import EditModal from "./EditModal";
 import NetworkParametersContext from "./Context";
-import repository from "./Repository";
+import networkParametersRepository from "./Repository/NetworkParameters";
 import {Map} from "immutable";
+import ActionButtons from "./ActionButtons";
+import {isObject} from "lodash-es";
 
-class ParametersList extends React.Component {
-    constructor(props) {
-        super(props);
+export default function ParametersList() {
+    const [filterByName, setFilterByName] = useState("");
+    const [changingParameter, setChangingParameter] = useState(null);
+    const [parameters, setParameters] = useState(new Map());
 
-        this.state = {
-            parameters: new Map(),
-            changingParameter: undefined,
-            filter: {
-                byName: ""
-            },
-            showEditModal: false
+    useEffect(() => {
+        const loadParameters = async () => {
+            const parameters = await networkParametersRepository.load();
+            setParameters(new Map(Object.entries(parameters)));
         };
+        loadParameters().catch(console.error);
+    }, []);
 
-        this.showEditModal = this.showEditModal.bind(this);
-        this.saveEditModal = this.saveEditModal.bind(this);
-        this.cancelEditModal = this.cancelEditModal.bind(this);
-    }
-
-    async componentDidMount() {
-        const parameters = await repository.load();
-
-        this.setState({
-            parameters: new Map(Object.entries(parameters))
-        });
-    }
-
-    onFilter(event) {
+    function onChangeFilterByName(event) {
         const value = event.target.value.toLowerCase();
-        this.setState(state => ({
-            filter: {...state.filter, byName: value}
-        }));
+        setFilterByName(value);
     }
 
-    prepareParameters() {
-        let parameters = Array.from(this.state.parameters, ([key, value]) => {
-            return {
-                name: key,
-                value: value.value,
-                newValue: value.newValue
-            };
-        });
+    function showEditModal(parameter) {
+        setChangingParameter(parameter);
+    }
 
-        if (this.state.filter.byName !== "") {
-            parameters = parameters.filter(parameter =>
-                parameter.name.includes(this.state.filter.byName)
+    function saveEditModal(newValue) {
+        setParameters(
+            parameters.set(changingParameter.name, {
+                ...changingParameter,
+                ...{newValue}
+            })
+        );
+        setChangingParameter(null);
+    }
+
+    function cancelEditModal() {
+        setChangingParameter(null);
+    }
+
+    const columns = [
+        {
+            key: "name",
+            title: counterpart.translate("network_parameters.name"),
+            dataIndex: "name"
+        },
+        {
+            key: "value",
+            title: counterpart.translate("network_parameters.value"),
+            dataIndex: "value"
+        },
+        {
+            key: "newValue",
+            title: counterpart.translate("network_parameters.new_value"),
+            dataIndex: "newValue"
+        },
+        {
+            key: "actions",
+            dataIndex: "actions"
+        }
+    ];
+
+    function prepareParameters() {
+        let parametersForTable = parameters;
+
+        if (filterByName !== "") {
+            parametersForTable = parameters.filter(parameter =>
+                parameter.name.includes(filterByName)
             );
         }
 
-        return parameters.map(parameter => {
-            return {
-                key: parameter.name,
-                name: parameter.name,
-                value: !isObject(parameter.value) ? parameter.value : "Object",
-                newValue: parameter.newValue,
-                actions: <ParameterActions parameter={parameter} />
-            };
-        });
+        return parametersForTable
+            .map(parameter => {
+                return {
+                    key: parameter.name,
+                    name: parameter.name,
+                    value: !isObject(parameter.value)
+                        ? parameter.value
+                        : "Object",
+                    newValue: parameter.newValue,
+                    actions: (
+                        <ParameterActions
+                            parameter={parameter}
+                            show={showEditModal}
+                        />
+                    )
+                };
+            })
+            .toArray();
     }
 
-    showEditModal(parameter) {
-        this.setState({
-            isVisibleEditModal: true,
-            changingParameter: parameter
-        });
-    }
+    return (
+        <>
+            <div className="search-actions">
+                <div className="search">
+                    <SearchInput
+                        placeholder={counterpart.translate(
+                            "network_parameters.filter_by_name"
+                        )}
+                        value={filterByName}
+                        onChange={onChangeFilterByName}
+                    />
+                </div>
 
-    saveEditModal(newValue) {
-        this.setState({
-            isVisibleEditModal: false
-        });
+                <div className="actions">
+                    <ActionButtons />
+                </div>
+            </div>
 
-        this.setState(state => ({
-            parameters: state.parameters.set(state.changingParameter.name, {
-                ...state.changingParameter,
-                ...{newValue}
-            }),
-            changingParameter: undefined
-        }));
-    }
-
-    cancelEditModal() {
-        this.setState({
-            isVisibleEditModal: false
-        });
-    }
-
-    render() {
-        const rows = this.prepareParameters();
-
-        const columns = [
-            {
-                key: "name",
-                title: counterpart.translate("network_parameters.name"),
-                dataIndex: "name"
-            },
-            {
-                key: "value",
-                title: counterpart.translate("network_parameters.value"),
-                dataIndex: "value"
-            },
-            {
-                key: "newValue",
-                title: counterpart.translate("network_parameters.new_value"),
-                dataIndex: "newValue"
-            },
-            {
-                key: "actions",
-                dataIndex: "actions"
-            }
-        ];
-
-        return (
-            <NetworkParametersContext.Provider
-                value={{
-                    isVisibleEditModal: false,
-                    changingParameter: this.state.changingParameter,
-                    showEditModal: this.showEditModal,
-                    saveEditModal: this.saveEditModal,
-                    cancelEditModal: this.cancelEditModal
-                }}
-            >
-                <SearchInput
-                    placeholder={counterpart.translate(
-                        "network_parameters.filter_by_name"
-                    )}
-                    value={this.state.filter.byName}
-                    onChange={this.onFilter.bind(this)}
-                    style={{
-                        width: "200px",
-                        marginBottom: "12px",
-                        marginTop: "4px"
-                    }}
-                />
-
-                <EditModal isVisible={this.state.isVisibleEditModal} />
-                <Table columns={columns} dataSource={rows} pagination={false} />
-            </NetworkParametersContext.Provider>
-        );
-    }
+            <EditModal
+                changingParameter={changingParameter}
+                save={saveEditModal}
+                cancel={cancelEditModal}
+            />
+            <Table
+                columns={columns}
+                dataSource={prepareParameters()}
+                pagination={false}
+            />
+        </>
+    );
 }
-
-ParametersList.contextType = NetworkParametersContext;
-
-export default ParametersList;

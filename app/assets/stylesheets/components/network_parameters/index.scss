@@ -1,8 +1,26 @@
-.network-parameters {
+.network-parameters-list {
     .search-actions {
         display: flex;
         justify-content: space-between;
         margin-top: 12px;
         margin-bottom: 12px;
+    }
+}
+
+.network-parameters-proposals {
+    .actions {
+        display: flex;
+        justify-content: right;
+        margin-bottom: 12px;
+
+        .reset {
+            margin-left: 8px;
+        }
+    }
+
+    .list {
+        .ant-table-expanded-row {
+            background-color: #262626;
+        }
     }
 }

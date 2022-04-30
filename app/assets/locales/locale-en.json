@@ -1125,6 +1125,8 @@
         "new_value": "New value",
         "filter_by_name": "Filter...",
         "edit": "Edit",
+        "list": "List",
+        "proposals": "Proposals",
         "edit_modal": {
             "new_value": "New value"
         },

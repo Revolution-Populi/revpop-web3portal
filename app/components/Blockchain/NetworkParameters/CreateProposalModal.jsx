@@ -1,13 +1,48 @@
 import React, {useContext, useState} from "react";
 import counterpart from "counterpart";
-import {Modal} from "bitshares-ui-style-guide";
+import {Modal, Table} from "bitshares-ui-style-guide";
 import proposalRepository from "./Repository/Proposal";
 import NetworkParametersContext from "./Context";
 import Translate from "react-translate-component";
+import {isNaN, isObject, toNumber} from "lodash-es";
 
 export default function CreateProposalModal({isVisible, close}) {
     const [saveEmptyError, setSaveEmptyError] = useState(false);
     const {parameters} = useContext(NetworkParametersContext);
+
+    const columns = [
+        {
+            key: "name",
+            title: counterpart.translate("network_parameters.name"),
+            dataIndex: "name"
+        },
+        {
+            key: "value",
+            title: counterpart.translate("network_parameters.value"),
+            dataIndex: "value"
+        },
+        {
+            key: "newValue",
+            title: counterpart.translate("network_parameters.new_value"),
+            dataIndex: "newValue"
+        }
+    ];
+
+    function data() {
+        return parameters
+            .filter(parameter => parameter.newValue !== undefined)
+            .map(parameter => {
+                return {
+                    key: parameter.name,
+                    name: parameter.name,
+                    value: !isObject(parameter.value)
+                        ? parameter.value
+                        : "Object",
+                    newValue: parameter.newValue
+                };
+            })
+            .toArray();
+    }
 
     function save() {
         const parametersToSave = parameters.filter(
@@ -19,7 +54,11 @@ export default function CreateProposalModal({isVisible, close}) {
             return;
         }
 
-        proposalRepository.create(parametersToSave);
+        const newParameters = parameters.map(parameter => {
+            return parameter.newValue ?? parameter.value;
+        });
+
+        proposalRepository.create(newParameters);
     }
 
     function onClose() {
@@ -41,7 +80,7 @@ export default function CreateProposalModal({isVisible, close}) {
                     <Translate content="network_parameters.create_proposal.errors.empty" />
                 </div>
             )}
-            Add table with parameters to change?
+            <Table columns={columns} dataSource={data()} pagination={false} />
         </Modal>
     );
 }

@@ -8,7 +8,7 @@ import NetworkParametersContext from "./Context";
 import networkParametersRepository from "./Repository/NetworkParameters";
 import {Map} from "immutable";
 import ActionButtons from "./ActionButtons";
-import {isObject} from "lodash-es";
+import {isObject, toNumber} from "lodash-es";
 
 export default function ParametersList() {
     const [filterByName, setFilterByName] = useState("");
@@ -33,12 +33,15 @@ export default function ParametersList() {
     }
 
     function saveEditModal(newValue) {
+        const value = isNaN(newValue) ? newValue : toNumber(newValue);
+
         setParameters(
             parameters.set(changingParameter.name, {
                 ...changingParameter,
-                ...{newValue}
+                ...{newValue: value}
             })
         );
+
         setChangingParameter(null);
     }
 
@@ -98,7 +101,11 @@ export default function ParametersList() {
     }
 
     return (
-        <>
+        <NetworkParametersContext.Provider
+            value={{
+                parameters: parameters
+            }}
+        >
             <div className="search-actions">
                 <div className="search">
                     <SearchInput
@@ -125,6 +132,6 @@ export default function ParametersList() {
                 dataSource={prepareParameters()}
                 pagination={false}
             />
-        </>
+        </NetworkParametersContext.Provider>
     );
 }

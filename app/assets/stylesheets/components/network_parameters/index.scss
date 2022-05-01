@@ -19,6 +19,18 @@
     }
 
     .list {
+        .ant-table-row {
+            &.unsupported {
+                color: grey;
+            }
+
+            .toggle {
+                & > span {
+                    cursor: pointer;
+                }
+            }
+        }
+
         .ant-table-expanded-row {
             background-color: #262626;
         }

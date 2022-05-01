@@ -4,7 +4,7 @@ import {Modal, Table} from "bitshares-ui-style-guide";
 import proposalRepository from "./Repository/Proposal";
 import NetworkParametersContext from "./Context";
 import Translate from "react-translate-component";
-import {isNaN, isObject, toNumber} from "lodash-es";
+import {isObject} from "lodash-es";
 
 export default function CreateProposalModal({isVisible, close}) {
     const [saveEmptyError, setSaveEmptyError] = useState(false);
@@ -44,7 +44,7 @@ export default function CreateProposalModal({isVisible, close}) {
             .toArray();
     }
 
-    function save() {
+    async function save() {
         const parametersToSave = parameters.filter(
             parameter => parameter.newValue !== undefined
         );
@@ -58,7 +58,12 @@ export default function CreateProposalModal({isVisible, close}) {
             return parameter.newValue ?? parameter.value;
         });
 
-        proposalRepository.create(newParameters);
+        try {
+            await proposalRepository.create(newParameters.toObject());
+            close();
+        } catch (e) {
+            close();
+        }
     }
 
     function onClose() {

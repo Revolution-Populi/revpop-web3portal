@@ -48,14 +48,37 @@ class ProposalRepository {
         transaction.add_type_operation(
             "committee_member_update_global_parameters",
             {
-                fee: {
-                    amount: 0,
-                    asset_id: "1.3.0"
-                },
                 new_parameters: parameters
             }
         );
+        transaction.set_required_fees();
+
         WalletDb.process_transaction(transaction, null, true);
+        // .then(result => {
+        //
+        // })
+        // .catch(error => {
+        //     console.error("asset settle error: ", error);
+        //     return false;
+        // });
+    }
+
+    async vote(account, proposals) {
+        const transaction = WalletApi.new_transaction();
+        transaction.add_type_operation("proposal_update", {
+            fee_paying_account: account.id,
+            proposal: proposal.name,
+            active_approvals_to_add: [account.id]
+        });
+
+        const result = await WalletDb.process_transaction(
+            transaction,
+            null,
+            true,
+            neededKeys
+        );
+
+        console.log(result);
     }
 }
 

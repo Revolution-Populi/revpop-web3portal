@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import {Table} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import ProposalsContext from "./Context";
@@ -7,10 +7,16 @@ import proposalRepository from "../Repository/Proposal";
 import ToggleCell from "./ToggleCell";
 import ExpandedRow from "./ExpandedRow";
 import ActionButtons from "./ActionButtons";
+import useSelectedProposalsReducer from "./Reducer/SelectedProposals";
 
 export default function ProposalsList() {
-    const [proposals, setProposals] = useState(new Map());
-    const [selectedProposals, setSelectedProposals] = useState([]);
+    const [proposals, setProposals] = useState(Map());
+    const [
+        selectedProposals,
+        addSelectedProposal,
+        removeSelectedProposal,
+        clearSelectedProposals
+    ] = useSelectedProposalsReducer();
 
     useEffect(() => {
         const loadProposals = async () => {
@@ -27,10 +33,25 @@ export default function ProposalsList() {
                     key: proposal.name,
                     name: proposal.name,
                     parameters: proposal.parameters,
-                    toggle: <ToggleCell proposal={proposal} />
+                    toggle: (
+                        <ToggleCell
+                            proposal={proposal}
+                            selectedProposals={selectedProposals}
+                            add={addSelectedProposal}
+                            remove={removeSelectedProposal}
+                        />
+                    )
                 };
             })
             .toArray();
+    }
+
+    function rowClassName(row) {
+        if (!selectedProposals.has(row.name)) {
+            return "unsupported";
+        }
+
+        return "";
     }
 
     const columns = [
@@ -41,14 +62,10 @@ export default function ProposalsList() {
         },
         {
             title: "Toggle",
-            dataIndex: "toggle"
+            dataIndex: "toggle",
+            className: "toggle"
         }
     ];
-
-    const rowSelection = {
-        selectedRowKeys: selectedProposals,
-        onChange: setSelectedProposals
-    };
 
     return (
         <ProposalsContext.Provider
@@ -60,7 +77,7 @@ export default function ProposalsList() {
                 <ActionButtons
                     proposals={proposals}
                     selectedProposals={selectedProposals}
-                    setSelectedProposals={setSelectedProposals}
+                    clear={clearSelectedProposals}
                 />
             </div>
 
@@ -68,7 +85,7 @@ export default function ProposalsList() {
                 className="list"
                 columns={columns}
                 dataSource={prepareProposals()}
-                rowSelection={rowSelection}
+                rowClassName={rowClassName}
                 expandedRowRender={proposal => (
                     <ExpandedRow proposal={proposal} />
                 )}

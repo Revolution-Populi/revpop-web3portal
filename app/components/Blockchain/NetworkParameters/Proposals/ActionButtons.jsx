@@ -1,18 +1,15 @@
 import React from "react";
 import {Button} from "bitshares-ui-style-guide";
 import Translate from "react-translate-component";
+import ProposalRepository from "../Repository/Proposal";
 
-export default function ActionButtons({
-    proposals,
-    selectedProposals,
-    setSelectedProposals
-}) {
+export default function ActionButtons({proposals, selectedProposals, clear}) {
     function onSave() {
-        console.log("onSave");
+        ProposalRepository.vote(proposals, selectedProposals);
     }
 
     function onReset() {
-        setSelectedProposals([]);
+        clear();
     }
 
     return (
@@ -20,11 +17,15 @@ export default function ActionButtons({
             <Button
                 type="primary"
                 onClick={onSave}
-                disabled={selectedProposals.length === 0}
+                disabled={selectedProposals.isEmpty()}
             >
                 <Translate content="account.votes.publish" />
             </Button>
-            <Button className="reset" onClick={onReset}>
+            <Button
+                className="reset"
+                onClick={onReset}
+                disabled={selectedProposals.isEmpty()}
+            >
                 <Translate content="account.perm.reset" />
             </Button>
         </>

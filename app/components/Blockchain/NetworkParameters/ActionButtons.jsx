@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Button} from "bitshares-ui-style-guide";
 import Translate from "react-translate-component";
 import CreateProposalModal from "./CreateProposalModal";
+import NetworkParametersContext from "./Context";
 
 export default function ActionButtons() {
+    const {parameters} = useContext(NetworkParametersContext);
     const [isVisible, setIsVisible] = useState(false);
 
     function showModal() {
@@ -14,10 +16,21 @@ export default function ActionButtons() {
         setIsVisible(false);
     }
 
+    function existsEditedParameters() {
+        return (
+            parameters.find(parameter => parameter.newValue !== undefined) !==
+            undefined
+        );
+    }
+
     return (
         <>
             <CreateProposalModal isVisible={isVisible} close={closeModal} />
-            <Button type="primary" onClick={showModal}>
+            <Button
+                type="primary"
+                disabled={!existsEditedParameters()}
+                onClick={showModal}
+            >
                 <Translate content="network_parameters.create_proposal.button" />
             </Button>
         </>

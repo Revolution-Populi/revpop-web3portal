@@ -1,24 +1,27 @@
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
+import {ChainStore} from "@revolutionpopuli/revpopjs";
+import AccountStore from "../../../../stores/AccountStore";
 import WalletDb from "../../../../stores/WalletDb";
 import WalletApi from "../../../../api/WalletApi";
 import {OrderedMap} from "immutable";
-import AccountStore from "../../../../stores/AccountStore";
-import ChainStore from "../../../../../../revpopjs/es/chain/src/ChainStore";
+import moment from "moment";
 
 class ProposalRepository {
     async load() {
         return {
             name: {
-                name: "name",
+                id: "1.10.1",
                 value: "value",
+                expiration_date: moment().add(3, "day"),
                 parameters: new OrderedMap({
                     parameter1: 50,
                     parameter2: "New value"
                 })
             },
             name2: {
-                name: "name2",
+                id: "1.10.3",
                 value: "value2",
+                expiration_date: moment().add(2, "day"),
                 parameters: new OrderedMap({
                     parameter1: 100,
                     parameter2: "New value"
@@ -50,13 +53,14 @@ class ProposalRepository {
     }
 
     async create(parameters, expirationTime) {
-        // let account = AccountStore.getState().currentAccount;
-        // account = ChainStore.getAccount(account);
+        let account = AccountStore.getState().currentAccount;
+        account = ChainStore.getAccount(account);
 
         const transaction = WalletApi.new_transaction();
         transaction.add_type_operation(
             "committee_member_update_global_parameters",
             {
+                fee_paying_account: account.get("id"),
                 new_parameters: parameters,
                 expiration_time: expirationTime
             }
@@ -64,31 +68,20 @@ class ProposalRepository {
         transaction.set_required_fees();
 
         WalletDb.process_transaction(transaction, null, true);
-        // .then(result => {
-        //
-        // })
-        // .catch(error => {
-        //     console.error("asset settle error: ", error);
-        //     return false;
-        // });
     }
 
-    async vote(account, proposals) {
+    async vote(proposal) {
+        let account = AccountStore.getState().currentAccount;
+        account = ChainStore.getAccount(account);
+
         const transaction = WalletApi.new_transaction();
         transaction.add_type_operation("proposal_update", {
-            fee_paying_account: account.id,
-            proposal: proposal.name,
-            active_approvals_to_add: [account.id]
+            fee_paying_account: account.get("id"),
+            proposal: proposal.id,
+            active_approvals_to_add: [account.get("id")]
         });
 
-        const result = await WalletDb.process_transaction(
-            transaction,
-            null,
-            true,
-            neededKeys
-        );
-
-        console.log(result);
+        await WalletDb.process_transaction(transaction, null, true);
     }
 }
 

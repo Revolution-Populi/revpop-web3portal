@@ -1,22 +1,14 @@
-import React, {useEffect, useReducer, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Table} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import ProposalsContext from "./Context";
 import {Map} from "immutable";
 import proposalRepository from "../Repository/Proposal";
-import ToggleCell from "./ToggleCell";
 import ExpandedRow from "./ExpandedRow";
-import ActionButtons from "./ActionButtons";
-import useSelectedProposalsReducer from "./Reducer/SelectedProposals";
+import RowActions from "./ProposalRowActions";
 
 export default function ProposalsList() {
     const [proposals, setProposals] = useState(Map());
-    const [
-        selectedProposals,
-        addSelectedProposal,
-        removeSelectedProposal,
-        clearSelectedProposals
-    ] = useSelectedProposalsReducer();
 
     useEffect(() => {
         const loadProposals = async () => {
@@ -30,40 +22,36 @@ export default function ProposalsList() {
         return proposals
             .map(proposal => {
                 return {
-                    key: proposal.name,
-                    name: proposal.name,
+                    key: proposal.id,
+                    id: proposal.id,
+                    expiration_date: proposal.expiration_date,
                     parameters: proposal.parameters,
-                    toggle: (
-                        <ToggleCell
-                            proposal={proposal}
-                            selectedProposals={selectedProposals}
-                            add={addSelectedProposal}
-                            remove={removeSelectedProposal}
-                        />
-                    )
+                    actions: <RowActions proposal={proposal} />
                 };
             })
             .toArray();
     }
 
-    function rowClassName(row) {
-        if (!selectedProposals.has(row.name)) {
-            return "unsupported";
-        }
-
-        return "";
-    }
-
     const columns = [
         {
-            key: "name",
-            title: counterpart.translate("network_parameters.name"),
-            dataIndex: "name"
+            title: counterpart.translate("network_parameters.proposals.id"),
+            dataIndex: "id"
         },
         {
-            title: "Toggle",
-            dataIndex: "toggle",
-            className: "toggle"
+            title: counterpart.translate(
+                "network_parameters.proposals.expiration_date"
+            ),
+            dataIndex: "expiration_date",
+            defaultSortOrder: "ascend",
+            sorter: (a, b) => {
+                return a.expiration_date - b.expiration_date;
+            },
+            render: expiration_date => expiration_date.format()
+        },
+        {
+            title: "",
+            dataIndex: "actions",
+            className: "row-actions"
         }
     ];
 
@@ -73,19 +61,10 @@ export default function ProposalsList() {
                 proposals: proposals
             }}
         >
-            <div className="actions">
-                <ActionButtons
-                    proposals={proposals}
-                    selectedProposals={selectedProposals}
-                    clear={clearSelectedProposals}
-                />
-            </div>
-
             <Table
                 className="list"
                 columns={columns}
                 dataSource={prepareProposals()}
-                rowClassName={rowClassName}
                 expandedRowRender={proposal => (
                     <ExpandedRow proposal={proposal} />
                 )}

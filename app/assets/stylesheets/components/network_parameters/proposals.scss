@@ -15,11 +15,15 @@
                 color: grey;
             }
 
-            .toggle {
-                & > span {
-                    cursor: pointer;
-                }
+            .row-actions {
+                text-align: right;
             }
+
+            //.toggle {
+            //    & > span {
+            //        cursor: pointer;
+            //    }
+            //}
         }
 
         .ant-table-expanded-row {

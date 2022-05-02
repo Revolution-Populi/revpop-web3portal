@@ -61,7 +61,7 @@ class Explorer extends React.Component {
                 {
                     name: "network_parameters",
                     link: "/explorer/network-parameters",
-                    translate: "network_parameters.title",
+                    translate: "network_parameters.list.title",
                     content: NetworkParameters
                 }
             ]

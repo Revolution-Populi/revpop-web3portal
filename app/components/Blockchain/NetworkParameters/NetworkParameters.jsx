@@ -19,7 +19,7 @@ class NetworkParameters extends React.Component {
                                 <Tabs.TabPane
                                     key="/explorer/network-parameters"
                                     tab={counterpart.translate(
-                                        "network_parameters.list"
+                                        "network_parameters.list.title"
                                     )}
                                 >
                                     <div className="network-parameters-list">
@@ -29,7 +29,7 @@ class NetworkParameters extends React.Component {
                                 <Tabs.TabPane
                                     key="/explorer/network-parameters/proposals"
                                     tab={counterpart.translate(
-                                        "network_parameters.proposals"
+                                        "network_parameters.proposals.title"
                                     )}
                                 >
                                     <div className="network-parameters-proposals">

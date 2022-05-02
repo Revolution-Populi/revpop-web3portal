@@ -1119,16 +1119,22 @@
         "title": "Fee Schedule"
     },
     "network_parameters": {
-        "title": "Network parameters",
         "name": "Name",
         "value": "Value",
         "new_value": "New value",
         "filter_by_name": "Filter...",
         "edit": "Edit",
-        "list": "List",
-        "proposals": "Proposals",
         "edit_modal": {
             "new_value": "New value"
+        },
+        "list": {
+            "title": "Network parameters"
+        },
+        "proposals": {
+            "title": "Proposals",
+            "id": "ID",
+            "expiration_date": "Expiration date",
+            "vote": "Vote"
         },
         "create_proposal": {
             "button": "Create proposal",

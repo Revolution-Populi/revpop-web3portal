@@ -5,8 +5,13 @@ import proposalRepository from "./Repository/Proposal";
 import NetworkParametersContext from "./Context";
 import Translate from "react-translate-component";
 import {isObject} from "lodash-es";
+import ExpirationDate from "./CreateProposalModal/ExpirationDate";
+import moment from "moment";
 
 export default function CreateProposalModal({isVisible, close}) {
+    const [expirationDate, setExpirationDate] = useState(
+        moment().add(1, "days")
+    );
     const [saveEmptyError, setSaveEmptyError] = useState(false);
     const {parameters} = useContext(NetworkParametersContext);
 
@@ -59,7 +64,10 @@ export default function CreateProposalModal({isVisible, close}) {
         });
 
         try {
-            await proposalRepository.create(newParameters.toObject());
+            await proposalRepository.create(
+                newParameters.toObject(),
+                expirationDate.diff(moment(), "second")
+            );
             close();
         } catch (e) {
             close();
@@ -76,6 +84,7 @@ export default function CreateProposalModal({isVisible, close}) {
             title={counterpart.translate(
                 "network_parameters.create_proposal.modal_title"
             )}
+            className="create-proposal-modal"
             visible={isVisible}
             onOk={save}
             onCancel={onClose}
@@ -85,7 +94,16 @@ export default function CreateProposalModal({isVisible, close}) {
                     <Translate content="network_parameters.create_proposal.errors.empty" />
                 </div>
             )}
-            <Table columns={columns} dataSource={data()} pagination={false} />
+            <Table
+                columns={columns}
+                className="list"
+                dataSource={data()}
+                pagination={false}
+            />
+            <ExpirationDate
+                date={expirationDate}
+                onChange={setExpirationDate}
+            />
         </Modal>
     );
 }

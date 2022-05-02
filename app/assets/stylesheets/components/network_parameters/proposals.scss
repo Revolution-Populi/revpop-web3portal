@@ -1,0 +1,29 @@
+.network-parameters-proposals {
+    .actions {
+        display: flex;
+        justify-content: right;
+        margin-bottom: 12px;
+
+        .reset {
+            margin-left: 8px;
+        }
+    }
+
+    .list {
+        .ant-table-row {
+            &.unsupported {
+                color: grey;
+            }
+
+            .toggle {
+                & > span {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .ant-table-expanded-row {
+            background-color: #262626;
+        }
+    }
+}

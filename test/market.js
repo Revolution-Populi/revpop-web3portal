@@ -952,333 +952,333 @@ describe("LimitOrder", function() {
     });
 });
 
-// describe("CallOrder", function() {
-//     let base = {
-//         amount: 8127,
-//         asset_id: "1.3.113"
-//     };
-//
-//     let quote = {
-//         amount: 59170,
-//         asset_id: "1.3.0"
-//     };
-//
-//     let settlePrice_0 = new FeedPrice({
-//         priceObject: {
-//             base,
-//             quote
-//         },
-//         market_base: "1.3.0",
-//         sqr: 1100,
-//         assets
-//     });
-//
-//     let settlePrice_113 = new FeedPrice({
-//         priceObject: {
-//             base,
-//             quote
-//         },
-//         market_base: "1.3.113",
-//         sqr: 1100,
-//         assets
-//     });
-//
-//     const o = {
-//         id: "1.8.2317",
-//         borrower: "1.2.115227",
-//         collateral: "338894366025",
-//         debt: 498820000,
-//         call_price: {
-//             base: {
-//                 amount: "13558072233",
-//                 asset_id: "1.3.0"
-//             },
-//             quote: {
-//                 amount: 34930000,
-//                 asset_id: "1.3.113"
-//             }
-//         }
-//     };
-//
-//     const o2 = {
-//         id: "1.8.2317",
-//         borrower: "1.2.115227",
-//         collateral: "338894366025",
-//         debt: 498820000,
-//         call_price: {
-//             base: {
-//                 amount: "1355807223",
-//                 asset_id: "1.3.0"
-//             },
-//             quote: {
-//                 amount: 349300000,
-//                 asset_id: "1.3.113"
-//             }
-//         }
-//     };
-//
-//     const o3_target_cr = {
-//         id: "1.8.2317",
-//         borrower: "1.2.115227",
-//         collateral: "120000",
-//         debt: 10000,
-//         call_price: {
-//             base: {
-//                 amount: "1355807223",
-//                 asset_id: "1.3.0"
-//             },
-//             quote: {
-//                 amount: 349300000,
-//                 asset_id: "1.3.113"
-//             }
-//         },
-//         target_collateral_ratio: 1750
-//     };
-//
-//     it("Instantiates", function() {
-//         let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         assert.equal(order.id, o.id, "Id should be 1.8.2317");
-//         assert.equal(order.collateral, o.collateral);
-//         assert.equal(order.debt, o.debt);
-//     });
-//
-//     it("Returns the call price of the order", function() {
-//         let order = new CallOrder(o, assets, "1.3.113", settlePrice_113);
-//         assert.equal(
-//             order.getPrice(false),
-//             38.8149792,
-//             "Price should equal 38.8149792"
-//         );
-//         let order2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         assert.equal(
-//             order2.getPrice(false),
-//             0.02576325,
-//             "Price should equal 0.02576325"
-//         );
-//     });
-//
-//     it("Returns the order type", function() {
-//         let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         assert.equal(order.isBid(), false, "Order type should be ASK/false");
-//
-//         let order2 = new CallOrder(o, assets, "1.3.113", settlePrice_113);
-//         assert.equal(order2.isBid(), true, "Order type should be BID/true");
-//     });
-//
-//     it("Returns margin call status", function() {
-//         let order = new CallOrder(o, assets, "1.3.113", settlePrice_113);
-//         let order2 = new CallOrder(o2, assets, "1.3.113", settlePrice_113);
-//
-//         assert.equal(
-//             order.isMarginCalled(),
-//             false,
-//             "Order is not margin called: " +
-//             order.getPrice() +
-//             " > " +
-//             settlePrice_113.toReal()
-//         );
-//         assert.equal(
-//             order2.isMarginCalled(),
-//             true,
-//             "Order2 is margin called: " +
-//             order2.getPrice() +
-//             " < " +
-//             settlePrice_113.toReal()
-//         );
-//
-//         let order3 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         let order4 = new CallOrder(o2, assets, "1.3.0", settlePrice_0);
-//
-//         assert.equal(
-//             order3.isMarginCalled(),
-//             false,
-//             "order3 is not margin called: " +
-//             order3.getPrice() +
-//             " < " +
-//             settlePrice_0.toReal()
-//         );
-//         assert.equal(
-//             order4.isMarginCalled(),
-//             true,
-//             "Order4 is margin called: " +
-//             order4.getPrice() +
-//             " > " +
-//             settlePrice_0.toReal()
-//         );
-//     });
-//
-//     it("Returns the amount for sale as an asset based on squeeze price", function() {
-//         let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         let forSale = order.amountForSale();
-//
-//         assert.equal(
-//             forSale.getAmount(),
-//             3994917846,
-//             "Satoshi amount for sale should equal 3994917846"
-//         );
-//         assert.equal(
-//             forSale.getAmount({real: true}),
-//             39949.17846,
-//             "Real amount for sale should equal 39949.17846"
-//         );
-//     });
-//
-//     it("Returns the amount to receive as an asset", function() {
-//         let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         let toReceive = order.amountToReceive();
-//
-//         assert.equal(
-//             toReceive.getAmount(),
-//             498820000,
-//             "Satoshi amount to receive should equal 498820000"
-//         );
-//         assert.equal(
-//             toReceive.getAmount({real: true}),
-//             49882.0,
-//             "Real amount for sale should equal 49882.0000"
-//         );
-//     });
-//
-//     it("Can be summed with another order", function() {
-//         let o1 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         let o2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         const o3 = o1.sum(o2);
-//
-//         assert(o3.isSum);
-//         assert.equal(
-//             o3.amountToReceive().getAmount(),
-//             498820000 * 2,
-//             "The amount should equal 997640000"
-//         );
-//
-//         assert.equal(
-//             o3.amountForSale().getAmount(),
-//             7989835692,
-//             "The amount should equal 7989835692"
-//         );
-//     });
-//
-//     it("Can be compared to another order with equals / ne", function() {
-//         let o1 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         let o2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//
-//         assert.equal(o1.ne(o2), false, "Orders are the same");
-//         assert.equal(o1.equals(o2), true, "Orders are the same");
-//     });
-//
-//     it("Calculates collateral to sell using target_collateral_ratio", function() {
-//         let o = new CallOrder(o3_target_cr, assets, "1.3.0", settlePrice_0);
-//         let o2 = new CallOrder(
-//             o3_target_cr,
-//             assets,
-//             "1.3.113",
-//             settlePrice_113
-//         );
-//
-//         /* check non-rounded values first */
-//         assert.equal(o._getMaxCollateralToSell(), 12542.901290883827);
-//         assert.equal(o._getMaxDebtToCover(), 1566.1523615120586);
-//         /* then check rounded values: */
-//         assert.equal(o.amountToReceive().getAmount(), 1567); // debt gets rounded up
-//         assert.equal(o.amountToReceive().getAmount({real: true}), 0.1567);
-//         assert.equal(o.amountForSale().getAmount(), 12550); // max_collateral_to_sell gets rounded up
-//
-//         /* check non-rounded values first */
-//         assert.equal(o2._getMaxCollateralToSell(), 12542.901290883827);
-//         assert.equal(o2._getMaxDebtToCover(), 1566.1523615120586);
-//         /* then check rounded values: */
-//         assert.equal(o2.amountToReceive().getAmount(), 1567); // debt gets rounded up
-//         assert.equal(o2.amountToReceive().getAmount({real: true}), 0.1567);
-//         assert.equal(o2.amountForSale().getAmount(), 12550); // max_collateral_to_sell gets rounded up
-//
-//         /* Create a new order with calculated amounts and check that CR = target_CR */
-//         let o3 = new CallOrder(
-//             {
-//                 id: "1.8.2317",
-//                 borrower: "1.2.115227",
-//                 collateral: 120000 - o2.amountForSale().getAmount(),
-//                 debt: 10000 - o2.amountToReceive().getAmount(),
-//                 call_price: {
-//                     base: {
-//                         amount: "1355807223",
-//                         asset_id: "1.3.0"
-//                     },
-//                     quote: {
-//                         amount: 349300000,
-//                         asset_id: "1.3.113"
-//                     }
-//                 },
-//                 target_collateral_ratio: 1750
-//             },
-//             assets,
-//             "1.3.113",
-//             settlePrice_113
-//         );
-//
-//         assert.equal(
-//             Math.floor(o3.getRatio() * 1000),
-//             1750,
-//             "Collateral ratio should equal 1.750"
-//         );
-//     });
-//
-//     it("Can be summed using target_cr", function() {
-//         let o1 = new CallOrder(o3_target_cr, assets, "1.3.0", settlePrice_0);
-//         let o2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
-//         const o3 = o1.sum(o2);
-//
-//         assert(o3.isSum);
-//         assert.equal(
-//             o3.amountToReceive().getAmount(),
-//             498820000 + 1567,
-//             "The amount should equal 498821567"
-//         );
-//
-//         assert.equal(
-//             o3.amountForSale().getAmount(),
-//             3994917846 + 12550,
-//             "The amount should equal 3994930396"
-//         );
-//     });
-//
-//     const feedPriceUSD = {
-//         base: {
-//             amount: 984015,
-//             asset_id: "1.3.121",
-//             precision: 4
-//         },
-//         quote: {
-//             amount: 100000000,
-//             asset_id: "1.3.0",
-//             precision: 5
-//         },
-//         sqr: 1100
-//     };
-//
-//     let feedPrice = new FeedPrice({
-//         priceObject: {
-//             base: new Asset(feedPriceUSD.base),
-//             quote: new Asset(feedPriceUSD.quote)
-//         },
-//         market_base: "1.3.0",
-//         sqr: feedPriceUSD.sqr,
-//         assets
-//     });
-//
-//     const usdMarginCalls = require("./usdMarginCalls.json");
-//
-//     it("Can sum a large amount of call orders", function() {
-//         let cos = usdMarginCalls.map(
-//             o => new CallOrder(o, assets, "1.3.0", feedPrice)
-//         );
-//         for (var i = cos.length - 2; i >= 0; i--) {
-//             cos[i] = cos[i].sum(cos[i + 1]);
-//             cos.splice(i + 1, 1);
-//         }
-//         assert.equal(cos[0].collateral, 2221748234897);
-//         assert.equal(cos[0].debt, 19874850935);
-//     });
-// });
+describe.skip("CallOrder", function() {
+    let base = {
+        amount: 8127,
+        asset_id: "1.3.113"
+    };
+
+    let quote = {
+        amount: 59170,
+        asset_id: "1.3.0"
+    };
+
+    let settlePrice_0 = new FeedPrice({
+        priceObject: {
+            base,
+            quote
+        },
+        market_base: "1.3.0",
+        sqr: 1100,
+        assets
+    });
+
+    let settlePrice_113 = new FeedPrice({
+        priceObject: {
+            base,
+            quote
+        },
+        market_base: "1.3.113",
+        sqr: 1100,
+        assets
+    });
+
+    const o = {
+        id: "1.8.2317",
+        borrower: "1.2.115227",
+        collateral: "338894366025",
+        debt: 498820000,
+        call_price: {
+            base: {
+                amount: "13558072233",
+                asset_id: "1.3.0"
+            },
+            quote: {
+                amount: 34930000,
+                asset_id: "1.3.113"
+            }
+        }
+    };
+
+    const o2 = {
+        id: "1.8.2317",
+        borrower: "1.2.115227",
+        collateral: "338894366025",
+        debt: 498820000,
+        call_price: {
+            base: {
+                amount: "1355807223",
+                asset_id: "1.3.0"
+            },
+            quote: {
+                amount: 349300000,
+                asset_id: "1.3.113"
+            }
+        }
+    };
+
+    const o3_target_cr = {
+        id: "1.8.2317",
+        borrower: "1.2.115227",
+        collateral: "120000",
+        debt: 10000,
+        call_price: {
+            base: {
+                amount: "1355807223",
+                asset_id: "1.3.0"
+            },
+            quote: {
+                amount: 349300000,
+                asset_id: "1.3.113"
+            }
+        },
+        target_collateral_ratio: 1750
+    };
+
+    it("Instantiates", function() {
+        let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        assert.equal(order.id, o.id, "Id should be 1.8.2317");
+        assert.equal(order.collateral, o.collateral);
+        assert.equal(order.debt, o.debt);
+    });
+
+    it("Returns the call price of the order", function() {
+        let order = new CallOrder(o, assets, "1.3.113", settlePrice_113);
+        assert.equal(
+            order.getPrice(false),
+            38.8149792,
+            "Price should equal 38.8149792"
+        );
+        let order2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        assert.equal(
+            order2.getPrice(false),
+            0.02576325,
+            "Price should equal 0.02576325"
+        );
+    });
+
+    it("Returns the order type", function() {
+        let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        assert.equal(order.isBid(), false, "Order type should be ASK/false");
+
+        let order2 = new CallOrder(o, assets, "1.3.113", settlePrice_113);
+        assert.equal(order2.isBid(), true, "Order type should be BID/true");
+    });
+
+    it("Returns margin call status", function() {
+        let order = new CallOrder(o, assets, "1.3.113", settlePrice_113);
+        let order2 = new CallOrder(o2, assets, "1.3.113", settlePrice_113);
+
+        assert.equal(
+            order.isMarginCalled(),
+            false,
+            "Order is not margin called: " +
+                order.getPrice() +
+                " > " +
+                settlePrice_113.toReal()
+        );
+        assert.equal(
+            order2.isMarginCalled(),
+            true,
+            "Order2 is margin called: " +
+                order2.getPrice() +
+                " < " +
+                settlePrice_113.toReal()
+        );
+
+        let order3 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let order4 = new CallOrder(o2, assets, "1.3.0", settlePrice_0);
+
+        assert.equal(
+            order3.isMarginCalled(),
+            false,
+            "order3 is not margin called: " +
+                order3.getPrice() +
+                " < " +
+                settlePrice_0.toReal()
+        );
+        assert.equal(
+            order4.isMarginCalled(),
+            true,
+            "Order4 is margin called: " +
+                order4.getPrice() +
+                " > " +
+                settlePrice_0.toReal()
+        );
+    });
+
+    it("Returns the amount for sale as an asset based on squeeze price", function() {
+        let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let forSale = order.amountForSale();
+
+        assert.equal(
+            forSale.getAmount(),
+            3994917846,
+            "Satoshi amount for sale should equal 3994917846"
+        );
+        assert.equal(
+            forSale.getAmount({real: true}),
+            39949.17846,
+            "Real amount for sale should equal 39949.17846"
+        );
+    });
+
+    it("Returns the amount to receive as an asset", function() {
+        let order = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let toReceive = order.amountToReceive();
+
+        assert.equal(
+            toReceive.getAmount(),
+            498820000,
+            "Satoshi amount to receive should equal 498820000"
+        );
+        assert.equal(
+            toReceive.getAmount({real: true}),
+            49882.0,
+            "Real amount for sale should equal 49882.0000"
+        );
+    });
+
+    it("Can be summed with another order", function() {
+        let o1 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let o2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        const o3 = o1.sum(o2);
+
+        assert(o3.isSum);
+        assert.equal(
+            o3.amountToReceive().getAmount(),
+            498820000 * 2,
+            "The amount should equal 997640000"
+        );
+
+        assert.equal(
+            o3.amountForSale().getAmount(),
+            7989835692,
+            "The amount should equal 7989835692"
+        );
+    });
+
+    it("Can be compared to another order with equals / ne", function() {
+        let o1 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        let o2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+
+        assert.equal(o1.ne(o2), false, "Orders are the same");
+        assert.equal(o1.equals(o2), true, "Orders are the same");
+    });
+
+    it("Calculates collateral to sell using target_collateral_ratio", function() {
+        let o = new CallOrder(o3_target_cr, assets, "1.3.0", settlePrice_0);
+        let o2 = new CallOrder(
+            o3_target_cr,
+            assets,
+            "1.3.113",
+            settlePrice_113
+        );
+
+        /* check non-rounded values first */
+        assert.equal(o._getMaxCollateralToSell(), 12542.901290883827);
+        assert.equal(o._getMaxDebtToCover(), 1566.1523615120586);
+        /* then check rounded values: */
+        assert.equal(o.amountToReceive().getAmount(), 1567); // debt gets rounded up
+        assert.equal(o.amountToReceive().getAmount({real: true}), 0.1567);
+        assert.equal(o.amountForSale().getAmount(), 12550); // max_collateral_to_sell gets rounded up
+
+        /* check non-rounded values first */
+        assert.equal(o2._getMaxCollateralToSell(), 12542.901290883827);
+        assert.equal(o2._getMaxDebtToCover(), 1566.1523615120586);
+        /* then check rounded values: */
+        assert.equal(o2.amountToReceive().getAmount(), 1567); // debt gets rounded up
+        assert.equal(o2.amountToReceive().getAmount({real: true}), 0.1567);
+        assert.equal(o2.amountForSale().getAmount(), 12550); // max_collateral_to_sell gets rounded up
+
+        /* Create a new order with calculated amounts and check that CR = target_CR */
+        let o3 = new CallOrder(
+            {
+                id: "1.8.2317",
+                borrower: "1.2.115227",
+                collateral: 120000 - o2.amountForSale().getAmount(),
+                debt: 10000 - o2.amountToReceive().getAmount(),
+                call_price: {
+                    base: {
+                        amount: "1355807223",
+                        asset_id: "1.3.0"
+                    },
+                    quote: {
+                        amount: 349300000,
+                        asset_id: "1.3.113"
+                    }
+                },
+                target_collateral_ratio: 1750
+            },
+            assets,
+            "1.3.113",
+            settlePrice_113
+        );
+
+        assert.equal(
+            Math.floor(o3.getRatio() * 1000),
+            1750,
+            "Collateral ratio should equal 1.750"
+        );
+    });
+
+    it("Can be summed using target_cr", function() {
+        let o1 = new CallOrder(o3_target_cr, assets, "1.3.0", settlePrice_0);
+        let o2 = new CallOrder(o, assets, "1.3.0", settlePrice_0);
+        const o3 = o1.sum(o2);
+
+        assert(o3.isSum);
+        assert.equal(
+            o3.amountToReceive().getAmount(),
+            498820000 + 1567,
+            "The amount should equal 498821567"
+        );
+
+        assert.equal(
+            o3.amountForSale().getAmount(),
+            3994917846 + 12550,
+            "The amount should equal 3994930396"
+        );
+    });
+
+    const feedPriceUSD = {
+        base: {
+            amount: 984015,
+            asset_id: "1.3.121",
+            precision: 4
+        },
+        quote: {
+            amount: 100000000,
+            asset_id: "1.3.0",
+            precision: 5
+        },
+        sqr: 1100
+    };
+
+    let feedPrice = new FeedPrice({
+        priceObject: {
+            base: new Asset(feedPriceUSD.base),
+            quote: new Asset(feedPriceUSD.quote)
+        },
+        market_base: "1.3.0",
+        sqr: feedPriceUSD.sqr,
+        assets
+    });
+
+    const usdMarginCalls = require("./usdMarginCalls.json");
+
+    it("Can sum a large amount of call orders", function() {
+        let cos = usdMarginCalls.map(
+            o => new CallOrder(o, assets, "1.3.0", feedPrice)
+        );
+        for (var i = cos.length - 2; i >= 0; i--) {
+            cos[i] = cos[i].sum(cos[i + 1]);
+            cos.splice(i + 1, 1);
+        }
+        assert.equal(cos[0].collateral, 2221748234897);
+        assert.equal(cos[0].debt, 19874850935);
+    });
+});
 
 describe("Settle Order", function() {
     let base = {

@@ -24,9 +24,9 @@
         "postinstall": "yarn run install-charting-library",
         "compile-tv-css": "sass ./charting_library/scss/:./charting_library/ --style compressed",
         "install-charting-library": "node ./charting_library/install-charting-library.cjs && yarn run compile-tv-css",
-        "test": "cross-env NODE_ENV=test mocha --require ts-node/register -r ./test/components/setup.js ./test --recursive --extension ts,tsx",
-        "test:market": "cross-env NODE_ENV=test mocha --require @babel/register --watch --extension js ./test/marketTests",
-        "bench:market": "cross-env NODE_ENV=test babel ./lib/common/MarketClasses.js -o ./app/test/MarketClasses.js && cross-env NODE_ENV=test node --harmony ./test/marketBenchmark",
+        "test": "cross-env NODE_ENV=test mocha -r ts-node/register -r ./test/components/setup.js ./test --recursive --extension js,ts,tsx",
+        "test:market": "cross-env NODE_ENV=test mocha --require @babel/register --watch --extension js ./test/market",
+        "bench:market": "cross-env NODE_ENV=test babel ./app/lib -d ./benchmark/lib && cross-env NODE_ENV=test babel ./app/branding.js -o ./benchmark/branding.js && cross-env NODE_ENV=test node --harmony ./benchmark/market.js",
         "profile-dev": "webpack --env dev --env profile --profile --json > stats-dev.json",
         "profile-build": "cross-env NODE_ENV=production webpack --env prod --env profile --env hash --env baseUrl=false --profile --json > stats-prod.json",
         "profile-nougly": "cross-env NODE_ENV=production webpack --env prod --env profile --env hash --env noUgly --profile --json > stats-prod-nougly.json",
@@ -219,6 +219,7 @@
         "zxcvbn-async": "0.0.5"
     },
     "devDependencies": {
+        "@babel/cli": "^7.17.10",
         "@babel/core": "^7.16.0",
         "@babel/eslint-parser": "^7.16.3",
         "@babel/plugin-proposal-function-bind": "^7.16.0",

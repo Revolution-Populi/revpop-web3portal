@@ -1125,10 +1125,18 @@
         "filter_by_name": "Filter...",
         "edit": "Edit",
         "edit_modal": {
+            "title": "Edit %(name)s parameter",
+            "value": "Value",
             "new_value": "New value"
         },
         "list": {
-            "title": "Network parameters"
+            "title": "Network parameters",
+            "add": "Add"
+        },
+        "add_new_parameter": {
+            "title": "Add new parameter",
+            "name": "Name",
+            "value": "Value"
         },
         "proposals": {
             "title": "Proposals",

@@ -1,11 +1,11 @@
 import React, {useContext, useState} from "react";
 import counterpart from "counterpart";
 import {Modal, Table} from "bitshares-ui-style-guide";
-import proposalRepository from "./Repository/Proposal";
-import NetworkParametersContext from "./Context";
+import proposalRepository from "../Repository/Proposal";
+import NetworkParametersContext from "../Context";
 import Translate from "react-translate-component";
 import {isObject} from "lodash-es";
-import ExpirationDate from "./CreateProposalModal/ExpirationDate";
+import ExpirationDate from "./ExpirationDate";
 import moment from "moment";
 
 export default function CreateProposalModal({isVisible, close}) {
@@ -100,10 +100,7 @@ export default function CreateProposalModal({isVisible, close}) {
                 dataSource={data()}
                 pagination={false}
             />
-            <ExpirationDate
-                date={expirationDate}
-                onChange={setExpirationDate}
-            />
+            <ExpirationDate onChange={setExpirationDate} />
         </Modal>
     );
 }

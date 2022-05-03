@@ -2,7 +2,7 @@ import React from "react";
 import {Form, DatePicker} from "bitshares-ui-style-guide";
 import moment from "moment";
 
-export default function ExpirationDate({date, onChange}) {
+export default function ExpirationDate({onChange}) {
     function disabledDate(current) {
         return current && current < moment().endOf("day");
     }
@@ -25,10 +25,12 @@ export default function ExpirationDate({date, onChange}) {
             {...formItemLayout}
         >
             <DatePicker
-                showTime
+                showTime={{
+                    defaultValue: moment("00:00:00", "HH:mm:ss"),
+                    format: "HH:mm"
+                }}
                 onChange={onChange}
                 disabledDate={disabledDate}
-                defaultValue={date}
             />
         </Form.Item>
     );

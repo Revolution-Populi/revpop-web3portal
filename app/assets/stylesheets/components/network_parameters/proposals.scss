@@ -18,16 +18,14 @@
             .row-actions {
                 text-align: right;
             }
-
-            //.toggle {
-            //    & > span {
-            //        cursor: pointer;
-            //    }
-            //}
         }
 
         .ant-table-expanded-row {
             background-color: #262626;
+
+            &:hover {
+                background-color: #262626;
+            }
         }
     }
 }

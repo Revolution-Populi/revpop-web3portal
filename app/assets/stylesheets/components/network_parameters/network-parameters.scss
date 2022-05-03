@@ -4,5 +4,13 @@
         justify-content: space-between;
         margin-top: 12px;
         margin-bottom: 12px;
+
+        .actions {
+            display: flex;
+
+            .add-parameter {
+                margin-right: 12px;
+            }
+        }
     }
 }

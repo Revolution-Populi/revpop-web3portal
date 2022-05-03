@@ -8,6 +8,8 @@ class NetworkParametersRepository {
                 .exec("get_global_properties", [])
         ).parameters;
 
+        console.log(data);
+
         const parametersKeys = Object.keys(data);
         const parameters = {};
 
@@ -19,6 +21,10 @@ class NetworkParametersRepository {
         });
 
         return parameters;
+    }
+
+    async add(parameters) {
+        console.log(parameters);
     }
 }
 

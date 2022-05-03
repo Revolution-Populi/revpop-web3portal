@@ -27,18 +27,46 @@ export default function EditModal({changingParameter, save, cancel}) {
         cancel();
     }
 
+    const formItemLayout = {
+        labelCol: {
+            xs: {span: 24},
+            sm: {span: 8}
+        },
+        wrapperCol: {
+            xs: {span: 24},
+            sm: {span: 16}
+        }
+    };
+
     return (
         <Modal
-            title={changingParameter ? changingParameter.name : ""}
+            title={counterpart.translate(
+                "network_parameters.edit_modal.title",
+                {
+                    name: changingParameter.name
+                }
+            )}
+            className="edit-parameter-modal"
             visible={isVisible}
             onOk={onSave}
             onCancel={onCancel}
         >
-            <div>Value: {changingParameter.value}</div>
+            <Form.Item
+                label={counterpart.translate(
+                    "network_parameters.edit_modal.value"
+                )}
+                className="value"
+                {...formItemLayout}
+            >
+                {changingParameter.value}
+            </Form.Item>
+
             <Form.Item
                 label={counterpart.translate(
                     "network_parameters.edit_modal.new_value"
                 )}
+                className="new-value"
+                {...formItemLayout}
             >
                 <Input defaultValue={newValue} onChange={onChangeNewValue} />
             </Form.Item>

@@ -95,8 +95,9 @@ export default function ParametersList() {
                 ? parameter.name
                 : [parent.key, parameter.name].join("."),
             name: parameter.name,
-            value: parameter.value,
-            newValue: parameter.newValue
+            value: parameter.value ?? null,
+            newValue: parameter.newValue ?? null,
+            link: parameter.link ?? null
         };
 
         let children;

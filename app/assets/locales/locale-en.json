@@ -1124,6 +1124,7 @@
         "new_value": "New value",
         "filter_by_name": "Filter...",
         "edit": "Edit",
+        "edit_fees": "Edit fees",
         "edit_modal": {
             "title": "Edit %(name)s parameter",
             "value": "Value",

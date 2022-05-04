@@ -8,7 +8,7 @@ import NetworkParametersContext from "./Context";
 import networkParametersRepository from "./Repository/NetworkParameters";
 import {Map} from "immutable";
 import ActionButtons from "./ActionButtons";
-import {isObject, toNumber} from "lodash-es";
+import {isNull, toNumber} from "lodash-es";
 
 export default function ParametersList() {
     const [filterByName, setFilterByName] = useState("");
@@ -18,7 +18,7 @@ export default function ParametersList() {
     useEffect(() => {
         const loadParameters = async () => {
             const parameters = await networkParametersRepository.load();
-            setParameters(new Map(Object.entries(parameters)));
+            setParameters(parameters);
         };
         loadParameters().catch(console.error);
     }, []);
@@ -33,14 +33,16 @@ export default function ParametersList() {
     }
 
     function saveEditModal(newValue) {
+        //TODO:: refactor this and setParameterNewValue function
         const value = isNaN(newValue) ? newValue : toNumber(newValue);
+        const path = changingParameter.key.split(".");
 
-        setParameters(
-            parameters.set(changingParameter.name, {
-                ...changingParameter,
-                ...{newValue: value}
-            })
-        );
+        const firstLevelParameterName = path[0];
+        const parameter = parameters.get(firstLevelParameterName);
+
+        setParameterNewValue(parameter, path, value);
+
+        setParameters(parameters.set(firstLevelParameterName, parameter));
 
         setChangingParameter(null);
     }
@@ -82,22 +84,42 @@ export default function ParametersList() {
 
         return parametersForTable
             .map(parameter => {
-                return {
-                    key: parameter.name,
-                    name: parameter.name,
-                    value: !isObject(parameter.value)
-                        ? parameter.value
-                        : "Object",
-                    newValue: parameter.newValue,
-                    actions: (
-                        <ParameterActions
-                            parameter={parameter}
-                            show={showEditModal}
-                        />
-                    )
-                };
+                return prepareParameter(parameter);
             })
             .toArray();
+    }
+
+    function prepareParameter(parameter, parent = null) {
+        const preparedParameter = {
+            key: isNull(parent)
+                ? parameter.name
+                : [parent.key, parameter.name].join("."),
+            name: parameter.name,
+            value: parameter.value,
+            newValue: parameter.newValue
+        };
+
+        let children;
+        let actions;
+        if (!parameter.children ?? null) {
+            children = null;
+            actions = (
+                <ParameterActions
+                    parameter={preparedParameter}
+                    show={showEditModal}
+                />
+            );
+        } else {
+            children = parameter.children.map(child =>
+                prepareParameter(child, preparedParameter)
+            );
+            actions = null;
+        }
+
+        return Object.assign(preparedParameter, {
+            children,
+            actions
+        });
     }
 
     return (
@@ -134,4 +156,18 @@ export default function ParametersList() {
             />
         </NetworkParametersContext.Provider>
     );
+}
+
+function setParameterNewValue(parameter, path, newValue) {
+    if (path.length === 1 && parameter.name === path[0]) {
+        parameter.newValue = newValue;
+        return;
+    }
+
+    if (parameter.children ?? null) {
+        path.shift();
+        parameter.children.forEach(child =>
+            setParameterNewValue(child, path, newValue)
+        );
+    }
 }

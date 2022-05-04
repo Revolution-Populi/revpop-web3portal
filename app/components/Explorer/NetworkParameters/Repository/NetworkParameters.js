@@ -1,4 +1,6 @@
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
+import parameterFactory from "../ParameterFactory";
+import {Map} from "immutable";
 
 class NetworkParametersRepository {
     async load() {
@@ -8,16 +10,14 @@ class NetworkParametersRepository {
                 .exec("get_global_properties", [])
         ).parameters;
 
-        console.log(data);
-
         const parametersKeys = Object.keys(data);
-        const parameters = {};
+        let parameters = Map();
 
-        parametersKeys.map(name => {
-            parameters[name] = {
+        parametersKeys.forEach(name => {
+            parameters = parameters.set(
                 name,
-                value: data[name]
-            };
+                parameterFactory.create(name, data[name])
+            );
         });
 
         return parameters;

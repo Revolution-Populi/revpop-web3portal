@@ -1,21 +1,24 @@
-import NetworkParameter from "../../../Context/NetworkParameters/Domain/NetworkParameter";
+import NetworkParameter, {
+    ParameterValueType
+} from "../../../Context/NetworkParameters/Domain/NetworkParameter";
 import ParameterActions from "./ParameterActions";
 import React, {ReactElement} from "react";
 import {ParameterType} from "../../../Context/NetworkParameters/Domain/Factory";
+import TableTemplate from "./ParameterValue/TableTemplate";
 
 export interface TableRow {
     key: string;
     name: string;
     description: string | null;
     type: ParameterType | null;
-    value?: TableRowValueType | null;
+    value?: JSX.Element | ParameterValueType | null;
     newValue?: TableRowValueType | null;
     link?: string | null;
     children?: TableRow[] | null;
     actions: ReactElement | null;
 }
 
-type TableRowValueType = string | number | boolean;
+export type TableRowValueType = string | number | boolean;
 
 class ParameterToTableRowTransformer {
     constructor(private showEditModal: () => void) {}
@@ -53,7 +56,20 @@ class ParameterToTableRowTransformer {
         }
 
         if (parameter.isNormal()) {
-            row.value = parameter.value;
+            let value:
+                | JSX.Element
+                | ParameterValueType = parameter.value as ParameterValueType;
+
+            if (parameter.type && parameter.value != null) {
+                value = (
+                    <TableTemplate
+                        type={parameter.type}
+                        value={parameter.value}
+                    />
+                );
+            }
+
+            row.value = value;
             row.newValue = parameter.newValue;
             row.actions = (
                 <ParameterActions parameter={row} show={this.showEditModal} />

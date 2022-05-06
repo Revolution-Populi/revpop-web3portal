@@ -2,13 +2,17 @@ import React, {useEffect, useState} from "react";
 import {Table} from "bitshares-ui-style-guide";
 import SearchInput from "../../Utility/SearchInput";
 import counterpart from "counterpart";
-import ParameterActions from "./ParameterActions";
 import EditModal from "./EditModal";
 import NetworkParametersContext from "./Context";
-import networkParametersRepository from "./Repository/NetworkParameters";
 import {Map} from "immutable";
 import ActionButtons from "./ActionButtons";
-import {isNull, toNumber} from "lodash-es";
+import {toNumber} from "lodash-es";
+import LoadAllHandler from "../../../Context/NetworkParameters/Application/Query/LoadAll/LoadAllHandler";
+import blockchainRepository from "../../../Context/NetworkParameters/Infrastructure/BlockchainRepository";
+import LoadAll from "../../../Context/NetworkParameters/Application/Query/LoadAll/LoadAll";
+import ParameterToTableRowTransformer from "./ParameterToTableRowTransformer";
+import UpdateParameter from "../../../Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameter";
+import UpdateParameterHandler from "../../../Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameterHandler";
 
 export default function ParametersList() {
     const [filterByName, setFilterByName] = useState("");
@@ -17,10 +21,14 @@ export default function ParametersList() {
 
     useEffect(() => {
         const loadParameters = async () => {
-            const parameters = await networkParametersRepository.load();
+            const query = new LoadAll();
+            const parameters = await new LoadAllHandler(
+                blockchainRepository
+            ).execute(query);
+            console.log(parameters);
             setParameters(parameters);
         };
-        loadParameters().catch(console.error);
+        loadParameters();
     }, []);
 
     function onChangeFilterByName(event) {
@@ -33,17 +41,13 @@ export default function ParametersList() {
     }
 
     function saveEditModal(newValue) {
-        //TODO:: refactor this and setParameterNewValue function
-        const value = isNaN(newValue) ? newValue : toNumber(newValue);
-        const path = changingParameter.key.split(".");
-
-        const firstLevelParameterName = path[0];
-        const parameter = parameters.get(firstLevelParameterName);
-
-        setParameterNewValue(parameter, path, value);
-
-        setParameters(parameters.set(firstLevelParameterName, parameter));
-
+        const command = new UpdateParameter(
+            parameters,
+            changingParameter.key,
+            newValue
+        );
+        const changedParameters = new UpdateParameterHandler().execute(command);
+        setParameters(changedParameters);
         setChangingParameter(null);
     }
 
@@ -82,45 +86,15 @@ export default function ParametersList() {
             );
         }
 
+        const parameterToTableRowTransformer = new ParameterToTableRowTransformer(
+            showEditModal
+        );
+
         return parametersForTable
             .map(parameter => {
-                return prepareParameter(parameter);
+                return parameterToTableRowTransformer.transform(parameter);
             })
             .toArray();
-    }
-
-    function prepareParameter(parameter, parent = null) {
-        const preparedParameter = {
-            key: isNull(parent)
-                ? parameter.name
-                : [parent.key, parameter.name].join("."),
-            name: parameter.name,
-            value: parameter.value ?? null,
-            newValue: parameter.newValue ?? null,
-            link: parameter.link ?? null
-        };
-
-        let children;
-        let actions;
-        if (!parameter.children ?? null) {
-            children = null;
-            actions = (
-                <ParameterActions
-                    parameter={preparedParameter}
-                    show={showEditModal}
-                />
-            );
-        } else {
-            children = parameter.children.map(child =>
-                prepareParameter(child, preparedParameter)
-            );
-            actions = null;
-        }
-
-        return Object.assign(preparedParameter, {
-            children,
-            actions
-        });
     }
 
     return (
@@ -157,18 +131,4 @@ export default function ParametersList() {
             />
         </NetworkParametersContext.Provider>
     );
-}
-
-function setParameterNewValue(parameter, path, newValue) {
-    if (path.length === 1 && parameter.name === path[0]) {
-        parameter.newValue = newValue;
-        return;
-    }
-
-    if (parameter.children ?? null) {
-        path.shift();
-        parameter.children.forEach(child =>
-            setParameterNewValue(child, path, newValue)
-        );
-    }
 }

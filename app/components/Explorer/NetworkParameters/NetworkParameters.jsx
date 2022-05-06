@@ -6,7 +6,6 @@ import {Tabs} from "bitshares-ui-style-guide";
 import ProposalsList from "./Proposals/ProposalsList";
 
 export default function NetworkParameters(props) {
-    console.log(props);
     return (
         <div className="grid-block">
             <div className="grid-block vertical medium-horizontal">

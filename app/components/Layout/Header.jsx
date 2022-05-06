@@ -545,9 +545,7 @@ class Header extends React.Component {
                                                     this
                                                 )}
                                                 className="button outline small"
-                                            >
-                                                >
-                                            </div>
+                                            ></div>
                                         </div>
                                     </li>
                                 </ul>

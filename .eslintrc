@@ -1,9 +1,13 @@
 {
     "plugins": [
-        "react", "json"
+        "react", "json", "@typescript-eslint"
     ],
-    "extends": ["plugin:react/recommended"],
-    "parser": "@babel/eslint-parser",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
     "env": {
         "browser": true,
         "node": true,
@@ -17,11 +21,9 @@
         }
     },
     "rules": {
-        "no-unused-vars": ["error", { "vars": "all", "args": "after-used" }],
         "comma-dangle": 0,
-        "indent": ["error", 4, {SwitchCase: 1}],
+        "indent": ["error", 4, {"SwitchCase": 1}],
         "quotes": [2, "double", "avoid-escape"],
-        "semi": [2, "always"],
         "camelcase": [0],
         "no-console": [0],
         "object-curly-spacing": [0],

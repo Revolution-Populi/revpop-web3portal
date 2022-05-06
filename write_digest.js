@@ -36,24 +36,25 @@ htmlZipFiles.forEach(function(file) {
     files.push({fullPath: path.resolve(htmlPath, file), fileName: file});
 });
 
-if (!files.length) return;
-releasesDir.remove(`release-checksums-${platform}`);
-files.forEach(function(file) {
-    var sha256 = crypto.createHash("sha256");
-    var s = fs.ReadStream(file.fullPath);
-    s.on("data", function(d) {
-        sha256.update(d);
+if (files.length) {
+    releasesDir.remove(`release-checksums-${platform}`);
+    files.forEach(function(file) {
+        var sha256 = crypto.createHash("sha256");
+        var s = fs.ReadStream(file.fullPath);
+        s.on("data", function(d) {
+            sha256.update(d);
+        });
+
+        s.on("end", function() {
+            var d2 = sha256.digest("hex");
+
+            console.log(`__${file.fileName}__`);
+            console.log("`" + d2 + "`");
+
+            releasesDir.append(
+                `release-checksums-${platform}`,
+                `\n__${file.fileName}__` + "\n`" + d2 + "`"
+            );
+        });
     });
-
-    s.on("end", function() {
-        var d2 = sha256.digest("hex");
-
-        console.log(`__${file.fileName}__`);
-        console.log("`" + d2 + "`");
-
-        releasesDir.append(
-            `release-checksums-${platform}`,
-            `\n__${file.fileName}__` + "\n`" + d2 + "`"
-        );
-    });
-});
+}

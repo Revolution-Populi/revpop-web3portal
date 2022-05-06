@@ -1,10 +1,13 @@
 import {Map} from "immutable";
+import {ParameterType} from "./Factory";
 
 export type ParameterValueType = string | number | boolean;
 
 export default class NetworkParameter {
     private _value: ParameterValueType | null = null;
     private _newValue: ParameterValueType | null = null;
+    private _description: string | null = null;
+    private _type: ParameterType | null = null;
     private _modified = false;
     private _link: string | null = null;
     private _children: Map<string, NetworkParameter> = Map();
@@ -30,6 +33,22 @@ export default class NetworkParameter {
     set newValue(value: ParameterValueType | null) {
         this._newValue = value;
         this._modified = true;
+    }
+
+    get description(): string | null {
+        return this._description;
+    }
+
+    set description(value: string | null) {
+        this._description = value;
+    }
+
+    get type(): ParameterType | null {
+        return this._type;
+    }
+
+    set type(value: ParameterType | null) {
+        this._type = value;
     }
 
     get link(): string | null {

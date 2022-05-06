@@ -1,10 +1,13 @@
 import NetworkParameter from "../../../Context/NetworkParameters/Domain/NetworkParameter";
 import ParameterActions from "./ParameterActions";
 import React, {ReactElement} from "react";
+import {ParameterType} from "../../../Context/NetworkParameters/Domain/Factory";
 
 export interface TableRow {
     key: string;
     name: string;
+    description: string | null;
+    type: ParameterType | null;
     value?: TableRowValueType | null;
     newValue?: TableRowValueType | null;
     link?: string | null;
@@ -27,6 +30,8 @@ class ParameterToTableRowTransformer {
                     ? parameter.name
                     : [parent.key, parameter.name].join("."),
             name: parameter.name,
+            description: parameter.description,
+            type: parameter.type,
             value: null,
             newValue: null,
             link: null,
@@ -36,6 +41,9 @@ class ParameterToTableRowTransformer {
 
         if (parameter.isLink()) {
             row.link = parameter.link;
+            row.actions = (
+                <ParameterActions parameter={row} show={this.showEditModal} />
+            );
         }
 
         if (parameter.isGroup()) {

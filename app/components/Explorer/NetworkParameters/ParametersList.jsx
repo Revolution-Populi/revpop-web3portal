@@ -62,6 +62,11 @@ export default function ParametersList() {
             dataIndex: "name"
         },
         {
+            key: "description",
+            title: counterpart.translate("network_parameters.description"),
+            dataIndex: "description"
+        },
+        {
             key: "value",
             title: counterpart.translate("network_parameters.value"),
             dataIndex: "value"

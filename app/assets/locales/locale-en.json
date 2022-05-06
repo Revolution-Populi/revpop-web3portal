@@ -1120,6 +1120,7 @@
     },
     "network_parameters": {
         "name": "Name",
+        "description": "Description",
         "value": "Value",
         "new_value": "New value",
         "filter_by_name": "Filter...",

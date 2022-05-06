@@ -7,7 +7,7 @@ export default function ParameterActions({parameter, show}) {
     if (parameter.link) {
         return (
             <div className="edit-fees">
-                <Link to="/explorer/fees">
+                <Link target="_blank" to={parameter.link}>
                     <Translate content="network_parameters.edit_fees" />
                 </Link>
             </div>

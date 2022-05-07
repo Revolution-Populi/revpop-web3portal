@@ -5,7 +5,7 @@ import counterpart from "counterpart";
 import {Tabs} from "bitshares-ui-style-guide";
 import ProposalsList from "./Proposals/ProposalsList";
 
-export default function NetworkParameters(props) {
+export default function NetworkParameters() {
     return (
         <div className="grid-block">
             <div className="grid-block vertical medium-horizontal">

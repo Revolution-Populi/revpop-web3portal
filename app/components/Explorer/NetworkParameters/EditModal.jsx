@@ -1,29 +1,28 @@
-import React, {useEffect, useState} from "react";
-import {Form, Modal, Input} from "bitshares-ui-style-guide";
+import React, {useState} from "react";
+import {Form, Modal} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
+import TableTemplate from "./ParameterValue/TableTemplate";
+import EditTemplate from "./ParameterValue/EditTemplate";
 
 export default function EditModal({changingParameter, save, cancel}) {
-    const [newValue, setNewValue] = useState("");
-    useEffect(() => {
-        setNewValue(changingParameter ? changingParameter.newValue : "");
-    }, [changingParameter]);
+    const [newValue, setNewValue] = useState(null);
 
     const isVisible = changingParameter !== null;
     if (!isVisible) {
         return null;
     }
 
-    function onChangeNewValue(event) {
-        setNewValue(event.currentTarget.value);
+    function onChangeNewValue(value) {
+        setNewValue(value);
     }
 
     function onSave() {
-        setNewValue("");
+        setNewValue(null);
         save(newValue);
     }
 
     function onCancel() {
-        setNewValue("");
+        setNewValue(null);
         cancel();
     }
 
@@ -58,7 +57,10 @@ export default function EditModal({changingParameter, save, cancel}) {
                 className="value"
                 {...formItemLayout}
             >
-                {changingParameter.value}
+                <TableTemplate
+                    type={changingParameter.type}
+                    value={changingParameter.rawValue}
+                />
             </Form.Item>
 
             <Form.Item
@@ -68,7 +70,11 @@ export default function EditModal({changingParameter, save, cancel}) {
                 className="new-value"
                 {...formItemLayout}
             >
-                <Input defaultValue={newValue} onChange={onChangeNewValue} />
+                <EditTemplate
+                    type={changingParameter.type}
+                    value={changingParameter.rawNewValue}
+                    onChange={onChangeNewValue}
+                />
             </Form.Item>
         </Modal>
     );

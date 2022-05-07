@@ -2,6 +2,7 @@ import React from "react";
 import {expect} from "chai";
 import {shallow} from "enzyme";
 import TableBooleanTemplate from "../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableBooleanTemplate";
+import TableStringTemplate from "../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableStringTemplate";
 
 describe("TableBooleanTemplate", () => {
     const cases: {
@@ -14,10 +15,22 @@ describe("TableBooleanTemplate", () => {
 
     cases.forEach(({value, text}) => {
         describe(`when called with "${text}" value`, () => {
-            it(`should return correct ${text}`, async () => {
+            it("have TableStringTemplate", async () => {
                 const wrapper = shallow(<TableBooleanTemplate value={value} />);
+                const tableStringTemplateWrapper = wrapper.find(
+                    TableStringTemplate
+                );
 
-                expect(wrapper.text()).equals(text);
+                expect(tableStringTemplateWrapper).length(1);
+            });
+
+            it(`have "${text}" TableStringTemplate value`, async () => {
+                const wrapper = shallow(<TableBooleanTemplate value={value} />);
+                const tableStringTemplateWrapper = wrapper.find(
+                    TableStringTemplate
+                );
+
+                expect(tableStringTemplateWrapper.prop("value")).equals(text);
             });
         });
     });

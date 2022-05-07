@@ -5,11 +5,15 @@ import TableStringTemplate from "./TableStringTemplate";
 import TableBooleanTemplate from "./TableBooleanTemplate";
 
 export type ShowTemplateProps = {
-    type: ParameterType;
-    value: TableRowValueType;
+    type: ParameterType | null;
+    value: TableRowValueType | null;
 };
 
 export default function TableTemplate({type, value}: ShowTemplateProps) {
+    if (null === value) {
+        return null;
+    }
+
     let element: ReactElement;
 
     switch (type) {

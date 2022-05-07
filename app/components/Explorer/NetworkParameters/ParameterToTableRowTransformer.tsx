@@ -11,8 +11,10 @@ export interface TableRow {
     name: string;
     description: string | null;
     type: ParameterType | null;
+    rawValue?: ParameterValueType | null;
     value?: JSX.Element | ParameterValueType | null;
-    newValue?: TableRowValueType | null;
+    rawNewValue?: ParameterValueType | null;
+    newValue?: JSX.Element | TableRowValueType | null;
     link?: string | null;
     children?: TableRow[] | null;
     actions: ReactElement | null;
@@ -35,7 +37,9 @@ class ParameterToTableRowTransformer {
             name: parameter.name,
             description: parameter.description,
             type: parameter.type,
+            rawValue: null,
             value: null,
+            rawNewValue: null,
             newValue: null,
             link: null,
             children: null,
@@ -56,21 +60,17 @@ class ParameterToTableRowTransformer {
         }
 
         if (parameter.isNormal()) {
-            let value:
-                | JSX.Element
-                | ParameterValueType = parameter.value as ParameterValueType;
-
-            if (parameter.type && parameter.value != null) {
-                value = (
-                    <TableTemplate
-                        type={parameter.type}
-                        value={parameter.value}
-                    />
-                );
-            }
-
-            row.value = value;
-            row.newValue = parameter.newValue;
+            row.rawValue = parameter.value;
+            row.value = (
+                <TableTemplate type={parameter.type} value={parameter.value} />
+            );
+            row.rawNewValue = parameter.newValue ?? parameter.value;
+            row.newValue = (
+                <TableTemplate
+                    type={parameter.type}
+                    value={parameter.newValue}
+                />
+            );
             row.actions = (
                 <ParameterActions parameter={row} show={this.showEditModal} />
             );

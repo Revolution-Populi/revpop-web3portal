@@ -24,8 +24,8 @@ describe("ParameterToTableRowTransformer", () => {
 
             expect(result.key).equals(parameter.name);
             expect(result.name).equals(parameter.name);
-            expect(result.value).equals(parameter.value);
-            expect(result.newValue).equals(parameter.newValue);
+            expect(result.rawValue).equals(parameter.value);
+            expect(result.rawNewValue).equals(parameter.newValue);
             expect(result.children).null;
         });
 
@@ -68,7 +68,7 @@ describe("ParameterToTableRowTransformer", () => {
                 "extensions.updatable_htlc_options.max_preimage_size"
             );
             expect(maxPreimageSize.name).equals("max_preimage_size");
-            expect(maxPreimageSize.value).equals(1024000);
+            expect(maxPreimageSize.rawValue).equals(1024000);
             expect(maxPreimageSize.children).null;
 
             const maxTimeoutSecs = updatableHtlcOptions
@@ -77,7 +77,7 @@ describe("ParameterToTableRowTransformer", () => {
                 "extensions.updatable_htlc_options.max_timeout_secs"
             );
             expect(maxTimeoutSecs.name).equals("max_timeout_secs");
-            expect(maxTimeoutSecs.value).equals(2592000);
+            expect(maxTimeoutSecs.rawValue).equals(2592000);
             expect(maxTimeoutSecs.children).null;
         });
     });

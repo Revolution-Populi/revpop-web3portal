@@ -68,7 +68,7 @@ export default class NetworkParameter {
     }
 
     public isNormal() {
-        return this.value !== null && this._children.size == 0;
+        return this.value !== null && !this.isGroup();
     }
 
     public isLink() {

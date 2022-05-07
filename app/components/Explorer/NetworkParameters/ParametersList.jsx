@@ -6,7 +6,6 @@ import EditModal from "./EditModal";
 import NetworkParametersContext from "./Context";
 import {Map} from "immutable";
 import ActionButtons from "./ActionButtons";
-import {toNumber} from "lodash-es";
 import LoadAllHandler from "../../../Context/NetworkParameters/Application/Query/LoadAll/LoadAllHandler";
 import blockchainRepository from "../../../Context/NetworkParameters/Infrastructure/BlockchainRepository";
 import LoadAll from "../../../Context/NetworkParameters/Application/Query/LoadAll/LoadAll";

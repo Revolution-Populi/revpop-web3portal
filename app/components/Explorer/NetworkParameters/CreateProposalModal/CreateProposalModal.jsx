@@ -4,9 +4,11 @@ import {Modal, Table} from "bitshares-ui-style-guide";
 import proposalRepository from "../Repository/Proposal";
 import NetworkParametersContext from "../Context";
 import Translate from "react-translate-component";
-import {isObject} from "lodash-es";
 import ExpirationDate from "./ExpirationDate";
 import moment from "moment";
+import GetChanged from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChanged";
+import GetChangedHandler from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChangedHandler";
+import ParameterToTableRowTransformer from "../ParameterToTableRowTransformer";
 
 export default function CreateProposalModal({isVisible, close}) {
     const [expirationDate, setExpirationDate] = useState(
@@ -34,44 +36,44 @@ export default function CreateProposalModal({isVisible, close}) {
     ];
 
     function data() {
-        return parameters
-            .filter(parameter => parameter.newValue !== undefined)
+        const query = new GetChanged(parameters);
+        const handler = new GetChangedHandler();
+        const parametersForTable = handler.execute(query);
+
+        const parameterToTableRowTransformer = new ParameterToTableRowTransformer(
+            () => {}
+        );
+
+        return parametersForTable
             .map(parameter => {
-                return {
-                    key: parameter.name,
-                    name: parameter.name,
-                    value: !isObject(parameter.value)
-                        ? parameter.value
-                        : "Object",
-                    newValue: parameter.newValue
-                };
+                return parameterToTableRowTransformer.transform(parameter);
             })
             .toArray();
     }
 
     async function save() {
-        const parametersToSave = parameters.filter(
-            parameter => parameter.newValue !== undefined
-        );
-
-        if (parametersToSave.isEmpty()) {
-            setSaveEmptyError(true);
-            return;
-        }
-
-        const newParameters = parameters.map(parameter => {
-            return parameter.newValue ?? parameter.value;
-        });
-
-        try {
-            await proposalRepository.create(
-                newParameters.toObject(),
-                expirationDate.diff(moment(), "second")
-            );
-            close();
-        } catch (e) {
-            close();
-        }
+        // const parametersToSave = parameters.filter(
+        //     parameter => parameter.newValue !== undefined
+        // );
+        //
+        // if (parametersToSave.isEmpty()) {
+        //     setSaveEmptyError(true);
+        //     return;
+        // }
+        //
+        // const newParameters = parameters.map(parameter => {
+        //     return parameter.newValue ?? parameter.value;
+        // });
+        //
+        // try {
+        //     await proposalRepository.create(
+        //         newParameters.toObject(),
+        //         expirationDate.diff(moment(), "second")
+        //     );
+        //     close();
+        // } catch (e) {
+        //     close();
+        // }
     }
 
     function onClose() {

@@ -7,7 +7,6 @@ import NetworkParametersContext from "./Context";
 export default function ActionButtons() {
     const {parameters} = useContext(NetworkParametersContext);
     const [isVisible, setIsVisible] = useState(false);
-    const [setIsVisibleAddNewParameterModal] = useState(false);
 
     function showModal() {
         setIsVisible(true);

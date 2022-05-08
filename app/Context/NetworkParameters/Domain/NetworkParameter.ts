@@ -78,4 +78,8 @@ export default class NetworkParameter {
     public isGroup() {
         return this._children.size > 0;
     }
+
+    public isChanged() {
+        return null !== this.newValue && this.value != this.newValue;
+    }
 }

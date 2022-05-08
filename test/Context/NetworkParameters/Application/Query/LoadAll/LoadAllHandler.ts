@@ -1,8 +1,8 @@
-import LoadAllHandler from "../../../../../app/Context/NetworkParameters/Application/Query/LoadAll/LoadAllHandler";
-import stubRepository from "../../../../../app/Context/NetworkParameters/Infrastructure/StubRepository";
-import LoadAll from "../../../../../app/Context/NetworkParameters/Application/Query/LoadAll/LoadAll";
+import LoadAllHandler from "../../../../../../app/Context/NetworkParameters/Application/Query/LoadAll/LoadAllHandler";
+import stubRepository from "../../../../../../app/Context/NetworkParameters/Infrastructure/StubRepository";
+import LoadAll from "../../../../../../app/Context/NetworkParameters/Application/Query/LoadAll/LoadAll";
 import {expect} from "chai";
-import NetworkParameter from "../../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
+import NetworkParameter from "../../../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
 
 describe("LoadAllHandler", () => {
     let handler: LoadAllHandler;

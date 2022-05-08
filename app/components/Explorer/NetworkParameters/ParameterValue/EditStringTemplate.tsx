@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 // @ts-ignore
 import {Input} from "bitshares-ui-style-guide";
 import {ParameterValueType} from "../../../../Context/NetworkParameters/Domain/NetworkParameter";
@@ -12,8 +12,8 @@ export default function EditStringTemplate({
     value,
     onChange
 }: ShowTemplateProps) {
-    function onChangeInput(value: string) {
-        onChange(value);
+    function onChangeInput(event: ChangeEvent<Input>) {
+        onChange(event.target.value);
     }
 
     return <Input defaulvalue={value} onChange={onChangeInput} />;

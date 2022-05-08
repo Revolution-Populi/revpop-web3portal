@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import NetworkParameter from "../../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
-import UpdateParameterHandler from "../../../../../app/Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameterHandler";
-import UpdateParameter from "../../../../../app/Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameter";
+import NetworkParameter from "../../../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
+import UpdateParameterHandler from "../../../../../../app/Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameterHandler";
+import UpdateParameter from "../../../../../../app/Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameter";
 import {Map} from "immutable";
-import {prepareExtensionParameter} from "../../../../components/Explorer/ParameterToTableRowTransformer";
+import {extensionsParameter} from "../../../../../Factory/Parameter";
 
 describe("UpdateParameterHandler", () => {
     let handler: UpdateParameterHandler;
@@ -51,7 +51,7 @@ describe("UpdateParameterHandler", () => {
         });
 
         it("with children", async () => {
-            const parameter = prepareExtensionParameter();
+            const parameter = extensionsParameter();
             parameters = parameters.set("extensions", parameter);
 
             const query = new UpdateParameter(

@@ -18,6 +18,8 @@ export default function EditTemplate({
 }: EditTemplateProps) {
     let element: ReactElement;
 
+    //TODO:resolve type by value
+
     switch (type) {
         case "uint8_t":
         case "uint16_t":

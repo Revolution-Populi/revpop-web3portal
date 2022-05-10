@@ -9,6 +9,9 @@ import moment from "moment";
 import GetChanged from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChanged";
 import GetChangedHandler from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChangedHandler";
 import ParameterToTableRowTransformer from "../ParameterToTableRowTransformer";
+import CreateHandler from "../../../../Context/Proposal/Application/Commands/Create/CreateHandler";
+import stubRepository from "../../../../Context/Proposal/Infrastructure/StubRepository";
+import Create from "../../../../Context/Proposal/Application/Commands/Create/Create";
 
 export default function CreateProposalModal({isVisible, close}) {
     const [expirationDate, setExpirationDate] = useState(
@@ -52,28 +55,16 @@ export default function CreateProposalModal({isVisible, close}) {
     }
 
     async function save() {
-        // const parametersToSave = parameters.filter(
-        //     parameter => parameter.newValue !== undefined
-        // );
-        //
-        // if (parametersToSave.isEmpty()) {
-        //     setSaveEmptyError(true);
-        //     return;
-        // }
-        //
-        // const newParameters = parameters.map(parameter => {
-        //     return parameter.newValue ?? parameter.value;
-        // });
-        //
-        // try {
-        //     await proposalRepository.create(
-        //         newParameters.toObject(),
-        //         expirationDate.diff(moment(), "second")
-        //     );
-        //     close();
-        // } catch (e) {
-        //     close();
-        // }
+        const handler = new CreateHandler(stubRepository);
+        const command = new Create(
+            parameters,
+            expirationDate.diff(moment(), "second")
+        );
+        const result = await handler.execute(command);
+
+        if (result) {
+            close();
+        }
     }
 
     function onClose() {

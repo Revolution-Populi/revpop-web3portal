@@ -28,7 +28,7 @@ class Factory implements FactoryInterface {
     create(name: string, value: ParameterValueType): NetworkParameter {
         const parameter = new NetworkParameter(name);
 
-        this.addDescriptionAndType(parameter);
+        this.addAddInfoFromLocalParameters(parameter);
 
         if (parameter.isLink()) {
             parameter.linkValue = value;
@@ -54,7 +54,7 @@ class Factory implements FactoryInterface {
         return parameter;
     }
 
-    private addDescriptionAndType(parameter: NetworkParameter) {
+    private addAddInfoFromLocalParameters(parameter: NetworkParameter) {
         if (
             Object.prototype.hasOwnProperty.call(
                 this.description,

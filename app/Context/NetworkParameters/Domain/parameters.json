@@ -125,6 +125,7 @@
     },
     "current_fees": {
         "type": "link",
+        "link": "/explorer/fees",
         "description": "commission amount"
     }
 }

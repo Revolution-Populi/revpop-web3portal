@@ -1,5 +1,8 @@
 import {isObject} from "lodash";
-import {ParameterValueType} from "./RepositoryInterface";
+import {
+    ParameterObjectValueType,
+    ParameterValueType
+} from "./RepositoryInterface";
 import NetworkParameter from "./NetworkParameter";
 import FactoryInterface from "./FactoryInterface";
 
@@ -8,12 +11,14 @@ export type ParameterType =
     | "uint8_t"
     | "uint16_t"
     | "uint32_t"
-    | "int64_t";
+    | "int64_t"
+    | "link";
 
 export interface ParameterDescriptionType {
     [key: string]: {
         type: ParameterType;
         description: string;
+        link?: string;
     };
 }
 
@@ -25,14 +30,15 @@ class Factory implements FactoryInterface {
 
         this.addDescriptionAndType(parameter);
 
-        //TODO:: current_fees
-        if (name === "current_fees") {
-            parameter.link = "/explorer/fees";
+        if (parameter.isLink()) {
+            parameter.linkValue = value;
+
             return parameter;
         }
 
         if (!isObject(value)) {
             parameter.value = value;
+
             return parameter;
         }
 
@@ -41,7 +47,7 @@ class Factory implements FactoryInterface {
             name =>
                 (parameter.children = parameter.children.set(
                     name,
-                    this.create(name, value[name])
+                    this.create(name, (value as ParameterObjectValueType)[name])
                 ))
         );
 
@@ -55,10 +61,10 @@ class Factory implements FactoryInterface {
                 parameter.name
             )
         ) {
-            parameter.description = this.description[
-                parameter.name
-            ].description;
-            parameter.type = this.description[parameter.name].type;
+            const parameterInfo = this.description[parameter.name];
+            parameter.description = parameterInfo.description;
+            parameter.type = parameterInfo.type;
+            parameter.link = parameterInfo.link ? parameterInfo.link : null;
         }
 
         return parameter;

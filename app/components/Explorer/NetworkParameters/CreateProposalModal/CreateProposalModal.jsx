@@ -12,6 +12,7 @@ import ParameterToTableRowTransformer from "../ParameterToTableRowTransformer";
 import CreateHandler from "../../../../Context/Proposal/Application/Commands/Create/CreateHandler";
 import stubRepository from "../../../../Context/Proposal/Infrastructure/StubRepository";
 import Create from "../../../../Context/Proposal/Application/Commands/Create/Create";
+import blockchainRepository from "../../../../Context/Proposal/Infrastructure/BlockchainRepository";
 
 export default function CreateProposalModal({isVisible, close}) {
     const [expirationDate, setExpirationDate] = useState(
@@ -55,11 +56,8 @@ export default function CreateProposalModal({isVisible, close}) {
     }
 
     async function save() {
-        const handler = new CreateHandler(stubRepository);
-        const command = new Create(
-            parameters,
-            expirationDate.diff(moment(), "second")
-        );
+        const handler = new CreateHandler(blockchainRepository);
+        const command = new Create(parameters, expirationDate);
         const result = await handler.execute(command);
 
         if (result) {

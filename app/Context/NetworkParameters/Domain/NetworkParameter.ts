@@ -1,8 +1,10 @@
 import {Map} from "immutable";
 import {ParameterType} from "./Factory";
+import {ParameterValueType as ParameterLinkValueType} from "./RepositoryInterface";
 
 export type ParameterValueType = string | number | boolean;
 
+//TODO: refactor to different classes for parameters: normal, group, link
 export default class NetworkParameter {
     private _value: ParameterValueType | null = null;
     private _newValue: ParameterValueType | null = null;
@@ -10,6 +12,7 @@ export default class NetworkParameter {
     private _type: ParameterType | null = null;
     private _modified = false;
     private _link: string | null = null;
+    private _linkValue: ParameterLinkValueType | null = null;
     private _children: Map<string, NetworkParameter> = Map();
 
     constructor(private _name: string) {}
@@ -57,6 +60,14 @@ export default class NetworkParameter {
 
     set link(value: string | null) {
         this._link = value;
+    }
+
+    get linkValue(): ParameterLinkValueType | null {
+        return this._linkValue;
+    }
+
+    set linkValue(value: ParameterLinkValueType | null) {
+        this._linkValue = value;
     }
 
     get children(): Map<string, NetworkParameter> {

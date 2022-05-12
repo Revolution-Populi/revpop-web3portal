@@ -5,7 +5,11 @@ import CreateHandler from "../../../../../../app/Context/Proposal/Application/Co
 import Create from "../../../../../../app/Context/Proposal/Application/Commands/Create/Create";
 import stubRepository from "../../../../../../app/Context/Proposal/Infrastructure/StubRepository";
 import moment from "moment";
-import {extensionsParameter} from "../../../../../Factory/Parameter";
+import {
+    extensionsParameter,
+    linkParameter
+} from "../../../../../Factory/Parameter";
+import {Proposals} from "../../../../../../app/Context/Proposal/Domain/RepositoryInterface";
 
 describe("CreateHandler", () => {
     let handler: CreateHandler;
@@ -60,12 +64,32 @@ describe("CreateHandler", () => {
                     expect(proposals.size).equals(1);
 
                     const proposal = proposals.first();
-                    expect(proposal.expiration_time).within(863997, 864003);
+                    expect(proposal.expiration_time).lte(864000);
 
                     expect(proposal.parameters).eql({
                         test_name: "test value",
                         changed_parameter: "new value"
                     });
+                });
+            });
+        });
+
+        describe("link parameter", async () => {
+            it("should return valid object", async () => {
+                const currentFees = linkParameter();
+                parameters = parameters.set(currentFees.name, currentFees);
+
+                const command = new Create(parameters, expirationTime);
+
+                const result = await handler.execute(command);
+                expect(result).true;
+
+                const proposals = stubRepository.loadAll();
+                expect(proposals.size).equals(1);
+
+                const proposal = proposals.first();
+                expect(proposal.parameters).eql({
+                    current_fees: currentFees.linkValue
                 });
             });
         });
@@ -99,7 +123,7 @@ describe("CreateHandler", () => {
                     expect(proposals.size).equals(1);
 
                     const proposal = proposals.first();
-                    expect(proposal.expiration_time).within(863997, 864003);
+                    expect(proposal.expiration_time).lte(864000);
 
                     expect(proposal.parameters).eql({
                         extensions: {
@@ -114,3 +138,5 @@ describe("CreateHandler", () => {
         });
     });
 });
+
+function assertProposalsCount(proposals: Proposals, count: number) {}

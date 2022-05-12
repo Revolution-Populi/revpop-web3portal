@@ -1,4 +1,4 @@
-import {ParameterObjectValueType} from "./RepositoryInterface";
+import {ParameterObjectValueType} from "../../NetworkParameters/Domain/RepositoryInterface";
 
 export default class Proposal {
     constructor(

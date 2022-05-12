@@ -1,10 +1,5 @@
 import {Set} from "immutable";
-
-export type ParameterObjectValueType = {
-    [key: string]: ParameterValueType;
-};
-
-export type ParameterValueType = string | number | ParameterObjectValueType;
+import {ParameterObjectValueType} from "../../NetworkParameters/Domain/RepositoryInterface";
 
 export type Proposal = {
     parameters: ParameterObjectValueType;

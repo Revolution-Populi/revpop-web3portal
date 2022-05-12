@@ -2,11 +2,13 @@ import {Map} from "immutable";
 import NetworkParameter from "../../../../NetworkParameters/Domain/NetworkParameter";
 import Create from "./Create";
 import RepositoryInterface, {
-    ParameterObjectValueType,
-    ParameterValueType,
     Proposal
 } from "../../../Domain/RepositoryInterface";
 import moment from "moment";
+import {
+    ParameterObjectValueType,
+    ParameterValueType
+} from "../../../../NetworkParameters/Domain/RepositoryInterface";
 
 export default class CreateHandler {
     constructor(private repository: RepositoryInterface) {}
@@ -38,6 +40,12 @@ export default class CreateHandler {
         parameters.forEach(parameter => {
             parameter = parameter as NetworkParameter;
             const name = parameter.name;
+
+            if (parameter.isLink()) {
+                objectParameters[
+                    name
+                ] = parameter.linkValue as ParameterValueType;
+            }
 
             if (parameter.isNormal()) {
                 const value = parameter.isChanged()

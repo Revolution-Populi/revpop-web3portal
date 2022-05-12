@@ -122,5 +122,9 @@
     "revpop_vote_mixture": {
         "type": "uint8_t",
         "description": "define a number of votes in one mix operation"
+    },
+    "current_fees": {
+        "type": "link",
+        "description": "commission amount"
     }
 }

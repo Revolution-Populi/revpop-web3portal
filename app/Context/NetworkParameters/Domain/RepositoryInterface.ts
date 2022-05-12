@@ -2,7 +2,16 @@ export type ParameterObjectValueType = {
     [key: string]: ParameterValueType;
 };
 
-export type ParameterValueType = string | number | ParameterObjectValueType;
+type currentFees = {
+    parameters: (number | ParameterObjectValueType)[][];
+    scale: number;
+};
+
+export type ParameterValueType =
+    | string
+    | number
+    | ParameterObjectValueType
+    | currentFees;
 
 export default interface RepositoryInterface {
     load: () => Promise<ParameterObjectValueType>;

@@ -22,6 +22,33 @@ export function groupParameterWith1LevelChildren(): NetworkParameter {
     return extensions;
 }
 
+export function linkParameter(): NetworkParameter {
+    const currentFees = new NetworkParameter("current_fees");
+    currentFees.link = "/explorer/fees";
+    currentFees.linkValue = {
+        parameters: [
+            [
+                0,
+                {
+                    fee: 86869,
+                    price_per_kbyte: 48260
+                }
+            ],
+            [
+                1,
+                {
+                    basic_fee: 482609,
+                    premium_fee: 24130471,
+                    price_per_kbyte: 48260
+                }
+            ]
+        ],
+        scale: 10000
+    };
+
+    return currentFees;
+}
+
 export function extensionsParameter(): NetworkParameter {
     const maxPreimageSize = new NetworkParameter("max_preimage_size");
     maxPreimageSize.value = 1024000;

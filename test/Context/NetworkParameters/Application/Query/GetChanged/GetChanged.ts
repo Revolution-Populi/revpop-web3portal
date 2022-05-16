@@ -4,7 +4,8 @@ import {Map} from "immutable";
 import NetworkParameter from "../../../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
 import {
     extensionsParameter,
-    groupParameterWith1LevelChildren
+    groupParameterWith1LevelChildren,
+    simpleParameter
 } from "../../../../../Factory/Parameter";
 import {expect} from "chai";
 
@@ -28,13 +29,14 @@ describe("GetChanged", () => {
         it("changed parameters not exist", async () => {
             let parameters = Map<string, NetworkParameter>();
 
-            const parameterNotChanged = new NetworkParameter("not_changed");
-            parameterNotChanged.value = "not changed value";
-            parameterNotChanged.newValue = null;
-
-            const parameterNotChanged2 = new NetworkParameter("not_changed_2");
-            parameterNotChanged2.value = "not changed value 2";
-            parameterNotChanged2.newValue = null;
+            const parameterNotChanged = simpleParameter(
+                "not_changed",
+                "not changed value"
+            );
+            const parameterNotChanged2 = simpleParameter(
+                "not_changed_2",
+                "not changed value 2"
+            );
 
             parameters = parameters.set("not_changed", parameterNotChanged);
             parameters = parameters.set("not_changed_2", parameterNotChanged2);
@@ -48,15 +50,17 @@ describe("GetChanged", () => {
         it("changed parameter exists", async () => {
             let parameters = Map<string, NetworkParameter>();
 
-            const parameterNotChanged = new NetworkParameter("not changed");
-            parameterNotChanged.value = "not changed value";
-            parameterNotChanged.newValue = null;
-
-            const parameterChanged = new NetworkParameter("changed");
-            parameterChanged.value = "changed value";
-            parameterChanged.newValue = "changed new value";
-
+            const parameterNotChanged = simpleParameter(
+                "not_changed",
+                "not changed value"
+            );
             parameters = parameters.set("not changed", parameterNotChanged);
+
+            const parameterChanged = simpleParameter(
+                "changed",
+                "changed value"
+            );
+            parameterChanged.newValue = "changed new value";
             parameters = parameters.set("changed", parameterChanged);
 
             const query = new GetChanged(parameters);

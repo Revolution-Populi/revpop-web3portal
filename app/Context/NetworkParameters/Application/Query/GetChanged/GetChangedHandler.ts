@@ -27,7 +27,7 @@ export default class GetChangedHandler {
                 }
             }
 
-            if (child?.isNormal() && child?.isChanged()) {
+            if (child?.isNormal() && child?.isModified()) {
                 changedParameters = changedParameters.set(child?.name, child);
             }
         });

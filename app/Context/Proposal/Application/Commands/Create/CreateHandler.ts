@@ -48,7 +48,7 @@ export default class CreateHandler {
             }
 
             if (parameter.isNormal()) {
-                const value = parameter.isChanged()
+                const value = parameter.isModified()
                     ? parameter.newValue
                     : parameter.value;
 

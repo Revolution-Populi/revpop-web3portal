@@ -12,6 +12,7 @@ import LoadAll from "../../../Context/NetworkParameters/Application/Query/LoadAl
 import ParameterToTableRowTransformer from "./ParameterToTableRowTransformer";
 import UpdateParameter from "../../../Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameter";
 import UpdateParameterHandler from "../../../Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameterHandler";
+import jsonParameters from "../../../Context/NetworkParameters/Domain/parameters.json";
 
 export default function ParametersList() {
     const [filterByName, setFilterByName] = useState("");
@@ -22,7 +23,8 @@ export default function ParametersList() {
         const loadParameters = async () => {
             const query = new LoadAll();
             const parameters = await new LoadAllHandler(
-                blockchainRepository
+                blockchainRepository,
+                jsonParameters
             ).execute(query);
             console.log(parameters);
             setParameters(parameters);

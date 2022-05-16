@@ -90,7 +90,7 @@ export default class NetworkParameter {
         return this._children.size > 0;
     }
 
-    public isChanged() {
-        return null !== this.newValue && this.value != this.newValue;
+    public isModified(): boolean {
+        return this._modified;
     }
 }

@@ -14,21 +14,26 @@ export type ParameterType =
     | "int64_t"
     | "link";
 
-export interface ParameterDescriptionType {
-    [key: string]: {
-        type: ParameterType;
-        description: string;
-        link?: string;
-    };
-}
+export type JsonParameterType = {
+    type: ParameterType;
+    description: string | null;
+    link?: string | null;
+    defaultValue?: ParameterValueType | null;
+};
+
+export type JsonParametersType = {
+    [key: string]: JsonParameterType;
+};
 
 class Factory implements FactoryInterface {
-    constructor(private description: ParameterDescriptionType) {}
+    create(
+        name: string,
+        value: ParameterValueType,
+        jsonParameter: JsonParameterType | null = null
+    ): NetworkParameter {
+        let parameter = new NetworkParameter(name);
 
-    create(name: string, value: ParameterValueType): NetworkParameter {
-        const parameter = new NetworkParameter(name);
-
-        this.addAddInfoFromLocalParameters(parameter);
+        parameter = this.updateFromJsonParameter(parameter, jsonParameter);
 
         if (parameter.isLink()) {
             parameter.linkValue = value;
@@ -54,17 +59,14 @@ class Factory implements FactoryInterface {
         return parameter;
     }
 
-    private addAddInfoFromLocalParameters(parameter: NetworkParameter) {
-        if (
-            Object.prototype.hasOwnProperty.call(
-                this.description,
-                parameter.name
-            )
-        ) {
-            const parameterInfo = this.description[parameter.name];
-            parameter.description = parameterInfo.description;
-            parameter.type = parameterInfo.type;
-            parameter.link = parameterInfo.link ? parameterInfo.link : null;
+    private updateFromJsonParameter(
+        parameter: NetworkParameter,
+        jsonParameter: JsonParameterType | null
+    ) {
+        if (null != jsonParameter) {
+            parameter.description = jsonParameter.description;
+            parameter.type = jsonParameter.type;
+            parameter.link = jsonParameter.link ? jsonParameter.link : null;
         }
 
         return parameter;

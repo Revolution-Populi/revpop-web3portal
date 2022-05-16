@@ -1,26 +1,50 @@
-import RepositoryInterface from "../../../Domain/RepositoryInterface";
+import RepositoryInterface, {
+    ParameterValueType
+} from "../../../Domain/RepositoryInterface";
+import {ParameterValueType as NetworkParameterValueType} from "../../../Domain/NetworkParameter";
 import NetworkParameter from "../../../Domain/NetworkParameter";
 import LoadAll from "./LoadAll";
 import {Map} from "immutable";
-import parameterDescription from "../../../Domain/parameters.json";
-import Factory, {ParameterDescriptionType} from "../../../Domain/Factory";
+import Factory, {JsonParametersType} from "../../../Domain/Factory";
+import {isEmpty} from "lodash";
 
 export default class LoadAllHandler {
-    constructor(readonly repository: RepositoryInterface) {}
+    constructor(
+        readonly repository: RepositoryInterface,
+        readonly jsonParameters: JsonParametersType
+    ) {}
 
     async execute(request: LoadAll): Promise<Map<string, NetworkParameter>> {
         const data = await this.repository.load();
-        let parameters = Map<string, NetworkParameter>();
+        const parameters = Map<string, NetworkParameter>().asMutable();
 
-        const factory = new Factory(
-            parameterDescription as ParameterDescriptionType
-        );
+        const factory = new Factory();
 
         for (const [name, value] of Object.entries(data)) {
-            const parameter = factory.create(name, value);
-            parameters = parameters.set(name, parameter);
+            const parameter = factory.create(
+                name,
+                value,
+                this.jsonParameters[name] ?? null
+            );
+            parameters.set(name, parameter);
+
+            delete this.jsonParameters[name];
         }
 
-        return parameters;
+        for (const [name, value] of Object.entries(this.jsonParameters)) {
+            if (isEmpty(value.defaultValue)) {
+                continue;
+            }
+
+            const parameter = factory.create(
+                name,
+                value.defaultValue as ParameterValueType,
+                this.jsonParameters[name]
+            );
+            parameter.newValue = value.defaultValue as NetworkParameterValueType;
+            parameters.set(name, parameter);
+        }
+
+        return parameters.asImmutable();
     }
 }

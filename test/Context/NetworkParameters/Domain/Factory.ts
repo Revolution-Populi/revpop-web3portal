@@ -1,13 +1,16 @@
 import {expect} from "chai";
-import Factory, {
-    ParameterDescriptionType
-} from "../../../../app/Context/NetworkParameters/Domain/Factory";
+import Factory from "../../../../app/Context/NetworkParameters/Domain/Factory";
+import {
+    jsonLinkParameter,
+    jsonNewParameter,
+    jsonSimpleParameter
+} from "../../../Factory/JsonParameter";
 
 describe("Factory", () => {
     describe("create", () => {
         describe("simple parameter", () => {
             it("without description", async () => {
-                const factory = new Factory({});
+                const factory = new Factory();
                 const parameter = factory.create("test_name", "test value");
 
                 expect(parameter.name).equals("test_name");
@@ -16,13 +19,17 @@ describe("Factory", () => {
             });
 
             it("with description", async () => {
-                const factory = new Factory({
-                    test_name: {
-                        type: "uint8_t",
-                        description: "test name description"
-                    }
-                });
-                const parameter = factory.create("test_name", "test value");
+                const factory = new Factory();
+
+                const jsonParameter = jsonSimpleParameter(
+                    "uint8_t",
+                    "test name description"
+                );
+                const parameter = factory.create(
+                    "test_name",
+                    "test value",
+                    jsonParameter
+                );
 
                 expect(parameter.name).equals("test_name");
                 expect(parameter.value).equals("test value");
@@ -33,14 +40,10 @@ describe("Factory", () => {
 
         describe("current fees parameter", () => {
             it("should create valid parameter", async () => {
-                const jsonParameter: ParameterDescriptionType = {
-                    current_fees: {
-                        type: "link",
-                        link: "/explorer/fees",
-                        description: "link description"
-                    }
-                };
-                const factory = new Factory(jsonParameter);
+                const jsonParameter = jsonLinkParameter({
+                    link: "/explorer/fees"
+                });
+                const factory = new Factory();
 
                 const currentFeesValue = {
                     parameters: [
@@ -64,15 +67,14 @@ describe("Factory", () => {
                 };
                 const parameter = factory.create(
                     "current_fees",
-                    currentFeesValue
+                    currentFeesValue,
+                    jsonParameter
                 );
 
                 expect(parameter.isLink()).true;
-                expect(parameter.link).equals(jsonParameter.current_fees.link);
+                expect(parameter.link).equals(jsonParameter.link);
                 expect(parameter.linkValue).eqls(currentFeesValue);
-                expect(parameter.description).equals(
-                    jsonParameter.current_fees.description
-                );
+                expect(parameter.description).equals(jsonParameter.description);
             });
         });
     });

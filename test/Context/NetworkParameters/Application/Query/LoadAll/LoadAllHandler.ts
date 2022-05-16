@@ -1,16 +1,12 @@
-import LoadAllHandler from "../../../../../../app/Context/NetworkParameters/Application/Query/LoadAll/LoadAllHandler";
+import {expect} from "chai";
 import stubRepository from "../../../../../../app/Context/NetworkParameters/Infrastructure/StubRepository";
 import LoadAll from "../../../../../../app/Context/NetworkParameters/Application/Query/LoadAll/LoadAll";
-import {expect} from "chai";
 import NetworkParameter from "../../../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
+import {addToApiResponse} from "../../../../../Factory/StubRepository";
+import {getLoadAllHandler} from "../../../../../Factory/LoadAllHandler";
+import {jsonNewParameter} from "../../../../../Factory/JsonParameter";
 
 describe("LoadAllHandler", () => {
-    let handler: LoadAllHandler;
-
-    before(function() {
-        handler = new LoadAllHandler(stubRepository);
-    });
-
     afterEach(function() {
         stubRepository.clear();
     });
@@ -18,6 +14,8 @@ describe("LoadAllHandler", () => {
     describe("load", () => {
         it("empty result", async () => {
             const query = new LoadAll();
+            const handler = getLoadAllHandler();
+
             const result = await handler.execute(query);
             expect(result.size).equals(0);
         });
@@ -26,6 +24,8 @@ describe("LoadAllHandler", () => {
             stubRepository.add("test_parameter", "test_value");
 
             const query = new LoadAll();
+            const handler = getLoadAllHandler();
+
             const result = await handler.execute(query);
             expect(result.size).equals(1);
 
@@ -44,6 +44,8 @@ describe("LoadAllHandler", () => {
             });
 
             const query = new LoadAll();
+            const handler = getLoadAllHandler();
+
             const result = await handler.execute(query);
             expect(result.size).equals(1);
 
@@ -51,6 +53,48 @@ describe("LoadAllHandler", () => {
             expect(parameter).instanceof(NetworkParameter);
             expect(parameter.value).null;
             expect(parameter.children.size).equals(1);
+        });
+
+        describe("new parameter", () => {
+            describe("without default value", () => {
+                it("should throw error", async () => {
+                    const newParameter = jsonNewParameter({
+                        defaultValue: null
+                    });
+                    addToApiResponse("old_parameter", 10);
+
+                    const handler = getLoadAllHandler({
+                        new_parameter: newParameter
+                    });
+                });
+            });
+
+            describe("with default value", () => {
+                it("should add new parameter", async () => {
+                    const newParameter = jsonNewParameter({
+                        defaultValue: "default value"
+                    });
+                    addToApiResponse("old_parameter", 10);
+
+                    const handler = getLoadAllHandler({
+                        new_parameter: newParameter
+                    });
+
+                    const query = new LoadAll();
+                    const result = await handler.execute(query);
+                    expect(result.size).equals(2);
+
+                    const resultNewParameter = result.last();
+                    expect(resultNewParameter.name).equals("new_parameter");
+                    expect(resultNewParameter.value).equals(
+                        newParameter.defaultValue
+                    );
+                    expect(resultNewParameter.newValue).equals(
+                        newParameter.defaultValue
+                    );
+                    expect(resultNewParameter.isModified()).true;
+                });
+            });
         });
     });
 });

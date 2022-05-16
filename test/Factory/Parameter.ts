@@ -1,5 +1,16 @@
-import NetworkParameter from "../../app/Context/NetworkParameters/Domain/NetworkParameter";
+import NetworkParameter, {
+    ParameterValueType
+} from "../../app/Context/NetworkParameters/Domain/NetworkParameter";
 import {Map} from "immutable";
+
+export function simpleParameter(
+    name: string,
+    value: ParameterValueType
+): NetworkParameter {
+    const parameter = new NetworkParameter(name);
+    parameter.value = value;
+    return parameter;
+}
 
 export function groupParameterWith1LevelChildren(): NetworkParameter {
     const maxPreimageSize = new NetworkParameter("max_preimage_size");

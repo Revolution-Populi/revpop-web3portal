@@ -45,12 +45,12 @@ class ImportKeys extends Component {
         super();
         this.state = this._getInitialState();
 
-        this._renderBalanceClaims = this._renderBalanceClaims.bind(this);
-    }
+        this.passwordRef = React.createRef();
 
-    static defaultProps = {
-        privateKey: true
-    };
+        this._renderBalanceClaims = this._renderBalanceClaims.bind(this);
+        this.onWifInputChange = this.onWifInputChange.bind(this);
+        this.onWifSubmit = this.onWifSubmit.bind(this);
+    }
 
     _getInitialState(keep_file_name = false) {
         return {
@@ -73,6 +73,7 @@ class ImportKeys extends Component {
             genesis_filtering: false,
             genesis_filter_status: [],
             genesis_filter_finished: undefined,
+            private_key: "",
             importSuccess: false
         };
     }
@@ -83,10 +84,10 @@ class ImportKeys extends Component {
         this.setState(state, () => this.updateOnChange());
     }
 
-    onWif(event) {
+    onWifSubmit(event) {
         event.preventDefault();
-        const value = this.refs.wifInput.state.value;
-        this.addByPattern(value);
+
+        this.addByPattern(this.state.private_key);
     }
 
     onCancel(e) {
@@ -192,18 +193,6 @@ class ImportKeys extends Component {
                 // setTimeout(()=>
                 genesis_filter.init(() => {
                     let filter_status = this.state.genesis_filter_status;
-
-                    // FF < version 41 does not support worker threads internals (like blob urls)
-                    // let GenesisFilterWorker = require("worker-loader!workers/GenesisFilterWorker")
-                    // let worker = new GenesisFilterWorker
-                    // worker.postMessage({
-                    //     account_keys: unfiltered_account_keys,
-                    //     bloom_filter: genesis_filter.bloom_filter
-                    // })
-                    // worker.onmessage = event => { try {
-                    //     let { status, account_keys } = event.data
-                    //     // ...
-                    // } catch( e ) { console.error('GenesisFilterWorker', e) }}
 
                     let account_keys = unfiltered_account_keys;
                     genesis_filter.filter(account_keys, status => {
@@ -380,9 +369,8 @@ class ImportKeys extends Component {
         if (evt && "preventDefault" in evt) {
             evt.preventDefault();
         }
-        let pwNode = this.refs.password;
-        // if(pwNode) pwNode.focus()
-        let password = pwNode ? pwNode.value : "";
+        let pwNode = this.passwordRef;
+        let password = pwNode.current ? pwNode.current.value : "";
         let checksum = this.state.password_checksum;
         let new_checksum = hash.sha512(hash.sha512(password)).toString("hex");
         if (checksum != new_checksum) {
@@ -483,7 +471,10 @@ class ImportKeys extends Component {
                                 ChainConfig.address_prefix +
                                 public_key_string.substring(3);
                     }
+
+                    //TODO::change state properly
                     this.state.imported_keys_public[public_key_string] = true;
+
                     let {account_names} = this.state.keys_to_account[
                         private_plainhex
                     ] || {account_names: []};
@@ -492,6 +483,8 @@ class ImportKeys extends Component {
                         if (_name == account_name) dup = true;
                     if (dup) continue;
                     account_names.push(account_name);
+
+                    //TODO::change state properly
                     this.state.keys_to_account[private_plainhex] = {
                         account_names,
                         public_key_string
@@ -511,12 +504,7 @@ class ImportKeys extends Component {
                 }
             }
         }
-        //let enc_brainkey = this.state.encrypted_brainkey
-        //if(enc_brainkey){
-        //    this.setState({
-        //        brainkey: password_aes.decryptHexToText(enc_brainkey)
-        //    })
-        //}
+
         this.setState(
             {
                 import_file_message: null,
@@ -546,9 +534,7 @@ class ImportKeys extends Component {
         }
         let keys_to_account = this.state.keys_to_account;
         for (let private_plainhex of Object.keys(keys_to_account)) {
-            let {account_names, public_key_string} = keys_to_account[
-                private_plainhex
-            ];
+            let {public_key_string} = keys_to_account[private_plainhex];
             if (dups[public_key_string])
                 delete keys_to_account[private_plainhex];
         }
@@ -576,7 +562,7 @@ class ImportKeys extends Component {
         }
         this.reset();
         WalletDb.importKeysWorker(private_key_objs)
-            .then(result => {
+            .then(() => {
                 ImportKeysStore.importing(false);
                 let import_count = private_key_objs.length;
 
@@ -636,14 +622,22 @@ class ImportKeys extends Component {
         for (let wif of contents.match(wif_regex) || []) {
             try {
                 let private_key = PrivateKey.fromWif(wif); //could throw and error
-                let private_plainhex = private_key.toBuffer().toString("hex");
                 let public_key = private_key.toPublicKey(); // S L O W
                 let public_key_string = public_key.toPublicKeyString();
-                this.state.imported_keys_public[public_key_string] = true;
-                this.state.keys_to_account[private_plainhex] = {
-                    account_names: [],
-                    public_key_string
-                };
+
+                this.setState(prevState => ({
+                    imported_keys_public: {
+                        ...prevState.imported_keys_public,
+                        [public_key_string]: true
+                    },
+                    keys_to_account: {
+                        ...prevState.keys_to_account,
+                        private_plainhex: {
+                            account_names: [],
+                            public_key_string
+                        }
+                    }
+                }));
 
                 let accountName = [];
                 AccountApi.lookupAccountByPublicKey(public_key_string).then(
@@ -690,16 +684,6 @@ class ImportKeys extends Component {
         return count;
     }
 
-    // toggleImportType(type) {
-    //     if (!type) {
-    //         return;
-    //     }
-    //     console.log("toggleImportType", type);
-    //     this.setState({
-    //         privateKey: type === "privateKey"
-    //     });
-    // }
-
     _renderBalanceClaims() {
         return (
             <div>
@@ -714,8 +698,13 @@ class ImportKeys extends Component {
         );
     }
 
+    onWifInputChange(event) {
+        this.setState({
+            private_key: event.currentTarget.value
+        });
+    }
+
     render() {
-        let {privateKey} = this.props;
         let {keys_to_account} = this.state;
         let key_count = Object.keys(keys_to_account).length;
         let account_keycount = this.getImportAccountKeyCount(keys_to_account);
@@ -734,9 +723,6 @@ class ImportKeys extends Component {
         }
 
         let filtering = this.state.genesis_filtering;
-        let was_filtered =
-            !!this.state.genesis_filter_status.length &&
-            this.state.genesis_filter_finished;
         let account_rows = null;
 
         if (this.state.genesis_filter_status.length) {
@@ -766,11 +752,6 @@ class ImportKeys extends Component {
         }
 
         let import_ready = key_count !== 0;
-        let password_placeholder = counterpart.translate(
-            "wallet.import_password"
-        );
-
-        if (import_ready) password_placeholder = "";
 
         if (!account_rows && account_keycount) {
             account_rows = [];
@@ -862,120 +843,32 @@ class ImportKeys extends Component {
                     <div>
                         <div>
                             <div>
-                                {privateKey ? (
-                                    <form onSubmit={this.onWif.bind(this)}>
-                                        <Translate
-                                            component="label"
-                                            content="wallet.paste_private"
-                                        />
-                                        <Input
-                                            ref="wifInput"
-                                            type="password"
-                                            id="wif"
-                                            tabIndex={tabIndex++}
-                                            style={{marginBottom: "16px"}}
-                                        />
-                                        <div className="importError">
-                                            <span className="red">
-                                                {this.state.errorTextMessage}
-                                            </span>
-                                        </div>
-                                        <Button
-                                            type="primary"
-                                            htmlType="submit"
-                                            style={{marginRight: "16px"}}
-                                        >
-                                            <Translate content="wallet.submit" />
-                                        </Button>
-                                        {cancelButton}
-                                    </form>
-                                ) : (
-                                    <form
-                                        onSubmit={this._passwordCheck.bind(
-                                            this
-                                        )}
-                                    >
-                                        <label>
-                                            <Translate content="wallet.bts_09_export" />
-                                            {this.state.no_file ? null : (
-                                                <span>
-                                                    &nbsp; (
-                                                    <a
-                                                        onClick={this.reset.bind(
-                                                            this
-                                                        )}
-                                                    >
-                                                        Reset
-                                                    </a>
-                                                    )
-                                                </span>
-                                            )}
-                                        </label>
-                                        <input
-                                            type="file"
-                                            id="file_input"
-                                            accept=".json"
-                                            style={{
-                                                border: "solid",
-                                                marginBottom: 15
-                                            }}
-                                            key={this.state.reset_file_name}
-                                            onChange={this.upload.bind(this)}
-                                        />
-                                        <div>
-                                            {this.state.import_file_message}
-                                        </div>
-                                        {!this.state.no_file ? (
-                                            <div>
-                                                <Input
-                                                    type="password"
-                                                    ref="password"
-                                                    key={
-                                                        this.state
-                                                            .reset_password
-                                                    }
-                                                    placeholder={
-                                                        password_placeholder
-                                                    }
-                                                    onChange={() => {
-                                                        if (
-                                                            this.state
-                                                                .import_password_message &&
-                                                            this.state
-                                                                .import_password_message
-                                                                .length
-                                                        ) {
-                                                            this.setState({
-                                                                import_password_message: null
-                                                            });
-                                                        }
-                                                    }}
-                                                />
-                                                <p className="facolor-error">
-                                                    {
-                                                        this.state
-                                                            .import_password_message
-                                                    }
-                                                </p>
-                                            </div>
-                                        ) : null}
-                                        <div className="button-group">
-                                            <Button
-                                                type="primary"
-                                                disabled={!!this.state.no_file}
-                                                htmlType="submit"
-                                                style={{marginRight: "16px"}}
-                                            >
-                                                <Translate content="wallet.submit" />
-                                            </Button>
-                                            {cancelButton}
-                                        </div>
-                                    </form>
-                                )}
+                                <Translate
+                                    component="label"
+                                    content="wallet.paste_private"
+                                />
+                                <Input
+                                    type="password"
+                                    id="wif"
+                                    tabIndex={tabIndex++}
+                                    style={{marginBottom: "16px"}}
+                                    onChange={this.onWifInputChange}
+                                />
+                                <div className="importError">
+                                    <span className="red">
+                                        {this.state.errorTextMessage}
+                                    </span>
+                                </div>
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    style={{marginRight: "16px"}}
+                                    onClick={this.onWifSubmit}
+                                >
+                                    <Translate content="wallet.submit" />
+                                </Button>
+                                {cancelButton}
                             </div>
-                            <br />
-
-                            <br />
                         </div>
                     </div>
                 ) : null}
@@ -1030,7 +923,7 @@ class ImportKeys extends Component {
     }
 }
 
-ImportKeys = connect(ImportKeys, {
+export default connect(ImportKeys, {
     listenTo() {
         return [ImportKeysStore];
     },
@@ -1040,5 +933,3 @@ ImportKeys = connect(ImportKeys, {
         };
     }
 });
-
-export default ImportKeys;

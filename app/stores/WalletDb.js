@@ -19,6 +19,9 @@ import SettingsActions from "actions/SettingsActions";
 import {Notification} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 
+import AesWorkerNotElectron from "worker-loader!workers/AesWorker";
+import AesWorkerElectron from "worker-loader!workers/AesWorker";
+
 let aes_private = null;
 let _passwordKey = null;
 // let transaction;
@@ -27,7 +30,7 @@ let TRACE = false;
 
 let dictJson, AesWorker;
 if (__ELECTRON__) {
-    AesWorker = require("worker-loader?inline=no-fallback!workers/AesWorker");
+    AesWorker = AesWorkerElectron;
     dictJson = require("common/dictionary_en.json");
 }
 
@@ -640,7 +643,7 @@ class WalletDb extends BaseStore {
                 private_plainhex_array.push(private_key_obj.private_plainhex);
             }
             if (!__ELECTRON__) {
-                AesWorker = require("worker-loader!workers/AesWorker");
+                AesWorker = AesWorkerNotElectron;
             }
             let worker = new AesWorker();
             worker.postMessage({

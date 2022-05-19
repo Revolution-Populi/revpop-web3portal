@@ -4,10 +4,12 @@ import {key} from "@revolutionpopuli/revpopjs";
 import {ChainConfig} from "@revolutionpopuli/revpopjs-ws";
 import Immutable from "immutable";
 import BaseStore from "stores/BaseStore";
+import AddressIndexWorkerNotElectron from "worker-loader!workers/AddressIndexWorker";
+import AddressIndexWorkerElectron from "worker-loader?inline=no-fallback!workers/AddressIndexWorker";
 
 let AddressIndexWorker;
 if (__ELECTRON__) {
-    AddressIndexWorker = require("worker-loader?inline=no-fallback!workers/AddressIndexWorker");
+    AddressIndexWorker = AddressIndexWorkerElectron;
 }
 class AddressIndex extends BaseStore {
     constructor() {
@@ -65,7 +67,7 @@ class AddressIndex extends BaseStore {
             this.loadAddyMap()
                 .then(() => {
                     if (!__ELECTRON__) {
-                        AddressIndexWorker = require("worker-loader!workers/AddressIndexWorker");
+                        AddressIndexWorker = AddressIndexWorkerNotElectron;
                     }
                     let worker = new AddressIndexWorker();
                     worker.postMessage({

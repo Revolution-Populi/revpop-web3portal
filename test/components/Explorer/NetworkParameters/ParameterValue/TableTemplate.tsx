@@ -1,11 +1,11 @@
 import React from "react";
-import {ParameterType} from "../../../../app/Context/NetworkParameters/Domain/Factory";
-import {ParameterValueType} from "../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
 import {expect} from "chai";
 import {shallow} from "enzyme";
-import ShowTemplate from "../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableTemplate";
-import TableStringTemplate from "../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableStringTemplate";
-import TableBooleanTemplate from "../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableBooleanTemplate";
+import {ParameterType} from "../../../../../app/Context/NetworkParameters/Domain/Factory";
+import {ParameterValueType} from "../../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
+import ShowTemplate from "../../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableTemplate";
+import TableStringTemplate from "../../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableStringTemplate";
+import TableBooleanTemplate from "../../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableBooleanTemplate";
 
 describe("TableTemplate", () => {
     describe("resolve", () => {

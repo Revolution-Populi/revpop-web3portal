@@ -1,8 +1,8 @@
 import React from "react";
 import {expect} from "chai";
 import {shallow} from "enzyme";
-import TableBooleanTemplate from "../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableBooleanTemplate";
-import TableStringTemplate from "../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableStringTemplate";
+import TableBooleanTemplate from "../../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableBooleanTemplate";
+import TableStringTemplate from "../../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableStringTemplate";
 
 describe("TableBooleanTemplate", () => {
     const cases: {

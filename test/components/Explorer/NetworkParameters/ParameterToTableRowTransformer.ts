@@ -1,9 +1,9 @@
+import {expect} from "chai";
 import ParameterToTableRowTransformer, {
     TableRow
-} from "../../../app/components/Explorer/NetworkParameters/ParameterToTableRowTransformer";
-import NetworkParameter from "../../../app/Context/NetworkParameters/Domain/NetworkParameter";
-import {expect} from "chai";
-import {extensionsParameter} from "../../Factory/Parameter";
+} from "../../../../app/components/Explorer/NetworkParameters/ParameterToTableRowTransformer";
+import NetworkParameter from "../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
+import {extensionsParameter} from "../../../Factory/Parameter";
 
 describe("ParameterToTableRowTransformer", () => {
     let parameterToTableRowTransformer: ParameterToTableRowTransformer;

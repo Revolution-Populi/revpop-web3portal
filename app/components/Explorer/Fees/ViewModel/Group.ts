@@ -1,8 +1,10 @@
 import Operation from "./Operation";
-import {Set} from "immutable";
+import {OrderedSet} from "immutable";
 
 export default class Group {
-    private _operations: Set<Operation> = Set<Operation>().asMutable();
+    private _operations: OrderedSet<Operation> = OrderedSet<
+        Operation
+    >().asMutable();
 
     constructor(private _code: string, private _name: string) {}
 
@@ -18,7 +20,7 @@ export default class Group {
         this._operations.add(operation);
     }
 
-    get operations(): Set<Operation> {
+    get operations(): OrderedSet<Operation> {
         return this._operations;
     }
 }

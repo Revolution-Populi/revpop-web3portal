@@ -1,10 +1,14 @@
 import Fee from "./Fee";
-import {Set} from "immutable";
+import {OrderedSet} from "immutable";
 
 export default class Operation {
-    private _fees: Set<Fee> = Set<Fee>().asMutable();
+    private _fees: OrderedSet<Fee> = OrderedSet<Fee>().asMutable();
 
-    constructor(private _id: number, private _code: string) {}
+    constructor(
+        private _id: number,
+        private _code: string,
+        private _name: string
+    ) {}
 
     get id(): number {
         return this._id;
@@ -14,11 +18,15 @@ export default class Operation {
         return this._code;
     }
 
+    get name(): string {
+        return this._name?.length > 0 ? this._name : this._code;
+    }
+
     addFee(fee: Fee) {
         this._fees.add(fee);
     }
 
-    get fees(): Set<Fee> {
+    get fees(): OrderedSet<Fee> {
         return this._fees;
     }
 }

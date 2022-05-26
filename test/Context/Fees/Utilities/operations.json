@@ -10,12 +10,12 @@
         "group": "group1"
     },
     {
-        "id": 1,
+        "id": 2,
         "name": "operation2",
         "group": "group2"
     },
     {
-        "id": 1,
+        "id": 3,
         "name": "operation3",
         "group": "group3"
     }

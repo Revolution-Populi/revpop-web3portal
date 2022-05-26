@@ -230,6 +230,7 @@
         "@hot-loader/react-dom": "16",
         "@types/chai": "^4.3.0",
         "@types/chai-as-promised": "^7.1.5",
+        "@types/counterpart": "^0.18.1",
         "@types/enzyme": "^3.10.11",
         "@types/lodash": "^4.14.182",
         "@types/mocha": "^9.1.0",

@@ -6,8 +6,8 @@ import Operations = Fees.Operations;
 export default class LoadAllHandler {
     constructor(readonly repository: RepositoryInterface) {}
 
-    execute(request: LoadAll): Promise<Operations> {
-        const operations = this.repository.loadAll();
+    async execute(query: LoadAll): Promise<Operations> {
+        const operations = await this.repository.loadAll();
 
         return operations;
     }

@@ -1116,7 +1116,10 @@
         }
     },
     "fees": {
-        "title": "Fee Schedule"
+        "title": "Fee Schedule",
+        "edit": "Edit",
+        "save": "Save changes",
+        "cancel": "Discard changes"
     },
     "network_parameters": {
         "name": "Name",
@@ -2680,12 +2683,15 @@
             "worker_create": "Create worker",
             "content_card_create": "Content card create",
             "content_card_update": "Content card update",
+            "content_card_remove": "Content card remove",
             "permission_create": "Permission create",
             "custom_authority_update": "Custom authority update",
             "custom_authority_delete": "Custom authority delete",
             "personal_data_create": "Custom data create",
             "personal_data_remove": "Custom data remove",
-            "ticket_update": "Ticket update"
+            "ticket_update": "Ticket update",
+            "custom_authority_create": "Custom authority create",
+            "permission_remove": "Permission remove"
         },
         "vesting_balance_create": "created vesting balance of",
         "view_json": "Show raw json",

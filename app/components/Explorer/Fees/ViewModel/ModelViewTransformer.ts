@@ -1,13 +1,15 @@
 import {Map} from "immutable";
 import counterpart from "counterpart";
 import {Fees} from "../../../../Context/Fees/types";
-import Operations = Fees.Operations;
+import Operations = Fees.OperationsType;
 import JsonOperationType = Fees.JsonOperationType;
 import JsonOperationsType = Fees.JsonOperationsType;
 import Operation from "../../../../Context/Fees/Domain/Operation";
+import Fee from "../../../../Context/Fees/Domain/Fee";
 import GroupView from "./Group";
 import OperationView from "./Operation";
 import FeeView from "./Fee";
+import FeeValue from "../../../../Context/Fees/Domain/FeeValue";
 
 type GroupsType = Map<string, GroupView>;
 
@@ -28,14 +30,16 @@ export default class ModelViewTransformer {
     transform(operations: Operations): GroupsType {
         this.groups = Map<string, GroupView>().asMutable();
 
-        operations.forEach((operation: Operation) => {
+        operations.forEach(operation => {
             const jsonOperation = this.jsonOperations.find(
-                jsonOperation => jsonOperation.id == operation.id
+                jsonOperation => jsonOperation.id == (operation as Operation).id
             );
 
             if (jsonOperation) {
                 const groupView = this.addGroup(jsonOperation);
-                groupView.addOperation(this.addOperationToGroup(operation));
+                groupView.addOperation(
+                    this.transformOperation(operation as Operation)
+                );
             }
         });
 
@@ -54,7 +58,7 @@ export default class ModelViewTransformer {
         return this.groups.get(jsonOperation.group);
     }
 
-    private addOperationToGroup(operation: Operation): OperationView {
+    private transformOperation(operation: Operation): OperationView {
         const operationView = new OperationView(
             operation.id,
             operation.name,
@@ -63,17 +67,24 @@ export default class ModelViewTransformer {
             })
         );
 
-        operation.fees.forEach((feeValue, feeCode) => {
-            const fee = new FeeView(
-                feeCode as string,
-                counterpart.translate(`transaction.feeTypes.${feeCode}`, {
-                    fallback: feeCode
+        operation.fees.forEach(fee => {
+            fee = fee as Fee;
+
+            const feeView = new FeeView(
+                fee.code,
+                counterpart.translate(`transaction.feeTypes.${fee.code}`, {
+                    fallback: fee.code
                 }),
-                feeValue as number,
-                (feeValue as number) * this.networkPercentOfFee
+                FeeValue.create(fee.value, fee.newValue),
+                FeeValue.create(
+                    fee.value * this.networkPercentOfFee,
+                    fee.newValue
+                        ? fee.newValue * this.networkPercentOfFee
+                        : null
+                )
             );
 
-            operationView.addFee(fee);
+            operationView.addFee(feeView);
         });
 
         return operationView;

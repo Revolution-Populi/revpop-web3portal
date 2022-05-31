@@ -1,11 +1,8 @@
 import {Map} from "immutable";
+import Operation from "./Domain/Operation";
+import Fee from "./Domain/Fee";
 
 export namespace Fees {
-    // export type CurrentFeesType = {
-    //     parameters: BlockchainOperationsType,
-    //     scale: number
-    // }
-
     export type BlockchainOperationsType = BlockchainOperationType[];
 
     export type BlockchainOperationType = [number, BlockchainFeeType];
@@ -22,5 +19,7 @@ export namespace Fees {
 
     export type JsonOperationsType = JsonOperationType[];
 
-    export type Operations = Map<number, Operation>;
+    export type OperationsType = Map<number, Operation>;
+
+    export type OperationFeesType = Map<string, Fee>;
 }

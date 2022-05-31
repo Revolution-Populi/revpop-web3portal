@@ -1,9 +1,11 @@
+import FeeValue from "../../../../Context/Fees/Domain/FeeValue";
+
 export default class Fee {
     constructor(
         private _code: string,
         private _name: string,
-        private _standardFee: number,
-        private _lifetimeMemberFee: number
+        private _standardFee: FeeValue,
+        private _lifetimeMemberFee: FeeValue
     ) {}
 
     get code(): string {
@@ -15,14 +17,22 @@ export default class Fee {
     }
 
     get standardFee(): number {
-        return this._standardFee;
+        return this._standardFee.value;
+    }
+
+    get standardFeeNewValue(): number | null {
+        return this._standardFee.newValue;
     }
 
     get lifetimeMemberFee(): number {
-        return this._lifetimeMemberFee;
+        return this._lifetimeMemberFee.value;
     }
 
-    isFreeStandardFee(): boolean {
-        return this._standardFee == 0;
+    get lifetimeMemberFeeNewValue(): number | null {
+        return this._lifetimeMemberFee.newValue;
+    }
+
+    updated(): boolean {
+        return this._standardFee.updated();
     }
 }

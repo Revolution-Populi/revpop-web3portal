@@ -1,5 +1,5 @@
 import {Fees} from "../types";
-import Operations = Fees.Operations;
+import Operations = Fees.OperationsType;
 
 export default interface RepositoryInterface {
     loadAll: () => Promise<Operations>;

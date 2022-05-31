@@ -30,6 +30,8 @@ class Fees extends React.Component {
             scale: null,
             networkPercent: null
         };
+
+        this.updateOperations = this.updateOperations.bind(this);
     }
 
     async componentDidMount() {
@@ -52,6 +54,12 @@ class Fees extends React.Component {
         });
     }
 
+    updateOperations(operations) {
+        this.setState({
+            operations
+        });
+    }
+
     render() {
         if (this.state.operations.isEmpty()) {
             return null;
@@ -68,7 +76,8 @@ class Fees extends React.Component {
         return (
             <FeesContext.Provider
                 value={{
-                    operations: this.state.operations
+                    operations: this.state.operations,
+                    updateOperations: this.updateOperations
                 }}
             >
                 <div className="grid-block vertical">

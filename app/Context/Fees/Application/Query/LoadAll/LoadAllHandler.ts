@@ -1,7 +1,7 @@
 import RepositoryInterface from "../../../Domain/RepositoryInterface";
 import LoadAll from "./LoadAll";
 import {Fees} from "../../../types";
-import Operations = Fees.Operations;
+import Operations = Fees.OperationsType;
 
 export default class LoadAllHandler {
     constructor(readonly repository: RepositoryInterface) {}

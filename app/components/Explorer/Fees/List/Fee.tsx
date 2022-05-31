@@ -11,6 +11,7 @@ export type FeeProps = {
 };
 
 export default function Fee({feeNumber, operation, fee}: FeeProps) {
+    // console.log(fee)
     return (
         <tr>
             {feeNumber == 1 && (
@@ -20,10 +21,18 @@ export default function Fee({feeNumber, operation, fee}: FeeProps) {
             )}
             <td>{fee.name}</td>
             <td className="standard-fee">
-                <FeeValueWithEdit value={fee.standardFee} />
+                <FeeValueWithEdit
+                    fee={fee}
+                    operationId={operation.id}
+                    code={fee.code}
+                />
             </td>
             <td className="lifetime-member-fee">
-                <FeeValue value={fee.lifetimeMemberFee} />
+                <FeeValue
+                    value={fee.lifetimeMemberFee}
+                    newValue={fee.lifetimeMemberFeeNewValue}
+                    updated={fee.updated()}
+                />
             </td>
         </tr>
     );

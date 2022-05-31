@@ -7,6 +7,9 @@ import AssetWrapper from "../../../Utility/AssetWrapper";
 import utils from "../../../../lib/common/utils";
 import FeeValue from "./FeeValue";
 import FeesContext from "../Context";
+import FeeView from "../ViewModel/Fee";
+import UpdateOperation from "../../../../Context/Fees/Application/Command/UpdateOperation/UpdateOperation";
+import UpdateOperationHandler from "../../../../Context/Fees/Application/Command/UpdateOperation/UpdateOperationHandler";
 
 type AssetType = {
     id: string;
@@ -16,33 +19,61 @@ type AssetType = {
 };
 
 export type Props = {
-    value: number;
+    fee: FeeView;
+    operationId: number;
+    code: string;
     asset: Map<string, AssetType>;
 };
 
-function FeeValueWithEdit({value, asset}: Props) {
+function FeeValueWithEdit({fee, operationId, code, asset}: Props) {
     const [edit, setEdit] = useState(false);
+    const [inputValue, setInputValue] = useState(fee.standardFee);
 
     const precision = utils.get_asset_precision(asset.get("precision"));
-    const [newValue, setNewValue] = useState(value / precision);
 
-    const {operations} = useContext(FeesContext);
+    const {operations, updateOperations} = useContext(FeesContext);
+
+    function onEditHandler() {
+        setEdit(true);
+    }
+
+    function onSaveHandler() {
+        const updateRequest = new UpdateOperation(
+            operations,
+            operationId,
+            code,
+            inputValue
+        );
+        const handler = new UpdateOperationHandler();
+        updateOperations(handler.execute(updateRequest));
+
+        setEdit(false);
+    }
+
+    function onCancelHandler() {
+        setEdit(false);
+    }
+
+    function onChangeHandler(value: number) {
+        setInputValue(value * precision);
+    }
 
     if (edit) {
         return (
             <>
                 <InputNumber
                     onChange={onChangeHandler}
-                    defaultValue={newValue}
+                    value={inputValue / precision}
                     min={0}
                     step={1 / precision}
                 />
-                <Icon
-                    onClick={onSaveHandler}
-                    className="save"
-                    name="chevron-down"
-                    title="fees.save"
-                />
+                <span onClick={onSaveHandler}>
+                    <Icon
+                        className="save"
+                        name="chevron-down"
+                        title="fees.save"
+                    />
+                </span>
                 <Icon
                     onClick={onCancelHandler}
                     className="cancel"
@@ -53,26 +84,13 @@ function FeeValueWithEdit({value, asset}: Props) {
         );
     }
 
-    function onEditHandler() {
-        setEdit(true);
-    }
-
-    function onSaveHandler() {
-        setEdit(false);
-    }
-
-    function onCancelHandler() {
-        setEdit(false);
-    }
-
-    function onChangeHandler(value: number) {
-        console.log(value);
-        setNewValue(value);
-    }
-
     return (
         <>
-            <FeeValue value={value} />
+            <FeeValue
+                value={fee.standardFee}
+                newValue={fee.standardFeeNewValue}
+                updated={fee.updated()}
+            />
             <Icon onClick={onEditHandler} name="edit" title="fees.edit" />
         </>
     );

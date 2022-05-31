@@ -5,7 +5,7 @@ import Factory from "../Domain/Factory";
 import {Fees} from "../types";
 import BlockchainOperationsType = Fees.BlockchainOperationsType;
 import JsonOperationsType = Fees.JsonOperationsType;
-import Operations = Fees.Operations;
+import Operations = Fees.OperationsType;
 import JsonOperationType = Fees.JsonOperationType;
 
 export default class GlobalObjectRepository implements RepositoryInterface {

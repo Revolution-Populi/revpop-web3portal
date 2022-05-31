@@ -1,6 +1,7 @@
 import {getGlobalObjectRepository} from "../Utilities/GlobalObjectRepository";
 import {expect} from "chai";
 import {getBlockchainOperation} from "../Utilities/Operation";
+import Fee from "../../../../app/Context/Fees/Domain/Fee";
 
 describe("GlobalObjectRepository", () => {
     describe("loadAll", () => {
@@ -43,23 +44,33 @@ describe("GlobalObjectRepository", () => {
             ]);
             const result = await repository.loadAll();
 
-            const operation1 = result.get(0);
-            const operation1Fees = operation1.fees;
-            expect(operation1Fees.size).equals(2);
-            expect(operation1Fees.has("fee")).true;
-            expect(operation1Fees.get("fee")).equals(86869);
-            expect(operation1Fees.has("price_per_kbyte")).true;
-            expect(operation1Fees.get("price_per_kbyte")).equals(48260);
+            const operation0 = result.get(0);
+            const operation0Fees = operation0.fees;
+            expect(operation0Fees.size).equals(2);
+
+            expect(operation0Fees.has("fee")).true;
+            assertFee(operation0Fees.get("fee"), 86869, null);
+
+            expect(operation0Fees.has("price_per_kbyte")).true;
+            assertFee(operation0Fees.get("price_per_kbyte"), 48260, null);
 
             const operation2 = result.get(1);
             const operation2Fees = operation2.fees;
             expect(operation2Fees.size).equals(3);
+
             expect(operation2Fees.has("basic_fee")).true;
-            expect(operation2Fees.get("basic_fee")).equals(482609);
+            assertFee(operation2Fees.get("basic_fee"), 482609, null);
+
             expect(operation2Fees.has("premium_fee")).true;
-            expect(operation2Fees.get("premium_fee")).equals(24130471);
+            assertFee(operation2Fees.get("premium_fee"), 24130471, null);
+
             expect(operation2Fees.has("price_per_kbyte")).true;
-            expect(operation2Fees.get("price_per_kbyte")).equals(48260);
+            assertFee(operation2Fees.get("price_per_kbyte"), 48260, null);
         });
     });
 });
+
+function assertFee(fee: Fee, value: number, newValue: number | null) {
+    expect(fee.value).equals(value);
+    expect(fee.newValue).equals(newValue);
+}

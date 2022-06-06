@@ -1,11 +1,11 @@
 import React from "react";
 import {Button} from "bitshares-ui-style-guide";
 import Translate from "react-translate-component";
-import ProposalRepository from "../Repository/Proposal";
+import {proposalRepository} from "../../../../Context/Proposal";
 
 export default function RowActions({proposal}) {
     function onSave() {
-        ProposalRepository.vote(proposal);
+        proposalRepository.vote(proposal);
     }
 
     return (

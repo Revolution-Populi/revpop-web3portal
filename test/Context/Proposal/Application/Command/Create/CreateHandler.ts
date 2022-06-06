@@ -60,7 +60,7 @@ describe("CreateHandler", () => {
 
                     expect(result).true;
 
-                    const proposals = stubRepository.loadAll();
+                    const proposals = await stubRepository.loadAll();
                     expect(proposals.size).equals(1);
 
                     const proposal = proposals.first();
@@ -84,7 +84,7 @@ describe("CreateHandler", () => {
                 const result = await handler.execute(command);
                 expect(result).true;
 
-                const proposals = stubRepository.loadAll();
+                const proposals = await stubRepository.loadAll();
                 expect(proposals.size).equals(1);
 
                 const proposal = proposals.first();
@@ -119,7 +119,7 @@ describe("CreateHandler", () => {
                     const result = await handler.execute(command);
                     expect(result).true;
 
-                    const proposals = stubRepository.loadAll();
+                    const proposals = await stubRepository.loadAll();
                     expect(proposals.size).equals(1);
 
                     const proposal = proposals.first();
@@ -138,5 +138,3 @@ describe("CreateHandler", () => {
         });
     });
 });
-
-function assertProposalsCount(proposals: Proposals, count: number) {}

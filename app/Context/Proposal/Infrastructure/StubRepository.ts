@@ -13,8 +13,8 @@ class StubRepository implements RepositoryInterface {
         return true;
     }
 
-    loadAll(): Proposals {
-        return this.items;
+    loadAll(): Promise<Proposals> {
+        return Promise.resolve(this.items);
     }
 
     clear() {

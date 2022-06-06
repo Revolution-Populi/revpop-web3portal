@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import {Table} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import ProposalsContext from "./Context";
+import {proposalRepository} from "../../../../Context/Proposal";
 import {Map} from "immutable";
-import proposalRepository from "../Repository/Proposal";
 import ExpandedRow from "./ExpandedRow";
 import RowActions from "./ProposalRowActions";
 

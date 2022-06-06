@@ -1,7 +1,6 @@
 import React, {useContext, useState} from "react";
 import counterpart from "counterpart";
 import {Modal, Table} from "bitshares-ui-style-guide";
-import proposalRepository from "../Repository/Proposal";
 import NetworkParametersContext from "../Context";
 import Translate from "react-translate-component";
 import ExpirationDate from "./ExpirationDate";
@@ -10,7 +9,6 @@ import GetChanged from "../../../../Context/NetworkParameters/Application/Query/
 import GetChangedHandler from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChangedHandler";
 import ParameterToTableRowTransformer from "../ParameterToTableRowTransformer";
 import CreateHandler from "../../../../Context/Proposal/Application/Commands/Create/CreateHandler";
-import stubRepository from "../../../../Context/Proposal/Infrastructure/StubRepository";
 import Create from "../../../../Context/Proposal/Application/Commands/Create/Create";
 import blockchainRepository from "../../../../Context/Proposal/Infrastructure/BlockchainRepository";
 
@@ -60,7 +58,7 @@ export default function CreateProposalModal({isVisible, close}) {
         const command = new Create(parameters, expirationDate);
         const result = await handler.execute(command);
 
-        if (result) {
+        if (result.isSuccess()) {
             close();
         }
     }

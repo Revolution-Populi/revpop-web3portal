@@ -10,5 +10,5 @@ export type Proposals = Set<Proposal>;
 
 export default interface RepositoryInterface {
     create: (proposal: Proposal) => void;
-    loadAll: () => Proposals;
+    loadAll: () => Promise<Proposals>;
 }

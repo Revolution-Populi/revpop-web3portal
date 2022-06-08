@@ -3,18 +3,18 @@ import {Set} from "immutable";
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
 // @ts-ignore
 import {ChainStore} from "@revolutionpopuli/revpopjs";
-import RepositoryInterface, {
-    Proposal,
-    Proposals
-} from "../Domain/RepositoryInterface";
+import RepositoryInterface from "../Domain/RepositoryInterface";
 import AccountStore from "../../../stores/AccountStore";
 import WalletApi from "../../../api/WalletApi";
 import WalletDb from "../../../stores/WalletDb";
+import {NetworkParameters} from "../../NetworkParameters/types";
+import ProposalType = NetworkParameters.ProposalType;
+import ProposalsType = NetworkParameters.ProposalsType;
 
 class BlockchainRepository implements RepositoryInterface {
-    private items: Proposals = Set();
+    private items: ProposalsType = Set();
 
-    async create(proposal: Proposal): Promise<void> {
+    async create(proposal: ProposalType): Promise<void> {
         let account = AccountStore.getState().currentAccount;
 
         account = ChainStore.getAccount(account);
@@ -37,8 +37,8 @@ class BlockchainRepository implements RepositoryInterface {
                 asset_id: "1.3.0"
             },
             fee_paying_account: account.get("id"),
-            expiration_time: proposal.expiration_time,
-            review_period_seconds: 300
+            expiration_time: proposal.expirationTime,
+            review_period_seconds: proposal.reviewPeriod
         });
 
         try {
@@ -48,7 +48,7 @@ class BlockchainRepository implements RepositoryInterface {
         }
     }
 
-    async loadAll(): Promise<Proposals> {
+    async loadAll(): Promise<ProposalsType> {
         // return {
         //     name: {
         //         id: "1.10.1",
@@ -95,7 +95,7 @@ class BlockchainRepository implements RepositoryInterface {
         //
         // return parameters;
 
-        const proposals = Set<Proposal>();
+        const proposals = Set<ProposalType>();
         return Promise.resolve(proposals);
     }
 

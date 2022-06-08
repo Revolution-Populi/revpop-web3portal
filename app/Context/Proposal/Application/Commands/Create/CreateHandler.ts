@@ -1,15 +1,16 @@
 import {Map} from "immutable";
 import NetworkParameter from "../../../../NetworkParameters/Domain/NetworkParameter";
 import Create from "./Create";
-import RepositoryInterface, {
-    Proposal
-} from "../../../Domain/RepositoryInterface";
 import {
     ParameterObjectValueType,
     ParameterValueType
 } from "../../../../NetworkParameters/Domain/RepositoryInterface";
+import RepositoryInterface from "../../../Domain/RepositoryInterface";
 import {Either, Failure, Success} from "../../../../Core/Logic/Result";
 import {UnexpectedError} from "../../../../Core/Logic/AppError";
+import {NetworkParameters} from "../../../../NetworkParameters/types";
+import ParametersType = NetworkParameters.ParametersType;
+import ProposalType = NetworkParameters.ProposalType;
 
 type Response = Either<UnexpectedError, void>;
 
@@ -17,9 +18,10 @@ export default class CreateHandler {
     constructor(private repository: RepositoryInterface) {}
 
     async execute(command: Create): Promise<Response> {
-        const proposal: Proposal = {
+        const proposal: ProposalType = {
             parameters: this.parameterMapToObject(command.parameters),
-            expiration_time: command.expirationTime.unix()
+            expirationTime: command.expirationTime.unix(),
+            reviewPeriod: this.getReviewPeriod(command.parameters)
         };
 
         // const query = new GetChanged(command.parameters);
@@ -70,5 +72,12 @@ export default class CreateHandler {
         });
 
         return objectParameters;
+    }
+
+    private getReviewPeriod(parameters: ParametersType): number {
+        const reviewPeriodParameter = parameters.get(
+            "committee_proposal_review_period"
+        );
+        return reviewPeriodParameter.value as number;
     }
 }

@@ -12,7 +12,11 @@ import CreateHandler from "../../../../Context/Proposal/Application/Commands/Cre
 import Create from "../../../../Context/Proposal/Application/Commands/Create/Create";
 import blockchainRepository from "../../../../Context/Proposal/Infrastructure/BlockchainRepository";
 
-export default function CreateProposalModal({isVisible, close}) {
+export default function CreateProposalModal({
+    isVisible,
+    close,
+    onProposalCreated
+}) {
     const [expirationDate, setExpirationDate] = useState(
         moment().add(1, "days")
     );
@@ -60,6 +64,7 @@ export default function CreateProposalModal({isVisible, close}) {
 
         if (result.isSuccess()) {
             close();
+            onProposalCreated();
         }
     }
 

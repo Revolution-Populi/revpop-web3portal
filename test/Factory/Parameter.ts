@@ -12,6 +12,10 @@ export function simpleParameter(
     return parameter;
 }
 
+export function committeeProposalReviewPeriod(): NetworkParameter {
+    return simpleParameter("committee_proposal_review_period", 300);
+}
+
 export function groupParameterWith1LevelChildren(): NetworkParameter {
     const maxPreimageSize = new NetworkParameter("max_preimage_size");
     maxPreimageSize.value = 1024000;

@@ -1143,8 +1143,10 @@
         "proposals": {
             "title": "Proposals",
             "id": "ID",
+            "review_period": "Review period",
             "expiration_date": "Expiration date",
-            "vote": "Vote"
+            "vote": "Vote",
+            "revoke": "Revoke"
         },
         "create_proposal": {
             "button": "Create proposal",

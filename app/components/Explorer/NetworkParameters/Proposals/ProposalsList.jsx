@@ -2,18 +2,20 @@ import React, {useEffect, useState} from "react";
 import {Table} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import ProposalsContext from "./Context";
-import {proposalRepository} from "../../../../Context/Proposal";
+import {LoadAll, loadAllHandler} from "../../../../Context/Proposal";
 import {Map} from "immutable";
 import ExpandedRow from "./ExpandedRow";
 import RowActions from "./ProposalRowActions";
+import Proposal from "../../../../Context/Proposal/Domain/Proposal";
 
 export default function ProposalsList() {
     const [proposals, setProposals] = useState(Map());
 
     useEffect(() => {
         const loadProposals = async () => {
-            const parameters = await proposalRepository.load();
-            setProposals(new Map(Object.entries(parameters)));
+            const query = new LoadAll();
+            const proposals = await loadAllHandler.execute(query);
+            setProposals(proposals);
         };
         loadProposals().catch(console.error);
     }, []);
@@ -24,8 +26,10 @@ export default function ProposalsList() {
                 return {
                     key: proposal.id,
                     id: proposal.id,
-                    expiration_date: proposal.expiration_date,
+                    expiration_date: proposal.expirationDate,
+                    review_period: proposal.reviewPeriod,
                     parameters: proposal.parameters,
+                    voted: proposal.voted,
                     actions: <RowActions proposal={proposal} />
                 };
             })
@@ -39,6 +43,13 @@ export default function ProposalsList() {
         },
         {
             title: counterpart.translate(
+                "network_parameters.proposals.review_period"
+            ),
+            dataIndex: "review_period",
+            render: expiration_date => expiration_date.format("lll")
+        },
+        {
+            title: counterpart.translate(
                 "network_parameters.proposals.expiration_date"
             ),
             dataIndex: "expiration_date",
@@ -46,7 +57,7 @@ export default function ProposalsList() {
             sorter: (a, b) => {
                 return a.expiration_date - b.expiration_date;
             },
-            render: expiration_date => expiration_date.format()
+            render: expiration_date => expiration_date.format("lll")
         },
         {
             title: "",
@@ -66,7 +77,8 @@ export default function ProposalsList() {
                 columns={columns}
                 dataSource={prepareProposals()}
                 expandedRowRender={proposal => (
-                    <ExpandedRow proposal={proposal} />
+                    <>Changed parameters</>
+                    // <ExpandedRow proposal={proposal} />
                 )}
                 pagination={false}
             />

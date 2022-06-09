@@ -74,7 +74,7 @@ describe("CreateHandler", () => {
 
                     expect(result.isSuccess()).true;
 
-                    const proposals = await stubRepository.loadAll();
+                    const proposals = await stubRepository.items;
                     expect(proposals.size).equals(1);
 
                     const proposal: ProposalType = proposals.first();
@@ -104,7 +104,7 @@ describe("CreateHandler", () => {
                 const result = await handler.execute(command);
                 expect(result.isSuccess()).true;
 
-                const proposals = await stubRepository.loadAll();
+                const proposals = await stubRepository.items;
                 expect(proposals.size).equals(1);
 
                 const proposal = proposals.first();
@@ -146,7 +146,7 @@ describe("CreateHandler", () => {
                     const result = await handler.execute(command);
                     expect(result.isSuccess()).true;
 
-                    const proposals = await stubRepository.loadAll();
+                    const proposals = await stubRepository.items;
                     expect(proposals.size).equals(1);
 
                     const proposal: ProposalType = proposals.first();

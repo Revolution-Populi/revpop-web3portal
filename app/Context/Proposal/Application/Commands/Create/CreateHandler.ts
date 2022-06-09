@@ -24,13 +24,7 @@ export default class CreateHandler {
             reviewPeriod: this.getReviewPeriod(command.parameters)
         };
 
-        // const query = new GetChanged(command.parameters);
-        // const handler = new GetChangedHandler();
-        // const changedParameters = handler.execute(query)
-        //
-        // if (changedParameters.isEmpty()) {
-        //     throw new Error("Changed parameters have not found")
-        // }
+        //TODO:check count of changed parameters
 
         try {
             await this.repository.create(proposal);

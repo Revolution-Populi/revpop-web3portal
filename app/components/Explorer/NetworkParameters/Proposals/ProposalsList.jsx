@@ -69,7 +69,8 @@ export default function ProposalsList() {
     return (
         <ProposalsContext.Provider
             value={{
-                proposals: proposals
+                proposals: proposals,
+                setProposals: setProposals
             }}
         >
             <Table
@@ -77,8 +78,7 @@ export default function ProposalsList() {
                 columns={columns}
                 dataSource={prepareProposals()}
                 expandedRowRender={proposal => (
-                    <>Changed parameters</>
-                    // <ExpandedRow proposal={proposal} />
+                    <ExpandedRow proposal={proposal} />
                 )}
                 pagination={false}
             />

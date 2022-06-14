@@ -1,14 +1,20 @@
 import LoadAll from "./LoadAll";
-import {NetworkParameters} from "../../../../NetworkParameters/types";
-import ProposalsType = NetworkParameters.ProposalsType;
 import RepositoryInterface from "../../../Domain/RepositoryInterface";
+import {loadAllParameters as loadAllParametersFunction} from "../../../../NetworkParameters/Facade";
+import {ProposalTypes} from "../../../types";
+import ProposalsType = ProposalTypes.ProposalsType;
 
 export default class LoadAllHandler {
-    constructor(readonly repository: RepositoryInterface) {}
+    constructor(
+        readonly repository: RepositoryInterface,
+        readonly loadAllParameters: typeof loadAllParametersFunction
+    ) {}
 
     async execute(request: LoadAll): Promise<ProposalsType> {
-        const data = await this.repository.loadAll();
+        const proposals = await this.repository.loadAll();
 
-        return data;
+        const allParameters = await this.loadAllParameters();
+
+        return proposals;
     }
 }

@@ -1,12 +1,8 @@
 import {Moment} from "moment";
-import {Set} from "immutable";
 import {ProposalTypes} from "../types";
 import ParametersType = ProposalTypes.ParametersType;
-import ChangedParameterType = ProposalTypes.ChangedParameterType;
-import ChangedParametersType = ProposalTypes.ChangedParametersType;
 
 export default class Proposal {
-    private _changedParameters: ChangedParametersType = Set();
     private _voted = false;
 
     constructor(
@@ -36,15 +32,11 @@ export default class Proposal {
         this._voted = true;
     }
 
+    revokeVote() {
+        this._voted = false;
+    }
+
     get voted(): boolean {
         return this._voted;
-    }
-
-    addChangedParameter(changedParameter: ChangedParameterType) {
-        this._changedParameters = this._changedParameters.add(changedParameter);
-    }
-
-    get changedParameters(): ParametersType {
-        return this._changedParameters;
     }
 }

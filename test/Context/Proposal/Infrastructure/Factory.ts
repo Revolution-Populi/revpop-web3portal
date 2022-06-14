@@ -1,7 +1,14 @@
 import {expect} from "chai";
 import moment from "moment";
-import {getBlockchainProposal} from "../Utils/BlockchainProposal";
+import {
+    getBlockchainProposal,
+    getBlockchainProposalWithParameters,
+    getBlockchainProposalWrongTransactionId
+} from "../Utils/BlockchainProposal";
 import factory from "../../../../app/Context/Proposal/Infrastructure/Factory";
+import Parameter from "../../../../app/Context/Proposal/Domain/Parameter";
+import {ProposalTypes} from "../../../../app/Context/Proposal/types";
+import ParameterValueType = ProposalTypes.ParameterValueType;
 
 describe("Factory", () => {
     describe("execute", () => {
@@ -47,5 +54,65 @@ describe("Factory", () => {
                 expect(proposal.voted).true;
             });
         });
+
+        describe("parameters property", async () => {
+            describe("with invalid blockchain proposal", async () => {
+                it("should throw error with wrong operation id", async () => {
+                    const blockchainProposal = getBlockchainProposalWrongTransactionId();
+
+                    expect(
+                        factory.fromBlockchain.bind(
+                            factory,
+                            blockchainProposal,
+                            "1.10.5"
+                        )
+                    ).to.throw("Invalid proposed operation id");
+                });
+            });
+
+            describe("with correct proposal", async () => {
+                it("should return correct parameters count", async () => {
+                    const result = factory.fromBlockchain(
+                        getBlockchainProposalWithParameters({
+                            parameter_1: 4,
+                            parameter_2: true
+                        }),
+                        "1.10.5"
+                    );
+
+                    expect(result.parameters.size).equals(2);
+                });
+
+                it("should return correct parameters", async () => {
+                    const result = factory.fromBlockchain(
+                        getBlockchainProposalWithParameters({
+                            parameter_1: 4,
+                            parameter_2: true
+                        }),
+                        "1.10.5"
+                    );
+
+                    assertParameter(
+                        result.parameters.first(),
+                        "parameter_1",
+                        4
+                    );
+                    assertParameter(
+                        result.parameters.last(),
+                        "parameter_2",
+                        true
+                    );
+                });
+            });
+        });
     });
 });
+
+function assertParameter(
+    parameter: Parameter,
+    name: string,
+    value: ParameterValueType
+) {
+    expect(parameter.name).equals(name);
+    expect(parameter.value).equals(value);
+}

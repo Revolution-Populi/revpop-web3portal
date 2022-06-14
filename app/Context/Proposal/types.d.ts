@@ -1,5 +1,6 @@
 import {Set} from "immutable";
 import Proposal from "./Domain/Proposal";
+import Parameter from "./Domain/Parameter";
 
 export namespace ProposalTypes {
     type FeeType = {
@@ -7,16 +8,26 @@ export namespace ProposalTypes {
         asset_id: string;
     };
 
+    export type ParameterObjectBlockchainValueType = {
+        [key: string]: ParameterBlockchainValueType;
+    };
+
+    type ParameterBlockchainValueType =
+        | string
+        | number
+        | boolean
+        | ParameterObjectBlockchainValueType;
+
     type ProposalTransactionOperationsBlockchainType = {
         fee: FeeType;
         new_parameters: ParameterObjectBlockchainValueType;
     };
 
-    type ProposalTransactionBlockchainType = {
+    export type ProposalTransactionBlockchainType = {
         ref_block_num: number;
         ref_block_prefix: number;
         expiration: string;
-        operations: [number, ProposalTransactionOperationsBlockchainType];
+        operations: [number, ProposalTransactionOperationsBlockchainType][];
         extensions: never[];
     };
 
@@ -34,29 +45,12 @@ export namespace ProposalTypes {
         review_period_time: string;
     };
 
-    export type ProposalsBlockchainType = ProposalBlockchainType[];
-
-    type ParameterObjectBlockchainValueType = {
-        [key: string]: ParameterBlockchainValueType;
-    };
-
-    type ParameterBlockchainValueType =
-        | string
-        | number
-        | ParameterObjectBlockchainValueType;
-
-    type ParameterType = {
-        name: string;
-        value: ParameterBlockchainValueType;
-    };
-    export type ParametersType = Set<ParameterType>;
-
-    type ChangedParameterType = {
-        name: string;
-        value: ParameterBlockchainValueType;
-        newValue: Extract<ParameterBlockchainValueType, string | number>;
-    };
-    export type ChangedParametersType = Set<ChangedParameterType>;
-
     export type ProposalsType = Set<Proposal>;
+
+    export type ParametersType = Set<Parameter>;
+
+    export type ParameterValueType = Extract<
+        ParameterBlockchainValueType,
+        string | number | boolean
+    >;
 }

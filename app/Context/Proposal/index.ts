@@ -2,7 +2,11 @@ import proposalRepository from "./Infrastructure/BlockchainRepository";
 
 import LoadAll from "./Application/Query/LoadAll/LoadAll";
 import LoadAllHandler from "./Application/Query/LoadAll/LoadAllHandler";
-const loadAllHandler = new LoadAllHandler(proposalRepository);
+import {loadAllParameters} from "../NetworkParameters/Facade";
+const loadAllHandler = new LoadAllHandler(
+    proposalRepository,
+    loadAllParameters
+);
 
 export {LoadAll, loadAllHandler};
 

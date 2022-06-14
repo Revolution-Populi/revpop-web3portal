@@ -1,4 +1,3 @@
-import {Map} from "immutable";
 import NetworkParameter from "../../../../NetworkParameters/Domain/NetworkParameter";
 import Create from "./Create";
 import {
@@ -36,7 +35,7 @@ export default class CreateHandler {
     }
 
     private parameterMapToObject(
-        parameters: Map<string, NetworkParameter>
+        parameters: ParametersType
     ): ParameterObjectValueType {
         const objectParameters: ParameterObjectValueType = {};
 

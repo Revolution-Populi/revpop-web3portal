@@ -3,11 +3,7 @@ import {Map} from "immutable";
 import {NetworkParameters} from "../../../../Context/NetworkParameters/types";
 import ParametersType = NetworkParameters.ParametersType;
 import NetworkParameter from "../../../../Context/NetworkParameters/Domain/NetworkParameter";
-import LoadAll from "../../../../Context/NetworkParameters/Application/Query/LoadAll/LoadAll";
-import LoadAllHandler from "../../../../Context/NetworkParameters/Application/Query/LoadAll/LoadAllHandler";
-import blockchainRepository from "../../../../Context/NetworkParameters/Infrastructure/BlockchainRepository";
-import jsonParameters from "../../../../Context/NetworkParameters/Domain/parameters.json";
-import {JsonParametersType} from "../../../../Context/NetworkParameters/Domain/Factory";
+import {LoadAll, loadAllHandler} from "../../../../Context/NetworkParameters";
 
 function useParameters() {
     const [parameters, setParameters] = useState<ParametersType>(
@@ -20,10 +16,7 @@ function useParameters() {
 
     const loadParameters = async () => {
         const query = new LoadAll();
-        const parameters = await new LoadAllHandler(
-            blockchainRepository,
-            jsonParameters as JsonParametersType
-        ).execute(query);
+        const parameters = await loadAllHandler.execute(query);
 
         setParameters(parameters);
     };

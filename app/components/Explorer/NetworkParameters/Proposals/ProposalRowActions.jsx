@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Button} from "bitshares-ui-style-guide";
 import Translate from "react-translate-component";
+import ProposalsContext from "./Context";
 import {
     RevokeVote,
     revokeVoteHandler,
@@ -9,14 +10,28 @@ import {
 } from "../../../../Context/Proposal";
 
 export default function RowActions({proposal}) {
-    function onVoteHandler() {
-        const command = new Vote(proposal.id);
-        voteHandler.execute(command);
+    const {proposals, setProposals} = useContext(ProposalsContext);
+
+    async function onVoteHandler() {
+        const command = new Vote(proposals, proposal.id);
+        const proposalsOrError = await voteHandler.execute(command);
+
+        if (proposalsOrError.isFailure()) {
+            return null;
+        }
+
+        setProposals(proposalsOrError.value);
     }
 
-    function onRevokeHandler() {
-        const command = new RevokeVote(proposal.id);
-        revokeVoteHandler.execute(command);
+    async function onRevokeHandler() {
+        const command = new RevokeVote(proposals, proposal.id);
+        const proposalsOrError = await revokeVoteHandler.execute(command);
+
+        if (proposalsOrError.isFailure()) {
+            return null;
+        }
+
+        setProposals(proposalsOrError.value);
     }
 
     if (proposal.voted) {

@@ -1,5 +1,7 @@
 import {ProposalTypes} from "../../../../app/Context/Proposal/types";
 import ProposalBlockchainType = ProposalTypes.ProposalBlockchainType;
+import ProposalTransactionBlockchainType = ProposalTypes.ProposalTransactionBlockchainType;
+import ParameterObjectBlockchainValueType = ProposalTypes.ParameterObjectBlockchainValueType;
 
 export function getBlockchainProposal(
     props?: Partial<ProposalBlockchainType>
@@ -15,16 +17,18 @@ export function getBlockchainProposal(
             expiration: "2022-06-16T21:00:00",
             extensions: [],
             operations: [
-                27,
-                {
-                    fee: {
-                        amount: 0,
-                        asset_id: "1.3.0"
-                    },
-                    new_parameters: {
-                        account_fee_scale_bitshifts: 4
+                [
+                    27,
+                    {
+                        fee: {
+                            amount: 0,
+                            asset_id: "1.3.0"
+                        },
+                        new_parameters: {
+                            account_fee_scale_bitshifts: 4
+                        }
                     }
-                }
+                ]
             ],
             ref_block_num: 0,
             ref_block_prefix: 0
@@ -40,4 +44,58 @@ export function getBlockchainProposal(
     }
 
     return blockchainProposal;
+}
+
+export function getBlockchainProposalWrongTransactionId() {
+    const proposedTransaction: ProposalTransactionBlockchainType = {
+        ref_block_num: 10,
+        ref_block_prefix: 10,
+        expiration: "2022-06-16T21:00:00",
+        operations: [
+            [
+                26,
+                {
+                    fee: {
+                        amount: 0,
+                        asset_id: "1.3.0"
+                    },
+                    new_parameters: {
+                        account_fee_scale_bitshifts: 4
+                    }
+                }
+            ]
+        ],
+        extensions: []
+    };
+
+    return getBlockchainProposal({
+        proposed_transaction: proposedTransaction
+    });
+}
+
+export function getBlockchainProposalWithParameters(
+    parameters: ParameterObjectBlockchainValueType
+) {
+    const proposedTransaction: ProposalTransactionBlockchainType = {
+        ref_block_num: 10,
+        ref_block_prefix: 10,
+        expiration: "2022-06-16T21:00:00",
+        operations: [
+            [
+                27,
+                {
+                    fee: {
+                        amount: 0,
+                        asset_id: "1.3.0"
+                    },
+                    new_parameters: parameters
+                }
+            ]
+        ],
+        extensions: []
+    };
+
+    return getBlockchainProposal({
+        proposed_transaction: proposedTransaction
+    });
 }

@@ -28,8 +28,8 @@ describe("CreateHandler", () => {
     });
 
     describe("execute", () => {
-        describe("parameters without children", async () => {
-            describe.skip("and without changes", async () => {
+        describe("parameters without children", () => {
+            describe.skip("and without changes", () => {
                 it("should throw exception", async () => {
                     const reviewPeriod = committeeProposalReviewPeriod();
                     parameters = parameters.set(
@@ -47,7 +47,7 @@ describe("CreateHandler", () => {
                 });
             });
 
-            describe("parameters with changes", async () => {
+            describe("parameters with changes", () => {
                 it("should create proposal with one old and one changed parameter", async () => {
                     const reviewPeriod = committeeProposalReviewPeriod();
                     parameters = parameters.set(
@@ -74,7 +74,7 @@ describe("CreateHandler", () => {
 
                     expect(result.isSuccess()).true;
 
-                    const proposals = await stubRepository.items;
+                    const proposals = await stubRepository.createdItems;
                     expect(proposals.size).equals(1);
 
                     const proposal: ProposalType = proposals.first();
@@ -91,7 +91,7 @@ describe("CreateHandler", () => {
             });
         });
 
-        describe("link parameter", async () => {
+        describe("link parameter", () => {
             it("should return valid object", async () => {
                 const reviewPeriod = committeeProposalReviewPeriod();
                 parameters = parameters.set(reviewPeriod.name, reviewPeriod);
@@ -104,7 +104,7 @@ describe("CreateHandler", () => {
                 const result = await handler.execute(command);
                 expect(result.isSuccess()).true;
 
-                const proposals = await stubRepository.items;
+                const proposals = await stubRepository.createdItems;
                 expect(proposals.size).equals(1);
 
                 const proposal = proposals.first();
@@ -115,8 +115,8 @@ describe("CreateHandler", () => {
             });
         });
 
-        describe("parameters with children", async () => {
-            describe.skip("and without changes", async () => {
+        describe("parameters with children", () => {
+            describe.skip("and without changes", () => {
                 it("should throw exception", async () => {
                     const parameter = extensionsParameter();
                     parameters = parameters.set(parameter.name, parameter);
@@ -127,7 +127,7 @@ describe("CreateHandler", () => {
                 });
             });
 
-            describe("and with changes", async () => {
+            describe("and with changes", () => {
                 it("should create proposal with one old and one changed parameter", async () => {
                     const reviewPeriod = committeeProposalReviewPeriod();
                     parameters = parameters.set(
@@ -146,7 +146,7 @@ describe("CreateHandler", () => {
                     const result = await handler.execute(command);
                     expect(result.isSuccess()).true;
 
-                    const proposals = await stubRepository.items;
+                    const proposals = await stubRepository.createdItems;
                     expect(proposals.size).equals(1);
 
                     const proposal: ProposalType = proposals.first();

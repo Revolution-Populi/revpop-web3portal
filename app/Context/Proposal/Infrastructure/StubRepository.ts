@@ -1,44 +1,57 @@
-import RepositoryInterface from "../Domain/RepositoryInterface";
 import {Set} from "immutable";
-import {NetworkParameters} from "../../NetworkParameters/types";
-import ProposalType = NetworkParameters.ProposalType;
-import ProposalsType = NetworkParameters.ProposalsType;
+import RepositoryInterface from "../Domain/RepositoryInterface";
+import Proposal from "../Domain/Proposal";
 import {ProposalTypes} from "../types";
-import ProposalBlockchainType = ProposalTypes.ProposalBlockchainType;
-import ProposalsBlockchainType = ProposalTypes.ProposalsBlockchainType;
+import ProposalsType = ProposalTypes.ProposalsType;
+//TODO::remove dependency from NetworkParameters
+import {NetworkParameters} from "../../NetworkParameters/types";
+import NetworkParametersProposalType = NetworkParameters.ProposalType;
+import NetworkParametersProposalsType = NetworkParameters.ProposalsType;
 
 class StubRepository implements RepositoryInterface {
-    private _items: ProposalsType = Set();
-    private blockchainItems: ProposalsBlockchainType = [];
+    private _addedItems: ProposalsType = Set<Proposal>().asMutable();
+    private _createdItems: NetworkParametersProposalsType = Set().asMutable();
+    private _votedProposalsId: Set<string> = Set<string>().asMutable();
+    private _revokeVotedProposalsId: Set<string> = Set<string>().asMutable();
 
-    create(proposal: ProposalType): boolean {
-        this._items = this._items.add(proposal);
+    add(proposal: Proposal) {
+        this._addedItems.add(proposal);
+    }
+
+    create(proposal: NetworkParametersProposalType): boolean {
+        this._createdItems = this._createdItems.add(proposal);
 
         return true;
     }
 
+    get createdItems(): NetworkParametersProposalsType {
+        return this._createdItems;
+    }
+
     loadAll(): Promise<ProposalsType> {
-        return Promise.resolve(this._items);
+        return Promise.resolve(this._createdItems);
     }
 
     vote(proposalId: string): void {
-        console.log("vote", proposalId);
+        this._votedProposalsId.add(proposalId);
+    }
+
+    get votedProposalsId(): Set<string> {
+        return this._votedProposalsId;
     }
 
     revokeVote(proposalId: string): void {
-        console.log("revokeVote", proposalId);
+        this._revokeVotedProposalsId.add(proposalId);
     }
 
-    get items(): ProposalsType {
-        return this._items;
-    }
-
-    addBlockchainItem(blockchainItem: ProposalBlockchainType) {
-        this.blockchainItems.push(blockchainItem);
+    get revokeVotedProposalsId(): Set<string> {
+        return this._revokeVotedProposalsId;
     }
 
     clear() {
-        this._items = this._items.clear();
+        this._createdItems = this._createdItems.clear();
+        this._votedProposalsId.clear();
+        this._revokeVotedProposalsId.clear();
     }
 }
 

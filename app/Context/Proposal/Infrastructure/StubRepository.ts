@@ -29,7 +29,7 @@ class StubRepository implements RepositoryInterface {
     }
 
     loadAll(): Promise<ProposalsType> {
-        return Promise.resolve(this._createdItems);
+        return Promise.resolve(this._addedItems);
     }
 
     vote(proposalId: string): void {
@@ -49,6 +49,7 @@ class StubRepository implements RepositoryInterface {
     }
 
     clear() {
+        this._addedItems = this._addedItems.clear();
         this._createdItems = this._createdItems.clear();
         this._votedProposalsId.clear();
         this._revokeVotedProposalsId.clear();

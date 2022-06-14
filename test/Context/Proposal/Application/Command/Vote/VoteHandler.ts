@@ -17,7 +17,7 @@ describe("Vote", () => {
     describe("execute", () => {
         describe("should return success result", () => {
             it("should return success result", async () => {
-                const proposal = getProposal();
+                const proposal = getProposal([]);
                 const proposals = Set([proposal]);
 
                 const command = new Vote(proposals, "1.10.1");
@@ -27,7 +27,7 @@ describe("Vote", () => {
             });
 
             it("should update proposal voted parameter", async () => {
-                const proposal = getProposal();
+                const proposal = getProposal([]);
                 const proposals = Set([proposal]);
 
                 const command = new Vote(proposals, "1.10.1");

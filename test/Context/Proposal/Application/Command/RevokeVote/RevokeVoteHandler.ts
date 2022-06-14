@@ -17,7 +17,7 @@ describe("Vote", () => {
     describe("execute", () => {
         describe("should return success result", () => {
             it("should return success result", async () => {
-                const proposal = getProposal("1.10.1");
+                const proposal = getProposal(["1.10.1"]);
                 const proposals = Set([proposal]);
 
                 const command = new RevokeVote(proposals, "1.10.1");
@@ -27,7 +27,7 @@ describe("Vote", () => {
             });
 
             it("should update proposal voted parameter", async () => {
-                const proposal = getProposal("1.10.1");
+                const proposal = getProposal(["1.10.1"]);
                 proposal.setVoted();
                 const proposals = Set([proposal]);
 

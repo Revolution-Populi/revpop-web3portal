@@ -3,6 +3,8 @@ import NetworkParameter from "./Domain/NetworkParameter";
 import {ParameterObjectValueType} from "./Domain/RepositoryInterface";
 
 export namespace NetworkParameters {
+    export type NetworkParametersType = Map<string, NetworkParameter>;
+
     export type ParametersType = Map<string, NetworkParameter>;
 
     export type ProposalType = {

@@ -1146,7 +1146,10 @@
             "review_period": "Review period",
             "expiration_date": "Expiration date",
             "vote": "Vote",
-            "revoke": "Revoke"
+            "revoke": "Revoke",
+            "parameters": {
+                "new": "New"
+            }
         },
         "create_proposal": {
             "button": "Create proposal",

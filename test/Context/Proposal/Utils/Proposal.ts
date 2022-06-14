@@ -1,16 +1,15 @@
 import Proposal from "../../../../app/Context/Proposal/Domain/Proposal";
 import {Set} from "immutable";
 import moment from "moment";
-import {ProposalTypes} from "../../../../app/Context/Proposal/types";
-import ParametersType = ProposalTypes.ParametersType;
 
-export function getProposal(
-    id?: string,
-    proposalParameters?: ParametersType
-): Proposal {
+export type ProposalConstructorType = Partial<
+    ConstructorParameters<typeof Proposal>
+>;
+
+export function getProposal(props: ProposalConstructorType): Proposal {
     return new Proposal(
-        id ?? "1.10.1",
-        proposalParameters ?? Set(),
+        props[0] ?? "1.10.1",
+        props[1] ?? Set(),
         moment(),
         moment()
     );

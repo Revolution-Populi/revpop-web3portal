@@ -1,14 +1,14 @@
-import {Map} from "immutable";
-import NetworkParameter from "../../../../NetworkParameters/Domain/NetworkParameter";
 import moment from "moment";
+//TODO::remove dependency from NetworkParameters
+import {NetworkParameters} from "../../../../NetworkParameters/types";
 
 export default class Create {
     constructor(
-        private _parameters: Map<string, NetworkParameter>,
+        private _parameters: NetworkParameters.ParametersType,
         private _expirationTime: moment.Moment
     ) {}
 
-    get parameters(): Map<string, NetworkParameter> {
+    get parameters(): NetworkParameters.ParametersType {
         return this._parameters;
     }
 

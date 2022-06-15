@@ -1,14 +1,11 @@
-import {Set} from "immutable";
-import {ParameterObjectValueType} from "../../NetworkParameters/Domain/RepositoryInterface";
-
-export type Proposal = {
-    parameters: ParameterObjectValueType;
-    expiration_time: number;
-};
-
-export type Proposals = Set<Proposal>;
+import {NetworkParameters} from "../../NetworkParameters/types";
+import ProposalType = NetworkParameters.ProposalType;
+import {ProposalTypes} from "../types";
+import ProposalsType = ProposalTypes.ProposalsType;
 
 export default interface RepositoryInterface {
-    create: (proposal: Proposal) => void;
-    loadAll: () => Proposals;
+    create: (proposal: ProposalType) => void;
+    loadAll: () => Promise<ProposalsType>;
+    vote: (proposalId: string) => void;
+    revokeVote: (proposalId: string) => void;
 }

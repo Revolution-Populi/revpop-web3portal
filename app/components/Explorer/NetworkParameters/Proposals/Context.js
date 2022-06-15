@@ -1,8 +1,9 @@
 import React from "react";
-import {Map} from "immutable";
+import {Set} from "immutable";
 
 const ProposalsDefaults = {
-    proposals: new Map()
+    proposals: Set(),
+    setProposals: () => {}
 };
 
 const ProposalsContext = React.createContext(ProposalsDefaults);

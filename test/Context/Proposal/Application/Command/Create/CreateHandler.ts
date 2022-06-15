@@ -6,10 +6,12 @@ import Create from "../../../../../../app/Context/Proposal/Application/Commands/
 import stubRepository from "../../../../../../app/Context/Proposal/Infrastructure/StubRepository";
 import moment from "moment";
 import {
+    committeeProposalReviewPeriod,
     extensionsParameter,
     linkParameter
 } from "../../../../../Factory/Parameter";
-import {Proposals} from "../../../../../../app/Context/Proposal/Domain/RepositoryInterface";
+import {NetworkParameters} from "../../../../../../app/Context/NetworkParameters/types";
+import ProposalType = NetworkParameters.ProposalType;
 
 describe("CreateHandler", () => {
     let handler: CreateHandler;
@@ -26,9 +28,15 @@ describe("CreateHandler", () => {
     });
 
     describe("execute", () => {
-        describe("parameters without children", async () => {
-            describe.skip("and without changes", async () => {
+        describe("parameters without children", () => {
+            describe.skip("and without changes", () => {
                 it("should throw exception", async () => {
+                    const reviewPeriod = committeeProposalReviewPeriod();
+                    parameters = parameters.set(
+                        reviewPeriod.name,
+                        reviewPeriod
+                    );
+
                     const parameter = new NetworkParameter("test name");
                     parameter.value = "test value";
                     parameters = parameters.set("test name", parameter);
@@ -39,8 +47,14 @@ describe("CreateHandler", () => {
                 });
             });
 
-            describe("parameters with changes", async () => {
+            describe("parameters with changes", () => {
                 it("should create proposal with one old and one changed parameter", async () => {
+                    const reviewPeriod = committeeProposalReviewPeriod();
+                    parameters = parameters.set(
+                        reviewPeriod.name,
+                        reviewPeriod
+                    );
+
                     const parameter = new NetworkParameter("test_name");
                     parameter.value = "test value";
                     parameters = parameters.set("test_name", parameter);
@@ -58,15 +72,18 @@ describe("CreateHandler", () => {
                     const command = new Create(parameters, expirationTime);
                     const result = await handler.execute(command);
 
-                    expect(result).true;
+                    expect(result.isSuccess()).true;
 
-                    const proposals = stubRepository.loadAll();
+                    const proposals = await stubRepository.createdItems;
                     expect(proposals.size).equals(1);
 
-                    const proposal = proposals.first();
-                    expect(proposal.expiration_time).lte(864000);
+                    const proposal: ProposalType = proposals.first();
+                    expect(proposal.expirationTime).equals(
+                        expirationTime.unix()
+                    );
 
                     expect(proposal.parameters).eql({
+                        committee_proposal_review_period: reviewPeriod.value,
                         test_name: "test value",
                         changed_parameter: "new value"
                     });
@@ -74,28 +91,32 @@ describe("CreateHandler", () => {
             });
         });
 
-        describe("link parameter", async () => {
+        describe("link parameter", () => {
             it("should return valid object", async () => {
+                const reviewPeriod = committeeProposalReviewPeriod();
+                parameters = parameters.set(reviewPeriod.name, reviewPeriod);
+
                 const currentFees = linkParameter();
                 parameters = parameters.set(currentFees.name, currentFees);
 
                 const command = new Create(parameters, expirationTime);
 
                 const result = await handler.execute(command);
-                expect(result).true;
+                expect(result.isSuccess()).true;
 
-                const proposals = stubRepository.loadAll();
+                const proposals = await stubRepository.createdItems;
                 expect(proposals.size).equals(1);
 
                 const proposal = proposals.first();
                 expect(proposal.parameters).eql({
+                    committee_proposal_review_period: reviewPeriod.value,
                     current_fees: currentFees.linkValue
                 });
             });
         });
 
-        describe("parameters with children", async () => {
-            describe.skip("and without changes", async () => {
+        describe("parameters with children", () => {
+            describe.skip("and without changes", () => {
                 it("should throw exception", async () => {
                     const parameter = extensionsParameter();
                     parameters = parameters.set(parameter.name, parameter);
@@ -106,8 +127,14 @@ describe("CreateHandler", () => {
                 });
             });
 
-            describe("and with changes", async () => {
+            describe("and with changes", () => {
                 it("should create proposal with one old and one changed parameter", async () => {
+                    const reviewPeriod = committeeProposalReviewPeriod();
+                    parameters = parameters.set(
+                        reviewPeriod.name,
+                        reviewPeriod
+                    );
+
                     const parameter = extensionsParameter();
                     parameter.children
                         .get("updatable_htlc_options")
@@ -117,15 +144,18 @@ describe("CreateHandler", () => {
 
                     const command = new Create(parameters, expirationTime);
                     const result = await handler.execute(command);
-                    expect(result).true;
+                    expect(result.isSuccess()).true;
 
-                    const proposals = stubRepository.loadAll();
+                    const proposals = await stubRepository.createdItems;
                     expect(proposals.size).equals(1);
 
-                    const proposal = proposals.first();
-                    expect(proposal.expiration_time).lte(864000);
+                    const proposal: ProposalType = proposals.first();
+                    expect(proposal.expirationTime).equals(
+                        expirationTime.unix()
+                    );
 
                     expect(proposal.parameters).eql({
+                        committee_proposal_review_period: reviewPeriod.value,
                         extensions: {
                             updatable_htlc_options: {
                                 max_preimage_size: 1024000,
@@ -138,5 +168,3 @@ describe("CreateHandler", () => {
         });
     });
 });
-
-function assertProposalsCount(proposals: Proposals, count: number) {}

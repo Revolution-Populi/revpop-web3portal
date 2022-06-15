@@ -4,7 +4,7 @@ import Translate from "react-translate-component";
 import CreateProposalModal from "./CreateProposalModal/CreateProposalModal";
 import NetworkParametersContext from "./Context";
 
-export default function ActionButtons() {
+export default function ActionButtons({onProposalCreated}) {
     const {parameters} = useContext(NetworkParametersContext);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -25,7 +25,11 @@ export default function ActionButtons() {
 
     return (
         <>
-            <CreateProposalModal isVisible={isVisible} close={closeModal} />
+            <CreateProposalModal
+                isVisible={isVisible}
+                close={closeModal}
+                onProposalCreated={onProposalCreated}
+            />
             <Button
                 type="primary"
                 className="create-proposal"

@@ -1,9 +1,10 @@
 import NetworkParameter from "../../../Domain/NetworkParameter";
 import GetChanged from "./GetChanged";
 import {Map} from "immutable";
+import {NetworkParameters} from "../../../types";
 
 export default class GetChangedHandler {
-    execute(request: GetChanged): Map<string, NetworkParameter> {
+    execute(request: GetChanged): NetworkParameters.ParametersType {
         const parameters = request.parameters;
 
         return this.findChanged(parameters);
@@ -11,8 +12,8 @@ export default class GetChangedHandler {
 
     private findChanged(
         parameters: Map<string, NetworkParameter>
-    ): Map<string, NetworkParameter> {
-        let changedParameters: Map<string, NetworkParameter> = Map();
+    ): NetworkParameters.ParametersType {
+        let changedParameters: NetworkParameters.ParametersType = Map();
 
         parameters.forEach(child => {
             if (child?.isGroup()) {

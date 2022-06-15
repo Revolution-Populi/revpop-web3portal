@@ -1,36 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Table} from "bitshares-ui-style-guide";
 import SearchInput from "../../Utility/SearchInput";
 import counterpart from "counterpart";
 import EditModal from "./EditModal";
 import NetworkParametersContext from "./Context";
-import {Map} from "immutable";
 import ActionButtons from "./ActionButtons";
-import LoadAllHandler from "../../../Context/NetworkParameters/Application/Query/LoadAll/LoadAllHandler";
-import blockchainRepository from "../../../Context/NetworkParameters/Infrastructure/BlockchainRepository";
-import LoadAll from "../../../Context/NetworkParameters/Application/Query/LoadAll/LoadAll";
 import ParameterToTableRowTransformer from "./ParameterToTableRowTransformer";
 import UpdateParameter from "../../../Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameter";
 import UpdateParameterHandler from "../../../Context/NetworkParameters/Application/Commands/UpdateParameter/UpdateParameterHandler";
-import jsonParameters from "../../../Context/NetworkParameters/Domain/parameters.json";
+import useParameters from "./Hooks/useParameters";
 
 export default function ParametersList() {
     const [filterByName, setFilterByName] = useState("");
     const [changingParameter, setChangingParameter] = useState(null);
-    const [parameters, setParameters] = useState(new Map());
-
-    useEffect(() => {
-        const loadParameters = async () => {
-            const query = new LoadAll();
-            const parameters = await new LoadAllHandler(
-                blockchainRepository,
-                jsonParameters
-            ).execute(query);
-            console.log(parameters);
-            setParameters(parameters);
-        };
-        loadParameters();
-    }, []);
+    const [parameters, loadParameters, setParameters] = useParameters();
 
     function onChangeFilterByName(event) {
         const value = event.target.value.toLowerCase();
@@ -121,7 +104,7 @@ export default function ParametersList() {
                 </div>
 
                 <div className="actions">
-                    <ActionButtons />
+                    <ActionButtons onProposalCreated={loadParameters} />
                 </div>
             </div>
 

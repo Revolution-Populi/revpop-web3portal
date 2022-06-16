@@ -6,7 +6,6 @@ import {Fees} from "../types";
 import BlockchainOperationsType = Fees.BlockchainOperationsType;
 import JsonOperationsType = Fees.JsonOperationsType;
 import Operations = Fees.OperationsType;
-import JsonOperationType = Fees.JsonOperationType;
 
 export default class GlobalObjectRepository implements RepositoryInterface {
     constructor(
@@ -18,9 +17,7 @@ export default class GlobalObjectRepository implements RepositoryInterface {
         const operations: Operations = Map<number, Operation>().asMutable();
 
         for (const blockchainOperation of this.blockchainOperations) {
-            const jsonOperation:
-                | JsonOperationType
-                | undefined = this.jsonOperations.find(
+            const jsonOperation = this.jsonOperations.find(
                 jsonOperation => jsonOperation.id == blockchainOperation[0]
             );
 

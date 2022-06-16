@@ -15,7 +15,7 @@ export default function Fee({feeNumber, operation, fee}: FeeProps) {
     return (
         <tr>
             {feeNumber == 1 && (
-                <td rowSpan={operation.fees.size}>
+                <td rowSpan={operation.rowSpan}>
                     <span className="label info">{operation.name}</span>
                 </td>
             )}

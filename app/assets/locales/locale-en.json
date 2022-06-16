@@ -1119,7 +1119,12 @@
         "title": "Fee Schedule",
         "edit": "Edit",
         "save": "Save changes",
-        "cancel": "Discard changes"
+        "cancel": "Discard changes",
+        "clearing_house_participant_transfer_fee_tooltip": "Information about Clearing House Participant Transfer Fee",
+        "create_proposal": {
+            "button": "Create proposal",
+            "modal_title": "Create proposal"
+        }
     },
     "network_parameters": {
         "name": "Name",
@@ -2696,7 +2701,9 @@
             "personal_data_remove": "Custom data remove",
             "ticket_update": "Ticket update",
             "custom_authority_create": "Custom authority create",
-            "permission_remove": "Permission remove"
+            "permission_remove": "Permission remove",
+            "place_order": "Place order",
+            "cancel_order": "Cancel order"
         },
         "vesting_balance_create": "created vesting balance of",
         "view_json": "Show raw json",

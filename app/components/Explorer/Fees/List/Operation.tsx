@@ -2,6 +2,7 @@ import React from "react";
 import OperationViewModel from "../ViewModel/Operation";
 import FeeViewModel from "../ViewModel/Fee";
 import Fee from "./Fee";
+import FeeCH from "./FeeCH";
 
 type OperationProps = {
     operation: OperationViewModel;
@@ -25,6 +26,8 @@ export default function Operation({operation}: OperationProps) {
                     />
                 );
             })}
+
+            {operation.showCHParticipantTransferFee && <FeeCH />}
         </>
     );
 }

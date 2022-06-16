@@ -10,6 +10,7 @@ import LoadAll from "../../../Context/Fees/Application/Query/LoadAll/LoadAll";
 import LoadAllHandler from "../../../Context/Fees/Application/Query/LoadAll/LoadAllHandler";
 import ModelViewTransformer from "./ViewModel/ModelViewTransformer";
 import Group from "./List/Group";
+import ActionButtons from "./ActionButtons";
 
 // let ltm_required = [5, 7, 20, 21, 34];
 
@@ -80,9 +81,12 @@ class Fees extends React.Component {
                     updateOperations: this.updateOperations
                 }}
             >
-                <div className="grid-block vertical">
+                <div className="grid-block vertical fees">
                     <div className="grid-block small-12 shrink">
                         <HelpContent path={"components/Fees"} />
+                    </div>
+                    <div className="list-actions">
+                        <ActionButtons />
                     </div>
                     <div className="grid-block small-12">
                         <div className="grid-content">

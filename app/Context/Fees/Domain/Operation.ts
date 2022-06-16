@@ -5,6 +5,7 @@ import OperationFeesType = Fees.OperationFeesType;
 
 export default class Operation {
     private _fees: OperationFeesType = Map();
+    private _showCHParticipantTransferFee = false;
 
     constructor(private _id: number, private _name: string) {}
 
@@ -16,8 +17,8 @@ export default class Operation {
         return this._name;
     }
 
-    addFee(code: string, value: number) {
-        this._fees = this._fees.set(code, new Fee(code, value));
+    addFee(fee: Fee) {
+        this._fees = this._fees.set(fee.code, fee);
     }
 
     get fees(): OperationFeesType {
@@ -26,6 +27,14 @@ export default class Operation {
 
     get updated(): boolean {
         return false;
+    }
+
+    get showCHParticipantTransferFee(): boolean {
+        return this._showCHParticipantTransferFee;
+    }
+
+    setShowCHParticipantTransferFee() {
+        this._showCHParticipantTransferFee = true;
     }
 
     getFee(code: string): Fee {

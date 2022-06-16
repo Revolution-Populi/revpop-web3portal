@@ -22,4 +22,8 @@ export default class Fee {
     update(newValue: number) {
         this._newValue = newValue;
     }
+
+    static create(code: string, value: number) {
+        return new Fee(code, value);
+    }
 }

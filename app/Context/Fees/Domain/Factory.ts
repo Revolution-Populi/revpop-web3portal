@@ -1,4 +1,5 @@
 import Operation from "./Operation";
+import Fee from "./Fee";
 import FactoryInterface from "./FactoryInterface";
 import {Fees} from "../types";
 import BlockchainOperationType = Fees.BlockchainOperationType;
@@ -13,7 +14,16 @@ class Factory implements FactoryInterface {
         const blockchainFees = blockchainOperation[1];
 
         for (const blockchainFee in blockchainFees) {
-            operation.addFee(blockchainFee, blockchainFees[blockchainFee]);
+            const fee = Fee.create(
+                blockchainFee,
+                blockchainFees[blockchainFee]
+            );
+
+            operation.addFee(fee);
+        }
+
+        if (jsonOperation.clearing_house_participant_transfer_fee) {
+            operation.setShowCHParticipantTransferFee();
         }
 
         return operation;

@@ -1,9 +1,10 @@
 import Operation from "../../../../app/Context/Fees/Domain/Operation";
+import Fee from "../../../../app/Context/Fees/Domain/Fee";
+import {Map} from "immutable";
 import {Fees} from "../../../../app/Context/Fees/types";
 import BlockchainFeeType = Fees.BlockchainFeeType;
 import BlockchainOperationType = Fees.BlockchainOperationType;
 import Operations = Fees.OperationsType;
-import {Map} from "immutable";
 
 type NewOperationType = {
     id: number;
@@ -21,7 +22,7 @@ export function getOperation(
     const operation = new Operation(id, name);
 
     for (const fee in fees) {
-        operation.addFee(fee, fees[fee]);
+        operation.addFee(Fee.create(fee, fees[fee]));
     }
 
     return operation;

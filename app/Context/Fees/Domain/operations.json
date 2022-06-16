@@ -2,7 +2,8 @@
     {
         "id": 0,
         "name": "transfer",
-        "group": "general"
+        "group": "general",
+        "clearing_house_participant_transfer_fee": true
     },
     {
         "id": 1,

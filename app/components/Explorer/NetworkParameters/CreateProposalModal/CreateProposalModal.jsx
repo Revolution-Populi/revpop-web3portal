@@ -3,7 +3,6 @@ import counterpart from "counterpart";
 import {Modal, Table} from "bitshares-ui-style-guide";
 import NetworkParametersContext from "../Context";
 import Translate from "react-translate-component";
-import ExpirationDate from "./ExpirationDate";
 import moment from "moment";
 import GetChanged from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChanged";
 import GetChangedHandler from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChangedHandler";
@@ -11,6 +10,7 @@ import ParameterToTableRowTransformer from "../ParameterToTableRowTransformer";
 import CreateHandler from "../../../../Context/Proposal/Application/Commands/Create/CreateHandler";
 import Create from "../../../../Context/Proposal/Application/Commands/Create/Create";
 import blockchainRepository from "../../../../Context/Proposal/Infrastructure/BlockchainRepository";
+import ExpirationDate from "../../../Common/ExpirationDate";
 
 export default function CreateProposalModal({
     isVisible,
@@ -73,6 +73,10 @@ export default function CreateProposalModal({
         close();
     }
 
+    function onDateChange(date) {
+        setExpirationDate(date);
+    }
+
     return (
         <Modal
             title={counterpart.translate(
@@ -94,7 +98,7 @@ export default function CreateProposalModal({
                 dataSource={data()}
                 pagination={false}
             />
-            <ExpirationDate onChange={setExpirationDate} />
+            <ExpirationDate onChange={onDateChange} />
         </Modal>
     );
 }

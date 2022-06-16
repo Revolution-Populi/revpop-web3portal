@@ -13,7 +13,7 @@ export type GroupProps = {
 
 export default function Group({group}: GroupProps) {
     return (
-        <div className="asset-card fees">
+        <div className="asset-card">
             <Card>{group.name.toUpperCase()}</Card>
             <table className="table">
                 <thead>

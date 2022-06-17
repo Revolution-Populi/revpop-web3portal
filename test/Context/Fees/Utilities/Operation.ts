@@ -43,10 +43,3 @@ export function getOperations(newOperations: NewOperationsType): Operations {
 
     return operations.asImmutable();
 }
-
-export function getBlockchainOperation(
-    id: number,
-    fees: BlockchainFeeType = {}
-): BlockchainOperationType {
-    return [id, fees];
-}

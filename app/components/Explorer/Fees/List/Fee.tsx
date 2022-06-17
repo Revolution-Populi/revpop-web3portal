@@ -11,7 +11,6 @@ export type FeeProps = {
 };
 
 export default function Fee({feeNumber, operation, fee}: FeeProps) {
-    // console.log(fee)
     return (
         <tr>
             {feeNumber == 1 && (

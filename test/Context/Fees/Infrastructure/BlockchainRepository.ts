@@ -1,28 +1,28 @@
-import {getGlobalObjectRepository} from "../Utilities/GlobalObjectRepository";
 import {expect} from "chai";
-import {getBlockchainOperation} from "../Utilities/Operation";
+import {getBlockchainRepository} from "../Utilities/BlockchainRepository";
+import {getBlockchainOperation} from "../Utilities/BlockchainOperation";
 import Fee from "../../../../app/Context/Fees/Domain/Fee";
 
-describe("GlobalObjectRepository", () => {
+describe("BlockchainRepository", () => {
     describe("loadAll", () => {
         it("should return current number of operations", async () => {
-            const repository = getGlobalObjectRepository([
+            const repository = getBlockchainRepository([
                 getBlockchainOperation(0),
                 getBlockchainOperation(1)
             ]);
 
-            const result = await repository.loadAll();
+            const [result] = await repository.loadAll();
 
             expect(result.size).equals(2);
         });
 
         it("should return correct Operation object", async () => {
-            const repository = getGlobalObjectRepository([
+            const repository = getBlockchainRepository([
                 getBlockchainOperation(0),
                 getBlockchainOperation(1)
             ]);
 
-            const result = await repository.loadAll();
+            const [result] = await repository.loadAll();
 
             const operation1 = result.get(0);
             expect(operation1.id).equals(0);
@@ -34,7 +34,7 @@ describe("GlobalObjectRepository", () => {
         });
 
         it("Operation object should contain correct fees list", async () => {
-            const repository = getGlobalObjectRepository([
+            const repository = getBlockchainRepository([
                 getBlockchainOperation(0, {fee: 86869, price_per_kbyte: 48260}),
                 getBlockchainOperation(1, {
                     basic_fee: 482609,
@@ -42,7 +42,7 @@ describe("GlobalObjectRepository", () => {
                     price_per_kbyte: 48260
                 })
             ]);
-            const result = await repository.loadAll();
+            const [result] = await repository.loadAll();
 
             const operation0 = result.get(0);
             const operation0Fees = operation0.fees;

@@ -1,8 +1,6 @@
-import {Map} from "immutable";
 // @ts-ignore
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import RepositoryInterface from "../Domain/RepositoryInterface";
-import Operation from "../Domain/Operation";
 import Factory from "../Domain/Factory";
 import {Fees} from "../types";
 import JsonOperationsType = Fees.JsonOperationsType;
@@ -22,7 +20,7 @@ export default class BlockchainRepository implements RepositoryInterface {
         const scale = data.current_fees.scale;
         const networkPercentOfFee = data.network_percent_of_fee;
 
-        const operations: Operations = Map<number, Operation>().asMutable();
+        const operations: Operations = {};
 
         for (const blockchainOperation of blockchainOperations) {
             const jsonOperation = this.jsonOperations.find(
@@ -35,7 +33,7 @@ export default class BlockchainRepository implements RepositoryInterface {
                     jsonOperation
                 );
 
-                operations.set(operation.id, operation);
+                operations[operation.id] = operation;
             }
         }
 

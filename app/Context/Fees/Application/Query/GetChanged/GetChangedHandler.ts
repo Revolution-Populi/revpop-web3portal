@@ -1,20 +1,29 @@
-import {Map} from "immutable";
 import GetChanged from "./GetChanged";
 import {Fees} from "../../../types";
 import OperationsType = Fees.OperationsType;
+import {Result, Success} from "../../../../Core/Logic/Result";
+import {AppError} from "../../../../Core/Logic/AppError";
 
 export default class GetChangedHandler {
-    execute(request: GetChanged): OperationsType {
+    execute(request: GetChanged): Result<AppError, OperationsType> {
         const operations = request.parameters;
 
-        return this.findChanged(operations);
+        return Success.create(this.findChanged(operations));
     }
 
     private findChanged(operations: OperationsType): OperationsType {
-        let changedParameters: OperationsType = Map();
+        const changedOperations: OperationsType = {};
 
-        operations.forEach(operation => {});
+        for (const operationId in operations) {
+            const operation = operations[operationId];
 
-        return changedParameters;
+            if (!operation.updated) {
+                continue;
+            }
+
+            changedOperations[operation.id] = operation;
+        }
+
+        return changedOperations;
     }
 }

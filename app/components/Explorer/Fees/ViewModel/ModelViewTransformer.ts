@@ -30,18 +30,18 @@ export default class ModelViewTransformer {
     transform(operations: Operations): GroupsType {
         this.groups = Map<string, GroupView>().asMutable();
 
-        operations.forEach(operation => {
+        for (const operationId in operations) {
+            const operation = operations[operationId];
+
             const jsonOperation = this.jsonOperations.find(
-                jsonOperation => jsonOperation.id == (operation as Operation).id
+                jsonOperation => jsonOperation.id === operation.id
             );
 
             if (jsonOperation) {
                 const groupView = this.addGroup(jsonOperation);
-                groupView.addOperation(
-                    this.transformOperation(operation as Operation)
-                );
+                groupView.addOperation(this.transformOperation(operation));
             }
-        });
+        }
 
         return this.groups.asImmutable();
     }
@@ -82,8 +82,8 @@ export default class ModelViewTransformer {
                 FeeValue.create(fee.value, fee.newValue),
                 FeeValue.create(
                     fee.value * this.networkPercentOfFee,
-                    fee.newValue
-                        ? fee.newValue * this.networkPercentOfFee
+                    fee.updated
+                        ? (fee.newValue as number) * this.networkPercentOfFee
                         : null
                 )
             );

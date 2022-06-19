@@ -1,39 +1,23 @@
 import RevokeVote from "./RevokeVote";
 import RepositoryInterface from "../../../Domain/RepositoryInterface";
-import {Either, Failure, Success} from "../../../../Core/Logic/Result";
-import {UnexpectedError} from "../../../../Core/Logic/AppError";
+import {Failure, Result, Success} from "../../../../Core/Logic/Result";
+import {AppError} from "../../../../Core/Logic/AppError";
 import Proposal from "../../../Domain/Proposal";
-import {ProposalTypes} from "../../../types";
-import ProposalsType = ProposalTypes.ProposalsType;
-
-type Response = Either<UnexpectedError, ProposalsType>;
 
 export default class RevokeVoteHandler {
     constructor(private repository: RepositoryInterface) {}
 
-    async execute(command: RevokeVote): Promise<Response> {
-        let proposals = command.proposals;
-
-        const proposal = proposals.find(proposal => {
-            proposal = proposal as Proposal;
-            return proposal.id == command.proposalId;
-        });
-
-        if (undefined === proposal) {
-            return Failure.create(
-                new UnexpectedError("proposal is not found")
-            ) as Response;
-        }
+    async execute(command: RevokeVote): Promise<Result<AppError, Proposal>> {
+        const proposal = command.proposal;
 
         try {
-            await this.repository.revokeVote(command.proposalId);
+            await this.repository.revokeVote(proposal.id);
         } catch (error) {
-            return Failure.create(new UnexpectedError(error)) as Response;
+            return Failure.create(new AppError(error));
         }
 
         proposal.revokeVote();
-        proposals = proposals.add(proposal);
 
-        return Success.create(proposals) as Response;
+        return Success.create(proposal);
     }
 }

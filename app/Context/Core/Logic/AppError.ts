@@ -1,5 +1,7 @@
-export class UnexpectedError {
-    public constructor(private _error: unknown) {}
+export class AppError extends Error {
+    public constructor(private _error: unknown) {
+        super();
+    }
 
     get error(): unknown {
         return this._error;
@@ -9,7 +11,7 @@ export class UnexpectedError {
         return "An unexpected error occurred.";
     }
 
-    public static create(err: Error): UnexpectedError {
-        return new UnexpectedError(err);
+    public static create(err: Error): AppError {
+        return new AppError(err);
     }
 }

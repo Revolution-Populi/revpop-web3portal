@@ -31,7 +31,7 @@ function FeeValueWithEdit({fee, operationId, code, asset}: Props) {
 
     const precision = utils.get_asset_precision(asset.get("precision"));
 
-    const {operations, updateOperations} = useContext(FeesContext);
+    const {operations, updateOperation} = useContext(FeesContext);
 
     function onEditHandler() {
         setEdit(true);
@@ -39,13 +39,18 @@ function FeeValueWithEdit({fee, operationId, code, asset}: Props) {
 
     function onSaveHandler() {
         const updateRequest = new UpdateOperation(
-            operations,
-            operationId,
+            operations[operationId],
             code,
             inputValue
         );
         const handler = new UpdateOperationHandler();
-        updateOperations(handler.execute(updateRequest));
+        const resultOrError = handler.execute(updateRequest);
+
+        if (resultOrError.isFailure()) {
+            return;
+        }
+
+        updateOperation(resultOrError.value);
 
         setEdit(false);
     }

@@ -1,17 +1,21 @@
 import React from "react";
-import {Map} from "immutable";
+import Operation from "../../../Context/Fees/Domain/Operation";
 import {Fees} from "../../../Context/Fees/types";
 import OperationsType = Fees.OperationsType;
 
 type FeesDefaultsType = {
     operations: OperationsType;
-    updateOperations: (operations: OperationsType) => void;
+    updateOperation: (operation: Operation) => void;
+    scale: number;
+    networkPercentOfFee: number;
 };
 
 const FeesDefaults: FeesDefaultsType = {
-    operations: Map(),
+    operations: {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    updateOperations: () => {}
+    updateOperation: () => {},
+    scale: 0,
+    networkPercentOfFee: 0
 };
 
 const FeesContext = React.createContext(FeesDefaults);

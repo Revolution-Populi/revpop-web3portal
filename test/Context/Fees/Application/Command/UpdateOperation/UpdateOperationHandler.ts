@@ -1,7 +1,9 @@
 import {expect} from "chai";
 import UpdateOperationHandler from "../../../../../../app/Context/Fees/Application/Command/UpdateOperation/UpdateOperationHandler";
 import UpdateOperation from "../../../../../../app/Context/Fees/Application/Command/UpdateOperation/UpdateOperation";
-import {getOperations} from "../../../Utilities/Operation";
+import {getOperation} from "../../../Utilities/Operation";
+import {getFees} from "../../../Utilities/Fee";
+import TestError from "../../../../Utils/TestError";
 
 describe("UpdateOperationHandler", () => {
     let handler: UpdateOperationHandler;
@@ -11,49 +13,71 @@ describe("UpdateOperationHandler", () => {
     });
 
     describe("execute", () => {
-        it("result should contain current count of operations", async () => {
+        it("result should return false if fee don't exists", async () => {
             const updateOperationCommand = new UpdateOperation(
-                getOperations([
-                    {id: 0, name: "operation0", fees: {fee1: 100}},
-                    {id: 1, name: "operation1", fees: {fee1: 200}}
-                ]),
-                0,
+                getOperation(
+                    0,
+                    "operation0",
+                    getFees([{code: "fee1", value: 100}])
+                ),
+                "fee2",
+                150
+            );
+
+            const result = handler.execute(updateOperationCommand);
+
+            expect(result.isFailure()).true;
+        });
+
+        it("result should return successful result ", async () => {
+            const updateOperationCommand = new UpdateOperation(
+                getOperation(
+                    0,
+                    "operation0",
+                    getFees([{code: "fee1", value: 100}])
+                ),
                 "fee1",
                 150
             );
 
             const result = handler.execute(updateOperationCommand);
 
-            expect(result.size).equals(2);
+            expect(result.isSuccess()).true;
         });
 
         it("result should contain updated operation", async () => {
             const updateOperationCommand = new UpdateOperation(
-                getOperations([
-                    {id: 0, name: "operation0", fees: {fee1: 100}},
-                    {id: 1, name: "operation1", fees: {fee1: 200}}
-                ]),
-                0,
+                getOperation(
+                    0,
+                    "operation0",
+                    getFees([
+                        {code: "fee1", value: 100},
+                        {code: "fee2", value: 200}
+                    ])
+                ),
                 "fee1",
                 150
             );
 
             const result = handler.execute(updateOperationCommand);
 
-            const operation0 = result.get(0);
-            expect(operation0.id).equals(0);
-            expect(operation0.name).equals("operation0");
+            if (result.isFailure()) {
+                throw new TestError();
+            }
 
-            const operation0Fee0 = operation0.getFee("fee1");
-            expect(operation0Fee0.value).equals(100);
-            expect(operation0Fee0.updated).true;
-            expect(operation0Fee0.newValue).equals(150);
+            const operation = result.value;
+            expect(operation.id).equals(0);
+            expect(operation.name).equals("operation0");
 
-            const operation1 = result.get(1);
-            const operation1Fee1 = operation1.getFee("fee1");
-            expect(operation1Fee1.value).equals(200);
-            expect(operation1Fee1.updated).false;
-            expect(operation1Fee1.newValue).null;
+            const operationFee0 = operation.getFee("fee1");
+            expect(operationFee0.value).equals(100);
+            expect(operationFee0.updated).true;
+            expect(operationFee0.newValue).equals(150);
+
+            const operationFee1 = operation.getFee("fee2");
+            expect(operationFee1.value).equals(200);
+            expect(operationFee1.updated).false;
+            expect(operationFee1.newValue).null;
         });
     });
 });

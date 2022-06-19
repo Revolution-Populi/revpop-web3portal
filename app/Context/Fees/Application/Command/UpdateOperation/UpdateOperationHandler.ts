@@ -1,25 +1,18 @@
 import UpdateOperation from "./UpdateOperation";
 import Operation from "../../../Domain/Operation";
-import {Fees} from "../../../types";
-import OperationsType = Fees.OperationsType;
+import {AppError} from "../../../../Core/Logic/AppError";
+import {Failure, Result, Success} from "../../../../Core/Logic/Result";
 
 export default class UpdateOperationHandler {
-    execute(request: UpdateOperation): OperationsType {
-        const operations = request.operations;
+    execute(request: UpdateOperation): Result<AppError, Operation> {
+        const operation = request.operation;
 
-        const operation = operations.find(operation => {
-            operation = operation as Operation;
-            return operation.id == request.id;
-        });
-
-        if (!operation) {
-            throw new Error(`operation ${request.id} not found`);
+        try {
+            operation.updateFee(request.feeCode, request.value);
+        } catch (e) {
+            return Failure.create(e as AppError);
         }
 
-        operation.updateFee(request.feeCode, request.value);
-
-        operations.set(operation.id, operation);
-
-        return operations;
+        return Success.create(operation);
     }
 }

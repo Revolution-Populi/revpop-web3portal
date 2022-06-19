@@ -1,14 +1,11 @@
 import {useEffect, useState} from "react";
-import {Map} from "immutable";
+import Operation from "../../../../Context/Fees/Domain/Operation";
 import {LoadAll, loadAllHandler} from "../../../../Context/Fees";
 import {Fees} from "../../../../Context/Fees/types";
 import OperationsType = Fees.OperationsType;
-import Operation from "../../../../Context/Fees/Domain/Operation";
 
 function useFees() {
-    const [operations, setOperations] = useState<OperationsType>(
-        Map<number, Operation>()
-    );
+    const [operations, setOperations] = useState<OperationsType>({});
     const [scale, setScale] = useState<number>();
     const [networkPercentOfFee, setNetworkPercentOfFee] = useState<number>();
 
@@ -29,10 +26,19 @@ function useFees() {
         setNetworkPercentOfFee(networkPercentOfFee);
     };
 
+    const updateOperation = (operation: Operation) => {
+        setOperations({
+            ...operations,
+            ...{
+                [operation.id]: operation
+            }
+        });
+    };
+
     return [
         operations,
         loadOperations,
-        setOperations,
+        updateOperation,
         scale,
         networkPercentOfFee
     ];

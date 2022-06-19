@@ -13,7 +13,7 @@ describe("BlockchainRepository", () => {
 
             const [result] = await repository.loadAll();
 
-            expect(result.size).equals(2);
+            expect(Object.keys(result).length).equals(2);
         });
 
         it("should return correct Operation object", async () => {
@@ -24,11 +24,11 @@ describe("BlockchainRepository", () => {
 
             const [result] = await repository.loadAll();
 
-            const operation1 = result.get(0);
+            const operation1 = result[0];
             expect(operation1.id).equals(0);
             expect(operation1.name).equals("operation0");
 
-            const operation2 = result.get(1);
+            const operation2 = result[1];
             expect(operation2.id).equals(1);
             expect(operation2.name).equals("operation1");
         });
@@ -44,7 +44,7 @@ describe("BlockchainRepository", () => {
             ]);
             const [result] = await repository.loadAll();
 
-            const operation0 = result.get(0);
+            const operation0 = result[0];
             const operation0Fees = operation0.fees;
             expect(operation0Fees.size).equals(2);
 
@@ -54,7 +54,7 @@ describe("BlockchainRepository", () => {
             expect(operation0Fees.has("price_per_kbyte")).true;
             assertFee(operation0Fees.get("price_per_kbyte"), 48260, null);
 
-            const operation2 = result.get(1);
+            const operation2 = result[1];
             const operation2Fees = operation2.fees;
             expect(operation2Fees.size).equals(3);
 

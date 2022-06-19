@@ -1,24 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Table} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import ProposalsContext from "./Context";
-import {LoadAll, loadAllHandler} from "../../../../Context/Proposal";
-import {Map} from "immutable";
 import ExpandedRow from "./ExpandedRow";
 import RowActions from "./ProposalRowActions";
-import Proposal from "../../../../Context/Proposal/Domain/Proposal";
+import useProposals from "./Hooks/useProposals";
 
 export default function ProposalsList() {
-    const [proposals, setProposals] = useState(Map());
-
-    useEffect(() => {
-        const loadProposals = async () => {
-            const query = new LoadAll();
-            const proposals = await loadAllHandler.execute(query);
-            setProposals(proposals);
-        };
-        loadProposals().catch(console.error);
-    }, []);
+    const [proposals, loadProposals, updateProposal] = useProposals();
 
     function prepareProposals() {
         return proposals
@@ -70,7 +59,7 @@ export default function ProposalsList() {
         <ProposalsContext.Provider
             value={{
                 proposals: proposals,
-                setProposals: setProposals
+                updateProposal: updateProposal
             }}
         >
             <Table

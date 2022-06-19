@@ -5,9 +5,8 @@ import {Modal} from "bitshares-ui-style-guide";
 import moment, {Moment} from "moment";
 import ExpirationDate from "../../../Common/ExpirationDate";
 import Context from "../Context";
-import {Fees} from "../../../../Context/Fees/types";
-import OperationsType = Fees.OperationsType;
 import {GetChanged, getChangedHandler} from "../../../../Context/Fees";
+import ChangedOperations from "./ChangedOperations";
 
 interface Props {
     isVisible: boolean;
@@ -26,35 +25,29 @@ export default function CreateProposalModal({isVisible, close}: Props) {
 
     async function save() {
         console.log(expirationDate);
-        // const handler = new CreateHandler(blockchainRepository);
-        // const command = new Create(parameters, expirationDate);
-        // const result = await handler.execute(command);
-        //
-        // if (result.isSuccess()) {
-        //     close();
-        //     onProposalCreated();
-        // }
     }
 
     function onDateChange(date: Moment) {
         setExpirationDate(date);
     }
 
-    // function getChangedFees(): OperationsType {
-    //     const getChanged = new GetChanged(operations);
-    //     return getChangedHandler.execute(getChanged);
-    // }
-    //
-    // const changedFees = getChangedFees();
+    const getChanged = new GetChanged(operations);
+    const changedOperations = getChangedHandler.execute(getChanged);
+
+    if (changedOperations.isFailure()) {
+        return null;
+    }
 
     return (
         <Modal
             title={counterpart.translate("fees.create_proposal.modal_title")}
-            className="create-proposal-modal"
+            className="create-proposal-modal-fees"
+            width={1000}
             visible={isVisible}
             onOk={save}
             onCancel={onClose}
         >
+            <ChangedOperations changedOperations={changedOperations.value} />
             <ExpirationDate onChange={onDateChange} />
         </Modal>
     );

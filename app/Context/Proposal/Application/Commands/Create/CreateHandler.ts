@@ -5,18 +5,16 @@ import {
     ParameterValueType
 } from "../../../../NetworkParameters/Domain/RepositoryInterface";
 import RepositoryInterface from "../../../Domain/RepositoryInterface";
-import {Either, Failure, Success} from "../../../../Core/Logic/Result";
-import {UnexpectedError} from "../../../../Core/Logic/AppError";
+import {Failure, Result, Success} from "../../../../Core/Logic/Result";
+import {AppError} from "../../../../Core/Logic/AppError";
 import {NetworkParameters} from "../../../../NetworkParameters/types";
 import ParametersType = NetworkParameters.ParametersType;
 import ProposalType = NetworkParameters.ProposalType;
 
-type Response = Either<UnexpectedError, void>;
-
 export default class CreateHandler {
     constructor(private repository: RepositoryInterface) {}
 
-    async execute(command: Create): Promise<Response> {
+    async execute(command: Create): Promise<Result<AppError, boolean>> {
         const proposal: ProposalType = {
             parameters: this.parameterMapToObject(command.parameters),
             expirationTime: command.expirationTime.unix(),
@@ -28,10 +26,10 @@ export default class CreateHandler {
         try {
             await this.repository.create(proposal);
         } catch (error) {
-            return Failure.create(new UnexpectedError(error)) as Response;
+            return Failure.create(new AppError(error));
         }
 
-        return Success.create() as Response;
+        return Success.create(true);
     }
 
     private parameterMapToObject(

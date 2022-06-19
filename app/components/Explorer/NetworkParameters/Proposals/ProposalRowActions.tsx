@@ -1,7 +1,9 @@
-import React, {useContext} from "react";
+import React from "react";
+// @ts-ignore
 import {Button} from "bitshares-ui-style-guide";
+// @ts-ignore
 import Translate from "react-translate-component";
-import ProposalsContext from "./Context";
+import Proposal from "../../../../Context/Proposal/Domain/Proposal";
 import {
     RevokeVote,
     revokeVoteHandler,
@@ -9,29 +11,29 @@ import {
     voteHandler
 } from "../../../../Context/Proposal";
 
-export default function RowActions({proposal}) {
-    const {proposals, setProposals} = useContext(ProposalsContext);
+type PropsType = {
+    proposal: Proposal;
+};
 
+export default function RowActions({proposal}: PropsType) {
     async function onVoteHandler() {
-        const command = new Vote(proposals, proposal.id);
+        const command = new Vote(proposal);
         const proposalsOrError = await voteHandler.execute(command);
 
         if (proposalsOrError.isFailure()) {
+            //TODO:: show error
             return null;
         }
-
-        setProposals(proposalsOrError.value);
     }
 
     async function onRevokeHandler() {
-        const command = new RevokeVote(proposals, proposal.id);
+        const command = new RevokeVote(proposal);
         const proposalsOrError = await revokeVoteHandler.execute(command);
 
         if (proposalsOrError.isFailure()) {
+            //TODO:: show error
             return null;
         }
-
-        setProposals(proposalsOrError.value);
     }
 
     if (proposal.voted) {

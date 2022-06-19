@@ -20,7 +20,9 @@ export namespace Fees {
 
     export type JsonOperationsType = JsonOperationType[];
 
-    export type OperationsType = Map<number, Operation>;
+    export type OperationsType = {
+        [id: number]: Operation;
+    };
 
     export type OperationFeesType = Map<string, Fee>;
 }

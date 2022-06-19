@@ -1,20 +1,14 @@
-import {Fees} from "../../../types";
-import Operations = Fees.OperationsType;
+import Operation from "../../../Domain/Operation";
 
 export default class UpdateOperation {
     constructor(
-        private _operations: Operations,
-        private _id: number,
+        private _operation: Operation,
         private _feeCode: string,
         private _value: number
     ) {}
 
-    get operations(): Fees.OperationsType {
-        return this._operations;
-    }
-
-    get id(): number {
-        return this._id;
+    get operation(): Operation {
+        return this._operation;
     }
 
     get feeCode(): string {

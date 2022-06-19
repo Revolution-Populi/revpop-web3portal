@@ -13,10 +13,14 @@ export default function Fees() {
     const [
         operations,
         loadOperations,
-        setOperations,
+        updateOperation,
         scale,
         networkPercent
     ] = useFees();
+
+    if (Object.keys(operations).length === 0) {
+        return null;
+    }
 
     const modelViewTransformer = new ModelViewTransformer(
         jsonOperations,
@@ -26,15 +30,13 @@ export default function Fees() {
 
     const groups = modelViewTransformer.transform(operations);
 
-    if (operations.isEmpty()) {
-        return null;
-    }
-
     return (
         <FeesContext.Provider
             value={{
                 operations: operations,
-                updateOperations: setOperations
+                updateOperation: updateOperation,
+                scale,
+                networkPercentOfFee: networkPercent / scale
             }}
         >
             <div className="grid-block vertical fees">

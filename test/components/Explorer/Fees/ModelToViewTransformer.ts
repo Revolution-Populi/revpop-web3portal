@@ -1,11 +1,10 @@
 import {expect} from "chai";
 import operations from "../../../Context/Fees/Utilities/operations.json";
 import ModelViewTransformer from "../../../../app/components/Explorer/Fees/ViewModel/ModelViewTransformer";
-import {Map} from "immutable";
 import {Fees} from "../../../../app/Context/Fees/types";
 import JsonOperationsType = Fees.JsonOperationsType;
-import {getOperation} from "../../../Context/Fees/Utilities/Operation";
-import Operation from "../../../../app/Context/Fees/Domain/Operation";
+import {getOperations} from "../../../Context/Fees/Utilities/Operation";
+import {getFees} from "../../../Context/Fees/Utilities/Fee";
 
 describe("ModelToViewTransformer", () => {
     let modelViewTransformer: ModelViewTransformer;
@@ -22,9 +21,7 @@ describe("ModelToViewTransformer", () => {
     describe("transform", () => {
         describe("transform one parameter", () => {
             it("should return one group", async () => {
-                const operations = Map<number, Operation>({
-                    0: getOperation(0, "operation0")
-                });
+                const operations = getOperations([{id: 0, name: "operation0"}]);
 
                 const result = modelViewTransformer.transform(operations);
 
@@ -36,9 +33,7 @@ describe("ModelToViewTransformer", () => {
             });
 
             it("should return one group with operation", async () => {
-                const operations = Map<number, Operation>({
-                    0: getOperation(0, "operation0")
-                });
+                const operations = getOperations([{id: 0, name: "operation0"}]);
 
                 const result = modelViewTransformer.transform(operations);
                 const group = result.get("group1");
@@ -51,11 +46,13 @@ describe("ModelToViewTransformer", () => {
             });
 
             it("should return one group with operation and one fee", async () => {
-                const operations = Map<number, Operation>({
-                    0: getOperation(0, "operation0", {
-                        fee1: 10000
-                    })
-                });
+                const operations = getOperations([
+                    {
+                        id: 0,
+                        name: "operation0",
+                        fees: getFees([{code: "fee1", value: 10000}])
+                    }
+                ]);
 
                 const result = modelViewTransformer.transform(operations);
                 const group = result.get("group1");
@@ -73,10 +70,16 @@ describe("ModelToViewTransformer", () => {
 
         describe("transform 2 parameter with different groups", () => {
             it("should return 2 group with 1 parameter", async () => {
-                const operations = Map<number, Operation>({
-                    0: getOperation(0, "operation0"),
-                    2: getOperation(2, "operation2")
-                });
+                const operations = getOperations([
+                    {
+                        id: 0,
+                        name: "operation0"
+                    },
+                    {
+                        id: 2,
+                        name: "operation2"
+                    }
+                ]);
 
                 const result = modelViewTransformer.transform(operations);
 

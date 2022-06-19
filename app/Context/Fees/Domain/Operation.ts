@@ -1,5 +1,6 @@
 import {Map} from "immutable";
 import Fee from "./Fee";
+import {AppError} from "../../Core/Logic/AppError";
 import {Fees} from "../types";
 import OperationFeesType = Fees.OperationFeesType;
 
@@ -26,7 +27,7 @@ export default class Operation {
     }
 
     get updated(): boolean {
-        return false;
+        return this.fees.find(fee => fee?.updated === true) !== undefined;
     }
 
     get showCHParticipantTransferFee(): boolean {
@@ -39,7 +40,7 @@ export default class Operation {
 
     getFee(code: string): Fee {
         if (!this.fees.has(code)) {
-            throw new Error(`fee ${code} not found`);
+            throw new AppError(`fee ${code} not found`);
         }
 
         return this.fees.get(code);

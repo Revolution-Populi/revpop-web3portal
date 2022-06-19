@@ -1,45 +1,39 @@
 import Operation from "../../../../app/Context/Fees/Domain/Operation";
 import Fee from "../../../../app/Context/Fees/Domain/Fee";
-import {Map} from "immutable";
 import {Fees} from "../../../../app/Context/Fees/types";
-import BlockchainFeeType = Fees.BlockchainFeeType;
-import BlockchainOperationType = Fees.BlockchainOperationType;
 import Operations = Fees.OperationsType;
+import OperationsType = Fees.OperationsType;
 
 type NewOperationType = {
     id: number;
     name: string;
-    fees?: BlockchainFeeType;
+    fees?: Fee[];
 };
 
 type NewOperationsType = NewOperationType[];
 
-export function getOperation(
-    id: number,
-    name: string,
-    fees: BlockchainFeeType = {}
-): Operation {
+export function getOperation(id: number, name: string, fees: Fee[]): Operation {
     const operation = new Operation(id, name);
 
     for (const fee in fees) {
-        operation.addFee(Fee.create(fee, fees[fee]));
+        operation.addFee(fees[fee]);
     }
 
     return operation;
 }
 
 export function getOperations(newOperations: NewOperationsType): Operations {
-    const operations = Map<number, Operation>().asMutable();
+    const operations: OperationsType = {};
 
     for (const newOperation of newOperations) {
         const operation = getOperation(
             newOperation.id,
             newOperation.name,
-            newOperation.fees ?? {}
+            newOperation.fees ?? []
         );
 
-        operations.set(operation.id, operation);
+        operations[operation.id] = operation;
     }
 
-    return operations.asImmutable();
+    return operations;
 }

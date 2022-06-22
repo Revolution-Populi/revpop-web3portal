@@ -1,21 +1,18 @@
 import {Set} from "immutable";
-import moment, {Moment} from "moment";
+import moment from "moment";
 import FactoryInterface from "../Domain/FactoryInterface";
 import Proposal from "../Domain/Proposal";
 import {ProposalTypes} from "../types";
 import ProposalBlockchainType = ProposalTypes.ProposalBlockchainType;
 import ParametersType = ProposalTypes.ParametersType;
-import ParameterObjectBlockchainValueType = ProposalTypes.ParameterObjectBlockchainValueType;
+import BlockchainParametersType = ProposalTypes.BlockchainParametersType;
 import ParameterValueType = ProposalTypes.ParameterValueType;
 import Parameter from "../Domain/Parameter";
 
 const UPDATE_GLOBAL_PARAMETERS_TRANSACTION_ID = 27;
 
 class Factory implements FactoryInterface {
-    fromBlockchain(
-        blockchainProposal: ProposalBlockchainType,
-        accountId: string
-    ): Proposal {
+    fromBlockchain(blockchainProposal: ProposalBlockchainType, accountId: string): Proposal {
         const operation = blockchainProposal.proposed_transaction.operations[0];
 
         if (operation[0] != UPDATE_GLOBAL_PARAMETERS_TRANSACTION_ID) {
@@ -36,9 +33,7 @@ class Factory implements FactoryInterface {
         return proposal;
     }
 
-    private transformParameters(
-        newParameters: ParameterObjectBlockchainValueType
-    ): ParametersType {
+    private transformParameters(newParameters: BlockchainParametersType): ParametersType {
         const parameters = Set<Parameter>().asMutable();
 
         for (const newParameterName in newParameters) {
@@ -47,14 +42,9 @@ class Factory implements FactoryInterface {
                 continue;
             }
 
-            const newParameterValue = newParameters[
-                newParameterName
-            ] as ParameterValueType;
+            const newParameterValue = newParameters[newParameterName] as ParameterValueType;
 
-            const parameter = Parameter.create(
-                newParameterName,
-                newParameterValue
-            );
+            const parameter = Parameter.create(newParameterName, newParameterValue);
             parameters.add(parameter);
         }
 

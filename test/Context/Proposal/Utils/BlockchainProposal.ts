@@ -1,11 +1,9 @@
 import {ProposalTypes} from "../../../../app/Context/Proposal/types";
 import ProposalBlockchainType = ProposalTypes.ProposalBlockchainType;
 import ProposalTransactionBlockchainType = ProposalTypes.ProposalTransactionBlockchainType;
-import ParameterObjectBlockchainValueType = ProposalTypes.ParameterObjectBlockchainValueType;
+import BlockchainParametersType = ProposalTypes.BlockchainParametersType;
 
-export function getBlockchainProposal(
-    props?: Partial<ProposalBlockchainType>
-): ProposalBlockchainType {
+export function getBlockchainProposal(props?: Partial<ProposalBlockchainType>): ProposalBlockchainType {
     const blockchainProposal: ProposalBlockchainType = {
         available_active_approvals: ["1.10.5"],
         available_key_approvals: [],
@@ -73,9 +71,7 @@ export function getBlockchainProposalWrongTransactionId() {
     });
 }
 
-export function getBlockchainProposalWithParameters(
-    parameters: ParameterObjectBlockchainValueType
-) {
+export function getBlockchainProposalWithParameters(parameters: BlockchainParametersType) {
     const proposedTransaction: ProposalTransactionBlockchainType = {
         ref_block_num: 10,
         ref_block_prefix: 10,

@@ -5,6 +5,7 @@ import OperationsType = Fees.OperationsType;
 
 type FeesDefaultsType = {
     operations: OperationsType;
+    loadOperations: () => void;
     updateOperation: (operation: Operation) => void;
     scale: number;
     networkPercentOfFee: number;
@@ -12,6 +13,8 @@ type FeesDefaultsType = {
 
 const FeesDefaults: FeesDefaultsType = {
     operations: {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    loadOperations: () => {},
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     updateOperation: () => {},
     scale: 0,

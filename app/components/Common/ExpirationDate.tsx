@@ -24,11 +24,7 @@ export default function ExpirationDate({onChange}: Props) {
     };
 
     return (
-        <Form.Item
-            label="Expiration date"
-            className="expiration-date"
-            {...formItemLayout}
-        >
+        <Form.Item label="Expiration date" className="expiration-date" {...formItemLayout}>
             <DatePicker
                 showTime={{
                     defaultValue: moment("00:00:00", "HH:mm:ss"),
@@ -36,6 +32,7 @@ export default function ExpirationDate({onChange}: Props) {
                 }}
                 onChange={onChange}
                 disabledDate={disabledDate}
+                defaultValue={moment().add(1, "days")}
             />
         </Form.Item>
     );

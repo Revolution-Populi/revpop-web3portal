@@ -5,7 +5,7 @@ import {Modal} from "bitshares-ui-style-guide";
 import moment, {Moment} from "moment";
 import ExpirationDate from "../../../Common/ExpirationDate";
 import Context from "../Context";
-import {GetChanged, getChangedHandler} from "../../../../Context/Fees";
+import {GetChanged, getChangedHandler, CreateProposal, createProposalHandler} from "../../../../Context/Fees";
 import ChangedOperations from "./ChangedOperations";
 
 interface Props {
@@ -14,17 +14,18 @@ interface Props {
 }
 
 export default function CreateProposalModal({isVisible, close}: Props) {
-    const [expirationDate, setExpirationDate] = useState(
-        moment().add(1, "days")
-    );
-    const {operations} = useContext(Context);
+    const [expirationDate, setExpirationDate] = useState(moment().add(1, "days"));
+    const {operations, loadOperations} = useContext(Context);
 
     function onClose() {
         close();
     }
 
     async function save() {
-        console.log(expirationDate);
+        const command = new CreateProposal(operations, expirationDate);
+        await createProposalHandler.execute(command);
+        loadOperations();
+        close();
     }
 
     function onDateChange(date: Moment) {

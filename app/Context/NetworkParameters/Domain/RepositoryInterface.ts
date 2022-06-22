@@ -1,18 +1,6 @@
-export type ParameterObjectValueType = {
-    [key: string]: ParameterValueType;
-};
-
-type currentFees = {
-    parameters: (number | ParameterObjectValueType)[][];
-    scale: number;
-};
-
-export type ParameterValueType =
-    | string
-    | number
-    | ParameterObjectValueType
-    | currentFees;
+import {NetworkParameters} from "../types";
+import BlockchainParametersType = NetworkParameters.BlockchainParametersType;
 
 export default interface RepositoryInterface {
-    load: () => Promise<ParameterObjectValueType>;
+    load: () => Promise<BlockchainParametersType>;
 }

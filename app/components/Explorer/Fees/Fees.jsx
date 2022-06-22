@@ -10,23 +10,13 @@ import useFees from "./Hooks/useFees";
 // let ltm_required = [5, 7, 20, 21, 34];
 
 export default function Fees() {
-    const [
-        operations,
-        loadOperations,
-        updateOperation,
-        scale,
-        networkPercent
-    ] = useFees();
+    const [operations, loadOperations, updateOperation, scale, networkPercent] = useFees();
 
     if (Object.keys(operations).length === 0) {
         return null;
     }
 
-    const modelViewTransformer = new ModelViewTransformer(
-        jsonOperations,
-        scale,
-        networkPercent / scale
-    );
+    const modelViewTransformer = new ModelViewTransformer(jsonOperations, scale, networkPercent / scale);
 
     const groups = modelViewTransformer.transform(operations);
 
@@ -34,6 +24,7 @@ export default function Fees() {
         <FeesContext.Provider
             value={{
                 operations: operations,
+                loadOperations: loadOperations,
                 updateOperation: updateOperation,
                 scale,
                 networkPercentOfFee: networkPercent / scale

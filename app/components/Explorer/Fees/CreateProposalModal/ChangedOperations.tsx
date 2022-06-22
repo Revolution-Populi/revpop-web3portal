@@ -20,8 +20,6 @@ interface Props {
 export default function ChangedOperations({changedOperations}: Props) {
     const {scale, networkPercentOfFee} = useContext(Context);
 
-    console.log(scale, networkPercentOfFee);
-
     const modelViewTransformer = new ModelViewTransformer(
         jsonOperations as JsonOperationsType,
         scale,
@@ -65,10 +63,7 @@ function Group({group}: GroupProps) {
             </thead>
             <tbody>
                 {group.operations.map(operation => (
-                    <Operation
-                        key={(operation as OperationViewModel).id}
-                        operation={operation as OperationViewModel}
-                    />
+                    <Operation key={(operation as OperationViewModel).id} operation={operation as OperationViewModel} />
                 ))}
             </tbody>
         </table>

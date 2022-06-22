@@ -1,12 +1,12 @@
-import RepositoryInterface, {
-    ParameterObjectValueType,
-    ParameterValueType
-} from "../Domain/RepositoryInterface";
+import RepositoryInterface from "../Domain/RepositoryInterface";
+import {NetworkParameters} from "../types";
+import BlockchainParametersType = NetworkParameters.BlockchainParametersType;
+import BlockchainParameterType = NetworkParameters.BlockchainParameterType;
 
 class StubRepository implements RepositoryInterface {
-    private items: ParameterObjectValueType = {};
+    private items: BlockchainParametersType = {};
 
-    add(key: string, value: ParameterValueType): void {
+    add(key: string, value: BlockchainParameterType): void {
         this.items[key] = value;
     }
 
@@ -14,7 +14,7 @@ class StubRepository implements RepositoryInterface {
         this.items = {};
     }
 
-    async load(): Promise<ParameterObjectValueType> {
+    async load(): Promise<BlockchainParametersType> {
         return this.items;
     }
 }

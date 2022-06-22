@@ -7,19 +7,11 @@ import moment from "moment";
 import GetChanged from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChanged";
 import GetChangedHandler from "../../../../Context/NetworkParameters/Application/Query/GetChanged/GetChangedHandler";
 import ParameterToTableRowTransformer from "../ParameterToTableRowTransformer";
-import CreateHandler from "../../../../Context/Proposal/Application/Commands/Create/CreateHandler";
-import Create from "../../../../Context/Proposal/Application/Commands/Create/Create";
-import blockchainRepository from "../../../../Context/Proposal/Infrastructure/BlockchainRepository";
 import ExpirationDate from "../../../Common/ExpirationDate";
+import {CreateProposal, createProposalHandler} from "../../../../Context/NetworkParameters";
 
-export default function CreateProposalModal({
-    isVisible,
-    close,
-    onProposalCreated
-}) {
-    const [expirationDate, setExpirationDate] = useState(
-        moment().add(1, "days")
-    );
+export default function CreateProposalModal({isVisible, close, onProposalCreated}) {
+    const [expirationDate, setExpirationDate] = useState(moment().add(1, "days"));
     const [saveEmptyError, setSaveEmptyError] = useState(false);
     const {parameters} = useContext(NetworkParametersContext);
 
@@ -46,9 +38,7 @@ export default function CreateProposalModal({
         const handler = new GetChangedHandler();
         const parametersForTable = handler.execute(query);
 
-        const parameterToTableRowTransformer = new ParameterToTableRowTransformer(
-            () => {}
-        );
+        const parameterToTableRowTransformer = new ParameterToTableRowTransformer(() => {});
 
         return parametersForTable
             .map(parameter => {
@@ -58,9 +48,8 @@ export default function CreateProposalModal({
     }
 
     async function save() {
-        const handler = new CreateHandler(blockchainRepository);
-        const command = new Create(parameters, expirationDate);
-        const result = await handler.execute(command);
+        const command = new CreateProposal(parameters, expirationDate);
+        const result = await createProposalHandler.execute(command);
 
         if (result.isSuccess()) {
             close();
@@ -79,9 +68,7 @@ export default function CreateProposalModal({
 
     return (
         <Modal
-            title={counterpart.translate(
-                "network_parameters.create_proposal.modal_title"
-            )}
+            title={counterpart.translate("network_parameters.create_proposal.modal_title")}
             className="create-proposal-modal"
             visible={isVisible}
             onOk={save}
@@ -92,12 +79,7 @@ export default function CreateProposalModal({
                     <Translate content="network_parameters.create_proposal.errors.empty" />
                 </div>
             )}
-            <Table
-                columns={columns}
-                className="list"
-                dataSource={data()}
-                pagination={false}
-            />
+            <Table columns={columns} className="list" dataSource={data()} pagination={false} />
             <ExpirationDate onChange={onDateChange} />
         </Modal>
     );

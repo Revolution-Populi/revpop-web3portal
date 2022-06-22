@@ -9,28 +9,18 @@ import WalletApi from "../../../api/WalletApi";
 import WalletDb from "../../../stores/WalletDb";
 import Proposal from "../Domain/Proposal";
 import factory from "./Factory";
-import {NetworkParameters} from "../../NetworkParameters/types";
-import ProposalType = NetworkParameters.ProposalType;
 import {ProposalTypes} from "../types";
 import ProposalsType = ProposalTypes.ProposalsType;
+import ProposalCreateType = ProposalTypes.ProposalCreateType;
 
 class BlockchainRepository implements RepositoryInterface {
-    async create(proposal: ProposalType): Promise<void> {
+    async create(proposal: ProposalCreateType): Promise<void> {
         let account = AccountStore.getState().currentAccount;
         account = ChainStore.getAccount(account);
 
-        const transaction = WalletApi.new_transaction();
-        transaction.add_type_operation(
-            "committee_member_update_global_parameters",
-            {
-                fee: {
-                    amount: 0,
-                    asset_id: "1.3.0"
-                },
-                new_parameters: proposal.parameters
-            }
-        );
+        const transaction = proposal.transaction;
 
+        // @ts-ignore
         transaction.propose({
             fee: {
                 amount: 1206522,
@@ -59,9 +49,7 @@ class BlockchainRepository implements RepositoryInterface {
         const proposals = Set<Proposal>().asMutable();
 
         for (const blockchainProposal of data) {
-            proposals.add(
-                factory.fromBlockchain(blockchainProposal, account.get("id"))
-            );
+            proposals.add(factory.fromBlockchain(blockchainProposal, account.get("id")));
         }
 
         return proposals;

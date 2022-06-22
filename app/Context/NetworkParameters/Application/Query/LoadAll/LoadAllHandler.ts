@@ -1,18 +1,15 @@
-import RepositoryInterface, {
-    ParameterValueType
-} from "../../../Domain/RepositoryInterface";
 import {ParameterValueType as NetworkParameterValueType} from "../../../Domain/NetworkParameter";
 import NetworkParameter from "../../../Domain/NetworkParameter";
 import LoadAll from "./LoadAll";
 import {Map} from "immutable";
 import Factory, {JsonParametersType} from "../../../Domain/Factory";
 import {isEmpty} from "lodash";
+import RepositoryInterface from "../../../Domain/RepositoryInterface";
+import {NetworkParameters} from "../../../types";
+import BlockchainParameterType = NetworkParameters.BlockchainParameterType;
 
 export default class LoadAllHandler {
-    constructor(
-        readonly repository: RepositoryInterface,
-        readonly jsonParameters: JsonParametersType
-    ) {}
+    constructor(readonly repository: RepositoryInterface, readonly jsonParameters: JsonParametersType) {}
 
     async execute(request: LoadAll): Promise<Map<string, NetworkParameter>> {
         const data = await this.repository.load();
@@ -21,11 +18,7 @@ export default class LoadAllHandler {
         const factory = new Factory();
 
         for (const [name, value] of Object.entries(data)) {
-            const parameter = factory.create(
-                name,
-                value,
-                this.jsonParameters[name] ?? null
-            );
+            const parameter = factory.create(name, value, this.jsonParameters[name] ?? null);
             parameters.set(name, parameter);
 
             delete this.jsonParameters[name];
@@ -38,7 +31,7 @@ export default class LoadAllHandler {
 
             const parameter = factory.create(
                 name,
-                value.defaultValue as ParameterValueType,
+                value.defaultValue as BlockchainParameterType,
                 this.jsonParameters[name]
             );
             parameter.newValue = value.defaultValue as NetworkParameterValueType;

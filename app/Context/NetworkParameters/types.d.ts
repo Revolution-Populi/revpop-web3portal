@@ -1,17 +1,19 @@
-import {Map, Set} from "immutable";
+import {Map} from "immutable";
 import NetworkParameter from "./Domain/NetworkParameter";
-import {ParameterObjectValueType} from "./Domain/RepositoryInterface";
 
 export namespace NetworkParameters {
+    export type BlockchainParametersType = {
+        [key: string]: BlockchainParameterType;
+    };
+
+    type currentFees = {
+        parameters: (number | BlockchainParametersType)[][];
+        scale: number;
+    };
+
+    export type BlockchainParameterType = string | number | BlockchainParametersType | currentFees;
+
     export type NetworkParametersType = Map<string, NetworkParameter>;
 
     export type ParametersType = Map<string, NetworkParameter>;
-
-    export type ProposalType = {
-        parameters: ParameterObjectValueType;
-        expirationTime: number;
-        reviewPeriod: number;
-    };
-
-    export type ProposalsType = Set<Proposal>;
 }

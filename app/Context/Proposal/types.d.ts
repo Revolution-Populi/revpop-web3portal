@@ -8,19 +8,15 @@ export namespace ProposalTypes {
         asset_id: string;
     };
 
-    export type ParameterObjectBlockchainValueType = {
-        [key: string]: ParameterBlockchainValueType;
+    export type BlockchainParametersType = {
+        [key: string]: BlockchainParameterType;
     };
 
-    type ParameterBlockchainValueType =
-        | string
-        | number
-        | boolean
-        | ParameterObjectBlockchainValueType;
+    type BlockchainParameterType = string | number | boolean | BlockchainParametersType;
 
     type ProposalTransactionOperationsBlockchainType = {
         fee: FeeType;
-        new_parameters: ParameterObjectBlockchainValueType;
+        new_parameters: BlockchainParametersType;
     };
 
     export type ProposalTransactionBlockchainType = {
@@ -45,12 +41,17 @@ export namespace ProposalTypes {
         review_period_time: string;
     };
 
+    export type ProposalCreateType = {
+        transaction: unknown;
+        expirationTime: number;
+        reviewPeriod: number;
+    };
+
+    export type ProposalsCreateType = Set<ProposalCreateType>;
+
     export type ProposalsType = Set<Proposal>;
 
     export type ParametersType = Set<Parameter>;
 
-    export type ParameterValueType = Extract<
-        ParameterBlockchainValueType,
-        string | number | boolean
-    >;
+    export type ParameterValueType = Extract<BlockchainParameterType, string | number | boolean>;
 }

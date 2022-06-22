@@ -1,6 +1,7 @@
 import {Map} from "immutable";
 import {ParameterType} from "./Factory";
-import {ParameterValueType as ParameterLinkValueType} from "./RepositoryInterface";
+import {NetworkParameters} from "../types";
+import BlockchainParameterType = NetworkParameters.BlockchainParameterType;
 
 export type ParameterValueType = string | number | boolean;
 
@@ -12,7 +13,7 @@ export default class NetworkParameter {
     private _type: ParameterType | null = null;
     private _modified = false;
     private _link: string | null = null;
-    private _linkValue: ParameterLinkValueType | null = null;
+    private _linkValue: BlockchainParameterType | null = null;
     private _children: Map<string, NetworkParameter> = Map();
 
     constructor(private _name: string) {}
@@ -62,11 +63,11 @@ export default class NetworkParameter {
         this._link = value;
     }
 
-    get linkValue(): ParameterLinkValueType | null {
+    get linkValue(): BlockchainParameterType | null {
         return this._linkValue;
     }
 
-    set linkValue(value: ParameterLinkValueType | null) {
+    set linkValue(value: BlockchainParameterType | null) {
         this._linkValue = value;
     }
 

@@ -1,10 +1,9 @@
-import {NetworkParameters} from "../../NetworkParameters/types";
-import ProposalType = NetworkParameters.ProposalType;
 import {ProposalTypes} from "../types";
+import ProposalCreateType = ProposalTypes.ProposalCreateType;
 import ProposalsType = ProposalTypes.ProposalsType;
 
 export default interface RepositoryInterface {
-    create: (proposal: ProposalType) => void;
+    create: (proposal: ProposalCreateType) => void;
     loadAll: () => Promise<ProposalsType>;
     vote: (proposalId: string) => void;
     revokeVote: (proposalId: string) => void;

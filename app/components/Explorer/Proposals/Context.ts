@@ -1,6 +1,6 @@
 import React from "react";
 import {Set} from "immutable";
-import Proposal from "../../../../Context/Proposal/Domain/Proposal";
+import Proposal from "../../../Context/Proposal/Domain/Proposal";
 
 const ProposalsDefaults = {
     proposals: Set(),

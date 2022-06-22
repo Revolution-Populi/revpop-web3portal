@@ -1148,17 +1148,6 @@
             "name": "Name",
             "value": "Value"
         },
-        "proposals": {
-            "title": "Proposals",
-            "id": "ID",
-            "review_period": "Review period",
-            "expiration_date": "Expiration date",
-            "vote": "Vote",
-            "revoke": "Revoke",
-            "parameters": {
-                "new": "New"
-            }
-        },
         "create_proposal": {
             "button": "Create proposal",
             "modal_title": "Create proposal",
@@ -1166,6 +1155,17 @@
             "errors": {
                 "empty": "No parameters for saving"
             }
+        }
+    },
+    "proposals": {
+        "title": "Proposals",
+        "id": "ID",
+        "review_period": "Review period",
+        "expiration_date": "Expiration date",
+        "vote": "Vote",
+        "revoke": "Revoke",
+        "parameters": {
+            "new": "New"
         }
     },
     "footer": {

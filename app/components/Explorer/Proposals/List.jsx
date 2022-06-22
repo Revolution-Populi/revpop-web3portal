@@ -6,7 +6,7 @@ import ExpandedRow from "./ExpandedRow";
 import RowActions from "./ProposalRowActions";
 import useProposals from "./Hooks/useProposals";
 
-export default function ProposalsList() {
+export default function List() {
     const [proposals, loadProposals, updateProposal] = useProposals();
 
     function prepareProposals() {
@@ -27,20 +27,16 @@ export default function ProposalsList() {
 
     const columns = [
         {
-            title: counterpart.translate("network_parameters.proposals.id"),
+            title: counterpart.translate("proposals.id"),
             dataIndex: "id"
         },
         {
-            title: counterpart.translate(
-                "network_parameters.proposals.review_period"
-            ),
+            title: counterpart.translate("proposals.review_period"),
             dataIndex: "review_period",
             render: expiration_date => expiration_date.format("lll")
         },
         {
-            title: counterpart.translate(
-                "network_parameters.proposals.expiration_date"
-            ),
+            title: counterpart.translate("proposals.expiration_date"),
             dataIndex: "expiration_date",
             defaultSortOrder: "ascend",
             sorter: (a, b) => {
@@ -62,15 +58,15 @@ export default function ProposalsList() {
                 updateProposal: updateProposal
             }}
         >
-            <Table
-                className="list"
-                columns={columns}
-                dataSource={prepareProposals()}
-                expandedRowRender={proposal => (
-                    <ExpandedRow proposal={proposal} />
-                )}
-                pagination={false}
-            />
+            <div className="network-parameters-proposals">
+                <Table
+                    className="list"
+                    columns={columns}
+                    dataSource={prepareProposals()}
+                    expandedRowRender={proposal => <ExpandedRow proposal={proposal} />}
+                    pagination={false}
+                />
+            </div>
         </ProposalsContext.Provider>
     );
 }

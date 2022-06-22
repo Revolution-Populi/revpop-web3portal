@@ -3,13 +3,8 @@ import React from "react";
 import {Button} from "bitshares-ui-style-guide";
 // @ts-ignore
 import Translate from "react-translate-component";
-import Proposal from "../../../../Context/Proposal/Domain/Proposal";
-import {
-    RevokeVote,
-    revokeVoteHandler,
-    Vote,
-    voteHandler
-} from "../../../../Context/Proposal";
+import Proposal from "../../../Context/Proposal/Domain/Proposal";
+import {RevokeVote, revokeVoteHandler, Vote, voteHandler} from "../../../Context/Proposal";
 
 type PropsType = {
     proposal: Proposal;
@@ -39,14 +34,14 @@ export default function RowActions({proposal}: PropsType) {
     if (proposal.voted) {
         return (
             <Button type="primary" onClick={onRevokeHandler}>
-                <Translate content="network_parameters.proposals.revoke" />
+                <Translate content="proposals.revoke" />
             </Button>
         );
     }
 
     return (
         <Button type="primary" onClick={onVoteHandler}>
-            <Translate content="network_parameters.proposals.vote" />
+            <Translate content="proposals.vote" />
         </Button>
     );
 }

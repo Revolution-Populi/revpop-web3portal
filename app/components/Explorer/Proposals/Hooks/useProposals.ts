@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {Set} from "immutable";
-import Proposal from "../../../../../Context/Proposal/Domain/Proposal";
-import {LoadAll, loadAllHandler} from "../../../../../Context/Proposal";
-import {ProposalTypes} from "../../../../../Context/Proposal/types";
+import Proposal from "../../../../Context/Proposal/Domain/Proposal";
+import {LoadAll, loadAllHandler} from "../../../../Context/Proposal";
+import {ProposalTypes} from "../../../../Context/Proposal/types";
 import ProposalsType = ProposalTypes.ProposalsType;
 
 function useProposals() {

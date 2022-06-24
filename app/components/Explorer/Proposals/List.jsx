@@ -3,32 +3,34 @@ import {Table} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import ProposalsContext from "./Context";
 import ExpandedRow from "./ExpandedRow";
-import RowActions from "./ProposalRowActions";
 import useProposals from "./Hooks/useProposals";
+import jsonParameters from "../../../../app/Context/NetworkParameters/Domain/parameters.json";
+import jsonOperations from "../../../../app/Context/Fees/Domain/operations.json";
+import ModelViewTransformer from "./ViewModal/ModelViewTransformer";
 
 export default function List() {
-    const [proposals, loadProposals, updateProposal] = useProposals();
+    const [proposals, updateProposal] = useProposals();
 
-    function prepareProposals() {
-        return proposals
-            .map(proposal => {
-                return {
-                    key: proposal.id,
-                    id: proposal.id,
-                    expiration_date: proposal.expirationDate,
-                    review_period: proposal.reviewPeriod,
-                    parameters: proposal.parameters,
-                    voted: proposal.voted,
-                    actions: <RowActions proposal={proposal} />
-                };
-            })
-            .toArray();
-    }
+    const modelViewTransformer = new ModelViewTransformer(jsonParameters, jsonOperations, 10000, 20);
+    const proposalsView = modelViewTransformer.transform(proposals);
 
     const columns = [
         {
             title: counterpart.translate("proposals.id"),
-            dataIndex: "id"
+            dataIndex: "id",
+            render: (id, proposal) => {
+                let changes = [];
+
+                if (proposal.hasChangeParameters) {
+                    changes.push("parameters");
+                }
+
+                if (proposal.hasChangeOperations) {
+                    changes.push("operations");
+                }
+
+                return id + ` (${changes.join(", ")})`;
+            }
         },
         {
             title: counterpart.translate("proposals.review_period"),
@@ -62,7 +64,7 @@ export default function List() {
                 <Table
                     className="list"
                     columns={columns}
-                    dataSource={prepareProposals()}
+                    dataSource={proposalsView}
                     expandedRowRender={proposal => <ExpandedRow proposal={proposal} />}
                     pagination={false}
                 />

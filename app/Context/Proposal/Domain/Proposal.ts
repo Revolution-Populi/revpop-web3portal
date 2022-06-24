@@ -1,6 +1,7 @@
 import {Moment} from "moment";
 import {ProposalTypes} from "../types";
 import ParametersType = ProposalTypes.ParametersType;
+import OperationsType = ProposalTypes.OperationsType;
 
 export default class Proposal {
     private _voted = false;
@@ -8,6 +9,7 @@ export default class Proposal {
     constructor(
         private _id: string,
         private _parameters: ParametersType,
+        private _operations: OperationsType,
         private _expirationDate: Moment,
         private _reviewPeriod: Moment
     ) {}
@@ -18,6 +20,10 @@ export default class Proposal {
 
     get parameters(): ParametersType {
         return this._parameters;
+    }
+
+    get operations(): OperationsType {
+        return this._operations;
     }
 
     get expirationDate(): Moment {

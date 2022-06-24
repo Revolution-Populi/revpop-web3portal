@@ -2,12 +2,17 @@ import {Set} from "immutable";
 import moment from "moment";
 import FactoryInterface from "../Domain/FactoryInterface";
 import Proposal from "../Domain/Proposal";
+import Parameter from "../Domain/Parameter";
+import Operation from "../Domain/Operation";
 import {ProposalTypes} from "../types";
 import ProposalBlockchainType = ProposalTypes.ProposalBlockchainType;
 import ParametersType = ProposalTypes.ParametersType;
 import BlockchainParametersType = ProposalTypes.BlockchainParametersType;
 import ParameterValueType = ProposalTypes.ParameterValueType;
-import Parameter from "../Domain/Parameter";
+import OperationsType = ProposalTypes.OperationsType;
+import BlockchainCurrentFeesType = ProposalTypes.BlockchainCurrentFeesType;
+import BlockchainCurrentFeesOperationType = ProposalTypes.BlockchainCurrentFeesOperationType;
+import Fee from "../Domain/Fee";
 
 const UPDATE_GLOBAL_PARAMETERS_TRANSACTION_ID = 27;
 
@@ -19,9 +24,12 @@ class Factory implements FactoryInterface {
             throw new Error("Invalid proposed operation id");
         }
 
+        const currentFees = operation[1].new_parameters.current_fees as BlockchainCurrentFeesType;
+
         const proposal = new Proposal(
             blockchainProposal.id,
             this.transformParameters(operation[1].new_parameters),
+            this.transformCurrentFees(currentFees.parameters),
             moment(blockchainProposal.expiration_time),
             moment(blockchainProposal.review_period_time)
         );
@@ -49,6 +57,24 @@ class Factory implements FactoryInterface {
         }
 
         return parameters.asImmutable();
+    }
+
+    private transformCurrentFees(blockchainOperations: BlockchainCurrentFeesOperationType[]): OperationsType {
+        const operations = Set<Operation>().asMutable();
+
+        for (const blockchainOperation of blockchainOperations) {
+            const blockchainFees = blockchainOperation[1];
+            const fees = [];
+            for (const blockchainFeeCode in blockchainFees) {
+                const fee = Fee.create(blockchainFeeCode, blockchainFees[blockchainFeeCode]);
+                fees.push(fee);
+            }
+
+            const operation = Operation.create(blockchainOperation[0], fees);
+            operations.add(operation);
+        }
+
+        return operations;
     }
 }
 

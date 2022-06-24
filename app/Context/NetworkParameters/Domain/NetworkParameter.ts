@@ -1,7 +1,7 @@
 import {Map} from "immutable";
-import {ParameterType} from "./Factory";
 import {NetworkParameters} from "../types";
 import BlockchainParameterType = NetworkParameters.BlockchainParameterType;
+import ParameterType = NetworkParameters.ParameterType;
 
 export type ParameterValueType = string | number | boolean;
 

@@ -1,10 +1,9 @@
-import NetworkParameter, {
-    ParameterValueType
-} from "../../../Context/NetworkParameters/Domain/NetworkParameter";
+import NetworkParameter, {ParameterValueType} from "../../../Context/NetworkParameters/Domain/NetworkParameter";
 import ParameterActions from "./ParameterActions";
 import React, {ReactElement} from "react";
-import {ParameterType} from "../../../Context/NetworkParameters/Domain/Factory";
 import TableTemplate from "./ParameterValue/TableTemplate";
+import {NetworkParameters} from "../../../Context/NetworkParameters/types";
+import ParameterType = NetworkParameters.ParameterType;
 
 export interface TableRow {
     key: string;
@@ -25,15 +24,9 @@ export type TableRowValueType = string | number | boolean;
 class ParameterToTableRowTransformer {
     constructor(private showEditModal: () => void) {}
 
-    transform(
-        parameter: NetworkParameter,
-        parent: TableRow | null = null
-    ): TableRow {
+    transform(parameter: NetworkParameter, parent: TableRow | null = null): TableRow {
         const row: TableRow = {
-            key:
-                null === parent
-                    ? parameter.name
-                    : [parent.key, parameter.name].join("."),
+            key: null === parent ? parameter.name : [parent.key, parameter.name].join("."),
             name: parameter.name,
             description: parameter.description,
             type: parameter.type,
@@ -48,32 +41,19 @@ class ParameterToTableRowTransformer {
 
         if (parameter.isLink()) {
             row.link = parameter.link;
-            row.actions = (
-                <ParameterActions parameter={row} show={this.showEditModal} />
-            );
+            row.actions = <ParameterActions parameter={row} show={this.showEditModal} />;
         }
 
         if (parameter.isGroup()) {
-            row.children = parameter.children
-                .map(child => this.transform(child as NetworkParameter, row))
-                .toArray();
+            row.children = parameter.children.map(child => this.transform(child as NetworkParameter, row)).toArray();
         }
 
         if (parameter.isNormal()) {
             row.rawValue = parameter.value;
-            row.value = (
-                <TableTemplate type={parameter.type} value={parameter.value} />
-            );
+            row.value = <TableTemplate type={parameter.type} value={parameter.value} />;
             row.rawNewValue = parameter.newValue ?? parameter.value;
-            row.newValue = (
-                <TableTemplate
-                    type={parameter.type}
-                    value={parameter.newValue}
-                />
-            );
-            row.actions = (
-                <ParameterActions parameter={row} show={this.showEditModal} />
-            );
+            row.newValue = <TableTemplate type={parameter.type} value={parameter.newValue} />;
+            row.actions = <ParameterActions parameter={row} show={this.showEditModal} />;
         }
 
         return row;

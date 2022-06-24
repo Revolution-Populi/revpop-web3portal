@@ -23,7 +23,7 @@ function useProposals() {
         console.log(proposal);
     };
 
-    return [proposals, loadProposals, updateProposal];
+    return [proposals, updateProposal];
 }
 
 export default useProposals;

@@ -2,11 +2,12 @@ import {ParameterValueType as NetworkParameterValueType} from "../../../Domain/N
 import NetworkParameter from "../../../Domain/NetworkParameter";
 import LoadAll from "./LoadAll";
 import {Map} from "immutable";
-import Factory, {JsonParametersType} from "../../../Domain/Factory";
+import Factory from "../../../Domain/Factory";
 import {isEmpty} from "lodash";
 import RepositoryInterface from "../../../Domain/RepositoryInterface";
 import {NetworkParameters} from "../../../types";
 import BlockchainParameterType = NetworkParameters.BlockchainParameterType;
+import JsonParametersType = NetworkParameters.JsonParametersType;
 
 export default class LoadAllHandler {
     constructor(readonly repository: RepositoryInterface, readonly jsonParameters: JsonParametersType) {}

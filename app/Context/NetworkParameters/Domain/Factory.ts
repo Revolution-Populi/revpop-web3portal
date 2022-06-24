@@ -4,19 +4,7 @@ import FactoryInterface from "./FactoryInterface";
 import {NetworkParameters} from "../types";
 import BlockchainParameterType = NetworkParameters.BlockchainParameterType;
 import BlockchainParametersType = NetworkParameters.BlockchainParametersType;
-
-export type ParameterType = "bool" | "uint8_t" | "uint16_t" | "uint32_t" | "int64_t" | "link";
-
-export type JsonParameterType = {
-    type: ParameterType;
-    description: string | null;
-    link?: string | null;
-    defaultValue?: BlockchainParameterType | null;
-};
-
-export type JsonParametersType = {
-    [key: string]: JsonParameterType;
-};
+import JsonParameterType = NetworkParameters.JsonParameterType;
 
 class Factory implements FactoryInterface {
     create(

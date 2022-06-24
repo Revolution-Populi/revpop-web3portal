@@ -1,6 +1,7 @@
 import {Set} from "immutable";
 import Proposal from "./Domain/Proposal";
 import Parameter from "./Domain/Parameter";
+import Operation from "./Domain/Operation";
 
 export namespace ProposalTypes {
     type FeeType = {
@@ -12,7 +13,18 @@ export namespace ProposalTypes {
         [key: string]: BlockchainParameterType;
     };
 
-    type BlockchainParameterType = string | number | boolean | BlockchainParametersType;
+    export type BlockchainCurrentFeesType = {
+        parameters: BlockchainCurrentFeesOperationType[];
+        scale: number;
+    };
+
+    export type BlockchainCurrentFeesOperationType = [number, BlockchainCurrentFeesOperationFeeType];
+
+    export type BlockchainCurrentFeesOperationFeeType = {
+        [code: string]: number;
+    };
+
+    type BlockchainParameterType = string | number | boolean | BlockchainParametersType | BlockchainCurrentFeesType;
 
     type ProposalTransactionOperationsBlockchainType = {
         fee: FeeType;
@@ -52,6 +64,8 @@ export namespace ProposalTypes {
     export type ProposalsType = Set<Proposal>;
 
     export type ParametersType = Set<Parameter>;
+
+    export type OperationsType = Set<Operation>;
 
     export type ParameterValueType = Extract<BlockchainParameterType, string | number | boolean>;
 }

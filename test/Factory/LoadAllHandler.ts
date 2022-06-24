@@ -1,9 +1,8 @@
 import stubRepository from "../../app/Context/NetworkParameters/Infrastructure/StubRepository";
 import LoadAllHandler from "../../app/Context/NetworkParameters/Application/Query/LoadAll/LoadAllHandler";
-import {JsonParametersType} from "../../app/Context/NetworkParameters/Domain/Factory";
+import {NetworkParameters} from "../../app/Context/NetworkParameters/types";
+import JsonParametersType = NetworkParameters.JsonParametersType;
 
-export function getLoadAllHandler(
-    jsonParameters: JsonParametersType = {}
-): LoadAllHandler {
+export function getLoadAllHandler(jsonParameters: JsonParametersType = {}): LoadAllHandler {
     return new LoadAllHandler(stubRepository, jsonParameters);
 }

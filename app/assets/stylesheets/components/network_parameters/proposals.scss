@@ -22,12 +22,15 @@
 
         .ant-table-expanded-row {
             background-color: #262626;
+            font-size: 14px;
 
             &:hover {
                 background-color: #262626;
             }
 
-            .parameters-list {
+            .parameters-list,
+            .operations-list,
+            ul {
                 font-size: 14px;
                 list-style: none;
                 margin: 0;
@@ -41,6 +44,10 @@
                 .old-value {
                     margin-left: 5px;
                 }
+            }
+
+            .operations-list ul {
+                margin-left: 10px;
             }
         }
     }

@@ -1,11 +1,12 @@
 import React from "react";
 import {expect} from "chai";
 import {shallow} from "enzyme";
-import {ParameterType} from "../../../../../app/Context/NetworkParameters/Domain/Factory";
 import {ParameterValueType} from "../../../../../app/Context/NetworkParameters/Domain/NetworkParameter";
 import ShowTemplate from "../../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableTemplate";
 import TableStringTemplate from "../../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableStringTemplate";
 import TableBooleanTemplate from "../../../../../app/components/Explorer/NetworkParameters/ParameterValue/TableBooleanTemplate";
+import {NetworkParameters} from "../../../../../app/Context/NetworkParameters/types";
+import ParameterType = NetworkParameters.ParameterType;
 
 describe("TableTemplate", () => {
     describe("resolve", () => {
@@ -24,9 +25,7 @@ describe("TableTemplate", () => {
         cases.forEach(({type, value, component}) => {
             describe(`when called with ${type} type and ${value} value`, () => {
                 it("should return correct component", async () => {
-                    const wrapper = shallow(
-                        <ShowTemplate type={type} value={value} />
-                    );
+                    const wrapper = shallow(<ShowTemplate type={type} value={value} />);
 
                     expect(wrapper.find(component)).length(1);
                 });

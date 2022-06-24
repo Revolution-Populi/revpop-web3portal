@@ -46,7 +46,7 @@ DynamicObjectResolver = BindToChainState(DynamicObjectResolver);
 
 function AssetWrapper(Component, options = {}) {
     options.propNames = options.propNames || [
-        !!options.asList ? "assets" : "asset"
+        options.asList ? "assets" : "asset"
     ];
     const finalPropTypes = options.propNames.reduce((res, type) => {
         res[type] = options.asList
@@ -57,7 +57,7 @@ function AssetWrapper(Component, options = {}) {
 
     let defaultProps = Object.keys(finalPropTypes).reduce((res, key) => {
         let current = options.defaultProps && options.defaultProps[key];
-        res[key] = !!options.asList ? List(current || []) : current || "1.3.0";
+        res[key] = options.asList ? List(current || []) : current || "1.3.0";
         return res;
     }, {});
 
@@ -85,7 +85,7 @@ function AssetWrapper(Component, options = {}) {
                             );
                         } else {
                             this.props[prop].forEach(a => {
-                                if (!!a)
+                                if (a)
                                     dos = dos.push(
                                         a.get("dynamic_asset_data_id")
                                     );

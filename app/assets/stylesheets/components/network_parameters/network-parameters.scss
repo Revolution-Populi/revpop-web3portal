@@ -1,0 +1,27 @@
+.network-parameters-list {
+    .search-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        margin-bottom: 12px;
+
+        .actions {
+            display: flex;
+
+            .add-parameter {
+                margin-right: 12px;
+            }
+        }
+    }
+
+    .ant-table {
+        .ant-table-row {
+            height: 44px;
+
+            .edit-fees {
+                width: 88px;
+                text-align: center;
+            }
+        }
+    }
+}

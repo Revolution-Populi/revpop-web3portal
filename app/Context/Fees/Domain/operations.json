@@ -1,0 +1,273 @@
+[
+    {
+        "id": 0,
+        "name": "transfer",
+        "group": "general",
+        "clearing_house_participant_transfer_fee": true
+    },
+    {
+        "id": 1,
+        "name": "account_create",
+        "group": "market"
+    },
+    {
+        "id": 2,
+        "name": "account_update",
+        "group": "market"
+    },
+    {
+        "id": 3,
+        "name": "account_whitelist",
+        "group": "market"
+    },
+    {
+        "id": 4,
+        "name": "account_upgrade",
+        "group": "market"
+    },
+    {
+        "id": 5,
+        "name": "account_transfer",
+        "group": "account"
+    },
+    {
+        "id": 6,
+        "name": "asset_create",
+        "group": "account"
+    },
+    {
+        "id": 7,
+        "name": "asset_update",
+        "group": "account"
+    },
+    {
+        "id": 8,
+        "name": "asset_update_bitasset",
+        "group": "account"
+    },
+    {
+        "id": 9,
+        "name": "asset_update_feed_producers",
+        "group": "account"
+    },
+    {
+        "id": 10,
+        "name": "asset_issue",
+        "group": "asset"
+    },
+    {
+        "id": 11,
+        "name": "asset_reserve",
+        "group": "asset"
+    },
+    {
+        "id": 12,
+        "name": "asset_fund_fee_pool",
+        "group": "asset"
+    },
+    {
+        "id": 13,
+        "name": "asset_settle",
+        "group": "asset"
+    },
+    {
+        "id": 14,
+        "name": "asset_global_settle",
+        "group": "asset"
+    },
+    {
+        "id": 15,
+        "name": "asset_publish_feed",
+        "group": "asset"
+    },
+    {
+        "id": 16,
+        "name": "witness_create",
+        "group": "asset"
+    },
+    {
+        "id": 17,
+        "name": "witness_update",
+        "group": "asset"
+    },
+    {
+        "id": 18,
+        "name": "proposal_create",
+        "group": "asset"
+    },
+    {
+        "id": 19,
+        "name": "proposal_update",
+        "group": "asset"
+    },
+    {
+        "id": 20,
+        "name": "proposal_delete",
+        "group": "business"
+    },
+    {
+        "id": 21,
+        "name": "withdraw_permission_create",
+        "group": "business"
+    },
+    {
+        "id": 22,
+        "name": "withdraw_permission_update",
+        "group": "business"
+    },
+    {
+        "id": 23,
+        "name": "withdraw_permission_claim",
+        "group": "business"
+    },
+    {
+        "id": 24,
+        "name": "withdraw_permission_delete",
+        "group": "business"
+    },
+    {
+        "id": 25,
+        "name": "committee_member_create",
+        "group": "general"
+    },
+    {
+        "id": 26,
+        "name": "committee_member_update",
+        "group": "general"
+    },
+    {
+        "id": 27,
+        "name": "committee_member_update_global_parameters",
+        "group": "general"
+    },
+    {
+        "id": 28,
+        "name": "vesting_balance_create",
+        "group": "general"
+    },
+    {
+        "id": 29,
+        "name": "vesting_balance_withdraw",
+        "group": "general"
+    },
+    {
+        "id": 30,
+        "name": "custom",
+        "group": "general"
+    },
+    {
+        "id": 31,
+        "name": "assert",
+        "group": "general"
+    },
+    {
+        "id": 32,
+        "name": "balance_claim",
+        "group": "general"
+    },
+    {
+        "id": 33,
+        "name": "override_transfer",
+        "group": "general"
+    },
+    {
+        "id": 34,
+        "name": "transfer_to_blind",
+        "group": "business"
+    },
+    {
+        "id": 35,
+        "name": "blind_transfer",
+        "group": "business"
+    },
+    {
+        "id": 36,
+        "name": "transfer_from_blind",
+        "group": "business"
+    },
+    {
+        "id": 37,
+        "name": "asset_settle_cancel",
+        "group": "general"
+    },
+    {
+        "id": 38,
+        "name": "asset_claim_fees",
+        "group": "asset"
+    },
+    {
+        "id": 39,
+        "name": "fba_distribute",
+        "group": "general"
+    },
+    {
+        "id": 40,
+        "name": "asset_claim_pool",
+        "group": "no_group"
+    },
+    {
+        "id": 41,
+        "name": "asset_update_issuer",
+        "group": "general"
+    },
+    {
+        "id": 42,
+        "name": "custom_authority_create",
+        "group": "no_group"
+    },
+    {
+        "id": 43,
+        "name": "custom_authority_update",
+        "group": "asset"
+    },
+    {
+        "id": 44,
+        "name": "custom_authority_delete",
+        "group": "asset"
+    },
+    {
+        "id": 45,
+        "name": "ticket_create",
+        "group": "market"
+    },
+    {
+        "id": 46,
+        "name": "ticket_update",
+        "group": "market"
+    },
+    {
+        "id": 47,
+        "name": "personal_data_create",
+        "group": "asset"
+    },
+    {
+        "id": 48,
+        "name": "personal_data_remove",
+        "group": "asset"
+    },
+    {
+        "id": 49,
+        "name": "content_card_create",
+        "group": "general"
+    },
+    {
+        "id": 50,
+        "name": "content_card_update",
+        "group": "general"
+    },
+    {
+        "id": 51,
+        "name": "content_card_remove",
+        "group": "no_group"
+    },
+    {
+        "id": 52,
+        "name": "permission_create",
+        "group": "general"
+    },
+    {
+        "id": 53,
+        "name": "permission_remove",
+        "group": "no_group"
+    }
+]

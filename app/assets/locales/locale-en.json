@@ -1116,7 +1116,57 @@
         }
     },
     "fees": {
-        "title": "Fee Schedule"
+        "title": "Fee Schedule",
+        "edit": "Edit",
+        "save": "Save changes",
+        "cancel": "Discard changes",
+        "clearing_house_participant_transfer_fee_tooltip": "Information about Clearing House Participant Transfer Fee",
+        "create_proposal": {
+            "button": "Create proposal",
+            "modal_title": "Create proposal"
+        }
+    },
+    "network_parameters": {
+        "name": "Name",
+        "description": "Description",
+        "value": "Value",
+        "new_value": "New value",
+        "filter_by_name": "Filter...",
+        "edit": "Edit",
+        "edit_fees": "Edit fees",
+        "edit_modal": {
+            "title": "Edit %(name)s parameter",
+            "value": "Value",
+            "new_value": "New value"
+        },
+        "list": {
+            "title": "Network parameters",
+            "add": "Add"
+        },
+        "add_new_parameter": {
+            "title": "Add new parameter",
+            "name": "Name",
+            "value": "Value"
+        },
+        "create_proposal": {
+            "button": "Create proposal",
+            "modal_title": "Create proposal",
+            "parameters_title": "Parameters to change",
+            "errors": {
+                "empty": "No parameters for saving"
+            }
+        }
+    },
+    "proposals": {
+        "title": "Proposals",
+        "id": "ID",
+        "review_period": "Review period",
+        "expiration_date": "Expiration date",
+        "vote": "Vote",
+        "revoke": "Revoke",
+        "parameters": {
+            "new": "New"
+        }
     },
     "footer": {
         "advanced_settings": "Advanced settings",
@@ -2640,7 +2690,20 @@
             "witness_create": "Create witness",
             "witness_update": "Update witness",
             "witness_withdraw_pay": "Witness pay withdrawal",
-            "worker_create": "Create worker"
+            "worker_create": "Create worker",
+            "content_card_create": "Content card create",
+            "content_card_update": "Content card update",
+            "content_card_remove": "Content card remove",
+            "permission_create": "Permission create",
+            "custom_authority_update": "Custom authority update",
+            "custom_authority_delete": "Custom authority delete",
+            "personal_data_create": "Custom data create",
+            "personal_data_remove": "Custom data remove",
+            "ticket_update": "Ticket update",
+            "custom_authority_create": "Custom authority create",
+            "permission_remove": "Permission remove",
+            "place_order": "Place order",
+            "cancel_order": "Cancel order"
         },
         "vesting_balance_create": "created vesting balance of",
         "view_json": "Show raw json",

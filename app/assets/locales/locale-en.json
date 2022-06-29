@@ -1554,7 +1554,6 @@
     "markets": {
         "base": "Base asset",
         "core_rate": "Core rate",
-        "filter": "Filter",
         "market_search": "Market Search",
         "preferred": "My Favorite Markets",
         "search": "Search",

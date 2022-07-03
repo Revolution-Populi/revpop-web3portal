@@ -17,7 +17,7 @@ import BalanceWrapper from "./BalanceWrapper";
 import AccountTreemap from "./AccountTreemap";
 import AssetWrapper from "../Utility/AssetWrapper";
 import AccountPortfolioList from "./AccountPortfolioList";
-import {Input, Icon, Switch, Tooltip, Button} from "bitshares-ui-style-guide";
+import {Switch, Tooltip, Button} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import SearchInput from "../Utility/SearchInput";
 

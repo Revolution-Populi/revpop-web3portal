@@ -1661,13 +1661,6 @@
             "takeScreenshot": "Show screenshot",
             "title": "Error report"
         },
-        "reserve": {
-            "amount": "Amount to burn",
-            "from": "Account to burn from",
-            "submit": "Burn",
-            "title": "Burn (reserve) asset",
-            "warning_message": "Note that asset burn (reserve) will destroy the amount of selected asset. This action can not be reverted once submitted!"
-        },
         "save": "save",
         "send": {
             "header": "Send from <span class=\"send-name\">%(fromName)s</span>",
@@ -1765,7 +1758,6 @@
         "asset_fund_fee_pool": "{account} funded {asset} fee pool with {amount}",
         "asset_global_settle": "{account} requested global settlement of {asset} at {price}",
         "asset_issue": "{account} issued {amount} to {to}",
-        "asset_reserve": "{account} burned (reserved) {amount}",
         "asset_settle": "{account} requested settlement of {amount}",
         "asset_settle_cancel": "{account} cancelled settlement of {amount}",
         "asset_settle_instant": "{account} settled {amount} instantly at {price}.",
@@ -1944,7 +1936,6 @@
         "approvers": "Approver(s)",
         "asset_create": "Create the asset %(asset)s using the account {account}",
         "asset_issue": "Issue {amount} to {to} using {account}",
-        "asset_reserve": "Burn (reserve) {amount} using {account}",
         "asset_settle": "Request a settlement of {amount} for {account}",
         "asset_update": "Update the asset {asset} using the account {account}",
         "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}",
@@ -2479,7 +2470,6 @@
     "transaction": {
         "amount_sell": "Amount to sell",
         "asset_claim_fees": "claimed asset fees of {balance_amount} from {asset} fee pool",
-        "asset_reserve": "burned asset amount",
         "at": "at",
         "balance_id": "Balance ID",
         "balance_owner": "Balance owner key",
@@ -2496,7 +2486,6 @@
         "broadcast_success": "Transaction has been broadcast",
         "broadcasting": "Broadcasting transaction..",
         "broadcasting_short": "Broadcasting..",
-        "burn_asset": "Burnt",
         "by": "by",
         "claimed": "Total claimed",
         "coll_maint": "Collateral maintenance ratio",
@@ -2582,7 +2571,6 @@
             "asset_global_settle": "Global asset settlement",
             "asset_issue": "Issue asset",
             "asset_publish_feed": "Publish feed",
-            "asset_reserve": "Burn asset",
             "asset_settle": "Asset settlement",
             "asset_settle_cancel": "Cancel asset settlement",
             "asset_update": "Update asset",

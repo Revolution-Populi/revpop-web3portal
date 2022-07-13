@@ -1375,6 +1375,7 @@
         "dashboard": "Portfolio",
         "deposit-withdraw": "Deposit/Withdraw",
         "deposit_legacy": "or Legacy Deposit",
+        "deposit": "Deposit",
         "exchange": "Exchange",
         "explorer": "Explore",
         "help": "Help",

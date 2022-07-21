@@ -1,0 +1,17 @@
+.deposit-page {
+    display: flex;
+    flex-direction: column;
+
+    .deposit-form {
+        border: 1px solid #4b5158;
+        border-radius: 6px;
+        padding: 2rem;
+    }
+
+    @include breakpoint(medium) {
+        div.deposit-form {
+            width: 450px;
+            margin-top: 2rem;
+        }
+    }
+}

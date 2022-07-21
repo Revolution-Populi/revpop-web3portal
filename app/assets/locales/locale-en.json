@@ -1118,6 +1118,16 @@
             "modal_title": "Create proposal"
         }
     },
+    "deposit": {
+        "title": "Deposit",
+        "amount": "Amount",
+        "hash": "Hash",
+        "timeout": "Timeout",
+        "metamask": "Deposit by Metamask",
+        "metamask_not_installed": "Metamask is not installed",
+        "metamask_not_connected": "Metamask is not connected",
+        "connect": "Connect"
+    },
     "network_parameters": {
         "name": "Name",
         "description": "Description",

@@ -516,11 +516,7 @@ class App extends React.Component {
                                     exact
                                     component={AccountDepositWithdraw}
                                 />
-                                <Route
-                                    path="/deposit"
-                                    exact
-                                    component={Deposit}
-                                />
+                                <Route path="/deposit" component={Deposit} />
                                 <Route
                                     path="/create-account"
                                     component={LoginSelector}

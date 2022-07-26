@@ -6,11 +6,20 @@
         border: 1px solid #4b5158;
         border-radius: 6px;
         padding: 2rem;
+
+        h4 {
+            margin: 0 0 1rem 0;
+        }
+
+        .htlc-created.asset-card {
+            margin: 0;
+            padding: 0 !important;
+        }
     }
 
     @include breakpoint(medium) {
         div.deposit-form {
-            width: 450px;
+            min-width: 450px;
             margin-top: 2rem;
         }
     }

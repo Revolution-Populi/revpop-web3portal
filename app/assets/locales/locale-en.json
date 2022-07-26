@@ -1119,14 +1119,18 @@
         }
     },
     "deposit": {
-        "title": "Deposit",
+        "title": "New deposit",
+        "sub_title": "or current deposit",
+        "new": "New deposit",
         "amount": "Amount",
+        "txHash": "Transaction hash",
         "hash": "Hash",
         "timeout": "Timeout",
         "metamask": "Deposit by Metamask",
         "metamask_not_installed": "Metamask is not installed",
         "metamask_not_connected": "Metamask is not connected",
-        "connect": "Connect"
+        "connect": "Connect",
+        "html_created": "HTLC contract created"
     },
     "network_parameters": {
         "name": "Name",

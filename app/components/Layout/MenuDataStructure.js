@@ -218,13 +218,17 @@ class MenuDataStructure {
                 text: "header.payments",
                 inDropdownBehavior: MenuItemType.WhenAccount
             }),
-            deposit: state => ({
-                target: "/deposit",
+            deposit: () => ({
+                target: "/deposit/new",
                 icon: {
                     name: "deposit",
                     title: "icons.deposit.deposit"
                 },
-                text: "header.deposit",
+                submenu: {
+                    target: "/deposit",
+                    text: "deposit.sub_title"
+                },
+                text: "deposit.title",
                 inDropdownBehavior: MenuItemType.WhenAccount
             }),
             withdraw: state => ({
@@ -236,7 +240,7 @@ class MenuDataStructure {
                     text: "header.withdraw_legacy",
                     disabled: !state.enableDepositWithdraw
                 },
-                disabled: !state.enableDepositWithdraw,
+                disabled: false,
                 inDropdownBehavior: MenuItemType.WhenAccount
             }),
             deposit_withdraw: state => ({

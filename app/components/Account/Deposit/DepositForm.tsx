@@ -4,17 +4,16 @@ import Web3 from "web3";
 import Translate from "react-translate-component";
 // @ts-ignore
 import counterpart from "counterpart";
-// @ts-ignore
 import {
     Form,
     Input,
     InputNumber,
     Button,
     DatePicker
+    // @ts-ignore
 } from "bitshares-ui-style-guide";
-import {provider} from "web3-core";
-import contractAbi from "../../../assets/abi/HashedTimelock.json";
 import moment, {Moment} from "moment";
+import {MakeDeposit, makeDepositHandler} from "../../../Context/Deposit";
 
 const formItemLayout = {
     labelCol: {
@@ -31,36 +30,37 @@ function disabledDate(current: Moment) {
 
 interface Props {
     from: string;
+    onConfirmed: (
+        txHash: string,
+        amount: number,
+        hashLock: string,
+        timeout: Moment
+    ) => void;
 }
 
-export default function DepositForm({from}: Props) {
-    const [amount, setAmount] = useState(0.1);
+//TODO:: add validation to the fields
+export default function DepositForm({from, onConfirmed}: Props) {
+    const [amount, setAmount] = useState(0.01);
     const [hash, setHash] = useState(Web3.utils.randomHex(32));
-    const [timeout, setTimeout] = useState(1);
+    const [timeout, setTimeout] = useState<Moment>(moment().add("1", "days"));
 
     async function handleSubmit(event: SubmitEvent) {
         event.preventDefault();
 
-        // @ts-ignore
-        const web3 = new Web3(window.ethereum);
+        const command = new MakeDeposit(
+            "metamask",
+            from,
+            Web3.utils.toWei(amount.toString()),
+            hash,
+            timeout.unix()
+        );
+        const result = await makeDepositHandler.execute(command);
 
-        const contractAddress = "0x8509C2c215373e7dA48bcB2745AEDA6BC9096144";
-        const receiver = "0x9B1EaAe87cC3A041c4CEf02386109D6aCE4E198E";
-
-        //@ts-ignore
-        const contract = new web3.eth.Contract(contractAbi, contractAddress);
-
-        contract.methods.newContract(receiver, hash, timeout).send({
-            from: from,
-            value: Web3.utils.toWei(amount.toString())
-        });
-        // .on("transactionHash", (hash: string) => {
-        //     console.log(hash);
-        // }).on("confirmation", (confirmationNumber: number, receipt: any) => {
-        //     console.log(confirmationNumber);
-        // }).on("error", function(error: any, receipt: any) {
-        //     console.log(error);
-        // });
+        if (result.isSuccess()) {
+            onConfirmed(result.txHash, amount, hash, timeout);
+        } else {
+            // TODO::show error
+        }
     }
 
     function onChangeAmountHandler(amount: number) {
@@ -68,7 +68,7 @@ export default function DepositForm({from}: Props) {
     }
 
     function onChangeTimeoutHandler(timeout: Moment) {
-        setTimeout(timeout.unix());
+        setTimeout(timeout);
     }
 
     return (
@@ -80,7 +80,7 @@ export default function DepositForm({from}: Props) {
                 <InputNumber
                     defaultValue={amount}
                     min={0}
-                    step={0.1}
+                    step={0.01}
                     formatter={(value: number) => `${value} ETH`}
                     onChange={onChangeAmountHandler}
                 />
@@ -96,6 +96,7 @@ export default function DepositForm({from}: Props) {
                     }}
                     onChange={onChangeTimeoutHandler}
                     disabledDate={disabledDate}
+                    defaultValue={timeout}
                 />
             </Form.Item>
             <Form.Item wrapperCol={{span: 12, offset: 4}}>

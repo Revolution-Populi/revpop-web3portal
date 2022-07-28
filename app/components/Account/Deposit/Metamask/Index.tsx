@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import DepositForm from "../DepositForm";
+import DepositForm from "../Form/Index";
 // @ts-ignore
 import Translate from "react-translate-component";
 import {Moment} from "moment";

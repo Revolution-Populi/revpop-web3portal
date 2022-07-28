@@ -1,0 +1,47 @@
+.network-parameters-proposals {
+    .actions {
+        display: flex;
+        justify-content: right;
+        margin-bottom: 12px;
+
+        .reset {
+            margin-left: 8px;
+        }
+    }
+
+    .list {
+        .ant-table-row {
+            &.unsupported {
+                color: grey;
+            }
+
+            .row-actions {
+                text-align: right;
+            }
+        }
+
+        .ant-table-expanded-row {
+            background-color: #262626;
+
+            &:hover {
+                background-color: #262626;
+            }
+
+            .parameters-list {
+                font-size: 14px;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                .new-value {
+                    margin-left: 5px;
+                    color: #7ed321;
+                }
+
+                .old-value {
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+}

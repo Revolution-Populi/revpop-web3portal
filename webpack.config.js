@@ -109,10 +109,8 @@ module.exports = function(env) {
             ]
         }),
         new webpack.ProvidePlugin({
+            process: "process",
             Buffer: ["buffer", "Buffer"]
-        }),
-        new webpack.ProvidePlugin({
-            process: ["process", "process"]
         })
     ];
     if (env.prod) {
@@ -315,6 +313,11 @@ module.exports = function(env) {
                     use: "null-loader"
                 },
                 {
+                    test: /\.(ts|tsx)$/,
+                    use: "ts-loader",
+                    exclude: /node_modules/
+                },
+                {
                     test: /\.jsx$/,
                     include: [
                         path.join(root_dir, "app"),
@@ -459,7 +462,7 @@ module.exports = function(env) {
                 path.resolve(root_dir, "app/lib"),
                 "node_modules"
             ],
-            extensions: [".js", ".jsx", ".coffee", ".json"],
+            extensions: [".ts", ".tsx", ".js", ".jsx", ".coffee", ".json"],
             mainFields: ["module", "jsnext:main", "browser", "main"],
             alias: alias,
             fallback: {
@@ -467,7 +470,11 @@ module.exports = function(env) {
                 constants: require.resolve("constants-browserify"),
                 stream: require.resolve("stream-browserify"),
                 path: require.resolve("path-browserify"),
-                buffer: require.resolve("buffer")
+                buffer: require.resolve("buffer"),
+                http: require.resolve("stream-http"),
+                https: require.resolve("https-browserify"),
+                os: require.resolve("os-browserify"),
+                url: require.resolve("url")
             }
         },
         plugins: plugins

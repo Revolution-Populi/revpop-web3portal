@@ -1,19 +1,22 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Web3 from "web3";
+// @ts-ignore
+import {connect} from "alt-react";
 // @ts-ignore
 import Translate from "react-translate-component";
 // @ts-ignore
 import counterpart from "counterpart";
-import {
-    Form,
-    Input,
-    InputNumber,
-    Button,
-    DatePicker
-    // @ts-ignore
-} from "bitshares-ui-style-guide";
+// @ts-ignore
+import {Form, Button, DatePicker} from "bitshares-ui-style-guide";
 import moment, {Moment} from "moment";
-import {MakeDeposit, makeDepositHandler} from "../../../Context/Deposit";
+import {Map} from "immutable";
+// @ts-ignore
+import {ChainStore} from "@revolutionpopuli/revpopjs";
+import AccountSelector from "../../AccountSelector";
+import AccountStore from "../../../../stores/AccountStore";
+import {MakeDeposit, makeDepositHandler} from "../../../../Context/Deposit";
+import HashLockField from "./HashLockField";
+import AmountField from "./AmountField";
 
 const formItemLayout = {
     labelCol: {
@@ -30,6 +33,7 @@ function disabledDate(current: Moment) {
 
 interface Props {
     from: string;
+    selectedAccountName: string;
     onConfirmed: (
         txHash: string,
         amount: number,
@@ -39,10 +43,16 @@ interface Props {
 }
 
 //TODO:: add validation to the fields
-export default function DepositForm({from, onConfirmed}: Props) {
+function DepositForm({from, onConfirmed, selectedAccountName}: Props) {
+    const [accountName, setAccountName] = useState<string>(selectedAccountName);
+    const [account, setAccount] = useState<Map<string, any>>();
     const [amount, setAmount] = useState(0.01);
-    const [hash, setHash] = useState(Web3.utils.randomHex(32));
+    const [hashLock, setHashLock] = useState<string>("");
     const [timeout, setTimeout] = useState<Moment>(moment().add("1", "days"));
+
+    useEffect(() => {
+        setAccount(ChainStore.getAccount(accountName));
+    }, [accountName]);
 
     async function handleSubmit(event: SubmitEvent) {
         event.preventDefault();
@@ -50,17 +60,22 @@ export default function DepositForm({from, onConfirmed}: Props) {
         const command = new MakeDeposit(
             "metamask",
             from,
+            accountName,
             Web3.utils.toWei(amount.toString()),
-            hash,
+            hashLock,
             timeout.unix()
         );
         const result = await makeDepositHandler.execute(command);
 
         if (result.isSuccess()) {
-            onConfirmed(result.txHash, amount, hash, timeout);
+            onConfirmed(result.txHash, amount, hashLock, timeout);
         } else {
             // TODO::show error
         }
+    }
+
+    function onAccountChangedHandler(account: any) {
+        setAccountName(account.get("name"));
     }
 
     function onChangeAmountHandler(amount: number) {
@@ -71,23 +86,32 @@ export default function DepositForm({from, onConfirmed}: Props) {
         setTimeout(timeout);
     }
 
+    function onChangeHashLockHandler(hashLock: string) {
+        setHashLock(hashLock);
+    }
+
+    if (!account) {
+        return <></>;
+    }
+
     return (
         <Form {...formItemLayout} onSubmit={handleSubmit}>
             <div className="text-center">
                 <Translate content="deposit.title" component="h4" />
             </div>
-            <Form.Item label="Amount">
-                <InputNumber
-                    defaultValue={amount}
-                    min={0}
-                    step={0.01}
-                    formatter={(value: number) => `${value} ETH`}
-                    onChange={onChangeAmountHandler}
-                />
-            </Form.Item>
-            <Form.Item label={counterpart.translate("deposit.hash")}>
-                <Input defaultValue={hash} />
-            </Form.Item>
+            <AccountSelector
+                label="deposit.account"
+                accountName={account.get("name")}
+                account={account}
+                typeahead={true}
+                locked={true}
+                onAccountChanged={onAccountChangedHandler}
+            />
+            <AmountField amount={amount} onChange={onChangeAmountHandler} />
+            <HashLockField
+                hashLock={hashLock}
+                onChange={onChangeHashLockHandler}
+            />
             <Form.Item label={counterpart.translate("deposit.timeout")}>
                 <DatePicker
                     showTime={{
@@ -107,3 +131,14 @@ export default function DepositForm({from, onConfirmed}: Props) {
         </Form>
     );
 }
+
+export default connect(DepositForm, {
+    listenTo() {
+        return [AccountStore];
+    },
+    getProps(props: any) {
+        return {
+            selectedAccountName: AccountStore.getState().currentAccount
+        };
+    }
+});

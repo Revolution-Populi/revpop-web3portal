@@ -4,6 +4,7 @@ export default class MakeDeposit {
     constructor(
         private _blockchainType: BlockchainType,
         private _fromAddress: string,
+        private _toAccount: string,
         private _amount: string,
         private _hash: string,
         private _timeout: number
@@ -15,6 +16,10 @@ export default class MakeDeposit {
 
     get fromAddress(): string {
         return this._fromAddress;
+    }
+
+    get toAccount(): string {
+        return this._toAccount;
     }
 
     get amount(): string {

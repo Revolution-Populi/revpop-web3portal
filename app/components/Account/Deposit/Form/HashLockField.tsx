@@ -10,7 +10,7 @@ interface Props {
     onChange: (hashLock: string) => void;
 }
 
-function HashLockField({form, hashLock, onChange}: Props) {
+export default function HashLockField({form, hashLock, onChange}: Props) {
     const {getFieldDecorator} = form;
 
     function onChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
@@ -36,5 +36,3 @@ function HashLockField({form, hashLock, onChange}: Props) {
         </Form.Item>
     );
 }
-
-export default Form.create({name: "hashLockField"})(HashLockField);

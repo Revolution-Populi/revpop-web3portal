@@ -32,6 +32,7 @@ function disabledDate(current: Moment) {
 }
 
 interface Props {
+    form: any;
     from: string;
     selectedAccountName: string;
     onConfirmed: (
@@ -43,7 +44,7 @@ interface Props {
 }
 
 //TODO:: add validation to the fields
-function DepositForm({from, onConfirmed, selectedAccountName}: Props) {
+function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
     const [accountName, setAccountName] = useState<string>(selectedAccountName);
     const [account, setAccount] = useState<Map<string, any>>();
     const [amount, setAmount] = useState(0.01);
@@ -56,6 +57,18 @@ function DepositForm({from, onConfirmed, selectedAccountName}: Props) {
 
     async function handleSubmit(event: SubmitEvent) {
         event.preventDefault();
+
+        let errors = false;
+
+        form.validateFieldsAndScroll((error: any, values: any) => {
+            if (error) {
+                errors = true;
+            }
+        });
+
+        if (errors) {
+            return;
+        }
 
         const command = new MakeDeposit(
             "metamask",
@@ -107,8 +120,13 @@ function DepositForm({from, onConfirmed, selectedAccountName}: Props) {
                 locked={true}
                 onAccountChanged={onAccountChangedHandler}
             />
-            <AmountField amount={amount} onChange={onChangeAmountHandler} />
+            <AmountField
+                form={form}
+                amount={amount}
+                onChange={onChangeAmountHandler}
+            />
             <HashLockField
+                form={form}
                 hashLock={hashLock}
                 onChange={onChangeHashLockHandler}
             />
@@ -132,7 +150,9 @@ function DepositForm({from, onConfirmed, selectedAccountName}: Props) {
     );
 }
 
-export default connect(DepositForm, {
+const DepositFormWrapped = Form.create({name: "amountField"})(DepositForm);
+
+export default connect(DepositFormWrapped, {
     listenTo() {
         return [AccountStore];
     },

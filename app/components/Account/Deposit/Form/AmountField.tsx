@@ -6,11 +6,11 @@ import {Form, InputNumber} from "bitshares-ui-style-guide";
 
 interface Props {
     form: any;
-    amount: string;
+    amount: number;
     onChange: (amount: number) => void;
 }
 
-function AmountField({form, amount, onChange}: Props) {
+export default function AmountField({form, amount, onChange}: Props) {
     const {getFieldDecorator} = form;
 
     function onChangeHandler(amount: number) {
@@ -38,5 +38,3 @@ function AmountField({form, amount, onChange}: Props) {
         </Form.Item>
     );
 }
-
-export default Form.create({name: "amountField"})(AmountField);

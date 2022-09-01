@@ -1,4 +1,5 @@
 import Web3 from "web3";
+import {AbiItem} from "web3-utils";
 import ProviderInterface from "./ProviderInterface";
 import CreateHtlcResponse from "./CreateHtlcResponse";
 import {provider} from "web3-core";
@@ -12,8 +13,10 @@ export default class Web3Provider implements ProviderInterface {
         const contractAddress = "0x8509C2c215373e7dA48bcB2745AEDA6BC9096144";
         const receiver = "0x9B1EaAe87cC3A041c4CEf02386109D6aCE4E198E";
 
-        //@ts-ignore
-        const contract = new web3.eth.Contract(contractAbi, contractAddress);
+        const contract = new web3.eth.Contract(
+            contractAbi as AbiItem[],
+            contractAddress
+        );
 
         return new Promise((resolve, reject) => {
             contract.methods

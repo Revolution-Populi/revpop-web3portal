@@ -1,11 +1,10 @@
 import React from "react";
-// @ts-ignore
-import counterpart from "counterpart";
-// @ts-ignore
 import {Route, Switch, useRouteMatch} from "react-router-dom";
 import HelpContent from "../../Utility/HelpContent";
 import Deposits from "./List/Index";
-import Metamask from "./Metamask/Index";
+import Selector from "./Methods/Selector";
+import Method from "./Methods/Index";
+import Redeem from "./Redeem/Index";
 
 export default function Index() {
     const {path} = useRouteMatch();
@@ -21,10 +20,24 @@ export default function Index() {
                     <Route path={`${path}`} exact>
                         <Deposits />
                     </Route>
+                    <Route path={`${path}/redeem`} exact>
+                        <div className="grid-block align-center">
+                            <div className="deposit-form">
+                                <Redeem />
+                            </div>
+                        </div>
+                    </Route>
                     <Route path={`${path}/new`} exact>
                         <div className="grid-block align-center">
                             <div className="deposit-form">
-                                <Metamask />
+                                <Selector />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path={`${path}/new/:type`} exact>
+                        <div className="grid-block align-center">
+                            <div className="deposit-form">
+                                <Method />
                             </div>
                         </div>
                     </Route>

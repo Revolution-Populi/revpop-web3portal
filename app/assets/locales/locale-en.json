@@ -1131,7 +1131,17 @@
         "metamask_not_installed": "Metamask is not installed",
         "metamask_not_connected": "Metamask is not connected",
         "connect": "Connect",
-        "html_created": "HTLC contract created"
+        "html_created": "HTLC contract created",
+        "selector": {
+            "title": "Select deposit method",
+            "metamask": "Metamask",
+            "manually": "Manually"
+        },
+        "manually": {},
+        "redeem": {
+            "title": "Redeem",
+            "secret": "Secret"
+        }
     },
     "network_parameters": {
         "name": "Name",

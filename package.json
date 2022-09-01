@@ -237,7 +237,7 @@
         "@types/lodash": "^4.14.182",
         "@types/mocha": "^9.1.0",
         "@types/react-dom": "^17.0.13",
-        "@types/sinon": "^10.0.11",
+        "@types/react-router-dom": "^5.3.3",
         "@typescript-eslint/eslint-plugin": "^5.22.0",
         "@typescript-eslint/parser": "^5.22.0",
         "archiver": "^3.0.0",

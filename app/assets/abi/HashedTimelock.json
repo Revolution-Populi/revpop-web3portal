@@ -69,85 +69,38 @@
         "type": "event"
     },
     {
-        "constant": false,
+        "anonymous": false,
         "inputs": [
             {
-                "internalType": "address payable",
-                "name": "_receiver",
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
                 "type": "address"
             },
             {
-                "internalType": "bytes32",
-                "name": "_hashlock",
-                "type": "bytes32"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_timelock",
-                "type": "uint256"
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
             }
         ],
-        "name": "newContract",
-        "outputs": [
-            {
-                "internalType": "bytes32",
-                "name": "contractId",
-                "type": "bytes32"
-            }
-        ],
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "function"
+        "name": "OwnershipTransferred",
+        "type": "event"
     },
     {
-        "constant": false,
         "inputs": [
             {
-                "internalType": "bytes32",
-                "name": "_contractId",
-                "type": "bytes32"
+                "internalType": "address payable",
+                "name": "account",
+                "type": "address"
             }
         ],
-        "name": "refund",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
+        "name": "collectFee",
+        "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
-        "inputs": [
-            {
-                "internalType": "bytes32",
-                "name": "_contractId",
-                "type": "bytes32"
-            },
-            {
-                "internalType": "bytes32",
-                "name": "_preimage",
-                "type": "bytes32"
-            }
-        ],
-        "name": "withdraw",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "bytes32",
@@ -198,8 +151,164 @@
                 "type": "bytes32"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getFee",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getFreeAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address payable",
+                "name": "_receiver",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "_hashlock",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_timelock",
+                "type": "uint256"
+            }
+        ],
+        "name": "newContract",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "contractId",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bytes32",
+                "name": "_contractId",
+                "type": "bytes32"
+            }
+        ],
+        "name": "refund",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "setFee",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }
+        ],
+        "name": "setFreeAddress",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bytes32",
+                "name": "_contractId",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "_preimage",
+                "type": "bytes32"
+            }
+        ],
+        "name": "withdraw",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "nonpayable",
         "type": "function"
     }
 ]

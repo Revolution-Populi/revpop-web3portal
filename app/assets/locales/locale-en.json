@@ -1138,6 +1138,11 @@
             "manually": "Manually"
         },
         "manually": {},
+        "send_tx_hash": {
+            "title": "Send transaction hash",
+            "tx_hash": "Transaction hash",
+            "submit": "Send"
+        },
         "redeem": {
             "title": "Redeem",
             "secret": "Secret"

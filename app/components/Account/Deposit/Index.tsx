@@ -5,6 +5,7 @@ import Deposits from "./List/Index";
 import Selector from "./Methods/Selector";
 import Method from "./Methods/Index";
 import Redeem from "./Redeem/Index";
+import SendTxHashWrapped from "./Methods/Manually/SendTxHash";
 
 export default function Index() {
     const {path} = useRouteMatch();
@@ -31,6 +32,13 @@ export default function Index() {
                         <div className="grid-block align-center">
                             <div className="deposit-form">
                                 <Selector />
+                            </div>
+                        </div>
+                    </Route>
+                    <Route path={`${path}/new/send_tx_hash`} exact>
+                        <div className="grid-block align-center">
+                            <div className="deposit-form">
+                                <SendTxHashWrapped />
                             </div>
                         </div>
                     </Route>

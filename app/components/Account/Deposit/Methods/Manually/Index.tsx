@@ -1,6 +1,7 @@
 import React from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
+import {Link, useRouteMatch} from "react-router-dom";
 import Abi from "../../../../../assets/abi/HashedTimelock.json";
 import SecretHash from "./SecretHash";
 import Timelock from "./Timelock";
@@ -12,6 +13,9 @@ export default function Index() {
         event.preventDefault();
         await window.navigator.clipboard.writeText(JSON.stringify(Abi));
     }
+
+    const {url, path} = useRouteMatch();
+    console.log(url, path);
 
     return (
         <>
@@ -108,6 +112,23 @@ export default function Index() {
                             <Timelock />
                         </li>
                     </ul>
+                </li>
+                <li>Click &quot;Write&quot;</li>
+                <li>
+                    &quot;Transaction Confirmation&quot; window will be shown.
+                    Check all information.
+                </li>
+                <li>The click &quot;Confirm & Send&quot;</li>
+                <li>
+                    After transaction will be completed open &quot;View on
+                    Etherscan&quot; link
+                </li>
+                <li>Copy &quot;Transaction Hash&quot; field</li>
+                <li>
+                    Send transaction hash from this page:{" "}
+                    <Link to="/deposit/new/send_tx_hash">
+                        Send transaction hash
+                    </Link>
                 </li>
             </ul>
         </>

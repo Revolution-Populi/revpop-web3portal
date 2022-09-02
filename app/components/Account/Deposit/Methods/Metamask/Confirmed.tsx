@@ -37,7 +37,7 @@ export default function Confirmed({htlc}: Props) {
                         <td>
                             <Translate content="deposit.timeout" />
                         </td>
-                        <td>{htlc.timeout.format("lll")}</td>
+                        <td>{htlc.timeout?.format("lll")}</td>
                     </tr>
                 </tbody>
             </table>

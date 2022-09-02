@@ -6,11 +6,28 @@
 
     &__type {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 150px;
         height: 150px;
         border: 1px solid #4b5158;
         border-radius: 6px;
+        color: #e0e0e0 !important;
+
+        .icon {
+            width: 100px;
+            height: 100px;
+
+            svg {
+                width: 100px;
+                height: 100px;
+
+                path {
+                    fill: transparent !important;
+                    stroke: #e0e0e0;
+                }
+            }
+        }
     }
 }

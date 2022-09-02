@@ -1554,7 +1554,6 @@
     "markets": {
         "base": "Base asset",
         "core_rate": "Core rate",
-        "filter": "Filter",
         "market_search": "Market Search",
         "preferred": "My Favorite Markets",
         "search": "Search",
@@ -1661,13 +1660,6 @@
             "takeScreenshot": "Show screenshot",
             "title": "Error report"
         },
-        "reserve": {
-            "amount": "Amount to burn",
-            "from": "Account to burn from",
-            "submit": "Burn",
-            "title": "Burn (reserve) asset",
-            "warning_message": "Note that asset burn (reserve) will destroy the amount of selected asset. This action can not be reverted once submitted!"
-        },
         "save": "save",
         "send": {
             "header": "Send from <span class=\"send-name\">%(fromName)s</span>",
@@ -1765,7 +1757,6 @@
         "asset_fund_fee_pool": "{account} funded {asset} fee pool with {amount}",
         "asset_global_settle": "{account} requested global settlement of {asset} at {price}",
         "asset_issue": "{account} issued {amount} to {to}",
-        "asset_reserve": "{account} burned (reserved) {amount}",
         "asset_settle": "{account} requested settlement of {amount}",
         "asset_settle_cancel": "{account} cancelled settlement of {amount}",
         "asset_settle_instant": "{account} settled {amount} instantly at {price}.",
@@ -1944,7 +1935,6 @@
         "approvers": "Approver(s)",
         "asset_create": "Create the asset %(asset)s using the account {account}",
         "asset_issue": "Issue {amount} to {to} using {account}",
-        "asset_reserve": "Burn (reserve) {amount} using {account}",
         "asset_settle": "Request a settlement of {amount} for {account}",
         "asset_update": "Update the asset {asset} using the account {account}",
         "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}",
@@ -2010,36 +2000,6 @@
         "claim_refcode": "Claim Referral Code",
         "enter_refcode": "Enter referral code",
         "refcode_optional": "Referral Code (optional)"
-    },
-    "registration": {
-        "accountConfirmation": "I have written down or otherwise stored my username and password.",
-        "accountDescription": "Please keep your password in a safe place. Don’t share it with any third-parties or send it online.",
-        "accountLoginByValue": "Account name + Password",
-        "accountModelTitle": "By Account Name<span class=\"hide-text-for-small\"> and Password</span>",
-        "accountNote": "If you forget your passphrase you will be unable to access your account and your funds. We cannot reset or restore your password! Memorize or write down your username and password!",
-        "attention": "Attention",
-        "backUpRestoreKey": "Back up and restore Account",
-        "checkboxRecover": "I understand that no one can recover my password or .bin file if I forget or lose it.",
-        "checkboxRemember": "I have memorized or otherwise stored my password and I safely kept downloaded .bin file.",
-        "checkboxUploaded": "I understand that .bin file must be used during the login process and without .bin file I will lose access to my funds.",
-        "continue": "Continue",
-        "copyPassword": "Copy password",
-        "createAccountTitle": "Create Account by .bin-file",
-        "createByPassword": "Create Account by Name and Password",
-        "downloadFile": "Download file",
-        "loginByKey": "Login by",
-        "passwordPlaceholder": "Minimum 7 characters",
-        "recommended": "recommended",
-        "securityAccountModel": "Medium",
-        "securityKey": "Security",
-        "securityWalletModel": "High",
-        "select": "Select",
-        "title": "Registration",
-        "walletDescription": "A bin-file will be automatically created. Please download it and keep in a safe place. You’ll need to upload this file to login to your account in the future.",
-        "walletLoginByValue": "Bin-file + Password",
-        "walletModelTitle": "By bin-file",
-        "walletNote": "Please keep in mind, that RevPop doesn't store users passwords and couldn't recover users accounts after password loss.",
-        "whyBinFile": "Why do I need a .bin file?"
     },
     "scaled_orders": {
         "action": {
@@ -2479,7 +2439,6 @@
     "transaction": {
         "amount_sell": "Amount to sell",
         "asset_claim_fees": "claimed asset fees of {balance_amount} from {asset} fee pool",
-        "asset_reserve": "burned asset amount",
         "at": "at",
         "balance_id": "Balance ID",
         "balance_owner": "Balance owner key",
@@ -2496,7 +2455,6 @@
         "broadcast_success": "Transaction has been broadcast",
         "broadcasting": "Broadcasting transaction..",
         "broadcasting_short": "Broadcasting..",
-        "burn_asset": "Burnt",
         "by": "by",
         "claimed": "Total claimed",
         "coll_maint": "Collateral maintenance ratio",
@@ -2582,7 +2540,6 @@
             "asset_global_settle": "Global asset settlement",
             "asset_issue": "Issue asset",
             "asset_publish_feed": "Publish feed",
-            "asset_reserve": "Burn asset",
             "asset_settle": "Asset settlement",
             "asset_settle_cancel": "Cancel asset settlement",
             "asset_update": "Update asset",

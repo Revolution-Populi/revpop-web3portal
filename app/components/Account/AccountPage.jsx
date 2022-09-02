@@ -7,7 +7,7 @@ import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import {connect} from "alt-react";
 import accountUtils from "common/account_utils";
-import {List, Set} from "immutable";
+import {List} from "immutable";
 import Page404 from "../Page404/Page404";
 import {Route, Switch, Redirect} from "react-router-dom";
 

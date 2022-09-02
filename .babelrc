@@ -1,11 +1,11 @@
 {
     "presets": [
         ["@babel/preset-env", { "modules": false,"targets": { "node": "current"} }],
-        ["@babel/preset-react",{ "targets": { "node": "current"}}]
+        ["@babel/preset-react", { "targets": { "node": "current"}}]
     ],
     "plugins": [
-      "react-hot-loader/babel",
-      "lodash"
+        "react-hot-loader/babel",
+        "lodash"
     ],
     "env": {
         "test": {

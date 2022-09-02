@@ -1134,40 +1134,6 @@ class Transaction extends React.Component {
 
                     break;
 
-                case "asset_burn":
-                    color = "cancel";
-
-                    rows.push(
-                        <tr key={key++}>
-                            <td>
-                                <Translate
-                                    component="span"
-                                    content="explorer.account.title"
-                                />
-                            </td>
-                            <td>{this.linkToAccount(op[1].payer)}</td>
-                        </tr>
-                    );
-
-                    rows.push(
-                        <tr key={key++}>
-                            <td>
-                                <Translate
-                                    component="span"
-                                    content="transfer.amount"
-                                />
-                            </td>
-                            <td>
-                                <FormattedAsset
-                                    amount={op[1].amount_to_burn.amount}
-                                    asset={op[1].amount_to_burn.asset_id}
-                                />
-                            </td>
-                        </tr>
-                    );
-
-                    break;
-
                 case "asset_fund_fee_pool":
                     color = "warning";
                     rows.push(

@@ -6,7 +6,6 @@ import WalletDb from "stores/WalletDb";
 import {ChainStore} from "@revolutionpopuli/revpopjs";
 import big from "bignumber.js";
 import {gatewayPrefixes} from "common/gateways";
-import {price} from "@revolutionpopuli/revpopjs/es/serializer/src/operations";
 let inProgress = {};
 
 class AssetActions {
@@ -614,34 +613,6 @@ class AssetActions {
                 }, 200);
             };
         }
-    }
-
-    reserveAsset(amount, assetId, payer) {
-        var tr = WalletApi.new_transaction();
-        tr.add_type_operation("asset_reserve", {
-            fee: {
-                amount: 0,
-                asset_id: 0
-            },
-            amount_to_reserve: {
-                amount: amount,
-                asset_id: assetId
-            },
-            payer,
-            extensions: []
-        });
-        return dispatch => {
-            return WalletDb.process_transaction(tr, null, true)
-                .then(() => {
-                    dispatch(true);
-                    return true;
-                })
-                .catch(error => {
-                    dispatch(false);
-                    console.log("----- reserveAsset error ----->", error);
-                    return false;
-                });
-        };
     }
 }
 

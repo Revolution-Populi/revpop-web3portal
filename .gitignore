@@ -19,7 +19,8 @@ app/bower_components
 app/bundle
 app/stats-dev.json
 app/stats-prod.json
-app/test/MarketClasses.js
+benchmark/lib
+benchmark/branding.js
 
 charting_library/*
 !charting_library/scss

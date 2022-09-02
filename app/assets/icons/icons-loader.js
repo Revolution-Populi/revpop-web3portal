@@ -75,7 +75,8 @@ let icons = [
     "create_account",
     "swap",
     "instant-trade",
-    "edit"
+    "edit",
+    "metamask"
 ];
 
 let iconsMap = {};

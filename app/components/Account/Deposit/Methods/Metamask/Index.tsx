@@ -7,20 +7,14 @@ import Confirmed from "./Confirmed";
 
 export interface HTLC {
     txHash: string;
-    amount: number;
+    amount: number | null;
     hashLock: string;
-    timeout: Moment;
+    timeout: Moment | null;
 }
 
 export default function Index() {
     const [installed, setInstalled] = useState(true);
     const [connected, setConnected] = useState(false);
-    // const [htlc, setHTLC] = useState<HTLC | null>({
-    //     txHash: "0x2688395bbe1e77021d9afa3e447af4ed01f130d266225896c28176d7d470c9c9",
-    //     amount: 0.01,
-    //     hashLock: "0x8ce85caf71efc05aaab671c4d8c09c307d0c45a49749777f96d0bd334dafd97f",
-    //     timeout: moment()
-    // });
     const [htlc, setHTLC] = useState<HTLC | null>(null);
     const [currentAddress, setCurrentAddress] = useState("");
 

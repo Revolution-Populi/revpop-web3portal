@@ -1141,6 +1141,7 @@
         "send_tx_hash": {
             "title": "Send transaction hash",
             "tx_hash": "Transaction hash",
+            "hash_lock": "HashLock",
             "submit": "Send"
         },
         "redeem": {

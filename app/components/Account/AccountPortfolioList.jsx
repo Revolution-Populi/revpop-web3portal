@@ -16,7 +16,7 @@ import {getFinalPrice} from "../Utility/EquivalentPrice";
 import LinkToAssetById from "../Utility/LinkToAssetById";
 import BorrowModal from "../Modal/BorrowModal";
 import ReactTooltip from "react-tooltip";
-import {getBackedCoin, getAssetAndGateway} from "common/gatewayUtils";
+import {getBackedCoin} from "common/gatewayUtils";
 import {ChainStore} from "@revolutionpopuli/revpopjs";
 import {connect} from "alt-react";
 import SettingsStore from "stores/SettingsStore";
@@ -31,8 +31,6 @@ import SettleModal from "../Modal/SettleModal";
 import DepositModal from "../Modal/DepositModal";
 import SimpleDepositBlocktradesBridge from "../Dashboard/SimpleDepositBlocktradesBridge";
 import WithdrawModal from "../Modal/WithdrawModalNew";
-import ZfApi from "react-foundation-apps/src/utils/foundation-api";
-import ReserveAssetModal from "../Modal/ReserveAssetModal";
 import CustomTable from "../Utility/CustomTable";
 import {Tooltip, Icon as AntIcon} from "bitshares-ui-style-guide";
 import Translate from "react-translate-component";
@@ -50,13 +48,11 @@ class AccountPortfolioList extends React.Component {
             isBorrowModalVisible: false,
             isDepositModalVisible: false,
             isWithdrawModalVisible: false,
-            isBurnModalVisible: false,
             isBridgeModalVisibleBefore: false,
             isSettleModalVisibleBefore: false,
             isBorrowModalVisibleBefore: false,
             isDepositModalVisibleBefore: false,
             isWithdrawModalVisibleBefore: false,
-            isBurnModalVisibleBefore: false,
             borrow: null,
             settleAsset: "1.3.0",
             depositAsset: null,
@@ -87,9 +83,6 @@ class AccountPortfolioList extends React.Component {
 
         this.showBorrowModal = this.showBorrowModal.bind(this);
         this.hideBorrowModal = this.hideBorrowModal.bind(this);
-
-        this.showBurnModal = this.showBurnModal.bind(this);
-        this.hideBurnModal = this.hideBurnModal.bind(this);
 
         this.showBridgeModal = this.showBridgeModal.bind(this);
         this.hideBridgeModal = this.hideBridgeModal.bind(this);
@@ -171,19 +164,6 @@ class AccountPortfolioList extends React.Component {
     hideWithdrawModal() {
         this.setState({
             isWithdrawModalVisible: false
-        });
-    }
-
-    showBurnModal() {
-        this.setState({
-            isBurnModalVisible: true,
-            isBurnModalVisibleBefore: true
-        });
-    }
-
-    hideBurnModal() {
-        this.setState({
-            isBurnModalVisible: false
         });
     }
 
@@ -366,12 +346,6 @@ class AccountPortfolioList extends React.Component {
 
     _hideAsset(asset, status) {
         SettingsActions.hideAsset(asset, status);
-    }
-
-    _burnAsset(asset, e) {
-        e.preventDefault();
-        this.setState({reserve: asset});
-        this.showBurnModal();
     }
 
     _showDepositModal(asset, e) {
@@ -798,15 +772,6 @@ class AccountPortfolioList extends React.Component {
             },
             {
                 className: "column-hide-medium",
-                title: <Translate content="modal.reserve.submit" />,
-                dataIndex: "burn",
-                align: "center",
-                render: item => {
-                    return <span style={{whiteSpace: "nowrap"}}>{item}</span>;
-                }
-            },
-            {
-                className: "column-hide-medium",
                 title: (
                     <Translate
                         content={
@@ -1165,14 +1130,6 @@ class AccountPortfolioList extends React.Component {
                     ) : (
                         emptyCell
                     ),
-                burn: !isBitAsset ? (
-                    <a
-                        style={{marginRight: 0}}
-                        onClick={this._burnAsset.bind(this, asset.get("id"))}
-                    >
-                        <Icon name="fire" className="icon-14px" />
-                    </a>
-                ) : null,
                 hide: (
                     <Tooltip
                         placement="bottom"
@@ -1353,7 +1310,6 @@ class AccountPortfolioList extends React.Component {
                                     emptyCell
                                 ),
                                 settle: emptyCell,
-                                burn: emptyCell,
                                 hide: (
                                     <Tooltip
                                         placement="bottom"
@@ -1533,20 +1489,6 @@ class AccountPortfolioList extends React.Component {
                             balances={this.props.balances}
                             bridges={currentBridges}
                             isDown={this.props.gatewayDown.get("TRADE")}
-                        />
-                    )}
-
-                    {/* Burn Modal */}
-                    {(this.state.isBurnModalVisible ||
-                        this.state.isBurnModalVisibleBefore) && (
-                        <ReserveAssetModal
-                            visible={this.state.isBurnModalVisible}
-                            hideModal={this.hideBurnModal}
-                            asset={this.state.reserve}
-                            account={this.props.account}
-                            onClose={() => {
-                                ZfApi.publish("reserve_asset", "close");
-                            }}
                         />
                     )}
                 </CustomTable>

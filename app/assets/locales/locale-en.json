@@ -1707,14 +1707,6 @@
             "witness_account": "Witness Account"
         }
     },
-    "news": {
-        "author": "Author",
-        "errors": {
-            "fetch": "Ops... Something went wrong fetching the news"
-        },
-        "news": "News",
-        "subject": "Subject"
-    },
     "notifications": {
         "account_create_failure": "Failed to create account: %(account_name)s - %(error_msg)s",
         "account_permissions_update_warning": "Setting your owner permissions like this will render your account permanently unusable. Please make sure you know what you're doing before modifying account authorities!",

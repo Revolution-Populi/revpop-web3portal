@@ -18,7 +18,7 @@ export default function HashLockField({form, hashLock, onChange}: Props) {
     }
 
     return (
-        <Form.Item label={counterpart.translate("deposit.hash")}>
+        <Form.Item label={counterpart.translate("deposit.hash_lock")}>
             {getFieldDecorator("hashLock", {
                 initialValue: hashLock,
                 rules: [

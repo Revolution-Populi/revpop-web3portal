@@ -17,7 +17,7 @@ export default function Confirmed({htlc}: Props) {
                 <tbody>
                     <tr>
                         <td>
-                            <Translate content="deposit.txHash" />
+                            <Translate content="deposit.tx_hash" />
                         </td>
                         <td>{htlc.txHash}</td>
                     </tr>
@@ -29,7 +29,7 @@ export default function Confirmed({htlc}: Props) {
                     </tr>
                     <tr>
                         <td>
-                            <Translate content="deposit.hash" />
+                            <Translate content="deposit.hash_lock" />
                         </td>
                         <td>{htlc.hashLock}</td>
                     </tr>

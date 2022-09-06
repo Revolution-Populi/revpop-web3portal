@@ -22,10 +22,16 @@
             svg {
                 width: 100px;
                 height: 100px;
+            }
+        }
 
-                path {
-                    fill: transparent !important;
-                    stroke: #e0e0e0;
+        &_metamask {
+            .icon {
+                svg {
+                    path {
+                        fill: transparent !important;
+                        stroke: #e0e0e0;
+                    }
                 }
             }
         }

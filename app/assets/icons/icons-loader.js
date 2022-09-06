@@ -76,7 +76,8 @@ let icons = [
     "swap",
     "instant-trade",
     "edit",
-    "metamask"
+    "metamask",
+    "keyboard"
 ];
 
 let iconsMap = {};

@@ -315,6 +315,11 @@ module.exports = function(env) {
                     use: "null-loader"
                 },
                 {
+                    test: /\.(ts|tsx)$/,
+                    use: "ts-loader",
+                    exclude: /node_modules/
+                },
+                {
                     test: /\.jsx$/,
                     include: [
                         path.join(root_dir, "app"),
@@ -459,7 +464,7 @@ module.exports = function(env) {
                 path.resolve(root_dir, "app/lib"),
                 "node_modules"
             ],
-            extensions: [".js", ".jsx", ".coffee", ".json"],
+            extensions: [".ts", ".tsx", ".js", ".jsx", ".coffee", ".json"],
             mainFields: ["module", "jsnext:main", "browser", "main"],
             alias: alias,
             fallback: {

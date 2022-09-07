@@ -1,0 +1,131 @@
+{
+    "block_interval": {
+        "type": "uint8_t",
+        "description": "interval in seconds between blocks"
+    },
+    "maintenance_interval": {
+        "type": "uint32_t",
+        "description": "interval in sections between blockchain maintenance events"
+    },
+    "maintenance_skip_slots": {
+        "type": "uint8_t",
+        "description": "average number of block_intervals to skip at maintenance time"
+    },
+    "committee_proposal_review_period": {
+        "type": "uint32_t",
+        "description": "low minimum time in seconds that a proposed transaction requiring committee authority may not be signed, prior to expiration"
+    },
+    "maximum_transaction_size": {
+        "type": "uint32_t",
+        "description": "average maximum allowable size in bytes for a transaction"
+    },
+    "maximum_block_size": {
+        "type": "uint32_t",
+        "description": "average maximum allowable size in bytes for a block"
+    },
+    "maximum_time_until_expiration": {
+        "type": "uint32_t",
+        "description": "average maximum lifetime in seconds for transactions to be valid, before expiring"
+    },
+    "maximum_proposal_lifetime": {
+        "type": "uint32_t",
+        "description": "low maximum lifetime in seconds for proposed transactions to be kept, before expiring"
+    },
+    "maximum_asset_whitelist_authorities": {
+        "type": "uint8_t",
+        "description": "low maximum number of accounts which an asset may list as authorities for its whitelist OR blacklist"
+    },
+    "maximum_asset_feed_publishers": {
+        "type": "uint8_t",
+        "description": "low the maximum number of feed publishers for a given asset"
+    },
+    "maximum_witness_count": {
+        "type": "uint16_t",
+        "description": "average maximum number of active witnesses"
+    },
+    "maximum_committee_count": {
+        "type": "uint16_t",
+        "description": "average maximum number of active committee_members"
+    },
+    "maximum_authority_membership": {
+        "type": "uint16_t",
+        "description": "low largest number of keys/accounts an authority can have"
+    },
+    "reserve_percent_of_fee": {
+        "type": "uint16_t",
+        "description": "average the percentage of the network's allocation of a fee that is taken out of circulation"
+    },
+    "network_percent_of_fee": {
+        "type": "uint16_t",
+        "description": "average percent of transaction fees paid to network"
+    },
+    "lifetime_referrer_percent_of_fee": {
+        "type": "uint16_t",
+        "description": "average percent of transaction fees paid to network"
+    },
+    "cashback_vesting_period_seconds": {
+        "type": "uint32_t",
+        "description": "low time after cashback rewards are accrued before they become liquid"
+    },
+    "cashback_vesting_threshold": {
+        "type": "int64_t",
+        "description": "low the maximum cashback that can be received without vesting"
+    },
+    "count_non_member_votes": {
+        "type": "bool",
+        "description": "set to false to restrict voting privileges to member accounts"
+    },
+    "allow_non_member_whitelists": {
+        "type": "bool",
+        "description": "true if non-member accounts may set whitelists and blacklists; false otherwise"
+    },
+    "witness_pay_per_block": {
+        "type": "int64_t",
+        "description": "average CORE to be allocated to witnesses (per block)"
+    },
+    "witness_pay_vesting_seconds": {
+        "type": "uint32_t",
+        "description": "vesting_seconds parameter for witness VBO's"
+    },
+    "worker_budget_per_day": {
+        "type": "int64_t",
+        "description": "CORE to be allocated to workers (per day)"
+    },
+    "max_predicate_opcode": {
+        "type": "uint16_t",
+        "description": "predicate_opcode must be less than this number"
+    },
+    "fee_liquidation_threshold": {
+        "type": "int64_t",
+        "description": "value in CORE at which accumulated fees in blockchain-issued market assets should be liquidated"
+    },
+    "accounts_per_fee_scale": {
+        "type": "uint16_t",
+        "description": "number of accounts between fee scaling"
+    },
+    "account_fee_scale_bitshifts": {
+        "type": "uint8_t",
+        "description": "number of times to left bitshift account registration fee at each scaling"
+    },
+    "max_authority_depth": {
+        "type": "uint8_t",
+        "description": "number of iterations in depth when searching for keys"
+    },
+    "revpop_witnesses_top_max": {
+        "type": "uint8_t",
+        "description": "average limit witnesses top list to max 63 (consensus algorithm)"
+    },
+    "revpop_witnesses_active_max": {
+        "type": "uint8_t",
+        "description": "average randomly choose max 21 active witnesses (consensus algorithm)"
+    },
+    "revpop_vote_mixture": {
+        "type": "uint8_t",
+        "description": "define a number of votes in one mix operation"
+    },
+    "current_fees": {
+        "type": "link",
+        "link": "/explorer/fees",
+        "description": "commission amount"
+    }
+}

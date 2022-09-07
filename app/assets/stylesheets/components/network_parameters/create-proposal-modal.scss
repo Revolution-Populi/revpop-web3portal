@@ -1,0 +1,13 @@
+.create-proposal-modal {
+    .list {
+        margin-bottom: 12px;
+    }
+
+    .expiration-date {
+        margin-bottom: 0;
+
+        .ant-form-item-label {
+            text-align: left;
+        }
+    }
+}

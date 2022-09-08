@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import counterpart from "counterpart";
 // @ts-ignore
-import {Form, InputNumber} from "bitshares-ui-style-guide";
+import {Form, InputNumber, Tooltip, Icon} from "bitshares-ui-style-guide";
 
 interface Props {
     form: any;
@@ -17,8 +17,19 @@ export default function AmountField({form, amount, onChange}: Props) {
         onChange(amount);
     }
 
+    const label = (
+        <>
+            {counterpart.translate("deposit.form.amount.label")}
+            <Tooltip
+                title={counterpart.translate("deposit.form.amount.tooltip")}
+            >
+                <Icon type="question-circle" />
+            </Tooltip>
+        </>
+    );
+
     return (
-        <Form.Item label={counterpart.translate("deposit.amount")}>
+        <Form.Item label={label}>
             {getFieldDecorator("amount", {
                 initialValue: amount,
                 rules: [

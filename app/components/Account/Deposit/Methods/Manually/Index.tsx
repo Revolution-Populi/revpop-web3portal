@@ -3,8 +3,19 @@ import React from "react";
 import Translate from "react-translate-component";
 import {Link, useRouteMatch} from "react-router-dom";
 import Abi from "../../../../../assets/abi/HashedTimelock.json";
-import SecretHash from "./SecretHash";
+// @ts-ignore
+import {Form} from "bitshares-ui-style-guide";
+import WalletSecretHashLockGenerator from "../../Form/SecretHashLock/Wallet";
 import Timelock from "./Timelock";
+
+const formItemLayout = {
+    labelCol: {
+        span: 4
+    },
+    wrapperCol: {
+        span: 20
+    }
+};
 
 export default function Index() {
     async function onCopyApiHandler(
@@ -15,10 +26,9 @@ export default function Index() {
     }
 
     const {url, path} = useRouteMatch();
-    console.log(url, path);
 
     return (
-        <>
+        <div className="manually">
             <div className="text-center">
                 <Translate content="deposit.title" component="h4" />
             </div>
@@ -84,12 +94,12 @@ export default function Index() {
                                 </li>
                                 <li>You should save it in a safe place.</li>
                             </ul>
-                            To generate by the wallet:
-                            <ul>
-                                <li>
-                                    <SecretHash />
-                                </li>
-                            </ul>
+                            Generate Secret and HashLock by the wallet:
+                            <Form {...formItemLayout}>
+                                <WalletSecretHashLockGenerator
+                                    onChange={() => {}}
+                                />
+                            </Form>
                             To generate manually:
                             <ul>
                                 <li>
@@ -137,6 +147,6 @@ export default function Index() {
                 </li>
                 <li>You should receive your RVETH in your wallet</li>
             </ul>
-        </>
+        </div>
     );
 }

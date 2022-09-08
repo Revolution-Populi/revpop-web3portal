@@ -7,7 +7,7 @@ export default class MakeDeposit {
         private _toAccount: string,
         private _amount: string,
         private _hash: string,
-        private _timeout: number
+        private _timeLock: number
     ) {}
 
     get blockchainType(): BlockchainType {
@@ -30,7 +30,7 @@ export default class MakeDeposit {
         return this._hash;
     }
 
-    get timeout(): number {
-        return this._timeout;
+    get timeLock(): number {
+        return this._timeLock;
     }
 }

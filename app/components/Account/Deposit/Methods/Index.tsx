@@ -20,7 +20,11 @@ export default function Index() {
 
     switch (type) {
         case "metamask":
-            return <Metamask />;
+            return (
+                <div className="deposit-form">
+                    <Metamask />
+                </div>
+            );
         case "manually":
             return <Manually />;
         default:

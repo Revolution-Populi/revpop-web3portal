@@ -12,7 +12,7 @@ export default class MakeDepositHandler {
             command.fromAddress,
             command.amount,
             command.hash,
-            command.timeout
+            command.timeLock
         );
 
         return await provider.create(htlc);

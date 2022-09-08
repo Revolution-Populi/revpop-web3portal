@@ -1,29 +1,48 @@
+@import "form";
 @import "selector";
 
 .deposit-page {
     display: flex;
     flex-direction: column;
 
-    .deposit-form {
+    .center-container {
         border: 1px solid #4b5158;
         border-radius: 6px;
         padding: 2rem;
-        max-width: 400px;
-
-        h4 {
-            margin: 0 0 1rem 0;
-        }
-
-        .htlc-created.asset-card {
-            margin: 0;
-            padding: 0 !important;
-        }
+        width: 400px;
     }
 
     @include breakpoint(medium) {
-        div.deposit-form {
+        .center-container {
             min-width: 700px;
             margin-top: 2rem;
+        }
+    }
+
+    .ant-form {
+        .ant-row {
+            .ant-form-item-label {
+                label {
+                    .anticon {
+                        vertical-align: middle;
+                        margin-left: 5px;
+                    }
+                }
+            }
+
+            .ant-form-item-control-wrapper {
+                .ant-input-group {
+                    .ant-input-group-addon {
+                        padding: 0;
+
+                        .ant-btn {
+                            padding: 6px;
+                            height: 30px;
+                            line-height: 1;
+                        }
+                    }
+                }
+            }
         }
     }
 }

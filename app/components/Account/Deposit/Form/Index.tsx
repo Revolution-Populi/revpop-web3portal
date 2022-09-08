@@ -5,9 +5,7 @@ import {connect} from "alt-react";
 // @ts-ignore
 import Translate from "react-translate-component";
 // @ts-ignore
-import counterpart from "counterpart";
-// @ts-ignore
-import {Form, Button, DatePicker} from "bitshares-ui-style-guide";
+import {Form, Button} from "bitshares-ui-style-guide";
 import moment, {Moment} from "moment";
 import {Map} from "immutable";
 // @ts-ignore
@@ -15,8 +13,9 @@ import {ChainStore} from "@revolutionpopuli/revpopjs";
 import AccountSelector from "../../AccountSelector";
 import AccountStore from "../../../../stores/AccountStore";
 import {MakeDeposit, makeDepositHandler} from "../../../../Context/Deposit";
-import HashLockField from "./HashLockField";
+import HashLockField from "./SecretHashLock/Index";
 import AmountField from "./AmountField";
+import TimeLock from "./TimeLock";
 
 const formItemLayout = {
     labelCol: {
@@ -26,10 +25,6 @@ const formItemLayout = {
         span: 20
     }
 };
-
-function disabledDate(current: Moment) {
-    return current && current < moment().endOf("day");
-}
 
 interface Props {
     form: any;
@@ -49,7 +44,7 @@ function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
     const [account, setAccount] = useState<Map<string, any>>();
     const [amount, setAmount] = useState(0.01);
     const [hashLock, setHashLock] = useState<string>("");
-    const [timeout, setTimeout] = useState<Moment>(moment().add("1", "days"));
+    const [timeLock, setTimeLock] = useState<Moment>(moment().add("1", "days"));
 
     useEffect(() => {
         setAccount(ChainStore.getAccount(accountName));
@@ -76,12 +71,13 @@ function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
             accountName,
             Web3.utils.toWei(amount.toString()),
             hashLock,
-            timeout.unix()
+            timeLock.unix()
         );
+
         const result = await makeDepositHandler.execute(command);
 
         if (result.isSuccess()) {
-            onConfirmed(result.txHash, amount, hashLock, timeout);
+            onConfirmed(result.txHash, amount, hashLock, timeLock);
         } else {
             // TODO::show error
         }
@@ -95,8 +91,8 @@ function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
         setAmount(amount);
     }
 
-    function onChangeTimeoutHandler(timeout: Moment) {
-        setTimeout(timeout);
+    function onChangeTimeLockHandler(timeLock: Moment) {
+        setTimeLock(timeLock);
     }
 
     function onChangeHashLockHandler(hashLock: string) {
@@ -113,7 +109,7 @@ function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
                 <Translate content="deposit.title" component="h4" />
             </div>
             <AccountSelector
-                label="deposit.account"
+                label="deposit.form.account.label"
                 accountName={account.get("name")}
                 account={account}
                 typeahead={true}
@@ -130,17 +126,7 @@ function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
                 hashLock={hashLock}
                 onChange={onChangeHashLockHandler}
             />
-            <Form.Item label={counterpart.translate("deposit.timeout")}>
-                <DatePicker
-                    showTime={{
-                        defaultValue: moment("00:00:00", "HH:mm:ss"),
-                        format: "HH:mm"
-                    }}
-                    onChange={onChangeTimeoutHandler}
-                    disabledDate={disabledDate}
-                    defaultValue={timeout}
-                />
-            </Form.Item>
+            <TimeLock timeLock={timeLock} onChange={onChangeTimeLockHandler} />
             <Form.Item wrapperCol={{span: 12, offset: 4}}>
                 <Button type="primary" htmlType="submit">
                     <Translate content="deposit.metamask" />

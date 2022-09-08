@@ -16,40 +16,26 @@ export default function Index() {
                 <HelpContent path={"components/Deposit"} />
             </div>
 
-            <div className="grid-block">
-                <Switch>
-                    <Route path={`${path}`} exact>
-                        <Deposits />
-                    </Route>
-                    <Route path={`${path}/redeem`} exact>
-                        <div className="grid-block align-center">
-                            <div className="deposit-form">
-                                <Redeem />
-                            </div>
-                        </div>
-                    </Route>
-                    <Route path={`${path}/new`} exact>
-                        <div className="grid-block align-center">
-                            <div className="deposit-form">
-                                <Selector />
-                            </div>
-                        </div>
-                    </Route>
-                    <Route path={`${path}/new/send_tx_hash`} exact>
-                        <div className="grid-block align-center">
-                            <div className="deposit-form">
-                                <SendTxHashWrapped />
-                            </div>
-                        </div>
-                    </Route>
-                    <Route path={`${path}/new/:type`} exact>
-                        <div className="grid-block align-center">
-                            <div className="deposit-form">
-                                <Method />
-                            </div>
-                        </div>
-                    </Route>
-                </Switch>
+            <div className="grid-block align-center">
+                <div className="center-container">
+                    <Switch>
+                        <Route path={`${path}`} exact>
+                            <Deposits />
+                        </Route>
+                        <Route path={`${path}/redeem`} exact>
+                            <Redeem />
+                        </Route>
+                        <Route path={`${path}/new`} exact>
+                            <Selector />
+                        </Route>
+                        <Route path={`${path}/new/send_tx_hash`} exact>
+                            <SendTxHashWrapped />
+                        </Route>
+                        <Route path={`${path}/new/:type`} exact>
+                            <Method />
+                        </Route>
+                    </Switch>
+                </div>
             </div>
         </div>
     );

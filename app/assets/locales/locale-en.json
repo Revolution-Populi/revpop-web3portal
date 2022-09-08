@@ -1122,11 +1122,35 @@
         "title": "New deposit",
         "sub_title": "or current deposit",
         "new": "New deposit",
-        "account": "Account",
-        "amount": "Amount",
-        "tx_hash": "Transaction hash",
-        "hash_lock": "HashLock",
-        "timeout": "Timeout",
+        "form": {
+            "account": {
+                "label": "Account"
+            },
+            "amount": {
+                "label": "Amount",
+                "tooltip": "Amount tooltip"
+            },
+            "tx_hash": {
+                "label": "Transaction hash",
+                "tooltip": "Transaction tooltip"
+            },
+            "secret": {
+                "label": "Secret",
+                "tooltip": "Secret tooltip"
+            },
+            "hash_lock": {
+                "label": "HashLock",
+                "tooltip": "Hashlock tooltip"
+            },
+            "time_lock": {
+                "label": "TimeLock",
+                "tooltip": "TimeLock tooltip"
+            },
+            "hash_lock_generator": {
+                "by_wallet": "Use wallet for Secret and HashLock generation",
+                "manually": "Manually enter HashLock"
+            }
+        },
         "metamask": "Deposit",
         "metamask_not_installed": "Metamask is not installed",
         "metamask_not_connected": "Metamask is not connected",

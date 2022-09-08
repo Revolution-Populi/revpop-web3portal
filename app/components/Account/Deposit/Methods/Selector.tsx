@@ -8,8 +8,8 @@ export default function Selector() {
     const {url} = useRouteMatch();
 
     return (
-        <>
-            <div className="text-center deposit-selector">
+        <div className="deposit-selector">
+            <div className="text-center">
                 <Translate content="deposit.selector.title" component="h4" />
             </div>
             <div className="deposit-selector__types">
@@ -25,6 +25,6 @@ export default function Selector() {
                     <Translate content="deposit.selector.manually" />
                 </Link>
             </div>
-        </>
+        </div>
     );
 }

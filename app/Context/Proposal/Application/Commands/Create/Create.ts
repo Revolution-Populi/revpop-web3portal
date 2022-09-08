@@ -1,18 +1,17 @@
-import moment from "moment";
-//TODO::remove dependency from NetworkParameters
-import {NetworkParameters} from "../../../../NetworkParameters/types";
+import {Moment} from "moment";
 
 export default class Create {
-    constructor(
-        private _parameters: NetworkParameters.ParametersType,
-        private _expirationTime: moment.Moment
-    ) {}
+    constructor(private _transaction: unknown, private _expirationTime: Moment, private _reviewPeriod: number) {}
 
-    get parameters(): NetworkParameters.ParametersType {
-        return this._parameters;
+    get transaction(): unknown {
+        return this._transaction;
     }
 
-    get expirationTime(): moment.Moment {
+    get expirationTime(): Moment {
         return this._expirationTime;
+    }
+
+    get reviewPeriod(): number {
+        return this._reviewPeriod;
     }
 }

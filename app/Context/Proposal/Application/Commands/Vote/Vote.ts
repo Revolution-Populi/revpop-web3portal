@@ -1,17 +1,9 @@
-import {ProposalTypes} from "../../../types";
-import ProposalsType = ProposalTypes.ProposalsType;
+import Proposal from "../../../Domain/Proposal";
 
 export default class Vote {
-    constructor(
-        private _proposals: ProposalsType,
-        private _proposalId: string
-    ) {}
+    constructor(private _proposal: Proposal) {}
 
-    get proposals(): ProposalsType {
-        return this._proposals;
-    }
-
-    get proposalId(): string {
-        return this._proposalId;
+    get proposal(): Proposal {
+        return this._proposal;
     }
 }

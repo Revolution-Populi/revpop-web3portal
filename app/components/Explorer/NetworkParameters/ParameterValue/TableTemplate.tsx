@@ -1,8 +1,9 @@
 import React, {ReactElement} from "react";
 import {TableRowValueType} from "../ParameterToTableRowTransformer";
-import {ParameterType} from "../../../../Context/NetworkParameters/Domain/Factory";
 import TableStringTemplate from "./TableStringTemplate";
 import TableBooleanTemplate from "./TableBooleanTemplate";
+import {NetworkParameters} from "../../../../Context/NetworkParameters/types";
+import ParameterType = NetworkParameters.ParameterType;
 
 export type ShowTemplateProps = {
     type: ParameterType | null;

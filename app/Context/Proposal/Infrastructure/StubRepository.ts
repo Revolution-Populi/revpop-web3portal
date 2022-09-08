@@ -3,14 +3,12 @@ import RepositoryInterface from "../Domain/RepositoryInterface";
 import Proposal from "../Domain/Proposal";
 import {ProposalTypes} from "../types";
 import ProposalsType = ProposalTypes.ProposalsType;
-//TODO::remove dependency from NetworkParameters
-import {NetworkParameters} from "../../NetworkParameters/types";
-import NetworkParametersProposalType = NetworkParameters.ProposalType;
-import NetworkParametersProposalsType = NetworkParameters.ProposalsType;
+import ProposalCreateType = ProposalTypes.ProposalCreateType;
+import ProposalsCreateType = ProposalTypes.ProposalsCreateType;
 
 class StubRepository implements RepositoryInterface {
     private _addedItems: ProposalsType = Set<Proposal>().asMutable();
-    private _createdItems: NetworkParametersProposalsType = Set().asMutable();
+    private _createdItems: ProposalsCreateType = Set<ProposalCreateType>().asMutable();
     private _votedProposalsId: Set<string> = Set<string>().asMutable();
     private _revokeVotedProposalsId: Set<string> = Set<string>().asMutable();
 
@@ -18,13 +16,13 @@ class StubRepository implements RepositoryInterface {
         this._addedItems.add(proposal);
     }
 
-    create(proposal: NetworkParametersProposalType): boolean {
+    create(proposal: ProposalCreateType): boolean {
         this._createdItems = this._createdItems.add(proposal);
 
         return true;
     }
 
-    get createdItems(): NetworkParametersProposalsType {
+    get createdItems(): ProposalsCreateType {
         return this._createdItems;
     }
 

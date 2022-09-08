@@ -1,6 +1,7 @@
 import {Set} from "immutable";
 import Proposal from "./Domain/Proposal";
 import Parameter from "./Domain/Parameter";
+import Operation from "./Domain/Operation";
 
 export namespace ProposalTypes {
     type FeeType = {
@@ -8,19 +9,26 @@ export namespace ProposalTypes {
         asset_id: string;
     };
 
-    export type ParameterObjectBlockchainValueType = {
-        [key: string]: ParameterBlockchainValueType;
+    export type BlockchainParametersType = {
+        [key: string]: BlockchainParameterType;
     };
 
-    type ParameterBlockchainValueType =
-        | string
-        | number
-        | boolean
-        | ParameterObjectBlockchainValueType;
+    export type BlockchainCurrentFeesType = {
+        parameters: BlockchainCurrentFeesOperationType[];
+        scale: number;
+    };
+
+    export type BlockchainCurrentFeesOperationType = [number, BlockchainCurrentFeesOperationFeeType];
+
+    export type BlockchainCurrentFeesOperationFeeType = {
+        [code: string]: number;
+    };
+
+    type BlockchainParameterType = string | number | boolean | BlockchainParametersType | BlockchainCurrentFeesType;
 
     type ProposalTransactionOperationsBlockchainType = {
         fee: FeeType;
-        new_parameters: ParameterObjectBlockchainValueType;
+        new_parameters: BlockchainParametersType;
     };
 
     export type ProposalTransactionBlockchainType = {
@@ -45,12 +53,19 @@ export namespace ProposalTypes {
         review_period_time: string;
     };
 
+    export type ProposalCreateType = {
+        transaction: unknown;
+        expirationTime: number;
+        reviewPeriod: number;
+    };
+
+    export type ProposalsCreateType = Set<ProposalCreateType>;
+
     export type ProposalsType = Set<Proposal>;
 
     export type ParametersType = Set<Parameter>;
 
-    export type ParameterValueType = Extract<
-        ParameterBlockchainValueType,
-        string | number | boolean
-    >;
+    export type OperationsType = Set<Operation>;
+
+    export type ParameterValueType = Extract<BlockchainParameterType, string | number | boolean>;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import Witnesses from "./Witnesses";
 import CommitteeMembers from "./CommitteeMembers";
-import FeesContainer from "../Blockchain/FeesContainer";
+import FeesContainer from "./Fees/FeesContainer";
 import BlocksContainer from "./BlocksContainer";
 import AssetsContainer from "./AssetsContainer";
 import AccountsContainer from "./AccountsContainer";
@@ -9,6 +9,7 @@ import counterpart from "counterpart";
 import MarketsContainer from "../Exchange/MarketsContainer";
 import {Tabs} from "bitshares-ui-style-guide";
 import NetworkParameters from "../Explorer/NetworkParameters/NetworkParameters";
+import Proposals from "./Proposals/List";
 
 class Explorer extends React.Component {
     constructor(props) {
@@ -63,6 +64,12 @@ class Explorer extends React.Component {
                     link: "/explorer/network-parameters",
                     translate: "network_parameters.list.title",
                     content: NetworkParameters
+                },
+                {
+                    name: "proposals",
+                    link: "/explorer/proposals",
+                    translate: "proposals.title",
+                    content: Proposals
                 }
             ]
         };
@@ -84,10 +91,7 @@ class Explorer extends React.Component {
                     const TabContent = tab.content;
 
                     return (
-                        <Tabs.TabPane
-                            key={tab.link}
-                            tab={counterpart.translate(tab.translate)}
-                        >
+                        <Tabs.TabPane key={tab.link} tab={counterpart.translate(tab.translate)}>
                             <div className="padding">
                                 <TabContent />
                             </div>

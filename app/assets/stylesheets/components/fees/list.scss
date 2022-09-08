@@ -1,0 +1,33 @@
+.fees {
+    .table {
+        tr {
+            th {
+                &.standard-fee,
+                &.lifetime-member-fee {
+                    text-align: right;
+                }
+            }
+
+            td {
+                padding: 5px 0;
+
+                &.standard-fee,
+                &.lifetime-member-fee {
+                    text-align: right;
+
+                    .edit,
+                    .save,
+                    .cancel {
+                        margin-left: 5px;
+                        cursor: pointer;
+                    }
+
+                    .new-value {
+                        margin-left: 5px;
+                        color: #049cce;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.create-proposal-modal-fees {
+    table {
+        margin-bottom: 10px;
+
+        tr {
+            td {
+                .new-value {
+                    margin-left: 5px;
+                    color: #049cce;
+                }
+            }
+        }
+    }
+
+    .ant-row.expiration-date {
+        display: flex;
+
+        .ant-form-item-label {
+            width: auto;
+        }
+    }
+}

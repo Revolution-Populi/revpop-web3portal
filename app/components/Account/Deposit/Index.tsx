@@ -6,6 +6,7 @@ import Selector from "./Methods/Selector";
 import Method from "./Methods/Index";
 import Redeem from "./Redeem/Index";
 import SendTxHashWrapped from "./Methods/Manually/SendTxHash";
+import Confirmed from "./Methods/Confirmed";
 
 export default function Index() {
     const {path} = useRouteMatch();
@@ -33,6 +34,9 @@ export default function Index() {
                         </Route>
                         <Route path={`${path}/new/:type`} exact>
                             <Method />
+                        </Route>
+                        <Route path={`${path}/:sessionId/confirmed`} exact>
+                            <Confirmed />
                         </Route>
                     </Switch>
                 </div>

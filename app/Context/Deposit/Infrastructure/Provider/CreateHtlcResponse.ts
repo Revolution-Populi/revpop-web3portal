@@ -1,4 +1,6 @@
 export default class CreateHtlcResponse {
+    public error: string | null = null;
+
     constructor(private status: boolean, private _txHash: string) {}
 
     isSuccess() {

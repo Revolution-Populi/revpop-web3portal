@@ -1,13 +1,13 @@
 import MakeDeposit from "./MakeDeposit";
-import {Either, left, Result, right, EesConnectionError, UnexpectedError} from "../../../../Core";
+import {AppError, Result} from "../../../../Core";
 import ProviderResolver from "../../../Infrastructure/Provider/ProviderResolver";
 import HTLC from "../../../Domain/HTLC";
 import SessionRepositoryInterface from "../../../Domain/SessionRepositoryInterface";
 import SessionConfirmerInterface from "../../../Domain/SessionConfirmerInterface";
 import Session from "../../../Domain/Session";
-import {SessionAlreadyPayed, SessionNotFoundError} from "./Errors";
-
-type Response = Either<UnexpectedError, Result<Session>>;
+import {SessionAlreadyPaid, SessionNotFoundError} from "./Errors";
+import {Failure, Success} from "../../../../Core/Logic/Result";
+import {BlockchainConnectionError, EesConnectionError} from "../../../../Core/Logic/AppError";
 
 export default class MakeDepositHandler {
     constructor(
@@ -15,15 +15,15 @@ export default class MakeDepositHandler {
         private _sessionConfirmer: SessionConfirmerInterface
     ) {}
 
-    async execute(command: MakeDeposit): Promise<Response> {
+    async execute(command: MakeDeposit): Promise<Result<AppError, Session>> {
         const session = await this._sessionRepository.load(command.sessionId);
 
         if (session === null) {
-            return left(new SessionNotFoundError(command.sessionId));
+            return Failure.create(new SessionNotFoundError(command.sessionId));
         }
 
         if (!session.canBePaid()) {
-            return left(new SessionAlreadyPayed(command.sessionId));
+            return Failure.create(new SessionAlreadyPaid(command.sessionId));
         }
 
         const htlc = new HTLC(command.fromAddress, command.amount, command.hashLock, command.timeLock);
@@ -33,7 +33,7 @@ export default class MakeDepositHandler {
         const createHTLCResult = await provider.create(htlc);
 
         if (!createHTLCResult.isSuccess()) {
-            return left(new SessionAlreadyPayed(command.sessionId));
+            return Failure.create(new AppError(new BlockchainConnectionError()));
         }
 
         // Send confirm request to EES
@@ -45,12 +45,12 @@ export default class MakeDepositHandler {
         );
 
         if (!sessionConfirmResult) {
-            return left(EesConnectionError.create());
+            return Failure.create(new AppError(new EesConnectionError()));
         }
 
         session.pay(createHTLCResult.txHash);
         await this._sessionRepository.save(session);
 
-        return right(Result.ok<Session>(session));
+        return Success.create<Session>(session);
     }
 }

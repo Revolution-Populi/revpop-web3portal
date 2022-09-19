@@ -2,8 +2,8 @@ export default class HTLC {
     constructor(
         private _fromAddress: string,
         private _amount: string,
-        private _hash: string,
-        private _timeout: number
+        private _hashLock: string,
+        private _timeLock: number
     ) {}
 
     get fromAddress(): string {
@@ -14,11 +14,11 @@ export default class HTLC {
         return this._amount;
     }
 
-    get hash(): string {
-        return this._hash;
+    get hashLock(): string {
+        return this._hashLock;
     }
 
-    get timeout(): number {
-        return this._timeout;
+    get timeLock(): number {
+        return this._timeLock;
     }
 }

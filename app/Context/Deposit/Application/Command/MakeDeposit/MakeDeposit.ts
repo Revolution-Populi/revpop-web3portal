@@ -1,12 +1,13 @@
-type BlockchainType = "metamask";
+type BlockchainType = "metamask" | "stub";
 
 export default class MakeDeposit {
     constructor(
         private _blockchainType: BlockchainType,
         private _fromAddress: string,
-        private _toAccount: string,
+        private _sessionId: string,
+        private _revpopAccount: string,
         private _amount: string,
-        private _hash: string,
+        private _hashLock: string,
         private _timeLock: number
     ) {}
 
@@ -18,16 +19,20 @@ export default class MakeDeposit {
         return this._fromAddress;
     }
 
-    get toAccount(): string {
-        return this._toAccount;
+    get sessionId(): string {
+        return this._sessionId;
+    }
+
+    get revpopAccount(): string {
+        return this._revpopAccount;
     }
 
     get amount(): string {
         return this._amount;
     }
 
-    get hash(): string {
-        return this._hash;
+    get hashLock(): string {
+        return this._hashLock;
     }
 
     get timeLock(): number {

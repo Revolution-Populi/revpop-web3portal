@@ -3,7 +3,6 @@ import DepositForm from "../../Form/Index";
 // @ts-ignore
 import Translate from "react-translate-component";
 import {Moment} from "moment";
-import Confirmed from "./Confirmed";
 
 export interface HTLC {
     txHash: string;
@@ -29,11 +28,7 @@ export default function Index() {
                 method: "eth_accounts"
             });
 
-            if (
-                accounts === null ||
-                accounts === undefined ||
-                accounts.length === 0
-            ) {
+            if (accounts === null || accounts === undefined || accounts.length === 0) {
                 setConnected(false);
                 return;
             }
@@ -45,12 +40,7 @@ export default function Index() {
         isConnected();
     }, []);
 
-    function onConfirmed(
-        txHash: string,
-        amount: number,
-        hashLock: string,
-        timeout: Moment
-    ) {
+    function onConfirmed(txHash: string, amount: number, hashLock: string, timeout: Moment) {
         setHTLC({txHash, amount, hashLock, timeout});
     }
 
@@ -59,11 +49,7 @@ export default function Index() {
             method: "eth_requestAccounts"
         });
 
-        if (
-            accounts === null ||
-            accounts === undefined ||
-            accounts.length === 0
-        ) {
+        if (accounts === null || accounts === undefined || accounts.length === 0) {
             setConnected(false);
             return;
         }
@@ -79,10 +65,7 @@ export default function Index() {
     if (!connected) {
         return (
             <>
-                <Translate
-                    content="deposit.metamask_not_connected"
-                    component="p"
-                />
+                <Translate content="deposit.metamask_not_connected" component="p" />
                 <a className="button primary" onClick={connect}>
                     <Translate content="deposit.connect" />
                 </a>
@@ -90,9 +73,9 @@ export default function Index() {
         );
     }
 
-    if (htlc !== null) {
-        return <Confirmed htlc={htlc} />;
-    }
+    // if (htlc !== null) {
+    //     return <Confirmed htlc={htlc} />;
+    // }
 
     return <DepositForm from={currentAddress} onConfirmed={onConfirmed} />;
 }

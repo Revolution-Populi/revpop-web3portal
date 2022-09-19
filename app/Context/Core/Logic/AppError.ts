@@ -1,17 +1,33 @@
-export class AppError extends Error {
-    public constructor(private _error: unknown) {
-        super();
+import {Result} from "./Result";
+import {UseCaseError} from "./UseCaseError";
+
+export class UnexpectedError extends Result<UseCaseError> {
+    public constructor(err: string) {
+        super(false, {
+            message: "An unexpected error occurred.",
+            error: err
+        } as UseCaseError);
+        console.log("[AppError]: An unexpected error occurred");
+        console.error(err);
     }
 
-    get error(): unknown {
-        return this._error;
+    public static create(err: string): UnexpectedError {
+        return new UnexpectedError(err);
+    }
+}
+
+export class EesConnectionError extends Result<UseCaseError> {
+    public constructor(err?: string) {
+        super(false, {
+            message: "EES services is unavailable.",
+            error: err
+        } as UseCaseError);
+
+        console.log("[EES connection error]: EES services is unavailable.");
+        console.error(err);
     }
 
-    get message(): string {
-        return "An unexpected error occurred.";
-    }
-
-    public static create(err: Error): AppError {
-        return new AppError(err);
+    public static create(err?: string): EesConnectionError {
+        return new EesConnectionError(err);
     }
 }

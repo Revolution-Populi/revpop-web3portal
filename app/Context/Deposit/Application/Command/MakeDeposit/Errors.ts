@@ -1,18 +1,13 @@
-import {Result} from "../../../../Core/Logic/Result";
 import {UseCaseError} from "../../../../Core/Logic/UseCaseError";
 
-export class SessionNotFoundError extends Result<UseCaseError> {
+export class SessionNotFoundError extends UseCaseError {
     constructor(id: string) {
-        super(false, {
-            message: `The session with id ${id} was not found.`
-        } as UseCaseError);
+        super(`The session with id ${id} was not found.`);
     }
 }
 
-export class SessionAlreadyPayed extends Result<UseCaseError> {
+export class SessionAlreadyPaid extends UseCaseError {
     constructor(id: string) {
-        super(false, {
-            message: `The session with id ${id} was not found.`
-        } as UseCaseError);
+        super(`The session with id ${id} cannot be paid.`);
     }
 }

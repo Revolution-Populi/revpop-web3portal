@@ -1,88 +1,54 @@
-export class Result<T> {
-    public isSuccess: boolean;
-    public isFailure: boolean;
-    public error: T | null;
-    private readonly _value: T | null;
+import {AppError} from "./AppError";
+import {UseCaseError} from "./UseCaseError";
 
-    constructor(isSuccess: boolean, error: T | null, value: T | null = null) {
-        if (isSuccess && error) {
-            throw new Error("InvalidOperation: A result cannot be successful and contain an error");
-        }
+export type Result<F, S> = Failure<F> | Success<S>;
 
-        if (!isSuccess && !error) {
-            throw new Error("InvalidOperation: A failing result needs to contain an error message");
-        }
+export type Either<F, S> = Failure<F> | Success<S>;
 
-        this.isSuccess = isSuccess;
-        this.isFailure = !isSuccess;
-        this.error = error;
+export class Success<T> {
+    private readonly _value: T;
+
+    constructor(value: T) {
         this._value = value;
-
-        Object.freeze(this);
     }
 
-    getValue(): T | null {
-        if (!this.isSuccess) {
-            return this.error as T;
-        }
-
+    get value(): T {
         return this._value;
     }
 
-    static ok<U>(value: U | null = null): Result<U> {
-        return new Result<U>(true, null, value);
-    }
-
-    static fail<U>(error: any): Result<U> {
-        return new Result<U>(false, error);
-    }
-
-    static combine(results: Result<any>[]): Result<any> {
-        for (const result of results) {
-            if (result.isFailure) return result;
-        }
-        return Result.ok();
-    }
-}
-
-export type Either<L, A> = Left<L, A> | Right<L, A>;
-
-export class Left<L, A> {
-    readonly value: L;
-
-    constructor(value: L) {
-        this.value = value;
-    }
-
-    isLeft(): this is Left<L, A> {
-        return true;
-    }
-
-    isRight(): this is Right<L, A> {
-        return false;
-    }
-}
-
-export class Right<L, A> {
-    readonly value: A;
-
-    constructor(value: A) {
-        this.value = value;
-    }
-
-    isLeft(): this is Left<L, A> {
+    isFailure(): this is Failure<T> {
         return false;
     }
 
-    isRight(): this is Right<L, A> {
+    isSuccess(): this is Success<T> {
         return true;
+    }
+
+    public static create<T>(value: T) {
+        return new Success<T>(value);
     }
 }
 
-export const left = <L, A>(l: L): Either<L, A> => {
-    return new Left(l);
-};
+export class Failure<T> {
+    private readonly _error: AppError | UseCaseError;
 
-export const right = <L, A>(a: A): Either<L, A> => {
-    return new Right<L, A>(a);
-};
+    constructor(value: AppError | UseCaseError) {
+        this._error = value;
+    }
+
+    get error(): AppError | UseCaseError {
+        return this._error;
+    }
+
+    isFailure(): this is Failure<T> {
+        return true;
+    }
+
+    isSuccess(): this is Success<T> {
+        return false;
+    }
+
+    public static create<T>(error: AppError | UseCaseError) {
+        return new Failure<T>(error);
+    }
+}

@@ -1,9 +1,7 @@
-import {Result, DomainError} from "../../Core";
+import {DomainError} from "../../Core";
 
-export class PaySessionError extends Result<DomainError> {
+export class PaySessionError extends DomainError {
     constructor(sessionId: string) {
-        super(false, {
-            message: `Session ${sessionId} can't be payed`
-        } as DomainError);
+        super(`Session ${sessionId} can't be payed`);
     }
 }

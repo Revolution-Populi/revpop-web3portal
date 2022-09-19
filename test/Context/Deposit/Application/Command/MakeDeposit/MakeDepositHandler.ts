@@ -53,7 +53,7 @@ describe("MakeDepositHandler", () => {
 
             it("should send request to blockchain", async () => {
                 const result = await handler.execute(command);
-                expect(result.isRight()).true;
+                expect(result.isSuccess()).true;
 
                 expect(provider.size).equals(1);
 
@@ -66,7 +66,7 @@ describe("MakeDepositHandler", () => {
 
             it("should send request to EES", async () => {
                 const result = await handler.execute(command);
-                expect(result.isRight()).true;
+                expect(result.isSuccess()).true;
 
                 expect(sessionConfirmer.size).equals(1);
 
@@ -79,7 +79,7 @@ describe("MakeDepositHandler", () => {
 
             it("should update session in local db", async () => {
                 const result = await handler.execute(command);
-                expect(result.isRight()).true;
+                expect(result.isSuccess()).true;
 
                 expect(sessionRepository.count).equals(1);
 

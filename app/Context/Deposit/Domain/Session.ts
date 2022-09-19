@@ -1,5 +1,6 @@
-import {Either, left, Result, right} from "../../Core";
+import {Either, Result} from "../../Core";
 import {PaySessionError} from "./Errors";
+import {Failure, Success} from "../../Core/Logic/Result";
 
 enum STATUS {
     CREATED = 1,
@@ -24,15 +25,15 @@ export default class Session {
         return this._status === STATUS.CREATED;
     }
 
-    pay(txHash: string): Either<PaySessionError, Result<void>> {
+    pay(txHash: string): Either<PaySessionError, boolean> {
         if (this._status !== STATUS.CREATED) {
-            return left(new PaySessionError(this.id));
+            return Failure.create(new PaySessionError(this.id));
         }
 
         this._txHash = txHash;
         this._status = STATUS.PAYED;
 
-        return right(Result.ok<void>());
+        return Success.create(true);
     }
 
     get id(): string {

@@ -1,8 +1,20 @@
 import GetSession from "./GetSession";
 import Session from "../../../Domain/Session";
+import {Failure, Result, Success} from "../../../../Core/Logic/Result";
+import SessionRepositoryInterface from "../../../Domain/SessionRepositoryInterface";
+import {UseCaseError} from "../../../../Core/Logic/AppError";
+import {SessionNotFoundError} from "./Errors";
 
 export default class GetSessionHandler {
-    execute(query: GetSession): Session {
-        return new Session("sfasdf", "asdfasdf", "sadfsadf", 123);
+    constructor(private _sessionRepository: SessionRepositoryInterface) {}
+
+    async execute(query: GetSession): Promise<Result<UseCaseError, Session>> {
+        const session = await this._sessionRepository.load(query.sessionId);
+
+        if (session === null) {
+            return Failure.create(new SessionNotFoundError(query.sessionId));
+        }
+
+        return Success.create(session);
     }
 }

@@ -6,13 +6,20 @@ import {Form, Tooltip, Icon, DatePicker} from "bitshares-ui-style-guide";
 import moment, {Moment} from "moment/moment";
 
 interface Props {
-    timeLock: Moment;
+    timeLock: Moment | null;
+    minTimeLock: number;
     onChange: (timeLock: Moment) => void;
 }
 
-export default function TimeLock({timeLock, onChange}: Props) {
+export default function TimeLock({timeLock, minTimeLock, onChange}: Props) {
     function disabledDate(current: Moment) {
-        return current && current < moment().endOf("day");
+        return (
+            current &&
+            current <
+                moment()
+                    .add(minTimeLock, "minutes")
+                    .endOf("day")
+        );
     }
 
     function onChangeHandler(timeLock: Moment) {
@@ -22,9 +29,7 @@ export default function TimeLock({timeLock, onChange}: Props) {
     const label = (
         <>
             {counterpart.translate("deposit.form.time_lock.label")}
-            <Tooltip
-                title={counterpart.translate("deposit.form.time_lock.tooltip")}
-            >
+            <Tooltip title={counterpart.translate("deposit.form.time_lock.tooltip")}>
                 <Icon type="question-circle" />
             </Tooltip>
         </>
@@ -39,7 +44,7 @@ export default function TimeLock({timeLock, onChange}: Props) {
                 }}
                 onChange={onChangeHandler}
                 disabledDate={disabledDate}
-                defaultValue={timeLock}
+                value={timeLock}
             />
         </Form.Item>
     );

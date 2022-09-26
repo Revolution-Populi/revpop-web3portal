@@ -1,8 +1,8 @@
 import GetLast from "./GetLast";
-import HTLC from "../../../Domain/HTLC";
+import Session from "../../../Domain/Session";
 
 export default class GetLastHandler {
-    execute(getLast: GetLast): HTLC {
+    execute(getLast: GetLast): Session {
         throw new Error("Not implemented!");
     }
 }

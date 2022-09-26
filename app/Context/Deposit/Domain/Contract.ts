@@ -1,13 +1,21 @@
-export default class HTLC {
+export default class Contract {
+    private _withdrawn = false;
+    private _refunded = false;
+
     constructor(
-        private _fromAddress: string,
+        private _sender: string,
+        private _receiver: string,
         private _amount: string,
         private _hashLock: string,
         private _timeLock: number
     ) {}
 
-    get fromAddress(): string {
-        return this._fromAddress;
+    get sender(): string {
+        return this._sender;
+    }
+
+    get receiver(): string {
+        return this._receiver;
     }
 
     get amount(): string {

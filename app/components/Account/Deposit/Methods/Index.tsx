@@ -3,36 +3,41 @@ import {useParams} from "react-router-dom";
 import Metamask from "./Metamask/Index";
 import Manually from "./Manually/Index";
 import Page404 from "../../../Page404/Page404";
-import {StartSession, startSessionHandler} from "../../../../Context/Deposit";
+import {Session, StartSession, startSessionHandler} from "../../../../Context/Deposit";
 
 type SelectorParams = {
     type: string;
 };
-
-export interface Session {
-    id: string;
-}
 
 export const SessionContext = createContext<Session | null>(null);
 
 export default function Index() {
     const {type} = useParams<SelectorParams>();
     const [session, setSession] = useState<Session | null>(null);
+    const [error, setError] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchSession() {
             const query = new StartSession();
-            const session = await startSessionHandler.execute(query);
-            setSession({
-                id: session.id
-            });
+            const sessionOrError = await startSessionHandler.execute(query);
+
+            if (sessionOrError.isFailure()) {
+                setError(true);
+                return;
+            }
+
+            setSession(sessionOrError.value);
         }
 
         fetchSession();
     }, []);
 
+    if (error) {
+        return <p>Something went wrong</p>;
+    }
+
     if (session === null) {
-        return null;
+        return <p>Starting deposit session</p>;
     }
 
     switch (type) {

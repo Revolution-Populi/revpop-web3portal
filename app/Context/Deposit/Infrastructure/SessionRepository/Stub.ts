@@ -7,7 +7,7 @@ export default class Stub implements SessionRepositoryInterface {
     } = {};
 
     load(sessionId: string): Promise<Session | null> {
-        return Promise.resolve(this.sessions[sessionId]);
+        return Promise.resolve(this.sessions[sessionId] ?? null);
     }
 
     save(session: Session): Promise<boolean> {

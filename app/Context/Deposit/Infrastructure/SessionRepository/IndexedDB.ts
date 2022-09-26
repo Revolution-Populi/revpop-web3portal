@@ -1,19 +1,33 @@
-import {openDB} from "idb";
+import {DBSchema, IDBPDatabase, openDB} from "idb";
 import SessionRepositoryInterface from "../../Domain/SessionRepositoryInterface";
 import Session from "../../Domain/Session";
-import {IDBPDatabase} from "idb";
 import transformer from "./Transformer";
 
-export default class IndexedDB implements SessionRepositoryInterface {
-    private DB_NAME = "session";
-    private DB_VERSION = 1;
-    private DEPOSIT_STORE = "deposit";
-    private DB_TABLES = [this.DEPOSIT_STORE];
+interface DB extends DBSchema {
+    session: {
+        value: {
+            id: string;
+            smartContractAddress: string;
+            receiverAddress: string;
+            minimumAmount: string;
+            minimumTimeLock: number;
+            status: number;
+        };
+        key: string;
+    };
+}
 
-    private db: IDBPDatabase | null = null;
+const DB_NAME = "web3portal";
+const DB_VERSION = 1;
+const SESSION_TABLE = "session";
+
+//This repository has problems because of "indexeddbshim" package
+
+export default class IndexedDB implements SessionRepositoryInterface {
+    private db: IDBPDatabase<DB> | null = null;
 
     constructor() {
-        this.openDb();
+        this.openDatabase();
     }
 
     async load(sessionId: string): Promise<Session | null> {
@@ -21,15 +35,31 @@ export default class IndexedDB implements SessionRepositoryInterface {
             return null;
         }
 
-        const tx = this.db.transaction(this.DEPOSIT_STORE, "readwrite");
-        const store = tx.objectStore(this.DEPOSIT_STORE);
-        const session = await store.get(sessionId);
+        // const session = await this.db.get(SESSION_TABLE, sessionId)
 
-        if (!session) {
-            return null;
-        }
+        const store = this.db.transaction(SESSION_TABLE).objectStore(SESSION_TABLE);
+        const request = await store.get(sessionId);
 
-        return transformer.reverseTransform(session);
+        //TODO::remove indexeddbshim?
+        return new Promise((resolve, reject) => {
+            // @ts-ignore
+            request.onsuccess = () => {
+                // @ts-ignore
+                const session = request.result;
+
+                if (!session) {
+                    resolve(null);
+                }
+
+                // @ts-ignore
+                resolve(transformer.reverseTransform(session));
+            };
+
+            // @ts-ignore
+            request.onerror = () => {
+                console.log("Load session error.");
+            };
+        });
     }
 
     async save(session: Session): Promise<boolean> {
@@ -37,22 +67,19 @@ export default class IndexedDB implements SessionRepositoryInterface {
             return false;
         }
 
-        const tx = this.db.transaction(this.DEPOSIT_STORE, "readwrite");
-        const store = tx.objectStore(this.DEPOSIT_STORE);
+        const tx = this.db.transaction(SESSION_TABLE, "readwrite");
+        const store = tx.objectStore(SESSION_TABLE);
 
         await Promise.all([store.put(transformer.transform(session)), tx.done]);
 
         return true;
     }
 
-    private async openDb() {
-        this.db = await openDB(this.DB_NAME, this.DB_VERSION, {
-            upgrade: (db: IDBPDatabase) => {
-                for (const tableName of this.DB_TABLES) {
-                    if (db.objectStoreNames.contains(tableName)) {
-                        continue;
-                    }
-                    db.createObjectStore(tableName, {keyPath: "id"});
+    private async openDatabase() {
+        this.db = await openDB<DB>(DB_NAME, DB_VERSION, {
+            upgrade: db => {
+                if (!db.objectStoreNames.contains(SESSION_TABLE)) {
+                    db.createObjectStore(SESSION_TABLE, {keyPath: "id"});
                 }
             }
         });

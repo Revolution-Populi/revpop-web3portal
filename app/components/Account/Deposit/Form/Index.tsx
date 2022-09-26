@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
+import {useHistory} from "react-router-dom";
 import Web3 from "web3";
 // @ts-ignore
 import {connect} from "alt-react";
@@ -10,10 +11,10 @@ import moment, {Moment} from "moment";
 import {Map} from "immutable";
 // @ts-ignore
 import {ChainStore} from "@revolutionpopuli/revpopjs";
-import {Session, SessionContext} from "../Methods/Index";
+import {SessionContext} from "../Methods/Index";
 import AccountSelector from "../../AccountSelector";
 import AccountStore from "../../../../stores/AccountStore";
-import {Session as SessionDomain, MakeDeposit, makeDepositHandler} from "../../../../Context/Deposit";
+import {Session, MakeDeposit, makeDepositHandler} from "../../../../Context/Deposit";
 import HashLockField from "./SecretHashLock/Index";
 import AmountField from "./AmountField";
 import TimeLock from "./TimeLock";
@@ -31,17 +32,22 @@ interface Props {
     form: any;
     from: string;
     selectedAccountName: string;
-    onConfirmed: (txHash: string, amount: number, hashLock: string, timeout: Moment) => void;
 }
 
 //TODO:: add validation to the fields
-function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
+function DepositForm({form, from, selectedAccountName}: Props) {
+    const history = useHistory();
     const session = useContext(SessionContext) as Session;
     const [accountName, setAccountName] = useState<string>(selectedAccountName);
     const [account, setAccount] = useState<Map<string, any>>();
     const [amount, setAmount] = useState(0.01);
     const [hashLock, setHashLock] = useState<string>("");
-    const [timeLock, setTimeLock] = useState<Moment>(moment().add("1", "days"));
+    const [timeLock, setTimeLock] = useState<Moment>(
+        moment()
+            .add(session.minimumTimeLock, "minutes")
+            .add(1, "day")
+            .startOf("day")
+    );
 
     useEffect(() => {
         setAccount(ChainStore.getAccount(accountName));
@@ -72,12 +78,12 @@ function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
             timeLock.unix()
         );
 
-        const result = await makeDepositHandler.execute(command);
+        const sessionOrError = await makeDepositHandler.execute(command);
 
-        if (result.isRight()) {
-            const session = result.value.getValue() as SessionDomain;
+        if (sessionOrError.isSuccess()) {
+            const session = sessionOrError.value;
 
-            // onConfirmed(session.id, amount, hashLock, timeLock);
+            history.push(`/deposit/${session.id}`);
         } else {
             // TODO::show error
         }
@@ -116,9 +122,14 @@ function DepositForm({form, from, onConfirmed, selectedAccountName}: Props) {
                 locked={true}
                 onAccountChanged={onAccountChangedHandler}
             />
-            <AmountField form={form} amount={amount} onChange={onChangeAmountHandler} />
+            <AmountField
+                form={form}
+                amount={amount}
+                minAmount={session.minimumAmount}
+                onChange={onChangeAmountHandler}
+            />
             <HashLockField form={form} hashLock={hashLock} onChange={onChangeHashLockHandler} />
-            <TimeLock timeLock={timeLock} onChange={onChangeTimeLockHandler} />
+            <TimeLock timeLock={timeLock} minTimeLock={session.minimumTimeLock} onChange={onChangeTimeLockHandler} />
             <Form.Item wrapperCol={{span: 12, offset: 4}}>
                 <Button type="primary" htmlType="submit">
                     <Translate content="deposit.metamask" />

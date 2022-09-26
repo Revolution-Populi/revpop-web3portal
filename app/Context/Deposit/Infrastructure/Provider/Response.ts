@@ -1,4 +1,4 @@
-export default class CreateHtlcResponse {
+export default class Response {
     public error: string | null = null;
 
     constructor(private status: boolean, private _txHash: string) {}

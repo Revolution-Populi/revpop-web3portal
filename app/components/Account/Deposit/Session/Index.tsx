@@ -2,15 +2,21 @@ import React from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
 import {useParams} from "react-router-dom";
+import useLoadSession from "../Hooks/useLoadSession";
 
 type SelectorParams = {
     sessionId: string;
 };
 
-export default function Confirmed() {
+export default function Index() {
     const {sessionId} = useParams<SelectorParams>();
+    const [session, error] = useLoadSession(sessionId);
 
-    console.log(sessionId);
+    console.log(session, error);
+
+    if (!session) {
+        return <p>Can&apos;t load session</p>;
+    }
 
     return (
         <div className="htlc-created asset-card">
@@ -21,25 +27,25 @@ export default function Confirmed() {
                 <tbody>
                     <tr>
                         <td>
-                            <Translate content="deposit.tx_hash" />
+                            <Translate content="deposit.form.tx_hash.label" />
                         </td>
-                        {/*<td>{htlc.txHash}</td>*/}
+                        <td>{session.txHash}</td>
                     </tr>
                     <tr>
                         <td>
-                            <Translate content="deposit.amount" />
+                            <Translate content="deposit.form.amount.label" />
                         </td>
                         {/*<td>{htlc.amount}</td>*/}
                     </tr>
                     <tr>
                         <td>
-                            <Translate content="deposit.hash_lock" />
+                            <Translate content="deposit.form.hash_lock.label" />
                         </td>
                         {/*<td>{htlc.hashLock}</td>*/}
                     </tr>
                     <tr>
                         <td>
-                            <Translate content="deposit.timeout" />
+                            <Translate content="deposit.form.time_lock.label" />
                         </td>
                         {/*<td>{htlc.timeout?.format("lll")}</td>*/}
                     </tr>

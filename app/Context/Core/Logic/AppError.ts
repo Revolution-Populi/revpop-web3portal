@@ -16,14 +16,20 @@ export class AppError extends Error {
     }
 }
 
-export class BlockchainConnectionError extends AppError {
+export class BlockchainConnectionError extends Error {
     public constructor() {
         super("Blockchain connection error.");
     }
 }
 
-export class EesConnectionError extends AppError {
+export class EesConnectionError extends Error {
     public constructor() {
         super("EES services is unavailable.");
+    }
+}
+
+export class UseCaseError extends Error {
+    public constructor(message: string) {
+        super(message);
     }
 }

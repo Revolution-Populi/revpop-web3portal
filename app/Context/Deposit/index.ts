@@ -18,7 +18,7 @@ const sessionConfirmer = new SessionConfirmer();
 const sessionRepository = new SessionRepository();
 
 const getLastHandler = new GetLastHandler();
-const getSessionIdHandler = new GetSessionHandler();
+const getSessionIdHandler = new GetSessionHandler(sessionRepository);
 const sendTxHashHandler = new SendTxHashHandler();
 const makeDepositHandler = new MakeDepositHandler(sessionRepository, sessionConfirmer);
 const startSessionHandler = new StartSessionHandler(sessionRepository, sessionFetcher);

@@ -1,6 +1,6 @@
-import HTLC from "../../Domain/HTLC";
-import CreateHtlcResponse from "./CreateHtlcResponse";
+import Request from "./CreateHtlcRequest";
+import Response from "./CreateHtlcResponse";
 
 export default interface ProviderInterface {
-    create: (htlc: HTLC) => Promise<CreateHtlcResponse>;
+    create: (request: Request) => Promise<Response>;
 }

@@ -73,9 +73,5 @@ export default function Index() {
         );
     }
 
-    // if (htlc !== null) {
-    //     return <Confirmed htlc={htlc} />;
-    // }
-
     return <DepositForm from={currentAddress} onConfirmed={onConfirmed} />;
 }

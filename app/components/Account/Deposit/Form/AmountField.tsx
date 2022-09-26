@@ -7,10 +7,11 @@ import {Form, InputNumber, Tooltip, Icon} from "bitshares-ui-style-guide";
 interface Props {
     form: any;
     amount: number;
+    minAmount: string;
     onChange: (amount: number) => void;
 }
 
-export default function AmountField({form, amount, onChange}: Props) {
+export default function AmountField({form, amount, minAmount, onChange}: Props) {
     const {getFieldDecorator} = form;
 
     function onChangeHandler(amount: number) {
@@ -20,9 +21,7 @@ export default function AmountField({form, amount, onChange}: Props) {
     const label = (
         <>
             {counterpart.translate("deposit.form.amount.label")}
-            <Tooltip
-                title={counterpart.translate("deposit.form.amount.tooltip")}
-            >
+            <Tooltip title={counterpart.translate("deposit.form.amount.tooltip")}>
                 <Icon type="question-circle" />
             </Tooltip>
         </>
@@ -40,7 +39,7 @@ export default function AmountField({form, amount, onChange}: Props) {
                 ]
             })(
                 <InputNumber
-                    min={0}
+                    min={minAmount}
                     step={0.01}
                     formatter={(value: number) => `${value} ETH`}
                     onChange={onChangeHandler}

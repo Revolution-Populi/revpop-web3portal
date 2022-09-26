@@ -1,16 +1,16 @@
 import ProviderInterface from "./ProviderInterface";
-import CreateHtlcResponse from "./CreateHtlcResponse";
-import HTLC from "../../Domain/HTLC";
+import Request from "./Request";
+import Response from "./Response";
 
 export default class StubProvider implements ProviderInterface {
-    private _requests: HTLC[] = [];
+    private _requests: Request[] = [];
     private _status = true;
     private _txHash = "0xdefc225669c161c4acc15e261778499ff4154ed69b88cefed3d3a3bf07748405";
 
-    async create(htlc: HTLC): Promise<CreateHtlcResponse> {
-        this._requests.push(htlc);
+    async create(request: Request): Promise<Response> {
+        this._requests.push(request);
 
-        return new CreateHtlcResponse(this._status, this._txHash);
+        return new Response(this._status, this._txHash);
     }
 
     get size(): number {
@@ -21,12 +21,12 @@ export default class StubProvider implements ProviderInterface {
         this._requests = [];
     }
 
-    get last(): HTLC | null {
+    get last(): Request | null {
         if (this.size === 0) {
             return null;
         }
 
-        return this._requests.pop() as HTLC;
+        return this._requests.pop() as Request;
     }
 
     get txHash(): string {

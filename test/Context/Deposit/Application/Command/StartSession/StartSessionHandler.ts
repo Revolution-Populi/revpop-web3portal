@@ -20,6 +20,8 @@ describe("StartSessionHandler", () => {
             const command = new StartSession();
             const result = await handler.execute(command);
 
+            expect(result.isSuccess()).true;
+
             expect(sessionRepository.count).equals(1);
         });
     });

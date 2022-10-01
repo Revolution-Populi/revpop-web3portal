@@ -1,5 +1,5 @@
-import Request from "./CreateHtlcRequest";
-import Response from "./CreateHtlcResponse";
+import Request from "./Request";
+import Response from "./Response";
 
 export default interface ProviderInterface {
     create: (request: Request) => Promise<Response>;

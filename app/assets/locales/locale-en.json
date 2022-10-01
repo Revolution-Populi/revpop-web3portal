@@ -1130,10 +1130,6 @@
                 "label": "Amount",
                 "tooltip": "Amount tooltip"
             },
-            "tx_hash": {
-                "label": "Transaction hash",
-                "tooltip": "Transaction tooltip"
-            },
             "secret": {
                 "label": "Secret",
                 "tooltip": "Secret tooltip"
@@ -1171,6 +1167,32 @@
         "redeem": {
             "title": "Redeem",
             "secret": "Secret"
+        },
+        "session": {
+            "title": "Session",
+            "empty": "No sessions",
+            "fields": {
+                "id": {
+                    "label": "ID"
+                },
+                "tx_hash": {
+                    "label": "Transaction hash"
+                },
+                "amount": {
+                    "label": "Amount"
+                },
+                "time_lock": {
+                    "label": "Time lock"
+                },
+                "status": {
+                    "label": "Status",
+                    "list": {
+                        "1": "Created",
+                        "5": "Payed",
+                        "10": "Redeemed"
+                    }
+                }
+            }
         }
     },
     "network_parameters": {

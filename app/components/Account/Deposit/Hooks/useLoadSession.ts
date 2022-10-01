@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {GetSession, getSessionIdHandler, Session} from "../../../../Context/Deposit";
+import {GetSession, getSessionHandler, Session} from "../../../../Context/Deposit";
 
 export default function useLoadSession(sessionId: string): [Session | null, boolean] {
     const [session, setSession] = useState<Session | null>(null);
@@ -8,7 +8,7 @@ export default function useLoadSession(sessionId: string): [Session | null, bool
     useEffect(() => {
         async function loadSession() {
             const query = new GetSession(sessionId);
-            const sessionOrError = await getSessionIdHandler.execute(query);
+            const sessionOrError = await getSessionHandler.execute(query);
 
             if (sessionOrError.isFailure()) {
                 setError(true);

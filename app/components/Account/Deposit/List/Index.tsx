@@ -1,8 +1,8 @@
 import React from "react";
 // @ts-ignore
 import {Link, useRouteMatch} from "react-router-dom";
-// @ts-ignore
 import counterpart from "counterpart";
+import Sessions from "./Sessions";
 
 export default function Deposits() {
     const {url} = useRouteMatch();
@@ -15,7 +15,9 @@ export default function Deposits() {
                         {counterpart("deposit.new")}
                     </Link>
                 </div>
-                <div className="deposits">Deposits</div>
+                <div className="deposits">
+                    <Sessions />
+                </div>
             </div>
         </>
     );

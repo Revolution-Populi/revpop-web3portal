@@ -35,8 +35,6 @@ export default class IndexedDB implements SessionRepositoryInterface {
             return null;
         }
 
-        // const session = await this.db.get(SESSION_TABLE, sessionId)
-
         const store = this.db.transaction(SESSION_TABLE).objectStore(SESSION_TABLE);
         const request = await store.get(sessionId);
 
@@ -58,6 +56,38 @@ export default class IndexedDB implements SessionRepositoryInterface {
             // @ts-ignore
             request.onerror = () => {
                 console.log("Load session error.");
+            };
+        });
+    }
+
+    async all(): Promise<Session[]> {
+        if (this.db === null) {
+            return [];
+        }
+
+        const store = this.db.transaction(SESSION_TABLE).objectStore(SESSION_TABLE);
+        const request = await store.getAll();
+
+        //TODO::remove indexeddbshim?
+        return new Promise((resolve, reject) => {
+            // @ts-ignore
+            request.onsuccess = () => {
+                const sessions = [];
+
+                // @ts-ignore
+                for (const session of request.result) {
+                    sessions.push(transformer.reverseTransform(session));
+                }
+
+                console.log(sessions);
+
+                // @ts-ignore
+                resolve(sessions);
+            };
+
+            // @ts-ignore
+            request.onerror = () => {
+                console.log("Load sessions error.");
             };
         });
     }

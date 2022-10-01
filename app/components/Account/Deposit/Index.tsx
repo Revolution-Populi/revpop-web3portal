@@ -7,6 +7,7 @@ import Method from "./Methods/Index";
 import Redeem from "./Redeem/Index";
 import SendTxHashWrapped from "./Methods/Manually/SendTxHash";
 import Session from "./Session/Index";
+import CenterContainer from "./CenterContainer";
 
 export default function Index() {
     const {path} = useRouteMatch();
@@ -17,30 +18,36 @@ export default function Index() {
                 <HelpContent path={"components/Deposit"} />
             </div>
 
-            <div className="grid-block align-center">
-                <div className="center-container">
-                    <Switch>
-                        <Route path={`${path}`} exact>
-                            <Deposits />
-                        </Route>
-                        <Route path={`${path}/redeem`} exact>
-                            <Redeem />
-                        </Route>
-                        <Route path={`${path}/new`} exact>
-                            <Selector />
-                        </Route>
-                        <Route path={`${path}/new/send_tx_hash`} exact>
-                            <SendTxHashWrapped />
-                        </Route>
-                        <Route path={`${path}/new/:type`} exact>
-                            <Method />
-                        </Route>
-                        <Route path={`${path}/:sessionId`} exact>
-                            <Session />
-                        </Route>
-                    </Switch>
-                </div>
-            </div>
+            <Switch>
+                <Route path={`${path}`} exact>
+                    <Deposits />
+                </Route>
+                <Route path={`${path}/redeem`} exact>
+                    <CenterContainer>
+                        <Redeem />
+                    </CenterContainer>
+                </Route>
+                <Route path={`${path}/new`} exact>
+                    <CenterContainer>
+                        <Selector />
+                    </CenterContainer>
+                </Route>
+                <Route path={`${path}/new/send_tx_hash`} exact>
+                    <CenterContainer>
+                        <SendTxHashWrapped />
+                    </CenterContainer>
+                </Route>
+                <Route path={`${path}/new/:type`} exact>
+                    <CenterContainer>
+                        <Method />
+                    </CenterContainer>
+                </Route>
+                <Route path={`${path}/:sessionId`} exact>
+                    <CenterContainer>
+                        <Session />
+                    </CenterContainer>
+                </Route>
+            </Switch>
         </div>
     );
 }

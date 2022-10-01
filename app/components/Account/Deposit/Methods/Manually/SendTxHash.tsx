@@ -13,7 +13,6 @@ import {SendTxHash as SendTxHashCommand, sendTxHashHandler} from "../../../../..
 import AccountSelector from "../../../AccountSelector";
 import AccountStore from "../../../../../stores/AccountStore";
 import {Map} from "immutable";
-import {HTLC} from "../Metamask/Index";
 
 interface Props {
     form: any;
@@ -24,7 +23,6 @@ function SendTxHash({form, selectedAccountName}: Props) {
     const {getFieldDecorator} = form;
     const [txHash, setTxHash] = useState<string>();
     const [hashLock, setHashLock] = useState<string>();
-    const [htlc, setHTLC] = useState<HTLC | null>(null);
     const [accountName, setAccountName] = useState<string>(selectedAccountName);
     const [account, setAccount] = useState<Map<string, any>>();
 
@@ -49,13 +47,6 @@ function SendTxHash({form, selectedAccountName}: Props) {
 
         const command = new SendTxHashCommand(txHash as string, accountName, hashLock as string);
         const result = sendTxHashHandler.execute(command);
-
-        setHTLC({
-            txHash: txHash as string,
-            amount: null,
-            hashLock: hashLock as string,
-            timeout: null
-        });
     }
 
     const formItemLayout = {
@@ -82,10 +73,6 @@ function SendTxHash({form, selectedAccountName}: Props) {
     if (!account) {
         return <></>;
     }
-
-    // if (htlc !== null) {
-    //     return <Confirmed htlc={htlc} />;
-    // }
 
     return (
         <>

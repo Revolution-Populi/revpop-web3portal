@@ -1,4 +1,5 @@
 import MenuItemType from "./MenuItemType";
+import {showAssetsAccounts} from "../../branding";
 
 class MenuDataStructure {
     /*
@@ -150,21 +151,15 @@ class MenuDataStructure {
             login: state => ({
                 target: state.clickHandlers.toggleLock,
                 icon: "power",
-                text: state.locked
-                    ? "header.lock_short"
-                    : "header.unlock_short",
+                text: state.locked ? "header.lock_short" : "header.unlock_short",
                 inDropdownBehavior: MenuItemType.Always
             }),
             divider: state => ({
                 inDropdownBehavior: MenuItemType.Divider
             }),
             create_account: state => ({
-                includePattern: state.passwordLogin
-                    ? "/create-account/password"
-                    : "/create-account/wallet",
-                target: state.passwordLogin
-                    ? "/create-account/password"
-                    : "/create-account/wallet",
+                includePattern: state.passwordLogin ? "/create-account/password" : "/create-account/wallet",
+                target: state.passwordLogin ? "/create-account/password" : "/create-account/wallet",
                 icon: {
                     name: "create_account",
                     title: "icons.user.create_account"
@@ -194,9 +189,7 @@ class MenuDataStructure {
                 target: state.clickHandlers.followUnfollow,
                 icon: {
                     name: state.isContact ? "minus-circle" : "plus-circle",
-                    title: state.isContact
-                        ? "icons.minus_circle.remove_contact"
-                        : "icons.plus_circle.add_contact"
+                    title: state.isContact ? "icons.minus_circle.remove_contact" : "icons.plus_circle.add_contact"
                 },
                 text: state.isContact ? "account.unfollow" : "account.follow",
                 inDropdownBehavior: MenuItemType.WhenNotMyAccount
@@ -363,7 +356,8 @@ class MenuDataStructure {
                 icon: "assets",
                 text: "explorer.assets.title",
                 inHeaderBehavior: MenuItemType.Dynamic,
-                inDropdownBehavior: MenuItemType.WhenAccount
+                inDropdownBehavior: MenuItemType.WhenAccount,
+                hidden: !showAssetsAccounts().includes(state.currentAccount)
             }),
             account_signedmessages: state => ({
                 includePattern: "/signedmessages",

@@ -83,7 +83,7 @@ export function getUnits(chainId = "3da3a128") {
 }
 
 export function getDefaultMarket() {
-    return "RVP_USD";
+    return "RVETH_RVP";
 }
 
 /**
@@ -289,7 +289,7 @@ export function getSupportedLanguages() {
 
 export function getAllowedLogins() {
     // possible: list containing any combination of ["password", "wallet"]
-    return ["wallet"];
+    return ["password"];
 }
 
 export function getConfigurationAsset() {
@@ -304,4 +304,8 @@ export function getConfigurationAsset() {
 
 export function getSteemNewsTag() {
     return "revolutionpopuli.fdn";
+}
+
+export function showAssetsAccounts() {
+    return ["nathan"];
 }

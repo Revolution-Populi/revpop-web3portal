@@ -22,6 +22,7 @@ import AccountSignedMessages from "./AccountSignedMessages";
 import AccountWhitelist from "./AccountWhitelist";
 import AccountVoting from "./AccountVoting";
 import AccountOverview from "./AccountOverview";
+import {showAssetsAccounts} from "../../branding";
 
 class AccountPage extends React.Component {
     static propTypes = {
@@ -34,9 +35,7 @@ class AccountPage extends React.Component {
 
     componentDidMount() {
         if (this.props.account) {
-            AccountActions.setCurrentAccount.defer(
-                this.props.account.get("name")
-            );
+            AccountActions.setCurrentAccount.defer(this.props.account.get("name"));
             // Fetch possible fee assets here to avoid async issues later (will resolve assets)
             accountUtils.getPossibleFees(this.props.account, "transfer");
         }
@@ -45,8 +44,7 @@ class AccountPage extends React.Component {
     UNSAFE_componentWillReceiveProps(np) {
         if (np.account) {
             const npName = np.account.get("name");
-            const currentName =
-                this.props.account && this.props.account.get("name");
+            const currentName = this.props.account && this.props.account.get("name");
 
             if (!this.props.account || npName !== currentName) {
                 // Update the current account in order to access the header right menu options
@@ -67,14 +65,7 @@ class AccountPage extends React.Component {
     }
 
     render() {
-        let {
-            myActiveAccounts,
-            searchAccounts,
-            settings,
-            wallet_locked,
-            account,
-            hiddenAssets
-        } = this.props;
+        let {myActiveAccounts, searchAccounts, settings, wallet_locked, account, hiddenAssets} = this.props;
 
         if (!account) {
             return <Page404 />;
@@ -101,19 +92,18 @@ class AccountPage extends React.Component {
 
         return (
             <Switch>
-                <Route
-                    path={`/account/${account_name}`}
-                    exact
-                    render={() => <AccountOverview {...passOnProps} />}
-                />
-                <Redirect
-                    from={`/account/${account_name}/overview`}
-                    to={`/account/${account_name}`}
-                />
+                <Route path={`/account/${account_name}`} exact render={() => <AccountOverview {...passOnProps} />} />
+                <Redirect from={`/account/${account_name}/overview`} to={`/account/${account_name}`} />
                 <Route
                     path={`/account/${account_name}/assets`}
                     exact
-                    render={() => <AccountAssets {...passOnProps} />}
+                    render={() => {
+                        if (!showAssetsAccounts().includes(account_name)) {
+                            return <Page404 />;
+                        }
+
+                        return <AccountAssets {...passOnProps} />;
+                    }}
                 />
                 <Route
                     path={`/account/${account_name}/create-asset`}
@@ -144,10 +134,7 @@ class AccountPage extends React.Component {
                     path={`/account/${account_name}/voting/:tab`}
                     render={() => <AccountVoting {...passOnProps} />}
                 />
-                <Redirect
-                    from={`/account/${account_name}/voting`}
-                    to={`/account/${account_name}/voting/witnesses`}
-                />
+                <Redirect from={`/account/${account_name}/voting`} to={`/account/${account_name}/voting/witnesses`} />
                 <Route
                     path={`/account/${account_name}/whitelist`}
                     exact
@@ -181,9 +168,7 @@ export default connect(AccountPageStoreWrapper, {
         return {
             myActiveAccounts: AccountStore.getState().myActiveAccounts,
             searchAccounts: AccountStore.getState().searchAccounts,
-            currentAccount:
-                AccountStore.getState().currentAccount ||
-                AccountStore.getState().passwordAccount,
+            currentAccount: AccountStore.getState().currentAccount || AccountStore.getState().passwordAccount,
             settings: SettingsStore.getState().settings,
             hiddenAssets: SettingsStore.getState().hiddenAssets,
             wallet_locked: WalletUnlockStore.getState().locked,

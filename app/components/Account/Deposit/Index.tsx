@@ -5,7 +5,7 @@ import Deposits from "./List/Index";
 import Selector from "./Methods/Selector";
 import Method from "./Methods/Index";
 import Redeem from "./Redeem/Index";
-import SendTxHashWrapped from "./Methods/Manually/SendTxHash";
+import ConfirmTransactionWrapped from "./Methods/Manually/ConfirmTransaction";
 import Session from "./Session/Index";
 import CenterContainer from "./CenterContainer";
 
@@ -34,7 +34,7 @@ export default function Index() {
                 </Route>
                 <Route path={`${path}/new/send_tx_hash`} exact>
                     <CenterContainer>
-                        <SendTxHashWrapped />
+                        <ConfirmTransactionWrapped />
                     </CenterContainer>
                 </Route>
                 <Route path={`${path}/new/:type`} exact>

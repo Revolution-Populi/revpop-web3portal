@@ -7,8 +7,6 @@ import contractAbi from "../../../../assets/abi/HashedTimelock.json";
 import Request from "./Request";
 
 export default class Web3Provider implements ProviderInterface {
-    async load() {}
-
     async create(request: Request): Promise<Response> {
         const web3 = new Web3(window.ethereum as provider);
 

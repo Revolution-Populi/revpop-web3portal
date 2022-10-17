@@ -149,6 +149,7 @@
         "alt": "https://github.com/bitshares/alt.git",
         "alt-container": "https://github.com/bitshares/alt-container.git",
         "alt-react": "https://github.com/bitshares/alt-react.git",
+        "axios": "^1.1.2",
         "bignumber.js": "^4.0.0",
         "bitshares-ui-style-guide": "https://github.com/bitshares/bitshares-ui-style-guide.git",
         "browser-locale": "^1.0.3",

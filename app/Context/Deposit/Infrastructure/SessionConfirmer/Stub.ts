@@ -1,4 +1,6 @@
 import SessionConfirmerInterface from "../../Domain/SessionConfirmerInterface";
+import {EesConnectionError, Result} from "../../../Core";
+import {Success} from "../../../Core/Logic/Result";
 
 interface Session {
     sessionId: string;
@@ -12,7 +14,12 @@ export default class Stub implements SessionConfirmerInterface {
         [index: string]: Session;
     } = {};
 
-    confirm(sessionId: string, revpopAccount: string, txHash: string, hashLock: string): Promise<boolean> {
+    async confirm(
+        sessionId: string,
+        revpopAccount: string,
+        txHash: string,
+        hashLock: string
+    ): Promise<Result<EesConnectionError, void>> {
         this.confirmedSessions[sessionId] = {
             sessionId,
             txHash,
@@ -20,7 +27,7 @@ export default class Stub implements SessionConfirmerInterface {
             hashLock
         };
 
-        return Promise.resolve(true);
+        return Success.create(undefined);
     }
 
     get size(): number {
@@ -28,6 +35,6 @@ export default class Stub implements SessionConfirmerInterface {
     }
 
     getById(sessionId: string): Session {
-        return this.confirmedSessions[sessionId];
+        return this.confirmedSessions[sessionId] ?? null;
     }
 }

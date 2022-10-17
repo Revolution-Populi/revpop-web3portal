@@ -9,7 +9,7 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 // @ts-ignore
 import {Form, Input, Button} from "bitshares-ui-style-guide";
-import {SendTxHash as SendTxHashCommand, sendTxHashHandler} from "../../../../../Context/Deposit";
+import {ConfirmSession, confirmSessionHandler} from "../../../../../Context/Deposit";
 import AccountSelector from "../../../AccountSelector";
 import AccountStore from "../../../../../stores/AccountStore";
 import {Map} from "immutable";
@@ -19,7 +19,7 @@ interface Props {
     selectedAccountName: string;
 }
 
-function SendTxHash({form, selectedAccountName}: Props) {
+function ConfirmTransaction({form, selectedAccountName}: Props) {
     const {getFieldDecorator} = form;
     const [txHash, setTxHash] = useState<string>();
     const [hashLock, setHashLock] = useState<string>();
@@ -30,7 +30,7 @@ function SendTxHash({form, selectedAccountName}: Props) {
         setAccount(ChainStore.getAccount(accountName));
     }, [accountName]);
 
-    function handleSubmit(event: SubmitEvent) {
+    async function handleSubmit(event: SubmitEvent) {
         event.preventDefault();
 
         let errors = false;
@@ -45,8 +45,8 @@ function SendTxHash({form, selectedAccountName}: Props) {
             return;
         }
 
-        const command = new SendTxHashCommand(txHash as string, accountName, hashLock as string);
-        const result = sendTxHashHandler.execute(command);
+        const command = new ConfirmSession(txHash as string, accountName, hashLock as string);
+        await confirmSessionHandler.execute(command);
     }
 
     const formItemLayout = {
@@ -82,7 +82,7 @@ function SendTxHash({form, selectedAccountName}: Props) {
             <div className="redeem">
                 <Form {...formItemLayout} onSubmit={handleSubmit}>
                     <AccountSelector
-                        label="deposit.account"
+                        label="deposit.form.account.label"
                         accountName={account.get("name")}
                         account={account}
                         typeahead={true}
@@ -129,7 +129,7 @@ function SendTxHash({form, selectedAccountName}: Props) {
     );
 }
 
-export default connect(Form.create({name: "txHashForm"})(SendTxHash), {
+export default connect(Form.create({name: "txHashForm"})(ConfirmTransaction), {
     listenTo() {
         return [AccountStore];
     },

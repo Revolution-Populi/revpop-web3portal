@@ -1,4 +1,4 @@
-import moment from "moment";
+import axios, {AxiosResponse} from "axios";
 import SessionFetcherInterface from "../../Domain/SessionFetcherInterface";
 import Session from "../../Domain/Session";
 import {EesAPI} from "../../../../api/apiConfig";
@@ -15,28 +15,24 @@ interface EesSessionResponse {
 
 export default class EES implements SessionFetcherInterface {
     async fetch(): Promise<Result<EesConnectionError, Session>> {
+        let response: AxiosResponse<EesSessionResponse>;
+
         try {
-            const response = await fetch(EesAPI.BASE + EesAPI.INITIALIZE_SESSION, {
-                mode: "cors"
-            });
-
-            if (!response.ok) {
-                return Failure.create(new EesConnectionError());
-            }
-
-            const sessionJson: EesSessionResponse = await response.json();
-
-            const session = new Session(
-                sessionJson.session_id,
-                sessionJson.contract_address,
-                sessionJson.receiver_address,
-                sessionJson.minimum_deposit,
-                sessionJson.minimum_timelock
-            );
-
-            return Success.create(session);
+            response = await axios.get(EesAPI.BASE + EesAPI.INITIALIZE_SESSION);
         } catch (e) {
             return Failure.create(new EesConnectionError());
         }
+
+        const sessionJson: EesSessionResponse = response.data;
+
+        const session = new Session(
+            sessionJson.session_id,
+            sessionJson.contract_address,
+            sessionJson.receiver_address,
+            sessionJson.minimum_deposit,
+            sessionJson.minimum_timelock
+        );
+
+        return Success.create(session);
     }
 }

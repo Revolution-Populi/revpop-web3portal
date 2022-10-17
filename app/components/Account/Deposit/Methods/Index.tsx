@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import Metamask from "./Metamask/Index";
 import Manually from "./Manually/Index";
 import Page404 from "../../../Page404/Page404";
-import {Session, StartSession, startSessionHandler} from "../../../../Context/Deposit";
+import {Session, StartSession, initializeSessionHandler} from "../../../../Context/Deposit";
 
 type SelectorParams = {
     type: string;
@@ -19,7 +19,7 @@ export default function Index() {
     useEffect(() => {
         async function fetchSession() {
             const query = new StartSession();
-            const sessionOrError = await startSessionHandler.execute(query);
+            const sessionOrError = await initializeSessionHandler.execute(query);
 
             if (sessionOrError.isFailure()) {
                 setError(true);

@@ -1055,13 +1055,6 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.17.9":
-  version "7.17.9"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.9.tgz#d19fbf802d01a8cb6cf053a64e472d42c434ba72"
-  integrity sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
 "@babel/template@^7.16.7", "@babel/template@^7.4.0":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.16.7.tgz#8d126c8701fde4d66b264b3eba3d96f07666d155"
@@ -1499,17 +1492,44 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@revolutionpopuli/revpop-report@link:../revpop-report":
-  version "0.0.0"
-  uid ""
+"@revolutionpopuli/revpop-report@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@revolutionpopuli/revpop-report/-/revpop-report-2.0.0.tgz#b416964429c1266c758828b03e54c4297ca2ad3c"
+  integrity sha512-rs9dLvO8XNRnTnxvAWc+0NWUppTc3eyDww7Kj9mhBr1PgozW8lXEbQHgh6C+087DN32kzUsxfDVdcPY3N7zyTA==
+  dependencies:
+    async "^3.2.2"
+    csv "^6.0.5"
+    moment "^2.29.1"
+    node-fetch "2.6.6"
 
-"@revolutionpopuli/revpopjs-ws@link:../revpopjs-ws":
-  version "0.0.0"
-  uid ""
+"@revolutionpopuli/revpopjs-ws@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@revolutionpopuli/revpopjs-ws/-/revpopjs-ws-6.0.0.tgz#7e0a99b2ab6b076d8f932d3ee8dab3c4ef54dcc3"
+  integrity sha512-1DHs8tC4fy5rWl5UTY7Xy7wfAHFtPfJZfLZ3gejhDJm8pjaWvCgzGGT4/0hXa7DKnlvd7mkPkPiiaW6RUUKOFg==
+  dependencies:
+    isomorphic-ws "^4.0.1"
+    ws "^8.4.0"
 
-"@revolutionpopuli/revpopjs@link:../revpopjs":
-  version "0.0.0"
-  uid ""
+"@revolutionpopuli/revpopjs@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@revolutionpopuli/revpopjs/-/revpopjs-6.0.0.tgz#5f90de6f4bedae89ed656dcee3ef81930e993a0d"
+  integrity sha512-OLQMlNxbRYKas8tS5W2G/w/e5mRc3zw/mdp+KrKRMpQymi/cCFtXvYLwjcd4JEuc6gIyKKgQ/gk93yv3aq6EbA==
+  dependencies:
+    "@revolutionpopuli/revpopjs-ws" "^6.0.0"
+    aws-sdk "^2.810.0"
+    bigi "^1.4.2"
+    bs58 "^4.0.1"
+    bytebuffer "^5.0.1"
+    create-hash "^1.2.0"
+    create-hmac "^1.1.7"
+    crypto-js "^4.1.1"
+    deep-equal "^2.0.5"
+    ecurve "^1.0.6"
+    event-emitter "^0.3.5"
+    immutable "^4.0.0"
+    ipfs-http-client "^48.2.2"
+    safe-buffer "^5.2.1"
+    secure-random "^1.1.2"
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"

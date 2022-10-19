@@ -49,5 +49,5 @@ export default function ExpandedRowOperations({operations}: Props) {
         );
     });
 
-    return <ul className="operations-list">{viewOperations}</ul>;
+    return <ul className="operations-list">{viewOperations.toArray()}</ul>;
 }

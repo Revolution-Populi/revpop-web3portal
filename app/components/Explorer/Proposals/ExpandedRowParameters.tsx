@@ -14,7 +14,6 @@ export default function ExpandedRowParameters({parameters}: Props) {
         if (!parameter.changed && !parameter.new) {
             return null;
         }
-        console.log(parameter);
 
         if (parameter.changed) {
             return (
@@ -33,5 +32,5 @@ export default function ExpandedRowParameters({parameters}: Props) {
         );
     });
 
-    return <ul className="parameters-list">{viewParameters}</ul>;
+    return <ul className="parameters-list">{viewParameters.toArray()}</ul>;
 }

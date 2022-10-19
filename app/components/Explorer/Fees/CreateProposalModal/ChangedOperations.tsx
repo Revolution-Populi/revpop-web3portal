@@ -62,9 +62,14 @@ function Group({group}: GroupProps) {
                 </tr>
             </thead>
             <tbody>
-                {group.operations.map(operation => (
-                    <Operation key={(operation as OperationViewModel).id} operation={operation as OperationViewModel} />
-                ))}
+                {group.operations
+                    .map(operation => (
+                        <Operation
+                            key={(operation as OperationViewModel).id}
+                            operation={operation as OperationViewModel}
+                        />
+                    ))
+                    .toArray()}
             </tbody>
         </table>
     );

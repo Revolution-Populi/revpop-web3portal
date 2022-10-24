@@ -1510,10 +1510,10 @@
     isomorphic-ws "^4.0.1"
     ws "^8.4.0"
 
-"@revolutionpopuli/revpopjs@^6.0.0":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@revolutionpopuli/revpopjs/-/revpopjs-6.0.1.tgz#67dcc567fb27fcac2ace37ca1ab680e4aa56d6db"
-  integrity sha512-SV6EkloCISsyTCoNXWylsaLzVAWAVyIpE6eXtUWzpoHtSm2mxKxkLbPtOeU1Y+QnhXPu1ESFMF0kfC2pTobd6w==
+"@revolutionpopuli/revpopjs@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@revolutionpopuli/revpopjs/-/revpopjs-6.0.2.tgz#844b0e703cfa41d372b871f69752dbf4efd472a6"
+  integrity sha512-UDO3kyzHO2F8yq4QWDB0RoAv2u3XEgLyGFnCGPLCeGkfySW5Vj1AYffEz6Y2YSRK5l83lG/iEFXV94idhaPWXw==
   dependencies:
     "@revolutionpopuli/revpopjs-ws" "^6.0.0"
     aws-sdk "^2.810.0"

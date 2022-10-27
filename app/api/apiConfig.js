@@ -142,6 +142,12 @@ export const settingsAPIs = {
             country: "Germany"
         },
         {
+            url: "wss://testnet4.revolutionpopuli.com:8090",
+            location: "Revolution Populi Testnet node 4",
+            region: "Northwestern Europe",
+            country: "Netherlands"
+        },
+        {
             url: "ws://localhost:8090",
             location: "Locally hosted"
         }

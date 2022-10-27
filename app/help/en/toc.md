@@ -1,6 +1,6 @@
 #### Help
 
- * [RevPop](introduction/revpop.md)
+ * [Index](index.md)
  * [Wallet](introduction/wallets.md)
  * [Backups](introduction/backups.md)
  * [Blockchain](introduction/blockchain.md)
@@ -8,13 +8,4 @@
  * [Accounts](accounts/general.md)
  * [Proposed Transactions](accounts/proposed.md)
  * [Permissions](accounts/permissions.md)
- * [Memberships](accounts/membership.md)
- * [User Issued Assets](assets/uia.md)
- * [Privatized BitAssets](assets/privbitassets.md)
- * [Decentralized Exchange](dex/introduction.md)
- * [Trading](dex/trading.md)
- * [Short Selling BitAssets](dex/shorting.md)
- * [Gateways](gateways/introduction.md)
-    * [Citadel](gateways/citadel.md)
-    * [Rudex](gateways/rudex.md)
-    * [Xbts](gateways/xbtsx.md)
+ <!-- * [Memberships](accounts/membership.md) -->

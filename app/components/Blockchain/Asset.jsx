@@ -291,22 +291,6 @@ class Asset extends React.Component {
         );
     }
 
-    renderPermissionIndicators(permissions, names) {
-        return (
-            <div>
-                {names.map(name => {
-                    return (
-                        <AssetPermission
-                            key={`perm_${name}`}
-                            name={name}
-                            isSet={permissions[name]}
-                        />
-                    );
-                })}
-            </div>
-        );
-    }
-
     renderAuthorityList(authorities) {
         return authorities.map(function(authority) {
             return (
@@ -418,13 +402,6 @@ class Asset extends React.Component {
                     hide_issuer="true"
                 />
                 {short_name ? <p>{short_name}</p> : null}
-
-                <Link
-                    className="button market-button"
-                    to={`/market/${asset.symbol}_${preferredMarket}`}
-                >
-                    <Translate content="exchange.market" />
-                </Link>
             </div>
         );
     }
@@ -1156,47 +1133,6 @@ class Asset extends React.Component {
         );
     }
 
-    renderAssetOwnerUpdate(asset) {
-        return (
-            <Panel
-                header={
-                    <Translate content="account.user_issued_assets.update_owner" />
-                }
-            >
-                <Translate
-                    component="p"
-                    content="account.user_issued_assets.update_owner_text"
-                    asset={asset.symbol}
-                />
-                <AssetOwnerUpdate
-                    asset={asset}
-                    account={this.props.currentAccount}
-                    currentOwner={asset.issuer}
-                />
-            </Panel>
-        );
-    }
-
-    renderFeedPublish(asset) {
-        return (
-            <Panel
-                header={
-                    <Translate content="transaction.trxTypes.asset_publish_feed" />
-                }
-            >
-                <Translate
-                    component="p"
-                    content="explorer.asset.feed_producer_text"
-                />
-                <AssetPublishFeed
-                    asset={asset.id}
-                    account={this.props.currentAccount}
-                    currentOwner={asset.issuer}
-                />
-            </Panel>
-        );
-    }
-
     renderCollateralBid(asset) {
         return (
             <Panel
@@ -1229,205 +1165,30 @@ class Asset extends React.Component {
         );
     }
 
-    renderFeePoolFunding(asset) {
-        return (
-            <Panel
-                header={<Translate content="explorer.asset.fee_pool.fund" />}
-            >
-                <Translate
-                    component="p"
-                    content="explorer.asset.fee_pool.fund_text"
-                    asset={asset.symbol}
-                />
-                <FeePoolOperation
-                    asset={asset.symbol}
-                    funderAccountName={this.props.currentAccount}
-                    hideBalance
-                />
-            </Panel>
-        );
-    }
-
-    renderFeePoolClaiming(asset) {
-        let dynamic = this.props.getDynamicObject(asset.dynamic_asset_data_id);
-        if (dynamic) dynamic = dynamic.toJS();
-        return (
-            <Panel
-                header={
-                    <Translate content="explorer.asset.fee_pool.claim_balance" />
-                }
-            >
-                <FeePoolOperation
-                    asset={asset.symbol}
-                    funderAccountName={this.props.currentAccount}
-                    dynamic={dynamic}
-                    hideBalance
-                    type="claim"
-                />
-            </Panel>
-        );
-    }
-
-    renderFeesClaiming(asset) {
-        let dynamic = this.props.getDynamicObject(asset.dynamic_asset_data_id);
-        if (dynamic) dynamic = dynamic.toJS();
-        return (
-            <Panel
-                header={
-                    <Translate content="transaction.trxTypes.asset_claim_fees" />
-                }
-            >
-                <FeePoolOperation
-                    asset={asset.symbol}
-                    dynamic={dynamic}
-                    funderAccountName={this.props.currentAccount}
-                    hideBalance
-                    type="claim_fees"
-                />
-            </Panel>
-        );
-    }
-
-    // TODO: Blacklist Authorities: <Account list like Voting>
-    // TODO: Blacklist Market: Base/Market, Base/Market
     renderPermissions(asset) {
-        //var dynamic = asset.dynamic;
-
-        var options = asset.options;
-
-        let permissionBooleans = assetUtils.getFlagBooleans(
-            asset.options.issuer_permissions,
-            this.props.asset.has("bitasset_data_id")
-        );
-
-        let bitNames = Object.keys(permissionBooleans);
-
-        // options.blacklist_authorities = ["1.2.3", "1.2.4"];
-        // options.whitelist_authorities = ["1.2.1", "1.2.2"];
-        // options.blacklist_markets = ["JPY", "RUB"];
-        // options.whitelist_markets = ["USD", "EUR", "GOLD"];
-
-        // options.max_market_fee initially a string
-        var maxMarketFee = permissionBooleans["charge_market_fee"] ? (
-            <tr>
-                <td>
-                    <Translate content="explorer.asset.permissions.max_market_fee" />
-                </td>
-                <td>
-                    <FormattedAsset
-                        amount={+options.max_market_fee}
-                        asset={asset.id}
-                    />
-                </td>
-            </tr>
-        ) : null;
-
-        // options.max_supply initially a string
-        var maxSupply = (
-            <tr>
-                <td>
-                    <Translate content="explorer.asset.permissions.max_supply" />
-                </td>
-                <td>
-                    <FormattedAsset
-                        amount={+options.max_supply}
-                        asset={asset.id}
-                    />
-                </td>
-            </tr>
-        );
-
-        var whiteLists = permissionBooleans["white_list"] ? (
-            <div>
-                <br />
-                {!!options.blacklist_authorities &&
-                    !!options.blacklist_authorities.length && (
-                        <React.Fragment>
-                            <Translate content="explorer.asset.permissions.blacklist_authorities" />
-                            : &nbsp;
-                            {this.renderAuthorityList(
-                                options.blacklist_authorities
-                            )}
-                        </React.Fragment>
-                    )}
-                {!!options.blacklist_markets &&
-                    !!options.blacklist_markets.length && (
-                        <React.Fragment>
-                            <br />
-                            <Translate content="explorer.asset.permissions.blacklist_markets" />
-                            : &nbsp;
-                            {this.renderMarketList(
-                                asset,
-                                options.blacklist_markets
-                            )}
-                        </React.Fragment>
-                    )}
-                {!!options.whitelist_authorities &&
-                    !!options.whitelist_authorities.length && (
-                        <React.Fragment>
-                            <br />
-                            <Translate content="explorer.asset.permissions.whitelist_authorities" />
-                            : &nbsp;
-                            {this.renderAuthorityList(
-                                options.whitelist_authorities
-                            )}
-                        </React.Fragment>
-                    )}
-                {!!options.whitelist_markets &&
-                    !!options.whitelist_markets.length && (
-                        <React.Fragment>
-                            <br />
-                            <Translate content="explorer.asset.permissions.whitelist_markets" />
-                            : &nbsp;
-                            {this.renderMarketList(
-                                asset,
-                                options.whitelist_markets
-                            )}
-                        </React.Fragment>
-                    )}
-            </div>
-        ) : null;
-
-        let whitelist_market_fee_sharing = asset.options.extensions
-            .whitelist_market_fee_sharing && (
-            <React.Fragment>
-                <br />
-                <Translate content="explorer.asset.permissions.accounts_in_whitelist_market_fee_sharing" />
-                : &nbsp;
-                {this.renderAuthorityList(
-                    asset.options.extensions.whitelist_market_fee_sharing
-                )}
-            </React.Fragment>
-        );
+        const options = asset.options;
 
         return (
-            <Panel
-                header={
+            <div className="asset-card no-padding">
+                <div className="card-divider">
                     <Translate content="explorer.asset.permissions.title" />
-                }
-            >
-                <div>
-                    <table
-                        className="table key-value-table table-hover"
-                        style={{padding: "1.2rem"}}
-                    >
-                        <tbody>
-                            {maxMarketFee}
-                            {maxSupply}
-                        </tbody>
-                    </table>
-
-                    <br />
-                    {this.renderPermissionIndicators(
-                        permissionBooleans,
-                        bitNames
-                    )}
-                    <br />
-
-                    {whiteLists}
-                    {whitelist_market_fee_sharing}
                 </div>
-            </Panel>
+                <table className="table key-value-table table-hover">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <Translate content="explorer.asset.permissions.max_supply" />
+                            </td>
+                            <td>
+                                <FormattedAsset
+                                    amount={+options.max_supply}
+                                    asset={asset.id}
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         );
     }
 
@@ -2123,25 +1884,6 @@ class Asset extends React.Component {
         );
     }
 
-    renderAssetResolvePrediction(asset) {
-        return (
-            <Panel
-                header={
-                    <Translate content="account.user_issued_assets.resolve_prediction" />
-                }
-            >
-                <Translate
-                    component="p"
-                    content="account.user_issued_assets.resolve_prediction_text"
-                />
-                <AssetResolvePrediction
-                    asset={asset}
-                    account={this.props.currentAccount}
-                />
-            </Panel>
-        );
-    }
-
     render() {
         if (this.props.backingAsset === null) {
             return <Page404 subtitle="asset_not_found_subtitle" />;
@@ -2167,6 +1909,15 @@ class Asset extends React.Component {
                             {this.renderAboutBox(asset, this.props.asset)}
                         </div>
 
+                        <div className="grid-block vertical">
+                            <div className="text-center explore-testnet-warning">
+                                <Translate
+                                    component="span"
+                                    content="explorer.asset.testnet_warning"
+                                />
+                            </div>
+                        </div>
+
                         <Tabs
                             onChange={this._setAssetTab.bind(this)}
                             activeKey={this.state.activeAssetTab}
@@ -2185,52 +1936,9 @@ class Asset extends React.Component {
                                     <div className="grid-content small-no-padding">
                                         {this.renderSummary(asset)}
                                     </div>
-                                    <div>
-                                        <Collapse className="asset-collapse">
-                                            {this.renderPermissions(asset)}
-
-                                            {this.renderFeePool(asset)}
-
-                                            {priceFeed
-                                                ? this.renderPriceFeed(asset)
-                                                : null}
-
-                                            {priceFeed
-                                                ? this.renderSettlement(asset)
-                                                : null}
-
-                                            {this.state.showCollateralBidInInfo
-                                                ? this.renderCollateralBid(
-                                                      asset
-                                                  )
-                                                : null}
-                                        </Collapse>
-                                    </div>
+                                    <div>{this.renderPermissions(asset)}</div>
                                 </div>
                                 {priceFeedData ? priceFeedData : null}
-                            </Tabs.TabPane>
-                            <Tabs.TabPane
-                                tab={counterpart.translate(
-                                    "explorer.asset.actions"
-                                )}
-                                key="actions"
-                            >
-                                <Collapse className="asset-collapse">
-                                    {this.renderFeePoolFunding(asset)}
-                                    {this.renderFeePoolClaiming(asset)}
-                                    {this.renderFeesClaiming(asset)}
-                                    {this.renderAssetOwnerUpdate(asset)}
-                                    {"bitasset" in asset &&
-                                        !asset.bitasset.is_prediction_market &&
-                                        this.renderFeedPublish(asset)}
-                                    {this.state.collateralBids.length > 0 &&
-                                        this.renderCollateralBid(asset)}
-                                    {"bitasset" in asset &&
-                                        asset.bitasset.is_prediction_market &&
-                                        this.renderAssetResolvePrediction(
-                                            asset
-                                        )}
-                                </Collapse>
                             </Tabs.TabPane>
                         </Tabs>
                     </div>

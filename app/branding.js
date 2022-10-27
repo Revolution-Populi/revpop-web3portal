@@ -29,9 +29,9 @@ export function getWalletURL() {
 export function getFaucet() {
     return {
         url: "http://localhost:3000", // 2017-12-infrastructure worker proposal
-        show: true,
+        show: false,
         editable: false,
-        referrer: "onboarding.bitshares.foundation"
+        referrer: "onboarding.revpop.foundation"
     };
 }
 
@@ -67,7 +67,7 @@ export function getDefaultTheme() {
  */
 export function getDefaultLogin() {
     // possible: one of "password", "wallet"
-    return "password";
+    return "wallet";
 }
 
 /**
@@ -289,7 +289,7 @@ export function getSupportedLanguages() {
 
 export function getAllowedLogins() {
     // possible: list containing any combination of ["password", "wallet"]
-    return ["password"];
+    return ["wallet"];
 }
 
 export function getConfigurationAsset() {

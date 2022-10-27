@@ -119,6 +119,14 @@ const DashboardPage = Loadable({
     loading: LoadingIndicator
 });
 
+const WalletManager = Loadable({
+    loader: () =>
+        import(
+            /* webpackChunkName: "wallet" */ "./components/Wallet/WalletManager"
+        ),
+    loading: LoadingIndicator
+});
+
 const ExistingAccount = Loadable({
     loader: () =>
         import(
@@ -179,7 +187,6 @@ import LoginSelector from "./components/LoginSelector";
 import {CreateWalletFromBrainkey} from "./components/Wallet/WalletCreate";
 import ShowcaseGrid from "./components/Showcases/ShowcaseGrid";
 import PriceAlertNotifications from "./components/PriceAlertNotifications";
-import GatewaySelectorModal from "./components/Gateways/GatewaySelectorModal";
 import SettingsStore from "./stores/SettingsStore";
 import GatewayActions from "./actions/GatewayActions";
 import {allowedGateway} from "./branding";
@@ -196,7 +203,6 @@ class App extends React.Component {
                 : false;
         this.state = {
             isBrowserSupportModalVisible: false,
-            isGatewaySelectorModalVisible: false,
             loading: false,
             synced: this._syncStatus(),
             syncFail,
@@ -212,9 +218,6 @@ class App extends React.Component {
 
         this.showBrowserSupportModal = this.showBrowserSupportModal.bind(this);
         this.hideBrowserSupportModal = this.hideBrowserSupportModal.bind(this);
-        this.hideGatewaySelectorModal = this.hideGatewaySelectorModal.bind(
-            this
-        );
 
         Notification.config({
             duration: DEFAULT_NOTIFICATION_DURATION,
@@ -267,12 +270,6 @@ class App extends React.Component {
     hideBrowserSupportModal() {
         this.setState({
             isBrowserSupportModalVisible: false
-        });
-    }
-
-    hideGatewaySelectorModal() {
-        this.setState({
-            isGatewaySelectorModalVisible: false
         });
     }
 
@@ -359,10 +356,6 @@ class App extends React.Component {
             )
         ) {
             updateGatewayBackers();
-        } else {
-            this.setState({
-                isGatewaySelectorModalVisible: true
-            });
         }
     }
 
@@ -543,6 +536,10 @@ class App extends React.Component {
 
                                 {/* Wallet backup/restore routes */}
                                 <Route
+                                    path="/wallet"
+                                    component={WalletManager}
+                                />
+                                <Route
                                     path="/create-wallet-brainkey"
                                     component={CreateWalletFromBrainkey}
                                 />
@@ -640,10 +637,6 @@ class App extends React.Component {
                             visible={this.state.isBrowserSupportModalVisible}
                             hideModal={this.hideBrowserSupportModal}
                             showModal={this.showBrowserSupportModal}
-                        />
-                        <GatewaySelectorModal
-                            visible={this.state.isGatewaySelectorModalVisible}
-                            hideModal={this.hideGatewaySelectorModal}
                         />
                     </div>
                 </BodyClassName>

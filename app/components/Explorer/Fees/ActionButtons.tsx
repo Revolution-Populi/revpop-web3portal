@@ -1,11 +1,13 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 // @ts-ignore
 import {Button} from "bitshares-ui-style-guide";
 // @ts-ignore
 import Translate from "react-translate-component";
+import FeesContext from "./Context";
 import CreateProposalModal from "./CreateProposalModal/CreateProposalModal";
 
 export default function ActionButtons() {
+    const {operations} = useContext(FeesContext);
     const [isVisible, setIsVisible] = useState(false);
 
     function showModal() {
@@ -14,6 +16,13 @@ export default function ActionButtons() {
 
     function closeModal() {
         setIsVisible(false);
+    }
+
+    function existsEditedFees() {
+        return (
+            Object.values(operations).find(operation => operation.updated) !==
+            undefined
+        );
     }
 
     return (
@@ -26,6 +35,7 @@ export default function ActionButtons() {
             <Button
                 type="primary"
                 className="create-proposal"
+                disabled={!existsEditedFees()}
                 onClick={showModal}
             >
                 <Translate content="fees.create_proposal.button" />

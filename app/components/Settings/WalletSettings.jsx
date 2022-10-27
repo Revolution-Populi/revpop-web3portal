@@ -50,26 +50,11 @@ export default class WalletSettings extends React.Component {
                 <WalletDelete />
 
                 <FormItem
-                    label={counterpart.translate("wallet.balance_claims")}
+                    label={counterpart.translate("wallet.brainkey_seq_reset")}
                     className="no-offset"
                     style={{padding: "15px 0"}}
                 >
-                    <div style={{paddingBottom: 10}}>
-                        <Translate content="settings.lookup_text" />:
-                    </div>
-                    <Button onClick={this.onLookup.bind(this)}>
-                        <Translate content="wallet.balance_claim_lookup" />
-                    </Button>
-                </FormItem>
-
-                {lookupActive ? <BalanceClaimActive /> : null}
-
-                <FormItem
-                    label={counterpart.translate("wallet.brainkey_seq_reset")}
-                    className="no-offset"
-                    style={{paddingBottom: "15px"}}
-                >
-                    <div style={{paddingBottom: 10}}>
+                    <div>
                         <p>
                             <Translate
                                 unsafe

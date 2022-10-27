@@ -305,6 +305,12 @@ class Blocks extends React.Component {
         return (
             <div ref="outerWrapper" className="grid-block vertical">
                 {/* First row of stats */}
+                <div className="text-center explore-testnet-warning">
+                    <Translate
+                        component="span"
+                        content="explorer.asset.testnet_warning"
+                    />
+                </div>
                 <div className="align-center grid-block shrink small-horizontal blocks-row">
                     <div className="grid-block text-center small-6 medium-3">
                         <div className="grid-content no-overflow">
@@ -335,26 +341,10 @@ class Blocks extends React.Component {
                         </div>
                     </div>
                     <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel">
-                                <Translate
-                                    component="span"
-                                    content="explorer.blocks.trx_per_sec"
-                                />
-                            </span>
-                            <h2>{utils.format_number(trxPerSec, 2)}</h2>
-                        </div>
+                        <div className="grid-content no-overflow"></div>
                     </div>
                     <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow">
-                            <span className="txtlabel">
-                                <Translate
-                                    component="span"
-                                    content="explorer.blocks.avg_conf_time"
-                                />
-                            </span>
-                            <h2>{utils.format_number(avgTime / 2, 2)}s</h2>
-                        </div>
+                        <div className="grid-content no-overflow"></div>
                     </div>
                 </div>
 
@@ -392,20 +382,7 @@ class Blocks extends React.Component {
                     </div>
 
                     <div className="grid-block text-center small-6 medium-3">
-                        <div className="grid-content no-overflow clear-fix">
-                            <span className="txtlabel">
-                                <Translate
-                                    component="span"
-                                    content="explorer.blocks.trx_per_block"
-                                />
-                            </span>
-                            <h2>
-                                {utils.format_number(
-                                    trxCount / blockCount || 0,
-                                    2
-                                )}
-                            </h2>
-                        </div>
+                        <div className="grid-content no-overflow clear-fix"></div>
                     </div>
                     <div className="grid-block text-center small-6 medium-3">
                         <div className="grid-content no-overflow clear-fix">

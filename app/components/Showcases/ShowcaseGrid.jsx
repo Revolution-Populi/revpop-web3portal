@@ -31,14 +31,14 @@ class ShowcaseGrid extends Component {
         let thiz = this;
         const tiles = [
             {
-                title: "showcases.paper_wallet.title",
+                title: "showcases.personal_data.title",
                 target: () => {
                     if (hasAccount) {
-                        createPaperWalletAsPDF(this.state.currentAccount);
+                        thiz.props.history.push("/spotlight/personal");
                     }
                 },
-                description: "showcases.paper_wallet.description",
-                icon: "wallet", // see Icons app/compoentns/Icon/Icon
+                description: "showcases.personal_data.description",
+                icon: "user", // see Icons app/compoentns/Icon/Icon
                 disabled: hasAccount
                     ? false
                     : "Please login to use this functionality"
@@ -56,93 +56,6 @@ class ShowcaseGrid extends Component {
                 },
                 description: "showcases.voting.description",
                 icon: "voting",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.barter.title",
-                target: event => {
-                    thiz.props.history.push("/barter");
-                },
-                description: "showcases.barter.description",
-                icon: "barter",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.borrow.title",
-                target: () => {
-                    if (hasAccount) {
-                        thiz.props.history.push("/borrow");
-                    }
-                },
-                description: "showcases.borrow.description",
-                icon: "borrow",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.direct_debit.title",
-                target: event => {
-                    thiz.props.history.push("/direct-debit");
-                },
-                description: "showcases.direct_debit.description",
-                icon: "direct_debit",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.htlc.title",
-                target: event => {
-                    thiz.props.history.push("/htlc");
-                },
-                description: "showcases.htlc.description",
-                icon: "htlc",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.prediction_market.title",
-                target: event => {
-                    thiz.props.history.push("/prediction");
-                },
-                description: "showcases.prediction_market.description",
-                icon: "prediction",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.merchant_protocol.title",
-                target: event => {
-                    thiz.props.history.push("/invoice/request");
-                },
-                description: "showcases.merchant_protocol.description",
-                icon: "merchant",
-                disabled: hasAccount
-                    ? false
-                    : "Please login to use this functionality"
-            },
-            {
-                title: "showcases.timed_transfer.title",
-                target: () => {},
-                description: "showcases.timed_transfer.description",
-                icon: "alarm",
-                disabled: true,
-                comingSoon: true
-            },
-            {
-                title: "showcases.instant_trade.title",
-                target: event => {
-                    thiz.props.history.push("/instant-trade");
-                },
-                description: "showcases.instant_trade.description",
-                icon: "instant-trade",
                 disabled: hasAccount
                     ? false
                     : "Please login to use this functionality"

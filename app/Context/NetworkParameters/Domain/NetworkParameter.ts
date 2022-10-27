@@ -35,6 +35,12 @@ export default class NetworkParameter {
     }
 
     set newValue(value: ParameterValueType | null) {
+        if (value === this.value) {
+            this._newValue = null;
+            this._modified = false;
+            return;
+        }
+
         this._newValue = value;
         this._modified = true;
     }

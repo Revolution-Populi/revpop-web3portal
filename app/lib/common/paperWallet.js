@@ -1,7 +1,6 @@
 import jsPDF from "jspdf";
 import QRCode from "qrcode";
 import WalletDb from "stores/WalletDb";
-import image from "../../assets/icons/paper-wallet-header.png";
 
 const _createPaperWalletAsPDF = function(
     ownerkeys,
@@ -80,18 +79,6 @@ const _createPaperWalletAsPDF = function(
             });
     };
 
-    let img = new Image();
-    img.src = image;
-    pdf.addImage(
-        img,
-        "PNG",
-        logoPositionX,
-        30,
-        logoWidth,
-        logoHeight,
-        "",
-        "MEDIUM"
-    );
     pdf.text("Account:", 18, rowHeight - 10);
     pdf.text(accountName, 42, rowHeight - 10);
 
@@ -118,7 +105,7 @@ const _createPaperWalletAsPDF = function(
 
     Promise.all(content).then(() => {
         pdf.save(
-            "bitshares" +
+            "revpop" +
                 "-paper-wallet-" +
                 (locked ? "public-" : "private-") +
                 accountName +

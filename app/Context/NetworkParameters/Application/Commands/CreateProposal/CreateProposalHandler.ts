@@ -12,18 +12,27 @@ import ParametersType = NetworkParameters.ParametersType;
 export default class CreateProposalHandler {
     async execute(command: CreateProposal): Promise<Result<AppError, boolean>> {
         const transaction = WalletApi.new_transaction();
-        transaction.add_type_operation("committee_member_update_global_parameters", {
-            fee: {
-                amount: 0,
-                asset_id: "1.3.0"
-            },
-            new_parameters: this.parameterMapToObject(command.parameters)
-        });
+        transaction.add_type_operation(
+            "committee_member_update_global_parameters",
+            {
+                fee: {
+                    amount: 0,
+                    asset_id: "1.3.0"
+                },
+                new_parameters: this.parameterMapToObject(command.parameters)
+            }
+        );
 
-        return await createProposal(transaction, command.expirationTime, this.reviewPeriod(command.parameters));
+        return await createProposal(
+            transaction,
+            command.expirationTime,
+            this.reviewPeriod(command.parameters)
+        );
     }
 
-    private parameterMapToObject(parameters: ParametersType): BlockchainParametersType {
+    private parameterMapToObject(
+        parameters: ParametersType
+    ): BlockchainParametersType {
         const objectParameters: BlockchainParametersType = {};
 
         parameters.forEach(parameter => {
@@ -31,17 +40,23 @@ export default class CreateProposalHandler {
             const name = parameter.name;
 
             if (parameter.isLink()) {
-                objectParameters[name] = parameter.linkValue as BlockchainParameterType;
+                objectParameters[
+                    name
+                ] = parameter.linkValue as BlockchainParameterType;
             }
 
             if (parameter.isNormal()) {
-                const value = parameter.isModified() ? parameter.newValue : parameter.value;
+                const value = parameter.isModified()
+                    ? parameter.newValue
+                    : parameter.value;
 
                 objectParameters[name] = value as BlockchainParameterType;
             }
 
             if (parameter.isGroup()) {
-                objectParameters[name] = this.parameterMapToObject(parameter.children);
+                objectParameters[name] = this.parameterMapToObject(
+                    parameter.children
+                );
             }
         });
 
@@ -49,7 +64,9 @@ export default class CreateProposalHandler {
     }
 
     private reviewPeriod(parameters: ParametersType): number {
-        const reviewPeriodParameter = parameters.get("committee_proposal_review_period");
+        const reviewPeriodParameter = parameters.get(
+            "committee_proposal_review_period"
+        );
         return reviewPeriodParameter.value as number;
     }
 }

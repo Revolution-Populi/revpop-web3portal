@@ -179,10 +179,6 @@ class LoginSelector extends React.Component {
                             <span
                                 className="button hollow primary"
                                 onClick={() => {
-                                    SettingsActions.changeSetting.defer({
-                                        setting: "passwordLogin",
-                                        value: true
-                                    });
                                     WalletUnlockActions.unlock().catch(
                                         () => {}
                                     );

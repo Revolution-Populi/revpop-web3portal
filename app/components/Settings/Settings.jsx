@@ -30,15 +30,11 @@ class Settings extends React.Component {
         let general = [
             "locale",
             "unit",
-            "fee_asset",
-            "filteredServiceProviders",
             "browser_notifications",
             "showSettles",
             "walletLockTimeout",
             "themes",
-            "showAssetPercent",
-            "viewOnlyMode",
-            "showProposedTx"
+            "showAssetPercent"
         ];
         // disable that the user can change login method if only one is allowed
         if (getAllowedLogins().length > 1) general.push("passwordLogin");
@@ -155,7 +151,7 @@ class Settings extends React.Component {
 
         if (getFaucet().show) menuEntries.push("faucet_address");
 
-        menuEntries.push("reset");
+        // menuEntries.push("reset");
 
         return menuEntries;
     }
@@ -259,11 +255,9 @@ class Settings extends React.Component {
                 });
                 break;
 
-            case "showProposedTx":
             case "showSettles":
             case "showAssetPercent":
             case "passwordLogin":
-            case "viewOnlyMode":
                 let reference = defaults[setting][0];
                 if (reference.translate) reference = reference.translate;
                 SettingsActions.changeSetting({
@@ -271,10 +265,6 @@ class Settings extends React.Component {
                     value: e.target.value === reference
                 });
                 break;
-
-            case "filteredServiceProviders":
-                break;
-            case "fee_asset":
             case "unit":
                 const defaultSettings = defaults["unit"];
                 let index = findEntry(e.target.value, defaultSettings);

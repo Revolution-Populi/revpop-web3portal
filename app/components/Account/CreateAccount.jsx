@@ -322,6 +322,12 @@ class CreateAccount extends React.Component {
                     </button>
                 )}
 
+                <div style={{paddingTop: 40}}>
+                    <p style={{marginBottom: 0}}>
+                        <Translate unsafe content="account.privacy_agreement" />
+                    </p>
+                </div>
+
                 {/* Backup restore option */}
                 <div style={{paddingTop: 40}}>
                     <label>
@@ -362,6 +368,19 @@ class CreateAccount extends React.Component {
 
         return (
             <div className="confirm-checks">
+                <p>
+                    <a href="/privacy-notice.html" target="_blank">
+                        <Translate content="wallet.privacy_notice" />
+                    </a>
+                    <br />
+                    <a
+                        href="https://revolutionpopuli.com/terms-and-conditions/"
+                        target="_blank"
+                    >
+                        <Translate content="wallet.terms_of_use" />
+                    </a>
+                </p>
+
                 <h4
                     style={{
                         fontWeight: "normal",
@@ -393,7 +412,7 @@ class CreateAccount extends React.Component {
                     <Translate
                         style={{textAlign: "left"}}
                         component="p"
-                        content="wallet.first_account_paid"
+                        content="wallet.first_account_paid_testnet"
                     />
                 ) : (
                     <Translate
@@ -402,13 +421,6 @@ class CreateAccount extends React.Component {
                         content="wallet.not_first_account"
                     />
                 )}
-
-                {/* {this.state.hide_refcode ? null :
-                    <div>
-                        <RefcodeInput ref="refcode" label="refcode.refcode_optional" expandable={true}/>
-                        <br/>
-                    </div>
-                } */}
             </div>
         );
     }

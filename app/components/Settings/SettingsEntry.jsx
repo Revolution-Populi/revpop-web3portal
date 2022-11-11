@@ -3,10 +3,8 @@ import counterpart from "counterpart";
 import Translate from "react-translate-component";
 import AssetName from "../Utility/AssetName";
 import Notify from "notifyjs";
-import FeeAssetSettings from "./FeeAssetSettings";
 
-import {Checkbox, Select, Input, Form, Button} from "bitshares-ui-style-guide";
-import GatewaySelectorModal from "../Gateways/GatewaySelectorModal";
+import {Checkbox, Select, Input, Form} from "bitshares-ui-style-guide";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -150,54 +148,23 @@ export default class SettingsEntry extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        {!!value.allow &&
-                            Notify.needsPermission && (
-                                <a
-                                    href="https://goo.gl/zZ7NHY"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="external-link"
-                                >
-                                    <Translate
-                                        component="div"
-                                        className="settings--notifications--no-browser-support"
-                                        content="settings.browser_notifications_disabled_by_browser_notify"
-                                    />
-                                </a>
-                            )}
+                        {!!value.allow && Notify.needsPermission && (
+                            <a
+                                href="https://goo.gl/zZ7NHY"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="external-link"
+                            >
+                                <Translate
+                                    component="div"
+                                    className="settings--notifications--no-browser-support"
+                                    content="settings.browser_notifications_disabled_by_browser_notify"
+                                />
+                            </a>
+                        )}
                     </div>
                 );
 
-                break;
-
-            case "fee_asset":
-                options = null;
-                value = true;
-                component = <FeeAssetSettings key="fee_asset_component" />;
-                break;
-
-            case "filteredServiceProviders":
-                options = null;
-                value = true;
-                component = (
-                    <React.Fragment>
-                        <Button
-                            onClick={this.showGatewaySelectorModal.bind(this)}
-                        >
-                            Choose external Service Providers
-                        </Button>
-                        {this.state.isGatewaySelectorModalRendered && (
-                            <GatewaySelectorModal
-                                visible={
-                                    this.state.isGatewaySelectorModalVisible
-                                }
-                                hideModal={this.hideGatewaySelectorModal.bind(
-                                    this
-                                )}
-                            />
-                        )}
-                    </React.Fragment>
-                );
                 break;
 
             case "defaultMarkets":

@@ -22,10 +22,6 @@ class BlockchainRepository implements RepositoryInterface {
 
         // @ts-ignore
         transaction.propose({
-            fee: {
-                amount: 1206522,
-                asset_id: "1.3.0"
-            },
             fee_paying_account: account.get("id"),
             expiration_time: proposal.expirationTime,
             review_period_seconds: proposal.reviewPeriod
@@ -49,7 +45,9 @@ class BlockchainRepository implements RepositoryInterface {
         const proposals = Set<Proposal>().asMutable();
 
         for (const blockchainProposal of data) {
-            proposals.add(factory.fromBlockchain(blockchainProposal, account.get("id")));
+            proposals.add(
+                factory.fromBlockchain(blockchainProposal, account.get("id"))
+            );
         }
 
         return proposals;

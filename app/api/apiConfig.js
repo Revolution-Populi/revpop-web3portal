@@ -152,6 +152,7 @@ export const settingsAPIs = {
             location: "Locally hosted"
         }
     ],
+    ES_WRAPPER_LIST: [],
     DEFAULT_FAUCET: getFaucet().url,
     TESTNET_FAUCET: getTestFaucet().url
 };

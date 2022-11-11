@@ -244,6 +244,12 @@ class Assets extends React.Component {
             <div className="grid-block vertical">
                 <div className="grid-block vertical">
                     <div className="grid-block main-content small-12 medium-10 medium-offset-1 main-content vertical">
+                        <div className="text-center explore-testnet-warning">
+                            <Translate
+                                component="span"
+                                content="explorer.asset.testnet_warning"
+                            />
+                        </div>
                         <div className="generic-bordered-box">
                             <div
                                 style={{

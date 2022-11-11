@@ -1,5 +1,4 @@
 [# summary]
-
 ### Asset {symbol}
 
 {description}

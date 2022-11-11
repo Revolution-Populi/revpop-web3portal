@@ -101,7 +101,6 @@ class MenuDataStructure {
                 allItems.account_assets,
                 allItems.account_signedmessages,
                 allItems.account_stats,
-                allItems.account_vesting,
                 allItems.account_whitelist,
                 allItems.account_permissions
             ];
@@ -112,8 +111,6 @@ class MenuDataStructure {
         return [
             allItems.login,
             allItems.create_account,
-            allItems.follow,
-            allItems.divider,
             allItems.dashboard,
             allItems.market,
             allItems.explorer,
@@ -121,28 +118,27 @@ class MenuDataStructure {
             allItems.transfer,
             allItems.deposit,
             allItems.withdraw,
+            allItems.settings,
+            allItems.settings_mobile,
+            allItems.help,
             allItems.account_voting,
-            allItems.spotlight,
-            allItems.insight,
-            allItems.divider,
+            allItems.account_vesting,
+            allItems.account_permissions,
+            allItems.account_assets
+            // allItems.accounts
             // allItems.account_voting,
-            // allItems.account_assets,
             // allItems.account_signedmessages,
             // allItems.account_stats,
             // allItems.account_vesting,
             // allItems.account_vesting_2,
             // allItems.account_whitelist,
-            // allItems.account_permissions,
             // allItems.divider,
-            allItems.settings,
-            allItems.settings_mobile,
-            allItems.accounts,
             // allItems.news,
-            allItems.borrow,
-            allItems.barter,
-            allItems.direct_debit,
-            allItems.prediction,
-            allItems.htlc
+            // allItems.borrow,
+            // allItems.barter,
+            // allItems.direct_debit,
+            // allItems.prediction,
+            // allItems.htlc
         ];
     }
 
@@ -151,15 +147,21 @@ class MenuDataStructure {
             login: state => ({
                 target: state.clickHandlers.toggleLock,
                 icon: "power",
-                text: state.locked ? "header.lock_short" : "header.unlock_short",
+                text: state.locked
+                    ? "header.lock_short"
+                    : "header.unlock_short",
                 inDropdownBehavior: MenuItemType.Always
             }),
             divider: state => ({
                 inDropdownBehavior: MenuItemType.Divider
             }),
             create_account: state => ({
-                includePattern: state.passwordLogin ? "/create-account/password" : "/create-account/wallet",
-                target: state.passwordLogin ? "/create-account/password" : "/create-account/wallet",
+                includePattern: state.passwordLogin
+                    ? "/create-account/password"
+                    : "/create-account/wallet",
+                target: state.passwordLogin
+                    ? "/create-account/password"
+                    : "/create-account/wallet",
                 icon: {
                     name: "create_account",
                     title: "icons.user.create_account"
@@ -183,16 +185,7 @@ class MenuDataStructure {
                 icon: "dashboard",
                 text: "header.dashboard",
                 inHeaderBehavior: MenuItemType.WhenAccount,
-                inDropdownBehavior: MenuItemType.WhenAccount
-            }),
-            follow: state => ({
-                target: state.clickHandlers.followUnfollow,
-                icon: {
-                    name: state.isContact ? "minus-circle" : "plus-circle",
-                    title: state.isContact ? "icons.minus_circle.remove_contact" : "icons.plus_circle.add_contact"
-                },
-                text: state.isContact ? "account.unfollow" : "account.follow",
-                inDropdownBehavior: MenuItemType.WhenNotMyAccount
+                inDropdownBehavior: MenuItemType.Never
             }),
             market: state => ({
                 includePattern: "/market/",
@@ -203,7 +196,7 @@ class MenuDataStructure {
                 },
                 text: "header.exchange",
                 inHeaderBehavior: MenuItemType.Always,
-                inDropdownBehavior: MenuItemType.WhenNotInHeader
+                inDropdownBehavior: MenuItemType.Never
             }),
             explorer: state => ({
                 includePattern: "/explorer",
@@ -214,7 +207,7 @@ class MenuDataStructure {
                 },
                 text: "header.explorer",
                 inHeaderBehavior: MenuItemType.Always,
-                inDropdownBehavior: MenuItemType.WhenNotInHeader
+                inDropdownBehavior: MenuItemType.Never
             }),
             transfer: state => ({
                 target: state.clickHandlers.showSend,
@@ -429,7 +422,7 @@ class MenuDataStructure {
                 },
                 text: "header.help",
                 inHeaderBehavior: MenuItemType.Dynamic,
-                inDropdownBehavior: MenuItemType.Never
+                inDropdownBehavior: MenuItemType.Always
             }),
             borrow: state => ({
                 includePattern: "/borrow",

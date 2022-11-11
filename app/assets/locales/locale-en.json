@@ -140,9 +140,8 @@
         "no_price": "--",
         "open_orders": "Open Orders",
         "optional": {
-            "formatter": "Optionally, {restore_link} or create an account using the {restore_form}.",
-            "restore_form": "advanced form",
-            "restore_link": "restore your account"
+            "formatter": "{restore_link}",
+            "restore_link": "Restore your existing account"
         },
         "options": {
             "memo_key": "Memo Key",
@@ -206,6 +205,7 @@
         },
         "permissions": "Permissions",
         "please_create_account": "Please create an account",
+        "privacy_agreement": "By creating an account, you agree that you have read and accept the <a href='https://revolutionpopuli.com/terms-and-conditions/' target='blank'>Terms of Use</a> and <a href='/privacy-notice.html' target='blank'>Testnet Privacy Notice</a>.",
         "polo_scam": "This account is not the real Poloniex account, please send to this account: poloniexwallet.",
         "portfolio": "Balances",
         "propose_from": "Propose From",
@@ -945,6 +945,7 @@
                 "market_fee_referral_taker_fee_percent": "Taker fee percent",
                 "stealth_supply": "Stealth supply"
             },
+            "testnet_warning": "The RVP token used in this Test Net is purely for test purposes, and is not the token that will be used in Main Net. The RVETH token used in this Test Net is also purely for test purposes.",
             "title": "Asset",
             "whitelist": {
                 "blacklist_authorities": "Blacklist authorities",
@@ -1067,7 +1068,7 @@
             "daily_pay": "Daily pay (RVP)",
             "date_text": "The start date should be at least a week into the future in order to allow people the time to discover, evaluate and vote for your worker.",
             "name_text": "The name of your worker should be short and descriptive, something like this: 'Worker Purpose - Account Name'",
-            "pay_text": "The daily pay defines how much you want to be paid per day and is defined in RVP. The current best practice is to define a salary in USD/CNY, and commit to burning whatever surplus you receive as a result of the RVP price increasing. As long as your worker is active and has sufficient votes to be above the refund worker, you will receive this daily salary.",
+            "pay_text": "The daily pay defines how much you want to be paid per day and is defined in RVP.",
             "period": "Duration",
             "title": "Worker name",
             "url_text": "You should supply a website, github document or google doc that describes in more detail the purpose of the worker and how you intend to use the worker pay.",
@@ -1104,14 +1105,6 @@
             "use_none": "Use none",
             "use_selected": "Use selected",
             "wallet": "Wallet"
-        },
-        "welcome": {
-            "explanation_dex": "BitShares offers a native decentralized exchange, the BitShares DEX. It is running completely on the blockchain with no need for centralized services, even the order matching is transparently on-chain.",
-            "explanation_later": "If you want to adjust this later on, you can also choose the external service providers in the Settings.",
-            "explanation_service_providers": "You can trade anything against everything, as long as the asset (token) is available on the BitShares Blockchain. For tokens that are not native to it there exist external service providers (so called Gateways and Bridges), that allow you to trade tokens like BTC on the BitShares DEX by providing you their own IOU ('I owe you') of it.",
-            "explanation_what_to_do": "You may choose which of those service providers you want to see readily available in the BitShares UI. To do so, click 'Choose Services'. If you want to keep using the BitShares UI just like before, lick 'Not now'.",
-            "first_line": "today, we want to give you some insight on the BitShares Blockchain and services around it.",
-            "hello": "Dear BitShares' User"
         }
     },
     "fees": {
@@ -1628,7 +1621,7 @@
             "confirm": "CONFIRM",
             "create_committee": "Become a committee member",
             "from": "From",
-            "text": "After being voted in as active committee you can help set policies and parameters for the BitShares blockchain including: <ul><li>Transaction fees</li><li>Parameters of BitAssets (e.g. market fees)</li><li>Blockchain parameters (e.g. block size & interval)</li><li>Referral and vesting parameters (e.g. cash back percent for life-time-members and vesting period)</li><li>Other governance matters</li></ul> Submit a link to your website or forum post explaining why yo would be a exemplary member to attract enough votes to become active. Committee members should have basic technical understanding of BitShares and bring knowledge and expertise in key aspects of governing an autonomous and self-sustaining blockchain. This is an unpaid position.",
+            "text": "After being voted in as active committee you can help set policies and parameters for the RevPop blockchain including: <ul><li>Transaction fees</li><li>Blockchain parameters (e.g. block size & interval)</li><li>Other governance matters</li></ul> Submit a link to your website or forum post explaining why you would be an exemplary member to attract enough votes to become active. Committee members should have basic technical understanding of RevPop and bring knowledge and expertise in key aspects of governing an autonomous and self-sustaining blockchain. This is an unpaid position.",
             "url": "URL",
             "web_example": "Enter link to your committee proposal post"
         },
@@ -1750,7 +1743,7 @@
             "enter_public_signing_key": "Enter your public signing key",
             "invalid_key": "Public Key is invalid",
             "public_signing_key": "Public Signing Key",
-            "text": "After being voted in as an active witness you are added in the rotation of block producers and expected to produce blocks signed by your signing key and you are rewarded in BTS per produced block. Common criteria that help make your case are <ul><li>implementation of fallbacks (e.g. running a hot swap backup server) and appropriate server specifications to ensure a low number of missed blocks (e.g. high connectivity)</li><li>participation in block production and rolling releases of the testnet</li><li>provision of a public node for the community</li><li>publication of price feeds for the BitAssets</li></ul> Submit a link to your website or forum post explaining why you would be a exemplary member to attract enough votes to become active.",
+            "text": "After being voted in as an active witness you are added in the rotation of block producers and expected to produce blocks signed by your signing key and you are rewarded in RVP per produced block. Common criteria that help make your case are <ul><li>implementation of fallbacks (e.g. running a hot swap backup server) and appropriate server specifications to ensure a low number of missed blocks (e.g. high connectivity)</li><li>participation in block production and rolling releases of the testnet</li><li>provision of a public node for the community</li></ul> Submit a link to your website or forum post explaining why you would be a exemplary member to attract enough votes to become active.",
             "url": "URL",
             "web_example": "Enter link to your witness proposal post",
             "witness_account": "Witness Account"
@@ -2359,6 +2352,47 @@
             "description": "Create a PDF with your account's keys printed (plain text and barcode). If the wallet is unlocked, the private keys are added as well.",
             "title": "Paper Wallet"
         },
+        "personal_data": {
+            "description": "Manage your personal data, grant permission to view some of your personal data to others. View personal data of other users by their permission.",
+            "form": {
+                "email": "Email",
+                "first_name": "First Name",
+                "full_name": "Full name",
+                "last_name": "Last Name",
+                "phone": "Phone",
+                "photo": "Photo",
+                "storage": "Storage"
+            },
+            "my": {
+                "account": "My account",
+                "delete": "Delete data",
+                "load": "Load data",
+                "save": "Save data",
+                "title": "Manage my data"
+            },
+            "share": {
+                "account": "Share with account",
+                "delete": "Remove permission",
+                "load_data": "To start sharing, load your personal data on the form above and select the account you want to share with.",
+                "same_user": "You cannot share data with yourself.",
+                "save": "Grant permission",
+                "select_parts": "Select personal data to share",
+                "title": "Share my data"
+            },
+            "title": "Personal Data",
+            "view": {
+                "account": "View account",
+                "invalid": "The data provided doesn't match the original user data.",
+                "load": "View data",
+                "load_data": "To view someone else's data, select your account and another user account.",
+                "load_error": "<error>",
+                "loading": "<loading...>",
+                "no_data": "This account has not been sharing information with you.",
+                "missing_part": "<not available>",
+                "title": "Viewing other users' data",
+                "valid": "The data provided matches the original user data."
+            }
+        },
         "prediction_market": {
             "description": "Create a prediction into the future that others can agree or disagree with, leveraged with collateral.",
             "title": "Prediction Markets"
@@ -2780,9 +2814,9 @@
     },
     "voting": {
         "create_ticket": "Lock 1 {asset}",
-        "description": "The BitShares blockchain allows the holders of its core token BTS to vote on block producers (witnesses), committee members (blockchain governance), worker proposals (reimbursement for tasks and strategic decisions through BSIPs/Polls).",
+        "description": "The Revpop blockchain allows the holders of its core token RVP to vote on block producers (witnesses), committee members (blockchain governance), worker proposals (reimbursement for tasks and strategic decisions through BSIPs/Polls).",
         "increase_voting_power": "Create Lock",
-        "ticket_explanation": "Obtain voting power by locking away the core token BTS.",
+        "ticket_explanation": "Obtain voting power by locking away the core token RVP.",
         "title": "Voting"
     },
     "walkthrough": {
@@ -2883,6 +2917,7 @@
         "enter_password": "Password",
         "existing_password": "Existing Password",
         "first_account_paid": "Since this is your first account, a faucet will pay the registration fee for you.",
+        "first_account_paid_testnet": "A faucet will pay the registration fee for you in the Testnet. You will also be credited with a few coins to start with.",
         "generated": "Generated password",
         "go_get_started": "Getting Started",
         "has_wallet": "When you create your first %(wallet_name)s account, a %(wallet_name)s local wallet will be automatically created as well and stored in your browser. This local wallet is encrypted with your password, and will contain any private keys belonging to your accounts. It is important that you take the time to backup this wallet once created!",
@@ -2934,6 +2969,7 @@
         "password_model_3": "<li>Single account</li><li>Easy login</li><li>Moderate security</li>",
         "password_show": "Show me my password",
         "paste_private": "Paste private keys here (Wallet Import Format - WIF)",
+        "privacy_notice": "Testnet Privacy Notice",
         "pwd4brainkey": "Enter your password to show your brainkey",
         "read_more": "Read more about %(wallet)s and %(backup)s.",
         "ready_to_restore": "Ready to Restore",
@@ -2956,6 +2992,7 @@
         "submit": "Submit",
         "switch_model_password": "Switch to cloud wallet",
         "switch_model_wallet": "Switch to local wallet",
+        "terms_of_use": "Terms of Use",
         "tips_account": "See your new account",
         "tips_dashboard": "See your Portfolio",
         "tips_deposit": "Make a deposit",

@@ -18,8 +18,7 @@ export default function ActionButtons({onProposalCreated}) {
 
     function existsEditedParameters() {
         return (
-            parameters.find(parameter => parameter.newValue !== undefined) !==
-            undefined
+            parameters.find(parameter => parameter.isModified()) !== undefined
         );
     }
 

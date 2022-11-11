@@ -633,22 +633,8 @@ class AccountVoting extends React.Component {
                     <div className="padding">
                         <div>
                             <Translate content="voting.title" component="h1" />
-                            <Translate
-                                content="voting.description"
-                                component="p"
-                            />
                         </div>
-                        <div className="ticket-row">
-                            {increase_voting_power}
-                            <Translate
-                                content="voting.ticket_explanation"
-                                component="p"
-                            />
-                        </div>
-                        <div className="proxy-row">
-                            {proxyInput}
-                            {actionButtons}
-                        </div>
+                        <div className="proxy-row">{actionButtons}</div>
                     </div>
 
                     <Tabs

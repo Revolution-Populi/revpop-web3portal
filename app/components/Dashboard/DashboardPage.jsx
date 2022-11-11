@@ -51,25 +51,7 @@ class DashboardPage extends React.Component {
                                         <StarredMarkets />
                                     </Tab>
                                     {preferredBases.map(q => {
-                                        let title = (
-                                            <span>
-                                                <img
-                                                    className="column-hide-small"
-                                                    style={{
-                                                        maxWidth: 30,
-                                                        marginRight: 5
-                                                    }}
-                                                    src={`${__BASE_URL__}asset-symbols/${q
-                                                        .replace(
-                                                            /^BTC/,
-                                                            "OPEN.BTC"
-                                                        )
-                                                        .toLowerCase()}.png`}
-                                                />
-                                                &nbsp;
-                                                {q}
-                                            </span>
-                                        );
+                                        let title = <span>{q}</span>;
 
                                         return (
                                             <Tab key={q} title={title}>
@@ -93,28 +75,25 @@ class DashboardPage extends React.Component {
     }
 }
 
-export default connect(
-    DashboardPage,
-    {
-        listenTo() {
-            return [AccountStore, SettingsStore];
-        },
-        getProps() {
-            let {
-                myActiveAccounts,
-                myHiddenAccounts,
-                passwordAccount,
-                accountsLoaded,
-                refsLoaded
-            } = AccountStore.getState();
+export default connect(DashboardPage, {
+    listenTo() {
+        return [AccountStore, SettingsStore];
+    },
+    getProps() {
+        let {
+            myActiveAccounts,
+            myHiddenAccounts,
+            passwordAccount,
+            accountsLoaded,
+            refsLoaded
+        } = AccountStore.getState();
 
-            return {
-                myActiveAccounts,
-                myHiddenAccounts,
-                passwordAccount,
-                accountsReady: accountsLoaded && refsLoaded,
-                preferredBases: SettingsStore.getState().preferredBases
-            };
-        }
+        return {
+            myActiveAccounts,
+            myHiddenAccounts,
+            passwordAccount,
+            accountsReady: accountsLoaded && refsLoaded,
+            preferredBases: SettingsStore.getState().preferredBases
+        };
     }
-);
+});

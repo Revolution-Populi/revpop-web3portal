@@ -368,19 +368,6 @@ class CreateAccount extends React.Component {
 
         return (
             <div className="confirm-checks">
-                <p>
-                    <a href="/privacy-notice.html" target="_blank">
-                        <Translate content="wallet.privacy_notice" />
-                    </a>
-                    <br />
-                    <a
-                        href="https://revolutionpopuli.com/terms-and-conditions/"
-                        target="_blank"
-                    >
-                        <Translate content="wallet.terms_of_use" />
-                    </a>
-                </p>
-
                 <h4
                     style={{
                         fontWeight: "normal",
@@ -393,19 +380,17 @@ class CreateAccount extends React.Component {
                     <Translate content="wallet.wallet_browser" />
                 </h4>
 
-                <p>
-                    {!hasWallet ? (
-                        <Translate
-                            content="wallet.has_wallet"
-                            wallet_name={getWalletName()}
-                        />
-                    ) : null}
-                </p>
-
                 <Translate
                     style={{textAlign: "left"}}
                     component="p"
                     content="wallet.create_account_text"
+                />
+
+                <Translate
+                    style={{textAlign: "left"}}
+                    unsafe
+                    component="p"
+                    content="wallet.create_account_text_2"
                 />
 
                 {firstAccount ? (
@@ -582,16 +567,21 @@ class CreateAccount extends React.Component {
                         </p>
                     ) : null}
 
-                    {step === 1
-                        ? this._renderAccountCreateForm()
-                        : step === 2
-                        ? this._renderBackup()
-                        : this._renderGetStarted()}
+                    {step === 1 ? (
+                        <>
+                            {this._renderAccountCreateText()}
+                            {this._renderAccountCreateForm()}
+                        </>
+                    ) : step === 2 ? (
+                        this._renderBackup()
+                    ) : (
+                        this._renderGetStarted()
+                    )}
                 </div>
 
                 <div style={{maxWidth: "95vw", paddingTop: "2rem"}}>
                     {step === 1
-                        ? this._renderAccountCreateText()
+                        ? null
                         : step === 2
                         ? this._renderBackupText()
                         : this._renderGetStartedText()}

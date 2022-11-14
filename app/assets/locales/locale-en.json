@@ -1171,6 +1171,7 @@
         "session": {
             "title": "Session",
             "empty": "No sessions",
+            "check_revpop_contract": "Check revpop contract",
             "fields": {
                 "id": {
                     "label": "ID"

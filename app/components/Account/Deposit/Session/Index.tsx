@@ -6,6 +6,7 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import {useParams} from "react-router-dom";
 import useLoadSession from "../Hooks/useLoadSession";
+import CheckRevpopButton from "./CheckRevpopButton";
 
 type SelectorParams = {
     sessionId: string;
@@ -30,7 +31,11 @@ export default function Index() {
                         <td>
                             <Translate content="deposit.session.fields.status.label" />
                         </td>
-                        <td>{counterpart(`deposit.session.fields.status.list.${session.status}`)}</td>
+                        <td>
+                            {counterpart(
+                                `deposit.session.fields.status.list.${session.status}`
+                            )}
+                        </td>
                     </tr>
                     {session.contract !== null && (
                         <>
@@ -44,7 +49,11 @@ export default function Index() {
                                 <td>
                                     <Translate content="deposit.form.amount.label" />
                                 </td>
-                                <td>{Web3.utils.fromWei(session.contract.amount)}</td>
+                                <td>
+                                    {Web3.utils.fromWei(
+                                        session.contract.amount
+                                    )}
+                                </td>
                             </tr>
                             <tr>
                                 <td>
@@ -56,12 +65,21 @@ export default function Index() {
                                 <td>
                                     <Translate content="deposit.form.time_lock.label" />
                                 </td>
-                                <td>{moment.unix(session.contract.timeLock).format("LLL")}</td>
+                                <td>
+                                    {moment
+                                        .unix(session.contract.timeLock)
+                                        .format("LLL")}
+                                </td>
                             </tr>
                         </>
                     )}
                 </tbody>
             </table>
+            <div className="actions">
+                {session.isPaid() && (
+                    <CheckRevpopButton sessionId={session.id} />
+                )}
+            </div>
         </div>
     );
 }

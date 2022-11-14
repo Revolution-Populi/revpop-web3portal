@@ -28,6 +28,10 @@ export default class Session {
         return this._status === STATUS.CREATED;
     }
 
+    isPaid(): boolean {
+        return this._status === STATUS.PAYED;
+    }
+
     pay(txHash: string, contract?: Contract): Either<PaySessionError, void> {
         if (!this.canBePaid()) {
             return Failure.create(new PaySessionError(this.id));

@@ -9,7 +9,10 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 // @ts-ignore
 import {Form, Input, Button} from "bitshares-ui-style-guide";
-import {ConfirmSession, confirmSessionHandler} from "../../../../../Context/Deposit";
+import {
+    ConfirmSession,
+    confirmSessionHandler
+} from "../../../../../Context/Deposit";
 import AccountSelector from "../../../AccountSelector";
 import AccountStore from "../../../../../stores/AccountStore";
 import {Map} from "immutable";
@@ -45,8 +48,8 @@ function ConfirmTransaction({form, selectedAccountName}: Props) {
             return;
         }
 
-        const command = new ConfirmSession(txHash as string, accountName, hashLock as string);
-        await confirmSessionHandler.execute(command);
+        // const command = new ConfirmSession(txHash as string, accountName, hashLock as string);
+        // await confirmSessionHandler.execute(command);
     }
 
     const formItemLayout = {
@@ -66,7 +69,9 @@ function ConfirmTransaction({form, selectedAccountName}: Props) {
         setTxHash(event.currentTarget.value);
     }
 
-    function onChangeHashLockHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    function onChangeHashLockHandler(
+        event: React.ChangeEvent<HTMLInputElement>
+    ) {
         setHashLock(event.currentTarget.value);
     }
 
@@ -77,7 +82,10 @@ function ConfirmTransaction({form, selectedAccountName}: Props) {
     return (
         <>
             <div className="text-center redeem">
-                <Translate content="deposit.send_tx_hash.title" component="h4" />
+                <Translate
+                    content="deposit.send_tx_hash.title"
+                    component="h4"
+                />
             </div>
             <div className="redeem">
                 <Form {...formItemLayout} onSubmit={handleSubmit}>
@@ -90,12 +98,17 @@ function ConfirmTransaction({form, selectedAccountName}: Props) {
                         onAccountChanged={onAccountChangedHandler}
                     />
 
-                    <Form.Item label={counterpart.translate("deposit.send_tx_hash.tx_hash")}>
+                    <Form.Item
+                        label={counterpart.translate(
+                            "deposit.send_tx_hash.tx_hash"
+                        )}
+                    >
                         {getFieldDecorator("secret", {
                             rules: [
                                 {
                                     required: true,
-                                    message: "Please enter the transaction hash!"
+                                    message:
+                                        "Please enter the transaction hash!"
                                 },
                                 {
                                     //Regexp validation
@@ -104,7 +117,11 @@ function ConfirmTransaction({form, selectedAccountName}: Props) {
                         })(<Input onChange={onChangeSecretHandler} />)}
                     </Form.Item>
 
-                    <Form.Item label={counterpart.translate("deposit.send_tx_hash.hash_lock")}>
+                    <Form.Item
+                        label={counterpart.translate(
+                            "deposit.send_tx_hash.hash_lock"
+                        )}
+                    >
                         {getFieldDecorator("hashLock", {
                             rules: [
                                 {

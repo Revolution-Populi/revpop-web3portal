@@ -12,16 +12,32 @@ import SessionConfirmer from "./Infrastructure/SessionConfirmer/EES";
 import SessionRepository from "./Infrastructure/SessionRepository/IndexedDB";
 import StartSession from "./Application/Command/StartSession/StartSession";
 import StartSessionHandler from "./Application/Command/StartSession/StartSessionHandler";
+import CheckBlockchainContract from "./Application/Command/CheckBlockchainContract/CheckBlockchainContract";
+import CheckBlockchainContractHandler from "./Application/Command/CheckBlockchainContract/CheckBlockchainContractHandler";
+import HtlcBlockchainRepository from "./Infrastructure/HtlcRepository/Blockchain";
 
 const sessionFetcher = new SessionFetcher();
 const sessionConfirmer = new SessionConfirmer();
 const sessionRepository = new SessionRepository();
+const htlcBlockchainRepository = new HtlcBlockchainRepository();
 
-const initializeSessionHandler = new StartSessionHandler(sessionRepository, sessionFetcher);
-const confirmSessionHandler = new ConfirmSessionHandler(sessionRepository, sessionConfirmer);
-const makeDepositHandler = new MakeDepositHandler(sessionRepository, sessionConfirmer);
+const initializeSessionHandler = new StartSessionHandler(
+    sessionRepository,
+    sessionFetcher
+);
+const confirmSessionHandler = new ConfirmSessionHandler(
+    sessionRepository,
+    sessionConfirmer
+);
+const makeDepositHandler = new MakeDepositHandler(
+    sessionRepository,
+    sessionConfirmer
+);
 const getSessionsHandler = new GetSessionsHandler(sessionRepository);
 const getSessionHandler = new GetSessionHandler(sessionRepository);
+const checkBlockchainContract = new CheckBlockchainContractHandler(
+    htlcBlockchainRepository
+);
 
 export {Session};
 export {StartSession, initializeSessionHandler};
@@ -29,3 +45,4 @@ export {ConfirmSession, confirmSessionHandler};
 export {MakeDeposit, makeDepositHandler};
 export {GetSessions, getSessionsHandler};
 export {GetSession, getSessionHandler};
+export {CheckBlockchainContract, checkBlockchainContract};

@@ -1,27 +1,19 @@
-FROM node:6
+FROM node:16 AS build
 
-# Install nginx
-RUN apt-get update \
-  && apt-get install -y nginx --no-install-recommends \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN yarn global add cross-env
 
-RUN npm install -g cross-env
+CMD mkdir /revpop-ui
+WORKDIR /revpop-ui
 
-# We copy the code from the docker-compose-yml
-# RUN git clone https://github.com/bitshares/bitshares-ui.git /bitshares-ui
-CMD mkdir /bitshares-ui
-WORKDIR /bitshares-ui
+ADD package.json ./
+ADD yarn.lock ./
+ADD charting_library ./charting_library
+RUN cross-env yarn install
 
-ADD package.json .
-RUN cross-env npm install --env.prod
+ADD . .
+RUN yarn build
 
-EXPOSE 80
+FROM nginx:1.19 as run
 
-## Copying default configuration
-ADD conf/nginx.conf /etc/nginx/nginx.conf
-ADD conf/start.sh /start.sh
-RUN chmod a+x /start.sh
-
-## Entry point
-ENTRYPOINT ["/start.sh"]
+COPY --from=build /revpop-ui/build/dist /usr/share/nginx/html
+COPY conf/nginx.conf /etc/nginx/nginx.conf

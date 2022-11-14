@@ -15,7 +15,7 @@ var outputFilePath = path.join(__dirname, outputFileName);
 // download only if it doesnt exist
 if (!fs.existsSync(outputFilePath)) {
     const outputFile = fs.createWriteStream(outputFilePath);
-    http.get("https://bitshares.org/assets/" + outputFileName, (response) => {
+    http.get("https://revolutionpopuli.com/wp-content/uploads/" + outputFileName, (response) => {
         response.pipe(outputFile);
     }).on("error", (err) => {
         console.error("Failed to download charting_library archive");

@@ -12,9 +12,16 @@ var fs = require("fs");
  * For staging builds, set the version to the latest commit hash, for
  * production set it to the package version
  */
-let branch = !!process.env.BRANCH ? process.env.BRANCH : git.branch();
-var __VERSION__ =
-    branch === "develop" ? git.short() : require("./package.json").version;
+let branch = "develop";
+let __VERSION__ = "DEV";
+
+try {
+    branch = !!process.env.BRANCH ? process.env.BRANCH : git.branch();
+    __VERSION__ =
+        branch === "develop" ? git.short() : require("./package.json").version;
+} catch {
+    // silent fail
+}
 
 // BASE APP DIR
 var root_dir = path.resolve(__dirname);
@@ -89,7 +96,7 @@ module.exports = function(env) {
             __TESTNET__: !!env.testnet,
             __DEPRECATED__: !!env.deprecated,
             DEFAULT_SYMBOL: "RVP",
-            __GIT_BRANCH__: JSON.stringify(git.branch()),
+            __GIT_BRANCH__: JSON.stringify(branch),
             __PERFORMANCE_DEVTOOL__: !!env.perf_dev
         }),
         new webpack.ContextReplacementPlugin(

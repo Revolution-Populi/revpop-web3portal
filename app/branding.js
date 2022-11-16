@@ -18,7 +18,7 @@ export function getWalletName() {
  * @returns {string}
  */
 export function getWalletURL() {
-    return "http://localhost:8080";
+    return "https://testnet.revolutionpopuli.com";
 }
 
 /**
@@ -28,7 +28,7 @@ export function getWalletURL() {
  */
 export function getFaucet() {
     return {
-        url: "http://localhost:3000", // 2017-12-infrastructure worker proposal
+        url: "https://testnet.revolutionpopuli.com",
         show: false,
         editable: false,
         referrer: "onboarding.revpop.foundation"

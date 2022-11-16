@@ -13,7 +13,7 @@ var fs = require("fs");
  * production set it to the package version
  */
 let branch = "develop";
-let __VERSION__ = "DEV";
+let __VERSION__ = require("./package.json").version;
 
 try {
     branch = !!process.env.BRANCH ? process.env.BRANCH : git.branch();

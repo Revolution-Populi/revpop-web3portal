@@ -95,8 +95,8 @@ class AccountVoting extends React.Component {
 
     componentDidMount() {
         this.updateAccountData(this.props);
-        this._getVoteObjects();
-        this._getVoteObjects("committee");
+        this._getVoteObjects(WITNESSES_KEY);
+        this._getVoteObjects(COMMITTEE_KEY);
     }
 
     shouldComponentUpdate(np, ns) {
@@ -236,7 +236,7 @@ class AccountVoting extends React.Component {
                 });
             const lastActive = active.last() || `1.${isWitness ? "6" : "5"}.1`;
             lastIdx = parseInt(lastActive.split(".")[2], 10);
-            for (var i = 1; i <= lastIdx + 10; i++) {
+            for (var i = 0; i <= lastIdx + 10; i++) {
                 vote_ids.push(`1.${isWitness ? "6" : "5"}.${i}`);
             }
         } else {

@@ -41,7 +41,9 @@ class MenuDataStructure {
                 item.inHeaderBehavior = MenuItemType.Always;
             }
             if (item.inDropdownBehavior === MenuItemType.WhenAccount) {
-                item.hidden = !state.currentAccount;
+                if (!item.hasOwnProperty("hidden")) {
+                    item.hidden = !state.currentAccount;
+                }
                 item.inDropdownBehavior = MenuItemType.Always;
             }
             if (item.inDropdownBehavior === MenuItemType.WhenUnlocked) {
@@ -416,6 +418,7 @@ class MenuDataStructure {
             }),
             help: state => ({
                 includePattern: "/help",
+                target: "/help",
                 icon: {
                     name: "question-circle",
                     title: "icons.question_circle"

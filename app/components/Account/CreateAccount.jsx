@@ -530,14 +530,6 @@ class CreateAccount extends React.Component {
                     <Translate content="wallet.congrat" />
                 </p>
 
-                <p>
-                    <Translate content="wallet.tips_explore" />
-                </p>
-
-                <p>
-                    <Translate content="wallet.tips_header" />
-                </p>
-
                 <p className="txtlabel warning">
                     <Translate content="wallet.tips_login" />
                 </p>
@@ -555,7 +547,7 @@ class CreateAccount extends React.Component {
                 name="scrollToInput"
             >
                 <div style={{maxWidth: "95vw"}}>
-                    {step !== 1 ? (
+                    {step === 2 ? (
                         <p
                             style={{
                                 fontWeight: "normal",
@@ -574,9 +566,7 @@ class CreateAccount extends React.Component {
                         </>
                     ) : step === 2 ? (
                         this._renderBackup()
-                    ) : (
-                        this._renderGetStarted()
-                    )}
+                    ) : null}
                 </div>
 
                 <div style={{maxWidth: "95vw", paddingTop: "2rem"}}>

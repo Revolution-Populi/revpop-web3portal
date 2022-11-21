@@ -1,6 +1,5 @@
 Revpop-Web3Portal
 ============
-[中文版](README_zh.md)
 
 This is the reference wallet of Revpop Blockchain which connects to Revpop Blockchain nodes (*revpop-core*).
 

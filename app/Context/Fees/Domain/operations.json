@@ -8,22 +8,24 @@
     {
         "id": 1,
         "name": "account_create",
-        "group": "market"
+        "group": "account",
+        "ltm_required": true
     },
     {
         "id": 2,
         "name": "account_update",
-        "group": "market"
+        "group": "account"
     },
     {
         "id": 3,
         "name": "account_whitelist",
-        "group": "market"
+        "group": "account",
+        "ltm_required": true
     },
     {
         "id": 4,
         "name": "account_upgrade",
-        "group": "market"
+        "group": "account"
     },
     {
         "id": 5,
@@ -33,22 +35,22 @@
     {
         "id": 6,
         "name": "asset_create",
-        "group": "account"
+        "group": "asset"
     },
     {
         "id": 7,
         "name": "asset_update",
-        "group": "account"
+        "group": "asset"
     },
     {
         "id": 8,
         "name": "asset_update_bitasset",
-        "group": "account"
+        "group": "asset"
     },
     {
         "id": 9,
         "name": "asset_update_feed_producers",
-        "group": "account"
+        "group": "asset"
     },
     {
         "id": 10,
@@ -83,22 +85,24 @@
     {
         "id": 16,
         "name": "witness_create",
-        "group": "asset"
+        "group": "business",
+        "ltm_required": true
     },
     {
         "id": 17,
         "name": "witness_update",
-        "group": "asset"
+        "group": "business",
+        "ltm_required": true
     },
     {
         "id": 18,
         "name": "proposal_create",
-        "group": "asset"
+        "group": "business"
     },
     {
         "id": 19,
         "name": "proposal_update",
-        "group": "asset"
+        "group": "business"
     },
     {
         "id": 20,
@@ -203,12 +207,12 @@
     {
         "id": 40,
         "name": "asset_claim_pool",
-        "group": "no_group"
+        "group": "asset"
     },
     {
         "id": 41,
         "name": "asset_update_issuer",
-        "group": "general"
+        "group": "asset"
     },
     {
         "id": 42,
@@ -218,12 +222,12 @@
     {
         "id": 43,
         "name": "custom_authority_update",
-        "group": "asset"
+        "group": "no_group"
     },
     {
         "id": 44,
         "name": "custom_authority_delete",
-        "group": "asset"
+        "group": "no_group"
     },
     {
         "id": 45,

@@ -71,6 +71,10 @@ export default class ModelViewTransformer {
             operationView.setShowCHParticipantTransferFee();
         }
 
+        if (operation.ltmRequired) {
+            operationView.setLtmRequired();
+        }
+
         operation.fees.forEach(fee => {
             fee = fee as Fee;
 

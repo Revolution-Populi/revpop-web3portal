@@ -20,18 +20,11 @@ export default function Fee({feeNumber, operation, fee}: FeeProps) {
             )}
             <td>{fee.name}</td>
             <td className="standard-fee">
-                {operation.ltmRequired && (
-                    <>
-                        - <sup>*</sup>
-                    </>
-                )}
-                {!operation.ltmRequired && (
-                    <FeeValueWithEdit
-                        fee={fee}
-                        operationId={operation.id}
-                        code={fee.code}
-                    />
-                )}
+                <FeeValue
+                    value={fee.lifetimeMemberFee}
+                    newValue={fee.lifetimeMemberFeeNewValue}
+                    updated={fee.updated()}
+                />
             </td>
             <td className="lifetime-member-fee">
                 <FeeValue

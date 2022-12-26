@@ -58,6 +58,8 @@ import {HtlcRedeem} from "./HtlcRedeem";
 import {HtlcRedeemed} from "./HtlcRedeemed";
 import {HtlcRefund} from "./HtlcRefund";
 import {TicketCreate} from "./TicketCreate";
+import {RevealCreateV3Operation} from "./RevealCreateV3Operation";
+import {CommitCreateV3Operation} from "./CommitCreateV3Operation";
 
 export default function opComponents(opType, props, opts) {
     switch (opType) {
@@ -239,6 +241,12 @@ export default function opComponents(opType, props, opts) {
 
         case "ticket_create":
             return <TicketCreate {...props} {...opts} />;
+
+        case "reveal_create_v3":
+            return <RevealCreateV3Operation {...props} {...opts} />;
+
+        case "commit_create_v3":
+            return <CommitCreateV3Operation {...props} {...opts} />;
 
         default:
             return <DefaultOperation {...props} />;

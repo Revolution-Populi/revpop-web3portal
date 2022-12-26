@@ -75,7 +75,7 @@ class AccountMembership extends React.Component {
                 "parameters",
                 "current_fees",
                 "parameters",
-                8,
+                4,
                 1,
                 "membership_lifetime_fee"
             ]) *

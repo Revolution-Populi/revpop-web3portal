@@ -159,6 +159,6 @@ export const settingsAPIs = {
 
 export const EesAPI = {
     BASE: "http://localhost:3000",
-    INITIALIZE_SESSION: "/deposit/initialize",
-    CONFIRM_SESSION: "/deposit/confirm"
+    DEPOSIT_SETTINGS: "/deposit/settings",
+    SUBMIT_DEPOSIT_REQUEST: "/deposit"
 };

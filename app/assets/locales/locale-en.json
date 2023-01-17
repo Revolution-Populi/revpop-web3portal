@@ -1121,7 +1121,7 @@
     "deposit": {
         "title": "New deposit",
         "sub_title": "or current deposit",
-        "new": "New deposit",
+        "create": "Create deposit",
         "form": {
             "account": {
                 "label": "Account"
@@ -1147,17 +1147,16 @@
                 "manually": "Manually enter HashLock"
             }
         },
-        "metamask": "Deposit",
-        "metamask_not_installed": "Metamask is not installed",
-        "metamask_not_connected": "Metamask is not connected",
-        "connect": "Connect",
-        "html_created": "HTLC contract created",
-        "selector": {
-            "title": "Select deposit method",
-            "metamask": "Metamask",
-            "manually": "Manually"
+        "metamask": {
+            "title": "Metamask",
+            "not_installed": "Metamask is not installed",
+            "not_connected": "Metamask is not connected",
+            "connect": "Connect"
         },
-        "manually": {},
+        "manually": {
+            "title": "Manually"
+        },
+        "html_created": "HTLC contract created",
         "send_tx_hash": {
             "title": "Send transaction hash",
             "tx_hash": "Transaction hash",

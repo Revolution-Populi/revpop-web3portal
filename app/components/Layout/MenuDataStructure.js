@@ -126,7 +126,8 @@ class MenuDataStructure {
             allItems.account_voting,
             allItems.account_vesting,
             allItems.account_permissions,
-            allItems.account_assets
+            allItems.account_assets,
+            allItems.account_stats
             // allItems.accounts
             // allItems.account_voting,
             // allItems.account_signedmessages,

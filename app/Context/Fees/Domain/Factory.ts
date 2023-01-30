@@ -26,6 +26,10 @@ class Factory implements FactoryInterface {
             operation.setShowCHParticipantTransferFee();
         }
 
+        if (jsonOperation.ltm_required) {
+            operation.setLtmRequired();
+        }
+
         return operation;
     }
 }

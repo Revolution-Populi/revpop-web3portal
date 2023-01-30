@@ -15,7 +15,8 @@ export namespace Fees {
         id: number;
         group: string;
         name: string;
-        clearing_house_participant_transfer_fee: boolean;
+        clearing_house_participant_transfer_fee?: boolean;
+        ltm_required?: boolean;
     };
 
     export type JsonOperationsType = JsonOperationType[];

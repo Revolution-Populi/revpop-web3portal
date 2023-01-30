@@ -7,6 +7,7 @@ import OperationFeesType = Fees.OperationFeesType;
 export default class Operation {
     private _fees: OperationFeesType = Map();
     private _showCHParticipantTransferFee = false;
+    private _ltmRequired = false;
 
     constructor(private _id: number, private _name: string) {}
 
@@ -34,8 +35,16 @@ export default class Operation {
         return this._showCHParticipantTransferFee;
     }
 
+    get ltmRequired(): boolean {
+        return this._ltmRequired;
+    }
+
     setShowCHParticipantTransferFee() {
         this._showCHParticipantTransferFee = true;
+    }
+
+    setLtmRequired() {
+        this._ltmRequired = true;
     }
 
     getFee(code: string): Fee {

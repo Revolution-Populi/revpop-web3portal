@@ -1,4 +1,5 @@
-Copyright (c) 2019 The BitShares UI worker and and contributors.
+Copyright (c) 2019 The BitShares UI worker and contributors.
+Copyright (c) 2018-2023 Revolution Populi Limited <info@revolutionpopuli.com>, and contributors.
 
 The MIT License
 

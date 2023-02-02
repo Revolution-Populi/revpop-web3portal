@@ -3,10 +3,12 @@ import crypto from "crypto";
 // @ts-ignore
 import counterpart from "counterpart";
 // @ts-ignore
+import {hash} from "@revolutionpopuli/revpopjs";
+// @ts-ignore
 import {Form, Input, Button, Tooltip, Icon} from "bitshares-ui-style-guide";
 
 interface Props {
-    onChange: (hasLock: string) => void;
+    onChange: (hashLock: string) => void;
 }
 
 interface SecretHashLogPair {
@@ -32,27 +34,17 @@ export default function Wallet({onChange}: Props) {
     }
 
     function generateHashLockFromSecret(secret: Buffer): Buffer {
-        return crypto
-            .createHash("sha256")
-            .update(secret)
-            .digest();
+        return hash.sha256(secret.toString("hex"));
     }
 
     function generateSecretHashLockPair(): SecretHashLogPair {
-        function bufferToString(b: Buffer): string {
-            return "0x" + b.toString("hex");
-        }
-
         const secret = generateSecret();
         const hashLock = generateHashLockFromSecret(secret);
-        return {
-            secret: bufferToString(secret),
-            hashLock: bufferToString(hashLock)
-        };
-    }
 
-    if (!secretHashLockPair) {
-        return null;
+        return {
+            secret: secret.toString("hex"),
+            hashLock: hashLock.toString("hex")
+        };
     }
 
     function onRefreshSecretHandler() {
@@ -111,6 +103,10 @@ export default function Wallet({onChange}: Props) {
             </Tooltip>
         </>
     );
+
+    if (!secretHashLockPair) {
+        return null;
+    }
 
     return (
         <>

@@ -3,9 +3,11 @@ import {Link} from "react-router-dom";
 // @ts-ignore
 import {Table} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
-import {GetSessions, getSessionsHandler, Session} from "../../../../Context/Deposit";
-
-console.log(counterpart.translate("deposit.session.fields.id.label"));
+import {
+    GetSessions,
+    getSessionsHandler,
+    Session
+} from "../../../../Context/Deposit";
 
 const columns = [
     {
@@ -55,10 +57,7 @@ export default function Sessions() {
 
     const data = sessions.map(session => ({
         key: session.id,
-        id: session.id,
-        tx_hash: session.txHash,
-        amount: session.contract?.amount ?? null,
-        status: session.status
+        id: session.id
     }));
 
     return <Table columns={columns} dataSource={data} />;

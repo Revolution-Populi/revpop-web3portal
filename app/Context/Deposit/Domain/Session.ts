@@ -1,5 +1,5 @@
-import {Either} from "../../Core";
-import {PaySessionError} from "./Errors";
+import {Moment} from "moment";
+import {SessionCanNotBePayed} from "./Errors";
 import {Failure, Success} from "../../Core/Logic/Result";
 import Contract from "./Contract";
 
@@ -12,16 +12,34 @@ export enum STATUS {
 export default class Session {
     private _status: STATUS;
     private _txHash: string | null = null;
-    private _contract: Contract | null = null;
 
     constructor(
         private _id: string,
-        private _smartContractAddress: string,
-        private _receiverAddress: string,
-        private _minimumAmount: string,
-        private _minimumTimeLock: number
+        private _value: string,
+        private _hashLock: string,
+        private _timeLock: Moment
     ) {
         this._status = STATUS.CREATED;
+    }
+
+    get id(): string {
+        return this._id;
+    }
+
+    get value(): string {
+        return this._value;
+    }
+
+    get hashLock(): string {
+        return this._hashLock;
+    }
+
+    get timeLock(): Moment {
+        return this._timeLock;
+    }
+
+    get status(): number {
+        return this._status;
     }
 
     canBePaid(): boolean {
@@ -32,47 +50,23 @@ export default class Session {
         return this._status === STATUS.PAYED;
     }
 
-    pay(txHash: string, contract?: Contract): Either<PaySessionError, void> {
+    pay(txHash: string, contract?: Contract) {
         if (!this.canBePaid()) {
-            return Failure.create(new PaySessionError(this.id));
+            throw new SessionCanNotBePayed(this._id);
         }
 
         this._txHash = txHash;
-        this._contract = contract ?? null;
         this._status = STATUS.PAYED;
 
         return Success.create(undefined);
     }
 
-    get id(): string {
-        return this._id;
-    }
-
-    get smartContractAddress(): string {
-        return this._smartContractAddress;
-    }
-
-    get receiverAddress(): string {
-        return this._receiverAddress;
-    }
-
-    get minimumAmount(): string {
-        return this._minimumAmount;
-    }
-
-    get minimumTimeLock(): number {
-        return this._minimumTimeLock;
-    }
-
-    get txHash(): string | null {
-        return this._txHash;
-    }
-
-    get contract(): Contract | null {
-        return this._contract;
-    }
-
-    get status(): STATUS {
-        return this._status;
+    static create(
+        id: string,
+        value: string,
+        hashLock: string,
+        timeLock: Moment
+    ) {
+        return new Session(id, value, hashLock, timeLock);
     }
 }

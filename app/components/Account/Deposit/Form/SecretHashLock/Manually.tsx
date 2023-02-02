@@ -39,9 +39,9 @@ export default function Manually({form, hashLock, onChange}: Props) {
                         message: "Please input your HashLock!"
                     },
                     {
-                        pattern: /0x[a-fA-F\d]{64}/,
+                        pattern: /[a-fA-F\d]{64}/,
                         message:
-                            "HashLock should be 64 characters long with 0x prefix. Use only hexadecimal symbols."
+                            "HashLock should be 64 characters long. Use only hexadecimal symbols."
                     }
                 ]
             })(<Input onChange={onChangeHandler} />)}

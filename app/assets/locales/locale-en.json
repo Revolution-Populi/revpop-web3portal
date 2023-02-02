@@ -1132,11 +1132,11 @@
             },
             "secret": {
                 "label": "Secret",
-                "tooltip": "Secret tooltip"
+                "tooltip": "The best choice for the Secret is a random string. If your secret can be guessed or is too short, you risk losing your funds. Use the copy button in this row to save the Secret."
             },
             "hash_lock": {
                 "label": "HashLock",
-                "tooltip": "Hashlock tooltip"
+                "tooltip": "The HashLock is calculated from the above Secret using the hashing algorithm. Use the copy button in this row to save the HashLock."
             },
             "time_lock": {
                 "label": "TimeLock",

@@ -10,21 +10,40 @@ type ErrorsType = EesConnectionError;
 export default class SubmitDepositRequestHandler {
     constructor(private sessionRepository: SessionRepositoryInterface) {}
 
-    async execute(command: SubmitDepositRequest): Promise<Session> {
+    async execute(command: SubmitDepositRequest): Promise<string> {
+        let depositRequestId: string;
+
         try {
             const result = await axios.post(
                 EesAPI.BASE + EesAPI.SUBMIT_DEPOSIT_REQUEST,
                 {
                     revpopAccount: command.revpopAccount,
-                    hashLock: command.hashLock
+                    hashLock: this.ensureHasPrefix(command.hashLock)
                 }
             );
+
+            depositRequestId = result.data.id;
         } catch (e) {
             throw new Error("Error while submit deposit request");
         }
 
-        //TODO::Save session locally
+        const session = Session.create(
+            depositRequestId,
+            command.value,
+            command.hashLock,
+            command.timeLock
+        );
 
-        throw new Error();
+        await this.sessionRepository.save(session);
+
+        return session.id;
+    }
+
+    ensureHasPrefix(hashLock: string) {
+        if ("0x" !== hashLock.substring(0, 2)) {
+            hashLock = "0x" + hashLock;
+        }
+
+        return hashLock;
     }
 }

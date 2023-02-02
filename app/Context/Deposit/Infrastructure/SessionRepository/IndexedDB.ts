@@ -7,11 +7,9 @@ interface DB extends DBSchema {
     session: {
         value: {
             id: string;
-            smartContractAddress: string;
-            receiverAddress: string;
-            minimumAmount: string;
-            minimumTimeLock: number;
-            status: number;
+            value: string;
+            hashLock: string;
+            timeLock: number;
         };
         key: string;
     };
@@ -35,7 +33,9 @@ export default class IndexedDB implements SessionRepositoryInterface {
             return null;
         }
 
-        const store = this.db.transaction(SESSION_TABLE).objectStore(SESSION_TABLE);
+        const store = this.db
+            .transaction(SESSION_TABLE)
+            .objectStore(SESSION_TABLE);
         const request = await store.get(sessionId);
 
         //TODO::remove indexeddbshim?
@@ -65,7 +65,9 @@ export default class IndexedDB implements SessionRepositoryInterface {
             return [];
         }
 
-        const store = this.db.transaction(SESSION_TABLE).objectStore(SESSION_TABLE);
+        const store = this.db
+            .transaction(SESSION_TABLE)
+            .objectStore(SESSION_TABLE);
         const request = await store.getAll();
 
         //TODO::remove indexeddbshim?

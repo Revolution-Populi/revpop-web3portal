@@ -1,7 +1,13 @@
 import {useEffect, useState} from "react";
-import {GetSession, getSessionHandler, Session} from "../../../../Context/Deposit";
+import {
+    GetSession,
+    getSessionHandler,
+    Session
+} from "../../../../Context/Deposit";
 
-export default function useLoadSession(sessionId: string): [Session | null, boolean] {
+export default function useLoadSession(
+    sessionId: string
+): [Session | null, boolean] {
     const [session, setSession] = useState<Session | null>(null);
     const [error, setError] = useState<boolean>(false);
 
@@ -18,9 +24,6 @@ export default function useLoadSession(sessionId: string): [Session | null, bool
             const session = sessionOrError.value;
 
             setSession(session);
-
-            if (session.txHash !== null) {
-            }
         }
 
         loadSession();

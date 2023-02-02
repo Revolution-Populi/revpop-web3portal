@@ -40,13 +40,13 @@ interface Props {
 
 //TODO::check existing payment
 function DepositForm({settings, form, selectedAccountName}: Props) {
-    // const history = useHistory();
+    const history = useHistory();
 
     const minValue = parseFloat(Web3.utils.fromWei(settings.minimumValue));
 
     const [accountName, setAccountName] = useState<string>(selectedAccountName);
     const [account, setAccount] = useState<Map<string, any>>();
-    const [amount, setAmount] = useState(minValue);
+    const [value, setValue] = useState(minValue);
     const [hashLock, setHashLock] = useState<string>("");
     const [timeLock, setTimeLock] = useState<Moment>(
         moment()
@@ -74,18 +74,23 @@ function DepositForm({settings, form, selectedAccountName}: Props) {
             return;
         }
 
-        const command = new SubmitDepositRequest(accountName, hashLock);
-        const result = await submitDepositRequestHandler.execute(command);
+        const command = new SubmitDepositRequest(
+            accountName,
+            Web3.utils.toWei(value.toString()),
+            hashLock,
+            timeLock
+        );
+        const sessionId = await submitDepositRequestHandler.execute(command);
 
-        console.log(result);
+        history.push(`/deposit/${sessionId}`);
     }
 
     function onAccountChangedHandler(account: any) {
         setAccountName(account.get("name"));
     }
 
-    function onChangeAmountHandler(amount: number) {
-        setAmount(amount);
+    function onChangeValueHandler(value: number) {
+        setValue(value);
     }
 
     function onChangeTimeLockHandler(timeLock: Moment) {
@@ -119,11 +124,11 @@ function DepositForm({settings, form, selectedAccountName}: Props) {
             />
             <AmountField
                 form={form}
-                amount={amount}
+                amount={value}
                 minAmount={parseFloat(
                     Web3.utils.fromWei(settings.minimumValue)
                 )}
-                onChange={onChangeAmountHandler}
+                onChange={onChangeValueHandler}
             />
             <HashLockField
                 form={form}
@@ -144,7 +149,7 @@ function DepositForm({settings, form, selectedAccountName}: Props) {
     );
 }
 
-const DepositFormWrapped = Form.create({name: "amountField"})(DepositForm);
+const DepositFormWrapped = Form.create({name: "depositForm"})(DepositForm);
 
 export default connect(DepositFormWrapped, {
     listenTo() {

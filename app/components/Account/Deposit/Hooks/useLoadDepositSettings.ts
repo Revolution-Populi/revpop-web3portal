@@ -1,26 +1,24 @@
 import {useEffect, useState} from "react";
 import GetDepositSettings from "../../../../Context/Deposit/Application/Query/GetDepositSettings/GetDepositSettings";
 import GetDepositSettingsHandler from "../../../../Context/Deposit/Application/Query/GetDepositSettings/GetDepositSettingsHandler";
+import {DepositSettings} from "../../../../Context/Deposit/Domain/EES/RepositoryInterface";
+import EesRepository from "../../../../Context/Deposit/Infrastructure/EES/Repository";
 
-export interface Settings {
-    contractAddress: string;
-    receiverAddress: string;
-    minimumValue: string;
-    minimumTimeLock: number;
-}
-
-export default function useLoadDepositSettings(): [Settings | null, boolean] {
-    const [settings, setSettings] = useState<Settings | null>(null);
+export default function useLoadDepositSettings(): [
+    DepositSettings | null,
+    boolean
+] {
+    const [settings, setSettings] = useState<DepositSettings | null>(null);
     const [error, setError] = useState<boolean>(false);
+    const eesRepository = new EesRepository();
+    const handler = new GetDepositSettingsHandler(eesRepository);
 
     useEffect(() => {
         async function load() {
             const query = new GetDepositSettings();
 
             try {
-                const settings = (await new GetDepositSettingsHandler().execute(
-                    query
-                )) as Settings;
+                const settings = await handler.execute(query);
 
                 setSettings(settings);
                 setError(false);

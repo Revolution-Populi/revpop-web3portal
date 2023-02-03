@@ -11,6 +11,7 @@ export interface ContractJson {
 
 export interface SessionJson {
     id: string;
+    internalAccount: string;
     value: string;
     hashLock: string;
     timeLock: number;
@@ -20,6 +21,7 @@ class Transformer {
     transform(session: Session): SessionJson {
         return {
             id: session.id,
+            internalAccount: session.internalAccount,
             value: session.value,
             hashLock: session.hashLock,
             timeLock: session.timeLock.unix()
@@ -29,6 +31,7 @@ class Transformer {
     reverseTransform(sessionJson: SessionJson): Session {
         const session = Session.create(
             sessionJson.id,
+            sessionJson.internalAccount,
             sessionJson.value,
             sessionJson.hashLock,
             moment.unix(sessionJson.timeLock)

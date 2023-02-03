@@ -1,7 +1,6 @@
 import {Moment} from "moment";
 import {SessionCanNotBePayed} from "./Errors";
-import {Failure, Success} from "../../Core/Logic/Result";
-import Contract from "./Contract";
+import ExternalContract from "./ExternalBlockchain/Contract";
 
 export enum STATUS {
     CREATED = 1,
@@ -11,10 +10,11 @@ export enum STATUS {
 
 export default class Session {
     private _status: STATUS;
-    private _txHash: string | null = null;
+    private _externalContract: ExternalContract | null = null;
 
     constructor(
         private _id: string,
+        private _internalAccount: string,
         private _value: string,
         private _hashLock: string,
         private _timeLock: Moment
@@ -24,6 +24,10 @@ export default class Session {
 
     get id(): string {
         return this._id;
+    }
+
+    get internalAccount(): string {
+        return this._internalAccount;
     }
 
     get value(): string {
@@ -42,7 +46,7 @@ export default class Session {
         return this._status;
     }
 
-    canBePaid(): boolean {
+    isCreated(): boolean {
         return this._status === STATUS.CREATED;
     }
 
@@ -50,23 +54,22 @@ export default class Session {
         return this._status === STATUS.PAYED;
     }
 
-    pay(txHash: string, contract?: Contract) {
-        if (!this.canBePaid()) {
+    pay(txHash: string, externalContract: ExternalContract) {
+        if (!this.isCreated()) {
             throw new SessionCanNotBePayed(this._id);
         }
 
-        this._txHash = txHash;
+        this._externalContract = externalContract;
         this._status = STATUS.PAYED;
-
-        return Success.create(undefined);
     }
 
     static create(
         id: string,
+        internalAccount: string,
         value: string,
         hashLock: string,
         timeLock: Moment
     ) {
-        return new Session(id, value, hashLock, timeLock);
+        return new Session(id, internalAccount, value, hashLock, timeLock);
     }
 }

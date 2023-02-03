@@ -1,12 +1,13 @@
 import axios from "axios";
 import GetDepositSettings from "./GetDepositSettings";
 import {EesAPI} from "../../../../../api/apiConfig";
-import {Settings} from "../../../../../components/Account/Deposit/Hooks/useLoadDepositSettings";
+import EesRepository from "../../../Infrastructure/EES/Repository";
+import {DepositSettings} from "../../../Domain/EES/RepositoryInterface";
 
 export default class GetDepositSettingsHandler {
-    constructor() {}
+    constructor(private readonly repository: EesRepository) {}
 
-    async execute(query: GetDepositSettings): Promise<Settings> {
+    async execute(query: GetDepositSettings): Promise<DepositSettings> {
         const settings = (
             await axios.get(EesAPI.BASE + EesAPI.DEPOSIT_SETTINGS)
         ).data;

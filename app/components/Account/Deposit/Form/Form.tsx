@@ -9,11 +9,11 @@ import Translate from "react-translate-component";
 import {Form, Button} from "bitshares-ui-style-guide";
 import moment, {Moment} from "moment";
 import {Map} from "immutable";
-import {Settings} from "../Hooks/useLoadDepositSettings";
 // @ts-ignore
 import {ChainStore} from "@revolutionpopuli/revpopjs";
 import AccountSelector from "../../AccountSelector";
 import AccountStore from "../../../../stores/AccountStore";
+import {DepositSettings} from "../../../../Context/Deposit/Domain/EES/RepositoryInterface";
 import HashLockField from "./SecretHashLock/Index";
 import AmountField from "./AmountField";
 import TimeLock from "./TimeLock";
@@ -32,7 +32,7 @@ const formItemLayout = {
 };
 
 interface Props {
-    settings: Settings;
+    settings: DepositSettings;
     form: any;
     from: string;
     selectedAccountName: string;

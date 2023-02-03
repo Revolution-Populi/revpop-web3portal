@@ -6,10 +6,10 @@ import counterpart from "counterpart";
 import AccountStore from "stores/AccountStore";
 // @ts-ignore
 import {connect} from "alt-react";
-import {
-    checkBlockchainContract,
-    CheckBlockchainContract
-} from "../../../../Context/Deposit";
+// import {
+//     checkBlockchainContract,
+//     CheckBlockchainContract
+// } from "../../../../Context/Deposit";
 
 type Params = {
     sessionId: string;
@@ -18,8 +18,8 @@ type Params = {
 
 function CheckRevpopButton({sessionId, currentAccount}: Params) {
     async function onClick() {
-        const query = new CheckBlockchainContract(currentAccount, sessionId);
-        const sessionsOrError = await checkBlockchainContract.execute(query);
+        // const query = new CheckBlockchainContract(currentAccount, sessionId);
+        // const sessionsOrError = await checkBlockchainContract.execute(query);
 
         // console.log(sessionsOrError);
         console.log(currentAccount);

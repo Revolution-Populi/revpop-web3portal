@@ -1,8 +1,7 @@
-export default class Request {
+export default class CreateNewContractRequest {
     constructor(
         private _contractAddress: string,
         private _receiver: string,
-        private _fromAddress: string,
         private _amount: string,
         private _hashLock: string,
         private _timeLock: number
@@ -14,10 +13,6 @@ export default class Request {
 
     get receiver(): string {
         return this._receiver;
-    }
-
-    get fromAddress(): string {
-        return this._fromAddress;
     }
 
     get amount(): string {

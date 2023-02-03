@@ -1170,16 +1170,18 @@
         "session": {
             "title": "Session",
             "empty": "No sessions",
-            "check_revpop_contract": "Check revpop contract",
             "fields": {
                 "id": {
                     "label": "ID"
                 },
-                "tx_hash": {
-                    "label": "Transaction hash"
+                "internal_account": {
+                    "label": "Internal account"
                 },
-                "amount": {
-                    "label": "Amount"
+                "value": {
+                    "label": "Value"
+                },
+                "hash_lock": {
+                    "label": "Hash lock"
                 },
                 "time_lock": {
                     "label": "Time lock"
@@ -1192,6 +1194,10 @@
                         "10": "Redeemed"
                     }
                 }
+            },
+            "actions": {
+                "create_new_external_contract": "Create new external HTLC contract",
+                "check_revpop_contract_creation": "Check revpop contract"
             }
         }
     },

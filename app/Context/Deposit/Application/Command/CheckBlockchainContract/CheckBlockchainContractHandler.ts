@@ -1,21 +1,17 @@
-import {Failure, Result, Success} from "../../../../Core/Logic/Result";
-import {BlockchainConnectionError} from "../../../../Core/Logic/AppError";
+import InternalBlockchainRepositoryInterface from "../../../Domain/InternalBlockchain/RepositoryInterface";
 import CheckBlockchainContract from "./CheckBlockchainContract";
-import Session from "../../../Domain/Session";
-import HtlcRepositoryInterface from "../../../Domain/HtlcRepositoryInterface";
-
-type ErrorsType = BlockchainConnectionError;
+import InternalContract from "../../../Domain/InternalBlockchain/Contract";
 
 export default class CheckBlockchainContractHandler {
-    constructor(private blockchainRepository: HtlcRepositoryInterface) {}
+    constructor(
+        private internalBlockchainRepository: InternalBlockchainRepositoryInterface
+    ) {}
 
     async execute(
         command: CheckBlockchainContract
-    ): Promise<Result<ErrorsType, Session>> {
+    ): Promise<InternalContract | null> {
         console.log(command);
 
-        const htlc = this.blockchainRepository.loadAccountHtlc(command.account);
-
-        return Failure.create(new BlockchainConnectionError());
+        return Promise.resolve(null);
     }
 }

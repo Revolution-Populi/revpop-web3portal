@@ -14,7 +14,7 @@ export default class StubRepository
     ): Promise<CreateNewContractResponse> {
         this._requests.push(request);
 
-        return new CreateNewContractResponse();
+        return new CreateNewContractResponse(this._status, this._txHash);
     }
 
     get size(): number {

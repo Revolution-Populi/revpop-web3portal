@@ -1,11 +1,16 @@
 export default class CreateNewContractRequest {
     constructor(
+        private _senderAddress: string,
         private _contractAddress: string,
         private _receiver: string,
         private _amount: string,
         private _hashLock: string,
         private _timeLock: number
     ) {}
+
+    get senderAddress(): string {
+        return this._senderAddress;
+    }
 
     get contractAddress(): string {
         return this._contractAddress;

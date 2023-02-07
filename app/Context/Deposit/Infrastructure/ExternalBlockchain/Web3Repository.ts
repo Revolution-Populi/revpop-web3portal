@@ -26,8 +26,7 @@ export default class Web3Repository
                     command.timeLock
                 )
                 .send({
-                    from: "0x9B1EaAe87cC3A041c4CEf02386109D6aCE4E198E",
-                    // from: accounts[0],
+                    from: command.senderAddress,
                     value: command.amount
                 })
                 .on("transactionHash", (hash: string) => {
@@ -40,8 +39,12 @@ export default class Web3Repository
                         receipt: TransactionReceipt
                     ) => {
                         if (confirmationNumber === 1) {
-                            // resolve(new Response(true, receipt.transactionHash));
-                            resolve(new CreateNewContractResponse());
+                            resolve(
+                                new CreateNewContractResponse(
+                                    true,
+                                    receipt.transactionHash
+                                )
+                            );
                         }
                     }
                 )
@@ -49,7 +52,7 @@ export default class Web3Repository
                     // console.log("receipt", receipt);
                 })
                 .on("error", function(error: any, receipt: TransactionReceipt) {
-                    reject(new CreateNewContractResponse());
+                    reject(new CreateNewContractResponse(false, ""));
                 });
         });
     }

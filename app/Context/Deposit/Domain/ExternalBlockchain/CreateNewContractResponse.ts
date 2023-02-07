@@ -1,3 +1,11 @@
 export default class CreateNewContractResponse {
-    constructor() {}
+    constructor(private _success: boolean, private _txHash: string) {}
+
+    get success(): boolean {
+        return this._success;
+    }
+
+    get txHash(): string {
+        return this._txHash;
+    }
 }

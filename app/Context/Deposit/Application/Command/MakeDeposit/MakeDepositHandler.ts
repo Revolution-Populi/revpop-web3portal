@@ -3,8 +3,10 @@ import SessionRepositoryInterface from "../../../Domain/SessionRepositoryInterfa
 import EesRepositoryInterface from "../../../Infrastructure/EES/Repository";
 import ExternalBlockchainRepositoryInterface from "../../../Domain/ExternalBlockchain/RepositoryInterface";
 import Session from "../../../Domain/Session";
+import ExternalContract from "../../../Domain/ExternalBlockchain/Contract";
 import CreateNewExternalContractRequest from "../../../Domain/ExternalBlockchain/CreateNewContractRequest";
 import * as Errors from "./Errors";
+import {BlockchainConnectionError} from "../../../../Core/Logic/AppError";
 
 export default class MakeDepositHandler {
     constructor(
@@ -26,8 +28,8 @@ export default class MakeDepositHandler {
 
         const settings = await this.eesRepository.loadDepositSettings();
 
-        // Create Contract in the blockchain
         const createNewExternalContractRequest = new CreateNewExternalContractRequest(
+            command.senderAddress,
             settings.contractAddress,
             settings.receiverAddress,
             session.value,
@@ -35,18 +37,19 @@ export default class MakeDepositHandler {
             session.timeLock.unix()
         );
 
-        await this.web3Repository.create(createNewExternalContractRequest);
+        const createContractResponse = await this.web3Repository.create(
+            createNewExternalContractRequest
+        );
 
-        // session.pay
+        if (!createContractResponse.success) {
+            throw new BlockchainConnectionError();
+        }
 
-        // const createContractResponse = await provider.create(createContractRequest);
-
-        // if (!createContractResponse.isSuccess()) {
-        //     throw new BlockchainConnectionError();
-        // }
-
-        // session.pay(createContractResponse.txHash, contract);
-        // await this._sessionRepository.save(session);
+        const externalContract = ExternalContract.create(
+            createContractResponse.txHash
+        );
+        session.pay(externalContract);
+        await this.sessionRepository.save(session);
 
         return session;
     }

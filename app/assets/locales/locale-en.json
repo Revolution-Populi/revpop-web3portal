@@ -1151,7 +1151,7 @@
             "title": "Metamask",
             "not_installed": "Metamask is not installed",
             "not_connected": "Metamask is not connected",
-            "connect": "Connect"
+            "connect": "Connect metamask"
         },
         "manually": {
             "title": "Manually"

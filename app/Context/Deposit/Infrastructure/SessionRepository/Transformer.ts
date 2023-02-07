@@ -1,12 +1,9 @@
 import moment from "moment";
 import Session, {STATUS} from "../../Domain/Session";
+import ExternalContract from "../../Domain/ExternalBlockchain/Contract";
 
-export interface ContractJson {
-    sender: string;
-    receiver: string;
-    amount: string;
-    hashLock: string;
-    timeLock: number;
+export interface ExternalContractJson {
+    txHash: string;
 }
 
 export interface SessionJson {
@@ -15,17 +12,29 @@ export interface SessionJson {
     value: string;
     hashLock: string;
     timeLock: number;
+    status: number;
+    externalContract?: ExternalContractJson;
 }
 
 class Transformer {
     transform(session: Session): SessionJson {
-        return {
+        const sessionJson: SessionJson = {
             id: session.id,
             internalAccount: session.internalAccount,
             value: session.value,
             hashLock: session.hashLock,
-            timeLock: session.timeLock.unix()
+            timeLock: session.timeLock.unix(),
+            status: session.status
         };
+
+        if (session.isPaid()) {
+            const externalContract = session.externalContract as ExternalContract;
+            sessionJson.externalContract = {
+                txHash: externalContract.txHash
+            };
+        }
+
+        return sessionJson;
     }
 
     reverseTransform(sessionJson: SessionJson): Session {
@@ -37,17 +46,13 @@ class Transformer {
             moment.unix(sessionJson.timeLock)
         );
 
-        // if (sessionJson.status === STATUS.PAYED && sessionJson.txHash && sessionJson.contract) {
-        //     const contract = new Contract(
-        //         sessionJson.contract.sender,
-        //         sessionJson.contract.receiver,
-        //         sessionJson.contract.amount,
-        //         sessionJson.contract.hashLock,
-        //         sessionJson.contract.timeLock
-        //     );
-
-        //     session.pay(sessionJson.txHash, contract);
-        // }
+        if (sessionJson.status === STATUS.PAYED) {
+            const externalContractJson = sessionJson.externalContract as ExternalContractJson;
+            const externalContract = new ExternalContract(
+                externalContractJson.txHash
+            );
+            session.pay(externalContract);
+        }
 
         return session;
     }

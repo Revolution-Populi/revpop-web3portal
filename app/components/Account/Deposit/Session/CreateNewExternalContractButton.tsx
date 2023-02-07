@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import counterpart from "counterpart";
+// @ts-ignore
+import Translate from "react-translate-component";
 import {
     MakeDeposit,
     makeDepositHandler,
@@ -11,20 +13,82 @@ interface Params {
 }
 
 export default function CreateNewExternalContractButton({session}: Params) {
-    async function onClick() {
-        const query = new MakeDeposit("metamask", session.id);
-        await makeDepositHandler.execute(query);
+    const [installed, setInstalled] = useState(true);
+    const [connected, setConnected] = useState(false);
+    const [currentAddress, setCurrentAddress] = useState("");
 
-        // console.log(sessionsOrError);
-        console.log(query);
+    useEffect(() => {
+        async function isConnected() {
+            if (window.ethereum === undefined) {
+                setInstalled(false);
+                return;
+            }
+
+            const accounts = await window.ethereum.request<string[]>({
+                method: "eth_accounts"
+            });
+
+            if (
+                accounts === null ||
+                accounts === undefined ||
+                accounts.length === 0
+            ) {
+                setConnected(false);
+                return;
+            }
+
+            setConnected(true);
+            setCurrentAddress(accounts[0] as string);
+        }
+
+        isConnected();
+    }, []);
+
+    async function onClick() {
+        const query = new MakeDeposit("metamask", currentAddress, session.id);
+        await makeDepositHandler.execute(query);
+    }
+
+    async function connect() {
+        const accounts = await window.ethereum.request<string[]>({
+            method: "eth_requestAccounts"
+        });
+
+        if (
+            accounts === null ||
+            accounts === undefined ||
+            accounts.length === 0
+        ) {
+            setConnected(false);
+            return;
+        }
+
+        setConnected(true);
+        setCurrentAddress(accounts[0] as string);
+    }
+
+    if (!installed) {
+        return <Translate content="deposit.metamask.not_installed" />;
+    }
+
+    if (!connected) {
+        return (
+            <>
+                <Translate
+                    content="deposit.metamask.not_connected"
+                    component="p"
+                />
+                <a className="button primary" onClick={connect}>
+                    <Translate content="deposit.metamask.connect" />
+                </a>
+            </>
+        );
     }
 
     return (
         <a onClick={onClick} className="button primary">
             <span>
-                {counterpart.translate(
-                    "deposit.session.actions.create_new_external_contract"
-                )}
+                <Translate content="deposit.session.actions.create_new_external_contract" />
             </span>
         </a>
     );

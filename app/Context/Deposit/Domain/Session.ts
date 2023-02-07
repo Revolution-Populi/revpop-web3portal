@@ -46,6 +46,10 @@ export default class Session {
         return this._status;
     }
 
+    get externalContract(): ExternalContract | null {
+        return this._externalContract;
+    }
+
     isCreated(): boolean {
         return this._status === STATUS.CREATED;
     }
@@ -54,7 +58,7 @@ export default class Session {
         return this._status === STATUS.PAYED;
     }
 
-    pay(txHash: string, externalContract: ExternalContract) {
+    pay(externalContract: ExternalContract) {
         if (!this.isCreated()) {
             throw new SessionCanNotBePayed(this._id);
         }

@@ -1,9 +1,14 @@
 import moment from "moment";
 import Session, {STATUS} from "../../Domain/Session";
 import ExternalContract from "../../Domain/ExternalBlockchain/Contract";
+import InternalContract from "../../Domain/InternalBlockchain/Contract";
 
 export interface ExternalContractJson {
     txHash: string;
+}
+
+export interface InternalContractJson {
+    id: string;
 }
 
 export interface SessionJson {
@@ -14,6 +19,7 @@ export interface SessionJson {
     timeLock: number;
     status: number;
     externalContract?: ExternalContractJson;
+    internalContract?: InternalContractJson;
 }
 
 class Transformer {
@@ -31,6 +37,18 @@ class Transformer {
             const externalContract = session.externalContract as ExternalContract;
             sessionJson.externalContract = {
                 txHash: externalContract.txHash
+            };
+        }
+
+        if (session.isCreatedInternalBlockchain()) {
+            const externalContract = session.externalContract as ExternalContract;
+            sessionJson.externalContract = {
+                txHash: externalContract.txHash
+            };
+
+            const internalContract = session.internalContract as InternalContract;
+            sessionJson.internalContract = {
+                id: internalContract.id
             };
         }
 
@@ -52,6 +70,21 @@ class Transformer {
                 externalContractJson.txHash
             );
             session.pay(externalContract);
+        }
+
+        if (sessionJson.status === STATUS.CREATED_INTERNAL_BLOCKCHAIN) {
+            const externalContractJson = sessionJson.externalContract as ExternalContractJson;
+            const externalContract = new ExternalContract(
+                externalContractJson.txHash
+            );
+            session.pay(externalContract);
+
+            const internalContractJson = sessionJson.internalContract as InternalContractJson;
+            const internalContract = new InternalContract(
+                internalContractJson.id,
+                ""
+            );
+            session.createdInternalBlockchain(internalContract);
         }
 
         return session;

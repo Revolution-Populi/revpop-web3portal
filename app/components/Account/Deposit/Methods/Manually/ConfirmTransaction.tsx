@@ -9,10 +9,6 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 // @ts-ignore
 import {Form, Input, Button} from "bitshares-ui-style-guide";
-import {
-    ConfirmSession,
-    confirmSessionHandler
-} from "../../../../../Context/Deposit";
 import AccountSelector from "../../../AccountSelector";
 import AccountStore from "../../../../../stores/AccountStore";
 import {Map} from "immutable";

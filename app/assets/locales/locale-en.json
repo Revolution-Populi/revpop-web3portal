@@ -1191,13 +1191,14 @@
                     "list": {
                         "1": "Created",
                         "5": "Payed",
-                        "10": "Redeemed"
+                        "10": "Created in REVPOP blockchain"
                     }
                 }
             },
             "actions": {
                 "create_new_external_contract": "Create new external HTLC contract",
-                "check_revpop_contract_creation": "Check revpop contract"
+                "check_deposit_contract_created": "Check deposit contract created",
+                "check_deposit_contract_created_unlock": "Unlock your account"
             }
         }
     },

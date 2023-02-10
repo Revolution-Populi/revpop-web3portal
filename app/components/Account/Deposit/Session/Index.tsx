@@ -1,13 +1,13 @@
 import React from "react";
 import Web3 from "web3";
-import moment from "moment";
 // @ts-ignore
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import {useParams} from "react-router-dom";
 import useLoadSession from "../Hooks/useLoadSession";
-import CheckRevpopButton from "./CheckRevpopButton";
 import CreateNewExternalContractButton from "./CreateNewExternalContractButton";
+import CheckDepositContractCreatedButton from "./CheckDepositContractCreatedButton";
+import Redeem from "./Redeem";
 
 type SelectorParams = {
     sessionId: string;
@@ -68,9 +68,12 @@ export default function Index() {
                 {session.isCreated() && (
                     <CreateNewExternalContractButton session={session} />
                 )}
-                {/* {session.isPaid() && (
-                    <CheckRevpopButton sessionId={session.id} />
-                )} */}
+                {session.isPaid() && (
+                    <CheckDepositContractCreatedButton sessionId={session.id} />
+                )}
+                {session.isCreatedInternalBlockchain() && (
+                    <Redeem session={session} />
+                )}
             </div>
         </div>
     );

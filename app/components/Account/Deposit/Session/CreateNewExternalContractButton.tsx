@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import counterpart from "counterpart";
 // @ts-ignore
 import Translate from "react-translate-component";
 import {
@@ -78,7 +77,7 @@ export default function CreateNewExternalContractButton({session}: Params) {
                     content="deposit.metamask.not_connected"
                     component="p"
                 />
-                <a className="button primary" onClick={connect}>
+                <a className="button" onClick={connect}>
                     <Translate content="deposit.metamask.connect" />
                 </a>
             </>
@@ -86,10 +85,8 @@ export default function CreateNewExternalContractButton({session}: Params) {
     }
 
     return (
-        <a onClick={onClick} className="button primary">
-            <span>
-                <Translate content="deposit.session.actions.create_new_external_contract" />
-            </span>
+        <a onClick={onClick} className="button">
+            <Translate content="deposit.session.actions.create_new_external_contract" />
         </a>
     );
 }

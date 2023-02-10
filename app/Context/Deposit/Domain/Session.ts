@@ -1,16 +1,19 @@
 import {Moment} from "moment";
-import {SessionCanNotBePayed} from "./Errors";
+import {SessionWrongStatusError} from "./Errors";
 import ExternalContract from "./ExternalBlockchain/Contract";
+import InternalContract from "./InternalBlockchain/Contract";
 
 export enum STATUS {
     CREATED = 1,
     PAYED = 5,
-    REDEEMED = 10
+    CREATED_INTERNAL_BLOCKCHAIN = 10,
+    REDEEMED = 15
 }
 
 export default class Session {
     private _status: STATUS;
     private _externalContract: ExternalContract | null = null;
+    private _internalContract: InternalContract | null = null;
 
     constructor(
         private _id: string,
@@ -50,6 +53,10 @@ export default class Session {
         return this._externalContract;
     }
 
+    get internalContract(): InternalContract | null {
+        return this._internalContract;
+    }
+
     isCreated(): boolean {
         return this._status === STATUS.CREATED;
     }
@@ -58,13 +65,32 @@ export default class Session {
         return this._status === STATUS.PAYED;
     }
 
+    isCreatedInternalBlockchain(): boolean {
+        return this._status === STATUS.CREATED_INTERNAL_BLOCKCHAIN;
+    }
+
     pay(externalContract: ExternalContract) {
         if (!this.isCreated()) {
-            throw new SessionCanNotBePayed(this._id);
+            throw new SessionWrongStatusError(
+                this._id,
+                "Can't change status to payed."
+            );
         }
 
         this._externalContract = externalContract;
         this._status = STATUS.PAYED;
+    }
+
+    createdInternalBlockchain(internalContract: InternalContract) {
+        if (!this.isPaid()) {
+            throw new SessionWrongStatusError(
+                this._id,
+                "Can't approve internal contract creation."
+            );
+        }
+
+        this._internalContract = internalContract;
+        this._status = STATUS.CREATED_INTERNAL_BLOCKCHAIN;
     }
 
     static create(

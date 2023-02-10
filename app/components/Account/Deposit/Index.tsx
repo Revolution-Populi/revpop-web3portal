@@ -2,8 +2,6 @@ import React from "react";
 import {Route, Switch, useRouteMatch} from "react-router-dom";
 import HelpContent from "../../Utility/HelpContent";
 import Deposits from "./List/Index";
-import Method from "./Methods/Index";
-import Redeem from "./Redeem/Index";
 import Form from "./Form/Index";
 import ConfirmTransactionWrapped from "./Methods/Manually/ConfirmTransaction";
 import Session from "./Session/Index";
@@ -22,11 +20,6 @@ export default function Index() {
                 <Route path={`${path}`} exact>
                     <Deposits />
                 </Route>
-                <Route path={`${path}/redeem`} exact>
-                    <CenterContainer>
-                        <Redeem />
-                    </CenterContainer>
-                </Route>
                 <Route path={`${path}/new`} exact>
                     <CenterContainer>
                         <Form />
@@ -35,11 +28,6 @@ export default function Index() {
                 <Route path={`${path}/new/send_tx_hash`} exact>
                     <CenterContainer>
                         <ConfirmTransactionWrapped />
-                    </CenterContainer>
-                </Route>
-                <Route path={`${path}/new/:type`} exact>
-                    <CenterContainer>
-                        <Method />
                     </CenterContainer>
                 </Route>
                 <Route path={`${path}/:sessionId`} exact>

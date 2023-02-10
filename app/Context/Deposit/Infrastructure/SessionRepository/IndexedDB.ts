@@ -101,7 +101,6 @@ export default class IndexedDB implements SessionRepositoryInterface {
 
         const tx = this.db.transaction(SESSION_TABLE, "readwrite");
         const store = tx.objectStore(SESSION_TABLE);
-
         await Promise.all([store.put(transformer.transform(session)), tx.done]);
 
         return true;

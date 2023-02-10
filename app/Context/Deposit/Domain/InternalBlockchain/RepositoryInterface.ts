@@ -1,5 +1,5 @@
-import Htlc from "./Contract";
+import Contract from "./Contract";
 
-export default interface InternalContractRepositoryInterface {
-    loadAccountHtlc: (account: string) => Promise<Htlc[]>;
+export default interface InternalBlockchainRepositoryInterface {
+    loadContractsByAccount: (account: string) => Promise<Contract[]>;
 }

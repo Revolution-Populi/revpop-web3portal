@@ -52,9 +52,9 @@ function Redeem({session, currentAccount}: Params) {
 
     return (
         <div className="redeem">
-            <Button onClick={onShowModalClick}>
+            <a className="button" onClick={onShowModalClick}>
                 <Translate content="showcases.htlc.redeem" />
-            </Button>
+            </a>
 
             {isModalVisible ? (
                 <HtlcModal

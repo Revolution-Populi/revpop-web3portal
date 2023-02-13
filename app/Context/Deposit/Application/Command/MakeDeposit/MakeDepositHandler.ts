@@ -15,7 +15,7 @@ export default class MakeDepositHandler {
         private readonly web3Repository: ExternalBlockchainRepositoryInterface
     ) {}
 
-    async execute(command: MakeDeposit): Promise<Session> {
+    async execute(command: MakeDeposit): Promise<boolean> {
         const session = await this.sessionRepository.load(command.sessionId);
 
         if (session === null) {
@@ -51,7 +51,7 @@ export default class MakeDepositHandler {
         session.pay(externalContract);
         await this.sessionRepository.save(session);
 
-        return session;
+        return true;
     }
 
     private ensureHasPrefix(hashLock: string) {

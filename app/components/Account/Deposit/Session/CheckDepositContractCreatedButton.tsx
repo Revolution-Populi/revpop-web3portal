@@ -10,16 +10,23 @@ import CheckDepositContractCreated from "../../../../Context/Deposit/Application
 type Params = {
     sessionId: string;
     walletLocked: boolean;
+    refresh: () => void;
 };
 
 const handler = CheckDepositContractCreatedHandler.create();
 
-function CheckDepositContractCreatedButton({sessionId, walletLocked}: Params) {
+function CheckDepositContractCreatedButton({
+    sessionId,
+    walletLocked,
+    refresh
+}: Params) {
     async function onClick() {
         const query = new CheckDepositContractCreated(sessionId);
         const result = await handler.execute(query);
 
-        console.log(result);
+        if (result) {
+            refresh();
+        }
     }
 
     if (walletLocked) {

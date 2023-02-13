@@ -5,6 +5,7 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import {useParams} from "react-router-dom";
 import useLoadSession from "../Hooks/useLoadSession";
+import ExplorerField from "./ExplorerField";
 import CreateNewExternalContractButton from "./CreateNewExternalContractButton";
 import CheckDepositContractCreatedButton from "./CheckDepositContractCreatedButton";
 import Redeem from "./Redeem";
@@ -15,7 +16,7 @@ type SelectorParams = {
 
 export default function Index() {
     const {sessionId} = useParams<SelectorParams>();
-    const [session, error] = useLoadSession(sessionId);
+    const [session, error, refreshSession] = useLoadSession(sessionId);
 
     if (!session) {
         return <p>Can&apos;t load session</p>;
@@ -62,14 +63,21 @@ export default function Index() {
                         </td>
                         <td>{session.timeLock.format()}</td>
                     </tr>
+                    <ExplorerField session={session} />
                 </tbody>
             </table>
             <div className="actions">
                 {session.isCreated() && (
-                    <CreateNewExternalContractButton session={session} />
+                    <CreateNewExternalContractButton
+                        session={session}
+                        refresh={refreshSession}
+                    />
                 )}
                 {session.isPaid() && (
-                    <CheckDepositContractCreatedButton sessionId={session.id} />
+                    <CheckDepositContractCreatedButton
+                        sessionId={session.id}
+                        refresh={refreshSession}
+                    />
                 )}
                 {session.isCreatedInternalBlockchain() && (
                     <Redeem session={session} />

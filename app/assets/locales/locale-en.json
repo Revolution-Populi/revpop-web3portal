@@ -1186,6 +1186,9 @@
                 "time_lock": {
                     "label": "Time lock"
                 },
+                "explorer_link": {
+                    "label": "Explorer link"
+                },
                 "status": {
                     "label": "Status",
                     "list": {

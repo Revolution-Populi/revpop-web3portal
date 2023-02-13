@@ -9,9 +9,13 @@ import {
 
 interface Params {
     session: Session;
+    refresh: () => void;
 }
 
-export default function CreateNewExternalContractButton({session}: Params) {
+export default function CreateNewExternalContractButton({
+    session,
+    refresh
+}: Params) {
     const [installed, setInstalled] = useState(true);
     const [connected, setConnected] = useState(false);
     const [currentAddress, setCurrentAddress] = useState("");
@@ -45,7 +49,14 @@ export default function CreateNewExternalContractButton({session}: Params) {
 
     async function onClick() {
         const query = new MakeDeposit("metamask", currentAddress, session.id);
-        await makeDepositHandler.execute(query);
+        try {
+            const result = await makeDepositHandler.execute(query);
+            if (result) {
+                refresh();
+            }
+        } catch (e) {
+            console.log("Create new external contract error");
+        }
     }
 
     async function connect() {

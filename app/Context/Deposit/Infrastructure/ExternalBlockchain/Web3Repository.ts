@@ -29,9 +29,6 @@ export default class Web3Repository
                     from: command.senderAddress,
                     value: command.amount
                 })
-                .on("transactionHash", (hash: string) => {
-                    // console.log(hash);
-                })
                 .on(
                     "confirmation",
                     (
@@ -48,9 +45,6 @@ export default class Web3Repository
                         }
                     }
                 )
-                .on("receipt", function(receipt: any) {
-                    // console.log("receipt", receipt);
-                })
                 .on("error", function(error: any, receipt: TransactionReceipt) {
                     reject(new CreateNewContractResponse(false, ""));
                 });

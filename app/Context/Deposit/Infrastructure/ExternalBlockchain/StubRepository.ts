@@ -1,3 +1,4 @@
+import {TransactionReceipt} from "web3-core";
 import ExternalBlockchainRepositoryInterface from "../../Domain/ExternalBlockchain/RepositoryInterface";
 import CreateNewContractRequest from "../../Domain/ExternalBlockchain/CreateNewContractRequest";
 import CreateNewContractResponse from "../../Domain/ExternalBlockchain/CreateNewContractResponse";
@@ -15,6 +16,19 @@ export default class StubRepository
         this._requests.push(request);
 
         return new CreateNewContractResponse(this._status, this._txHash);
+    }
+
+    async getTransactionReceipt(
+        txHash: string
+    ): Promise<TransactionReceipt | null> {
+        return null;
+    }
+
+    async getContract(
+        contractId: string,
+        contractAddress: string
+    ): Promise<any | null> {
+        return {};
     }
 
     get size(): number {

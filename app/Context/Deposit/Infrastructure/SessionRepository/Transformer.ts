@@ -52,6 +52,18 @@ class Transformer {
             };
         }
 
+        if (session.isRedeemed()) {
+            const externalContract = session.externalContract as ExternalContract;
+            sessionJson.externalContract = {
+                txHash: externalContract.txHash
+            };
+
+            const internalContract = session.internalContract as InternalContract;
+            sessionJson.internalContract = {
+                id: internalContract.id
+            };
+        }
+
         return sessionJson;
     }
 
@@ -85,6 +97,23 @@ class Transformer {
                 ""
             );
             session.createdInternalBlockchain(internalContract);
+        }
+
+        if (sessionJson.status === STATUS.REDEEMED) {
+            const externalContractJson = sessionJson.externalContract as ExternalContractJson;
+            const externalContract = new ExternalContract(
+                externalContractJson.txHash
+            );
+            session.pay(externalContract);
+
+            const internalContractJson = sessionJson.internalContract as InternalContractJson;
+            const internalContract = new InternalContract(
+                internalContractJson.id,
+                ""
+            );
+            session.createdInternalBlockchain(internalContract);
+
+            session.redeemed();
         }
 
         return session;

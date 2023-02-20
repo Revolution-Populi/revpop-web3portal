@@ -1,7 +1,8 @@
 import React from "react";
 // @ts-ignore
 import {Link, useRouteMatch} from "react-router-dom";
-import counterpart from "counterpart";
+// @ts-ignore
+import Translate from "react-translate-component";
 import Sessions from "./Sessions";
 
 export default function Deposits() {
@@ -9,15 +10,15 @@ export default function Deposits() {
 
     return (
         <>
-            <div className="grid-content">
+            <div className="grid-content sessions">
                 <div className="actions">
                     <Link to={`${url}/new`} className="button primary">
-                        {counterpart("deposit.new")}
+                        <span>
+                            <Translate content="deposit.title" />
+                        </span>
                     </Link>
                 </div>
-                <div className="deposits">
-                    <Sessions />
-                </div>
+                <Sessions />
             </div>
         </>
     );

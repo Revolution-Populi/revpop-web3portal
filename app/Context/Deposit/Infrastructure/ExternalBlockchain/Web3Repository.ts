@@ -1,6 +1,6 @@
 import Web3 from "web3";
-import {AbiItem} from "web3-utils";
 import {provider, TransactionReceipt} from "web3-core";
+import {AbiItem} from "web3-utils";
 import contractAbi from "../../../../assets/abi/HashedTimelock.json";
 import ExternalBlockchainRepositoryInterface from "../../Domain/ExternalBlockchain/RepositoryInterface";
 import CreateNewContractRequest from "../../Domain/ExternalBlockchain/CreateNewContractRequest";
@@ -49,5 +49,27 @@ export default class Web3Repository
                     reject(new CreateNewContractResponse(false, ""));
                 });
         });
+    }
+
+    async getTransactionReceipt(
+        txHash: string
+    ): Promise<TransactionReceipt | null> {
+        const web3 = new Web3(window.ethereum as provider);
+
+        return await web3.eth.getTransactionReceipt(txHash);
+    }
+
+    async getContract(
+        contractId: string,
+        contractAddress: string
+    ): Promise<any | null> {
+        const web3 = new Web3(window.ethereum as provider);
+
+        const contract = new web3.eth.Contract(
+            contractAbi as AbiItem[],
+            contractAddress
+        );
+
+        return await contract.methods.getContract(contractId).call();
     }
 }

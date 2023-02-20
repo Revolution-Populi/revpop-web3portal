@@ -1,14 +1,14 @@
 import React from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
-import Session from "../../../../Context/Deposit/Domain/Session";
+import Session, {STATUS} from "../../../../Context/Deposit/Domain/Session";
 
 type Params = {
     session: Session;
 };
 
-export default function Index({session}: Params) {
-    if (session.isCreated()) {
+export default function ExternalExplorerField({session}: Params) {
+    if (session.status < STATUS.PAYED) {
         return null;
     }
 

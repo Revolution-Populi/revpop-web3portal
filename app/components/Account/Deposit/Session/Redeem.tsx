@@ -2,26 +2,34 @@ import React, {useState} from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
 // @ts-ignore
-import {Button} from "bitshares-ui-style-guide";
-// @ts-ignore
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
 // @ts-ignore
 import {ChainStore, FetchChainObjects} from "@revolutionpopuli/revpopjs";
 import {bindToCurrentAccount} from "../../../Utility/BindToCurrentAccount";
+import SessionRepository from "../../../../Context/Deposit/Infrastructure/SessionRepository/IndexedDB";
 import HtlcModal from "../../../Modal/HtlcModal";
 import {Session} from "../../../../Context/Deposit";
 
 type Params = {
     session: Session;
     currentAccount: any;
+    refresh: () => void;
 };
 
-function Redeem({session, currentAccount}: Params) {
+const sessionRepository = new SessionRepository();
+
+function Redeem({session, currentAccount, refresh}: Params) {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
     const [modalData, setModalData] = useState<any>();
 
-    function hideModal() {
+    async function hideModal() {
         setIsModalVisible(false);
+    }
+
+    async function afterSuccess() {
+        session.redeemed();
+        await sessionRepository.save(session);
+        refresh();
     }
 
     async function onShowModalClick() {
@@ -62,6 +70,7 @@ function Redeem({session, currentAccount}: Params) {
                     hideModal={hideModal}
                     operation={modalData}
                     fromAccount={currentAccount}
+                    afterSuccess={afterSuccess}
                 />
             ) : null}
         </div>

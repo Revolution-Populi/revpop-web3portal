@@ -5,10 +5,13 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import {useParams} from "react-router-dom";
 import useLoadSession from "../Hooks/useLoadSession";
-import ExplorerField from "./ExplorerField";
+import InternalIdField from "./InternalIdField";
+import ExternalExplorerField from "./ExternalExplorerField";
 import CreateNewExternalContractButton from "./CreateNewExternalContractButton";
 import CheckDepositContractCreatedButton from "./CheckDepositContractCreatedButton";
 import Redeem from "./Redeem";
+import Instructions from "./Manually/Instructions";
+import AddTransaction from "./Manually/AddTransaction";
 
 type SelectorParams = {
     sessionId: string;
@@ -63,15 +66,23 @@ export default function Index() {
                         </td>
                         <td>{session.timeLock.format()}</td>
                     </tr>
-                    <ExplorerField session={session} />
+                    <InternalIdField session={session} />
+                    <ExternalExplorerField session={session} />
                 </tbody>
             </table>
             <div className="actions">
                 {session.isCreated() && (
-                    <CreateNewExternalContractButton
-                        session={session}
-                        refresh={refreshSession}
-                    />
+                    <>
+                        <CreateNewExternalContractButton
+                            session={session}
+                            refresh={refreshSession}
+                        />
+                        <Instructions session={session} />
+                        <AddTransaction
+                            session={session}
+                            refresh={refreshSession}
+                        />
+                    </>
                 )}
                 {session.isPaid() && (
                     <CheckDepositContractCreatedButton
@@ -80,7 +91,7 @@ export default function Index() {
                     />
                 )}
                 {session.isCreatedInternalBlockchain() && (
-                    <Redeem session={session} />
+                    <Redeem session={session} refresh={refreshSession} />
                 )}
             </div>
         </div>

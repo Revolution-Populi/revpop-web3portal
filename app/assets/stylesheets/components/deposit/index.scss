@@ -1,6 +1,9 @@
 @import "form";
 @import "session";
-@import "selector";
+@import "add-txhash-manually";
+@import "sessions";
+
+// @import "selector";
 
 .deposit-page {
     display: flex;

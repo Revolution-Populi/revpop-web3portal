@@ -1,20 +1,18 @@
-import MakeDeposit from "./MakeDeposit";
+import AddTransactionManually from "./AddTransactionManually";
 import SessionRepositoryInterface from "../../../Domain/SessionRepositoryInterface";
 import EesRepositoryInterface from "../../../Infrastructure/EES/Repository";
 import ExternalBlockchainRepositoryInterface from "../../../Domain/ExternalBlockchain/RepositoryInterface";
 import ExternalContract from "../../../Domain/ExternalBlockchain/Contract";
-import CreateNewExternalContractRequest from "../../../Domain/ExternalBlockchain/CreateNewContractRequest";
 import * as Errors from "./Errors";
-import {BlockchainConnectionError} from "../../../../Core/Logic/AppError";
 
-export default class MakeDepositHandler {
+export default class AddTransactionManuallyHandler {
     constructor(
         private readonly sessionRepository: SessionRepositoryInterface,
         private readonly eesRepository: EesRepositoryInterface,
         private readonly web3Repository: ExternalBlockchainRepositoryInterface
     ) {}
 
-    async execute(command: MakeDeposit): Promise<boolean> {
+    async execute(command: AddTransactionManually): Promise<boolean> {
         const session = await this.sessionRepository.load(command.sessionId);
 
         if (session === null) {
@@ -26,27 +24,36 @@ export default class MakeDepositHandler {
         }
 
         const settings = await this.eesRepository.loadDepositSettings();
-
-        const createNewExternalContractRequest = new CreateNewExternalContractRequest(
-            command.senderAddress,
-            settings.contractAddress,
-            settings.receiverAddress,
-            session.value,
-            this.ensureHasPrefix(session.hashLock),
-            session.timeLock.unix()
+        const transactionReceipt = await this.web3Repository.getTransactionReceipt(
+            command.txHash
         );
 
-        const createContractResponse = await this.web3Repository.create(
-            createNewExternalContractRequest
-        );
-
-        if (!createContractResponse.success) {
-            throw new BlockchainConnectionError();
+        if (transactionReceipt === null) {
+            throw new Errors.TransactionNotFound(command.sessionId);
         }
 
-        const externalContract = ExternalContract.create(
-            createContractResponse.txHash
+        const log = transactionReceipt["logs"][0];
+        const contractId = log["topics"][1];
+        const contract = await this.web3Repository.getContract(
+            contractId,
+            settings.contractAddress
         );
+        const hashLock = contract.hashlock;
+
+        console.log(session.hashLock, contract, hashLock);
+        console.log(
+            this.ensureHasPrefix(session.hashLock),
+            this.ensureHasPrefix(hashLock)
+        );
+
+        if (
+            this.ensureHasPrefix(session.hashLock) !==
+            this.ensureHasPrefix(hashLock)
+        ) {
+            throw new Errors.InvalidHashLock(command.txHash);
+        }
+
+        const externalContract = ExternalContract.create(command.txHash);
         session.pay(externalContract);
         await this.sessionRepository.save(session);
 

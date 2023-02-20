@@ -208,8 +208,8 @@ class Preimage extends React.Component {
                                     hashMatch == null
                                         ? undefined
                                         : hashMatch
-                                            ? "green"
-                                            : "red"
+                                        ? "green"
+                                        : "red"
                             }}
                             name="preimage"
                             id="preimage"
@@ -415,6 +415,10 @@ class HtlcModal extends React.Component {
             })
                 .then(result => {
                     this.props.hideModal();
+
+                    if (typeof this.props.afterSuccess === "function") {
+                        this.props.afterSuccess();
+                    }
                 })
                 .catch(err => {
                     // todo: visualize error somewhere
@@ -825,8 +829,8 @@ class HtlcModal extends React.Component {
             operation && operation.type === "create"
                 ? counterpart.translate("showcases.htlc.create_htlc")
                 : isExtend
-                    ? counterpart.translate("showcases.htlc.extend_htlc")
-                    : counterpart.translate("showcases.htlc.redeem_htlc");
+                ? counterpart.translate("showcases.htlc.extend_htlc")
+                : counterpart.translate("showcases.htlc.redeem_htlc");
         let sendButtonText =
             operation && operation.type === "create"
                 ? counterpart.translate("showcases.direct_debit.create")
@@ -925,8 +929,8 @@ class HtlcModal extends React.Component {
                                     asset_types.length > 0 && asset
                                         ? asset.get("id")
                                         : asset_id
-                                            ? asset_id
-                                            : asset_types[0]
+                                        ? asset_id
+                                        : asset_types[0]
                                 }
                                 assets={asset_types}
                                 display_balance={
@@ -1022,18 +1026,13 @@ class HtlcModal extends React.Component {
     }
 }
 
-export default connect(
-    HtlcModal,
-    {
-        listenTo() {
-            return [SettingsStore];
-        },
-        getProps(props) {
-            return {
-                fee_asset_symbol: SettingsStore.getState().settings.get(
-                    "fee_asset"
-                )
-            };
-        }
+export default connect(HtlcModal, {
+    listenTo() {
+        return [SettingsStore];
+    },
+    getProps(props) {
+        return {
+            fee_asset_symbol: SettingsStore.getState().settings.get("fee_asset")
+        };
     }
-);
+});

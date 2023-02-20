@@ -1154,15 +1154,16 @@
             "connect": "Connect metamask"
         },
         "manually": {
-            "title": "Manually"
+            "instructions": {
+                "label": "Pay manually"
+            },
+            "add_transaction": {
+                "label": "Add transaction hash manually",
+                "tx_hash": "Transaction hash",
+                "submit": "Add"
+            }
         },
         "html_created": "HTLC contract created",
-        "send_tx_hash": {
-            "title": "Send transaction hash",
-            "tx_hash": "Transaction hash",
-            "hash_lock": "HashLock",
-            "submit": "Send"
-        },
         "redeem": {
             "title": "Redeem",
             "secret": "Secret"
@@ -1189,12 +1190,16 @@
                 "explorer_link": {
                     "label": "Explorer link"
                 },
+                "internal_htlc_id": {
+                    "label": "Internal HTLC id"
+                },
                 "status": {
                     "label": "Status",
                     "list": {
                         "1": "Created",
                         "5": "Payed",
-                        "10": "Created in REVPOP blockchain"
+                        "10": "Created in REVPOP blockchain",
+                        "15": "Completed"
                     }
                 }
             },

@@ -23,7 +23,10 @@ export default class CheckDepositContractCreatedHandler {
         );
 
         for (const internalContract of internalContracts) {
-            if (internalContract.message === session.externalContract?.txHash) {
+            if (
+                internalContract.message ===
+                this.remove0x(session.externalContract?.txHash as string)
+            ) {
                 session.createdInternalBlockchain(internalContract);
                 await this.sessionRepository.save(session);
 
@@ -32,6 +35,14 @@ export default class CheckDepositContractCreatedHandler {
         }
 
         return false;
+    }
+
+    private remove0x(txHash: string): string {
+        if ("0x" === txHash.substring(0, 2)) {
+            return txHash.substring(2);
+        }
+
+        return txHash;
     }
 
     public static create(): CheckDepositContractCreatedHandler {

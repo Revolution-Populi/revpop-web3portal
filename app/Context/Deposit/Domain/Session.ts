@@ -69,6 +69,10 @@ export default class Session {
         return this._status === STATUS.CREATED_INTERNAL_BLOCKCHAIN;
     }
 
+    isRedeemed(): boolean {
+        return this._status === STATUS.REDEEMED;
+    }
+
     pay(externalContract: ExternalContract) {
         if (!this.isCreated()) {
             throw new SessionWrongStatusError(
@@ -91,6 +95,17 @@ export default class Session {
 
         this._internalContract = internalContract;
         this._status = STATUS.CREATED_INTERNAL_BLOCKCHAIN;
+    }
+
+    redeemed() {
+        // if (!this.isCreatedInternalBlockchain()) {
+        //     throw new SessionWrongStatusError(
+        //         this._id,
+        //         "Can't redeem internal contract."
+        //     );
+        // }
+
+        this._status = STATUS.REDEEMED;
     }
 
     static create(

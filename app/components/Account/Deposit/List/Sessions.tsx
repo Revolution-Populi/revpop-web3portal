@@ -8,6 +8,8 @@ import {
     getSessionsHandler,
     Session
 } from "../../../../Context/Deposit";
+import {Moment} from "moment";
+import Web3 from "web3";
 
 const columns = [
     {
@@ -16,20 +18,20 @@ const columns = [
         render: (id: string) => <Link to={`/deposit/${id}`}>{id}</Link>
     },
     {
-        title: counterpart.translate("deposit.session.fields.tx_hash.label"),
-        dataIndex: "tx_hash"
-    },
-    {
-        title: counterpart.translate("deposit.session.fields.amount.label"),
-        dataIndex: "amount"
+        title: counterpart.translate("deposit.session.fields.value.label"),
+        dataIndex: "value",
+        render: (value: string) => `${Web3.utils.fromWei(value)} ETH`
     },
     {
         title: counterpart.translate("deposit.session.fields.time_lock.label"),
-        dataIndex: "time_lock"
+        dataIndex: "timeLock",
+        render: (timeLock: Moment) => timeLock.format()
     },
     {
         title: counterpart.translate("deposit.session.fields.status.label"),
-        dataIndex: "status"
+        dataIndex: "status",
+        render: (status: number) =>
+            counterpart(`deposit.session.fields.status.list.${status}`)
     }
 ];
 
@@ -55,10 +57,5 @@ export default function Sessions() {
         return <p>{counterpart.translate("deposit.session.empty")}</p>;
     }
 
-    const data = sessions.map(session => ({
-        key: session.id,
-        id: session.id
-    }));
-
-    return <Table columns={columns} dataSource={data} />;
+    return <Table columns={columns} dataSource={sessions} />;
 }

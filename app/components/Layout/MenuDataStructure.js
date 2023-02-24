@@ -231,16 +231,10 @@ class MenuDataStructure {
                 text: "deposit.title",
                 inDropdownBehavior: MenuItemType.WhenAccount
             }),
-            withdraw: state => ({
-                target: state.clickHandlers.showWithdraw,
+            withdraw: () => ({
+                target: "/withdraw/new",
                 icon: "withdraw",
-                text: "modal.withdraw.submit",
-                submenu: {
-                    target: "/deposit-withdraw",
-                    text: "header.withdraw_legacy",
-                    disabled: !state.enableDepositWithdraw
-                },
-                disabled: false,
+                text: "withdraw.title",
                 inDropdownBehavior: MenuItemType.WhenAccount
             }),
             deposit_withdraw: state => ({

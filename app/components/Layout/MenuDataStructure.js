@@ -231,8 +231,8 @@ class MenuDataStructure {
                 text: "deposit.title",
                 inDropdownBehavior: MenuItemType.WhenAccount
             }),
-            withdraw: state => ({
-                target: state.clickHandlers.showWithdraw,
+            withdraw: () => ({
+                target: "/withdraw/new",
                 icon: "withdraw",
                 text: "modal.withdraw.submit",
                 submenu: {

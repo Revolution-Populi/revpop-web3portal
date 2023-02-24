@@ -9,6 +9,8 @@ import CheckDepositContractCreated from "../../../../Context/Deposit/Application
 // @ts-ignore
 import {Notification} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
+import WalletUnlockActions from "../../../../actions/WalletUnlockActions";
+import AccountActions from "../../../../actions/AccountActions";
 
 type Params = {
     sessionId: string;
@@ -38,11 +40,21 @@ function CheckDepositContractCreatedButton({
         }
     }
 
+    async function onClickUnlock(event: React.MouseEvent<HTMLElement>) {
+        event.preventDefault();
+        WalletUnlockActions.unlock()
+            .then(() => {
+                AccountActions.tryToSetCurrentAccount();
+            })
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            .catch(() => {});
+    }
+
     if (walletLocked) {
         return (
-            <div>
+            <a className="button" onClick={onClickUnlock}>
                 <Translate content="deposit.session.actions.check_deposit_contract_created_unlock" />
-            </div>
+            </a>
         );
     }
 

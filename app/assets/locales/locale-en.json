@@ -1118,6 +1118,9 @@
             "modal_title": "Create proposal"
         }
     },
+    "withdraw": {
+        "title": "New Withdraw"
+    },
     "network_parameters": {
         "name": "Name",
         "description": "Description",

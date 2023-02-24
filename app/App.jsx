@@ -193,6 +193,7 @@ import {allowedGateway} from "./branding";
 import Deposit from "./components/Account/Deposit/Index";
 import Withdraw from "./components/Account/Withdraw/Index";
 import Deposit from "./components/Account/Deposit/Index";
+import Withdraw from "./components/Account/Withdraw/Index";
 
 class App extends React.Component {
     constructor() {
@@ -494,6 +495,7 @@ class App extends React.Component {
                                     exact
                                     component={AccountDepositWithdraw}
                                 />
+                                <Route path="/withdraw" component={Withdraw} />
                                 <Route path="/deposit" component={Deposit} />
                                 <Route path="/withdraw" component={Withdraw} />
                                 <Route

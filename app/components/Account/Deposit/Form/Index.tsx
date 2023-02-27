@@ -6,6 +6,10 @@ import DepositForm from "./Form";
 export default function Index() {
     const [settings, error] = useLoadDepositSettings();
 
+    if (error) {
+        return <div>Error loading settings, please try again later.</div>;
+    }
+
     if (null === settings) {
         return <div>Loading...</div>;
     }

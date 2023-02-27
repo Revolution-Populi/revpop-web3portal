@@ -6,6 +6,9 @@ import WalletUnlockStore from "../../../../stores/WalletUnlockStore";
 import {connect} from "alt-react";
 import CheckDepositContractCreatedHandler from "../../../../Context/Deposit/Application/Command/CheckDepositContractCreated/CheckDepositContractCreatedHandler";
 import CheckDepositContractCreated from "../../../../Context/Deposit/Application/Command/CheckDepositContractCreated/CheckDepositContractCreated";
+// @ts-ignore
+import {Notification} from "bitshares-ui-style-guide";
+import counterpart from "counterpart";
 
 type Params = {
     sessionId: string;
@@ -26,6 +29,12 @@ function CheckDepositContractCreatedButton({
 
         if (result) {
             refresh();
+        } else {
+            Notification.error({
+                message: counterpart.translate(
+                    "deposit.session.errors.contract_not_found"
+                )
+            });
         }
     }
 

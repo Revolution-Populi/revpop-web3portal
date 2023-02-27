@@ -1207,6 +1207,9 @@
                 "create_new_external_contract": "Create new external HTLC contract",
                 "check_deposit_contract_created": "Check deposit contract created",
                 "check_deposit_contract_created_unlock": "Unlock your account"
+            },
+            "errors": {
+                "contract_not_found": "Contract not found, please try again later"
             }
         }
     },

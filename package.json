@@ -276,7 +276,7 @@
         "jest-cli": "^24.9.0",
         "markdown-loader": "^6.0.0",
         "md5-file": "^4.0.0",
-        "mini-css-extract-plugin": "^2.4.5",
+        "mini-css-extract-plugin": "^2.5.1",
         "mocha": "^9.2.2",
         "node-libs-browser": "^1.0.0",
         "null-loader": "^4.0.1",

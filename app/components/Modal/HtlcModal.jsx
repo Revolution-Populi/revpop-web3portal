@@ -32,6 +32,7 @@ import ChainTypes from "../Utility/ChainTypes";
 import PropTypes from "prop-types";
 import {hasLoaded} from "../Utility/BindToCurrentAccount";
 import FeeAssetSelector from "../Utility/FeeAssetSelector";
+import UnlockButton from "../UnlockButton/UnlockButton";
 
 const getUninitializedFeeAmount = () =>
     new Asset({amount: 0, asset_id: "1.3.0"});
@@ -881,15 +882,18 @@ class HtlcModal extends React.Component {
                 overlay={true}
                 onCancel={this.props.hideModal}
                 footer={[
-                    <Button
-                        key={"send"}
-                        disabled={isSubmitNotValid}
-                        onClick={
-                            !isSubmitNotValid ? this.onSubmit.bind(this) : null
-                        }
-                    >
-                        {sendButtonText}
-                    </Button>,
+                    <UnlockButton key={"send"}>
+                        <Button
+                            disabled={isSubmitNotValid}
+                            onClick={
+                                !isSubmitNotValid
+                                    ? this.onSubmit.bind(this)
+                                    : null
+                            }
+                        >
+                            {sendButtonText}
+                        </Button>
+                    </UnlockButton>,
                     <Button key="Cancel" onClick={this.props.hideModal}>
                         <Translate component="span" content="transfer.cancel" />
                     </Button>

@@ -34,7 +34,7 @@ export default function Wallet({onChange}: Props) {
     }
 
     function generateHashLockFromSecret(secret: Buffer): Buffer {
-        return hash.sha256(secret.toString("hex"));
+        return hash.sha256(secret, "hex");
     }
 
     function generateSecretHashLockPair(): SecretHashLogPair {

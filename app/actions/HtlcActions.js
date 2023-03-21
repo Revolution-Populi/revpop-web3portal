@@ -1,15 +1,14 @@
 import alt from "alt-instance";
+import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import WalletApi from "api/WalletApi";
 import WalletDb from "stores/WalletDb";
-import {hash} from "@revolutionpopuli/revpopjs";
+import {ChainStore, hash, FetchChainObjects} from "@revolutionpopuli/revpopjs";
 
 const calculateHash = (cipher, preimage) => {
     let preimage_hash_calculated = null;
     switch (cipher) {
         case "sha256":
-            preimage_hash_calculated = hash.sha256(
-                Buffer.from(preimage, "hex")
-            );
+            preimage_hash_calculated = hash.sha256(preimage);
             break;
         case "ripemd160":
             preimage_hash_calculated = hash.ripemd160(preimage);
@@ -111,7 +110,7 @@ class HtlcActions {
         let tr = WalletApi.new_transaction();
 
         tr.add_type_operation("htlc_redeem", {
-            preimage: preimage,
+            preimage: new Buffer(preimage).toString("hex"),
             fee: {
                 amount: 0,
                 asset_id: "1.3.0"

@@ -29,12 +29,25 @@ export default function Wallet({onChange}: Props) {
         setSecretHashLockPair(secretHashLockPair);
     }, []);
 
+    function generateRandomString(length: number) {
+        let result = "";
+        const characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*();:.,|?/\\>{}[]*-+<";
+        const charactersLength = characters.length;
+        for (let i = 0; i < length; i++) {
+            result += characters.charAt(
+                Math.floor(Math.random() * charactersLength)
+            );
+        }
+        return result;
+    }
+
     function generateSecret(): Buffer {
-        return crypto.randomBytes(HASH_BYTES_LENGTH);
+        return Buffer.from(generateRandomString(HASH_BYTES_LENGTH));
     }
 
     function generateHashLockFromSecret(secret: Buffer): Buffer {
-        return hash.sha256(secret, "hex");
+        return hash.sha256(secret);
     }
 
     function generateSecretHashLockPair(): SecretHashLogPair {
@@ -42,7 +55,7 @@ export default function Wallet({onChange}: Props) {
         const hashLock = generateHashLockFromSecret(secret);
 
         return {
-            secret: secret.toString("hex"),
+            secret: secret.toString(),
             hashLock: hashLock.toString("hex")
         };
     }

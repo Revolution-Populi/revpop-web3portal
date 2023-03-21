@@ -89,7 +89,6 @@ describe("LoadAllHandler", () => {
                     expect(resultNewParameter.value).equals(
                         newParameter.defaultValue
                     );
-                    console.log("resultNewParameter", resultNewParameter);
                     expect(resultNewParameter.newValue).equals(
                         newParameter.defaultValue
                     );

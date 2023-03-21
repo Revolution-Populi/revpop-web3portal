@@ -127,7 +127,6 @@ class Preimage extends React.Component {
                     preimage_cipher: preimage_cipher,
                     preimage_size: preimage.length
                 });
-
                 this.setState({
                     preimage_hash_calculated: hash
                 });

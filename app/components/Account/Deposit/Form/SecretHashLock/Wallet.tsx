@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import crypto from "crypto";
 // @ts-ignore
 import counterpart from "counterpart";
 // @ts-ignore
@@ -34,10 +33,10 @@ export default function Wallet({onChange}: Props) {
         const characters =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*();:.,|?/\\>{}[]*-+<";
         const charactersLength = characters.length;
+        const indexes = new Uint8Array(length);
+        crypto.getRandomValues(indexes);
         for (let i = 0; i < length; i++) {
-            result += characters.charAt(
-                Math.floor(Math.random() * charactersLength)
-            );
+            result += characters.charAt(indexes[i] % charactersLength);
         }
         return result;
     }

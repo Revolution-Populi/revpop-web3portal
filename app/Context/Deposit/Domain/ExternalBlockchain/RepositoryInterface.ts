@@ -14,4 +14,5 @@ export default interface ExternalBlockchainRepositoryInterface {
         contractId: string,
         contractAddress: string
     ) => Promise<any | null>;
+    getChainId: () => Promise<number>;
 }

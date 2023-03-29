@@ -44,6 +44,8 @@ export default class MakeDepositHandler {
             throw new BlockchainConnectionError();
         }
 
+        console.log("CONTRACT ", createNewExternalContractRequest);
+
         const externalContract = ExternalContract.create(
             createContractResponse.txHash
         );

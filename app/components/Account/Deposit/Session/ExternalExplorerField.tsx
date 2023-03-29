@@ -1,14 +1,23 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
 import Session, {STATUS} from "../../../../Context/Deposit/Domain/Session";
+import GetTransactionExplorerLinkHandler from "../../../../Context/Deposit/Application/Command/GetTransactionExplorerLink/GetTransactionExplorerLinkHandler";
+import GetTransactionExplorerLink from "../../../../Context/Deposit/Application/Command/GetTransactionExplorerLink/GetTransactionExplorerLink";
 
 type Params = {
     session: Session;
 };
 
 export default function ExternalExplorerField({session}: Params) {
-    if (session.status < STATUS.PAYED) {
+    const [url, setUrl] = useState<string>("loading...");
+
+    useEffect(() => {
+        const handler = GetTransactionExplorerLinkHandler.create();
+        handler.execute(new GetTransactionExplorerLink(session)).then(setUrl);
+    }, []);
+
+    if (session.status < STATUS.PAYED || !session.externalContract || !url) {
         return null;
     }
 
@@ -16,10 +25,7 @@ export default function ExternalExplorerField({session}: Params) {
         <tr>
             <td></td>
             <td>
-                <a
-                    target="_blank"
-                    href={`https://goerli.etherscan.io/tx/${session.externalContract?.txHash}`}
-                >
+                <a target="_blank" href={url} rel="noreferrer">
                     <Translate content="deposit.session.fields.explorer_link.label" />
                 </a>
             </td>

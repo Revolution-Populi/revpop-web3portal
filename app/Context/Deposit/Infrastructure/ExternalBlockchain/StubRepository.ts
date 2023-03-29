@@ -9,6 +9,7 @@ export default class StubRepository
     private _status = true;
     private _txHash =
         "0xdefc225669c161c4acc15e261778499ff4154ed69b88cefed3d3a3bf07748405";
+    private _chainId = 1;
 
     async create(
         request: CreateNewContractRequest
@@ -29,6 +30,10 @@ export default class StubRepository
         contractAddress: string
     ): Promise<any | null> {
         return {};
+    }
+
+    async getChainId(): Promise<number> {
+        return this._chainId;
     }
 
     get size(): number {
@@ -57,5 +62,9 @@ export default class StubRepository
 
     set status(value: boolean) {
         this._status = value;
+    }
+
+    set chainId(value: number) {
+        this._chainId = value;
     }
 }

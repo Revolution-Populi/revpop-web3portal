@@ -6,6 +6,9 @@ import {
     makeDepositHandler,
     Session
 } from "../../../../Context/Deposit";
+// @ts-ignore
+import {Notification} from "bitshares-ui-style-guide";
+import counterpart from "counterpart";
 
 interface Params {
     session: Session;
@@ -18,6 +21,7 @@ export default function CreateNewExternalContractButton({
 }: Params) {
     const [installed, setInstalled] = useState(true);
     const [connected, setConnected] = useState(false);
+    const [isCreating, setIsCreating] = useState(false);
     const [currentAddress, setCurrentAddress] = useState("");
 
     useEffect(() => {
@@ -50,6 +54,13 @@ export default function CreateNewExternalContractButton({
     async function onClick() {
         const query = new MakeDeposit("metamask", currentAddress, session.id);
         try {
+            Notification.info({
+                message: counterpart.translate(
+                    "deposit.session.warnings.waiting_for_contract_creation_in_external_blockchain"
+                ),
+                duration: 10
+            });
+            setIsCreating(true);
             const result = await makeDepositHandler.execute(query);
             if (result) {
                 refresh();
@@ -96,8 +107,17 @@ export default function CreateNewExternalContractButton({
     }
 
     return (
-        <a onClick={onClick} className="button">
-            <Translate content="deposit.session.actions.create_new_external_contract" />
-        </a>
+        <button
+            onClick={onClick}
+            className="button ant-btn ant-btn-primary"
+            disabled={isCreating}
+        >
+            {!isCreating && (
+                <Translate content="deposit.session.actions.create_new_external_contract" />
+            )}
+            {isCreating && (
+                <Translate content="deposit.session.actions.creating_new_external_contract" />
+            )}
+        </button>
     );
 }

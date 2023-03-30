@@ -1,3 +1,4 @@
+@import "../../themes/dark-theme";
 .deposit-form {
     h4 {
         margin: 0 0 1rem 0;
@@ -12,4 +13,9 @@
         margin: 0;
         padding: 0 !important;
     }
+}
+
+body.darkTheme .ant-btn-primary[disabled] {
+    color: $white !important;
+    opacity: 0.5 !important;
 }

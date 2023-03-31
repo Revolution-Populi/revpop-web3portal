@@ -4,11 +4,13 @@ import RevpopRepository from "../../../Infrastructure/InternalBlockchain/Reposit
 import SessionIndexedDBRepository from "../../../Infrastructure/SessionRepository/IndexedDB";
 import CheckDepositContractCreated from "./CheckDepositContractCreated";
 import * as Errors from "./Errors";
+import EesRepository from "../../../Infrastructure/EES/Repository";
 
 export default class CheckDepositContractCreatedHandler {
     constructor(
         private readonly sessionRepository: SessionRepositoryInterface,
-        private readonly internalBlockchainRepository: InternalBlockchainRepositoryInterface
+        private readonly internalBlockchainRepository: InternalBlockchainRepositoryInterface,
+        private readonly eesRepository: EesRepository
     ) {}
 
     async execute(command: CheckDepositContractCreated): Promise<boolean> {
@@ -21,6 +23,14 @@ export default class CheckDepositContractCreatedHandler {
         const internalContracts = await this.internalBlockchainRepository.loadContractsByAccount(
             session.internalAccount
         );
+
+        if (
+            !(await this.eesRepository.checkDepositSubmittedToInternalBlockchain(
+                command.sessionId
+            ))
+        ) {
+            return false;
+        }
 
         for (const internalContract of internalContracts) {
             if (
@@ -48,9 +58,11 @@ export default class CheckDepositContractCreatedHandler {
     public static create(): CheckDepositContractCreatedHandler {
         const sessionRepository = new SessionIndexedDBRepository();
         const internalRepository = new RevpopRepository();
+        const eesRepository = new EesRepository();
         return new CheckDepositContractCreatedHandler(
             sessionRepository,
-            internalRepository
+            internalRepository,
+            eesRepository
         );
     }
 }

@@ -1798,6 +1798,9 @@
             "takeScreenshot": "Show screenshot",
             "title": "Error report"
         },
+        "reserve": {
+            "from": "From"
+        },
         "save": "save",
         "send": {
             "header": "Send from <span class=\"send-name\">%(fromName)s</span>",
@@ -1911,6 +1914,7 @@
         "htlc_redeem": "{redeemer} request to redeem from HTLC {htlc_id}",
         "htlc_redeemed": "{to} redeemed {amount} from HTLC {htlc_id} of {from}",
         "htlc_refund": "{to} got refund of HTLC {htlc_id}",
+        "asset_reserve": "{account} burned {amount}",
         "lifetime_upgrade_account": "{account} was upgraded to lifetime member",
         "limit_order_buy": "{account} placed order %(order)s to buy {amount} at {price}",
         "limit_order_cancel": "{account} cancelled order #%(order)s",
@@ -2749,6 +2753,7 @@
             "htlc_redeem": "HTLC redeem",
             "htlc_redeemed": "HTLC redeemed",
             "htlc_refund": "HTLC refund",
+            "asset_reserve": "Burn",
             "limit_order_cancel": "Cancel order",
             "limit_order_create": "Place order",
             "liquidity_pool_create": "Create liquidity pool",

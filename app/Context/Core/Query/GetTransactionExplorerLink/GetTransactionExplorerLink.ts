@@ -1,4 +1,4 @@
-import Session from "../../../Domain/Session";
+import Session from "../../../Deposit/Domain/Session";
 
 export default class GetTransactionExplorerLink {
     constructor(private _session: Session) {}

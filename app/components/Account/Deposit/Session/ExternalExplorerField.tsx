@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
 import Session, {STATUS} from "../../../../Context/Deposit/Domain/Session";
-import GetTransactionExplorerLinkHandler from "../../../../Context/Deposit/Application/Command/GetTransactionExplorerLink/GetTransactionExplorerLinkHandler";
-import GetTransactionExplorerLink from "../../../../Context/Deposit/Application/Command/GetTransactionExplorerLink/GetTransactionExplorerLink";
+import GetTransactionExplorerLinkHandler from "../../../../Context/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLinkHandler";
+import GetTransactionExplorerLink from "../../../../Context/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLink";
 
 type Params = {
     session: Session;

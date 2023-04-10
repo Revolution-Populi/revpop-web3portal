@@ -29,12 +29,12 @@ export default function HashLockField({form, hashLock, onChange}: Props) {
                 <Wallet onChange={onChange} />
                 <Row className="generator-switcher">
                     <Col
-                        span={20}
-                        offset={4}
+                        span={17}
+                        offset={7}
                         onClick={onActivateManuallyMethod}
                     >
                         {counterpart.translate(
-                            "deposit.form.hash_lock_generator.manually"
+                            "form.hash_lock_generator.manually"
                         )}
                     </Col>
                 </Row>
@@ -46,9 +46,9 @@ export default function HashLockField({form, hashLock, onChange}: Props) {
         <>
             <Manually form={form} hashLock={hashLock} onChange={onChange} />
             <Row className="generator-switcher">
-                <Col span={20} offset={4} onClick={onActivateWalletGenerator}>
+                <Col span={17} offset={7} onClick={onActivateWalletGenerator}>
                     {counterpart.translate(
-                        "deposit.form.hash_lock_generator.by_wallet"
+                        "form.hash_lock_generator.by_wallet"
                     )}
                 </Col>
             </Row>

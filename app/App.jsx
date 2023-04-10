@@ -192,8 +192,6 @@ import GatewayActions from "./actions/GatewayActions";
 import {allowedGateway} from "./branding";
 import Deposit from "./components/Account/Deposit/Index";
 import Withdraw from "./components/Account/Withdraw/Index";
-import Deposit from "./components/Account/Deposit/Index";
-import Withdraw from "./components/Account/Withdraw/Index";
 
 class App extends React.Component {
     constructor() {

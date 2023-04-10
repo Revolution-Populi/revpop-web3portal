@@ -21,13 +21,14 @@ import {
 } from "../../../../Context/Withdraw";
 import Address from "./Address";
 import Currency from "./Currency";
+import FeeAssetSelector from "../../../Utility/FeeAssetSelector";
 
 const formItemLayout = {
     labelCol: {
-        span: 4
+        span: 7
     },
     wrapperCol: {
-        span: 20
+        span: 17
     }
 };
 
@@ -47,11 +48,13 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
     const [value, setValue] = useState(minValue);
     const [hashLock, setHashLock] = useState<string>("");
     const [address, setAddress] = useState<string>("");
-    const [currency, setCurrency] = useState<string>("");
     const [withdrawalFeeCurrency, setWithdrawalFeeCurrency] = useState<string>(
         ""
     );
-    const [defaultAssets, setDefaultAssets] = useState<string>("");
+    const [transactionFeeCurrency, setTransactionFeeCurrency] = useState<
+        string
+    >("");
+    const defaultAssets = ["RVP", "RVETH"];
 
     useEffect(() => {
         setAccount(ChainStore.getAccount(accountName));
@@ -99,8 +102,12 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
         setHashLock(hashLock);
     }
 
-    function onChangeCurrencyHandler(currency: string) {
-        setCurrency(currency);
+    function onChangeWithdrawalFeeCurrencyHandler(currency: string) {
+        setWithdrawalFeeCurrency(currency);
+    }
+
+    function onChangeTransactionFeeCurrencyHandler(currency: string) {
+        setTransactionFeeCurrency(currency);
     }
 
     if (!account) {
@@ -132,17 +139,23 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
                 )}
                 onChange={onChangeValueHandler}
             />
-            {/*<Currency*/}
-            {/*    form={form}*/}
-            {/*    currency={withdrawalFeeCurrency}*/}
-            {/*    defaultAssets={defaultAssets}*/}
-            {/*    onChange={onChangeCurrencyHandler}*/}
-            {/*    label={"withdrawal.form.label.currency_to_pay_withdrawal"}*/}
-            {/*    tooltip={*/}
-            {/*        "withdrawal.form.tooltip.currency_to_pay_withdrawal_fee"*/}
-            {/*    }*/}
-            {/*    requiredMessage={"withdraw.form.select.withdrawal_fee_currency"}*/}
-            {/*/>*/}
+            <FeeAssetSelector
+                label={"withdraw.form.label.currency_to_pay_withdrawal_fee"}
+                account={account}
+                transaction={{
+                    type: "htlc_create"
+                }}
+                onChange={onChangeTransactionFeeCurrencyHandler}
+            />
+            <FeeAssetSelector
+                label={"withdraw.form.label.currency_to_pay_transaction_fee"}
+                account={account}
+                transaction={{
+                    type: "transfer",
+                    options: ["price_per_kbyte"]
+                }}
+                onChange={onChangeTransactionFeeCurrencyHandler}
+            />
             <HashLockField
                 form={form}
                 hashLock={hashLock}
@@ -153,7 +166,7 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
                 onChange={onChangeAddressHandler}
                 form={form}
             />
-            <Form.Item wrapperCol={{span: 12, offset: 4}}>
+            <Form.Item wrapperCol={{span: 17, offset: 7}}>
                 <Button type="primary" htmlType="submit">
                     <Translate content="withdraw.create" />
                 </Button>

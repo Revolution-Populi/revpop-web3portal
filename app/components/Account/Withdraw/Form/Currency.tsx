@@ -2,18 +2,18 @@ import React from "react";
 // @ts-ignore
 import counterpart from "counterpart";
 // @ts-ignore
-import {Form, Tooltip} from "bitshares-ui-style-guide";
-import Icon from "../../../Icon/Icon";
+import {Form, Tooltip, Icon} from "bitshares-ui-style-guide";
 import AssetSelect from "../../../Utility/AssetSelect";
 
 interface Props {
     form: any;
     currency: string;
-    defaultAssets: string;
+    defaultAssets: string[];
     onChange: (currency: string) => void;
     label: string;
     tooltip: string;
     requiredMessage: string;
+    name: string;
 }
 
 export default function Currency({
@@ -23,7 +23,8 @@ export default function Currency({
     onChange,
     label,
     tooltip,
-    requiredMessage
+    requiredMessage,
+    name
 }: Props) {
     const {getFieldDecorator} = form;
 
@@ -35,17 +36,14 @@ export default function Currency({
         <>
             {counterpart.translate(label)}
             <Tooltip title={counterpart.translate(tooltip)}>
-                <Icon
-                    type="question-circle"
-                    name={counterpart.translate(label)}
-                />
+                <Icon type="question-circle" />
             </Tooltip>
         </>
     );
 
     return (
         <Form.Item label={itemLabel}>
-            {getFieldDecorator("amount", {
+            {getFieldDecorator(name, {
                 initialValue: currency,
                 rules: [
                     {

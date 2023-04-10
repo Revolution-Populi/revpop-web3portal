@@ -31,6 +31,7 @@ export default class CheckDepositContractCreatedHandler {
         ) {
             return false;
         }
+        console.log("INTERNAL CONTRACTs", internalContracts);
 
         for (const internalContract of internalContracts) {
             if (

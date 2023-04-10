@@ -1282,6 +1282,10 @@
         "address": {
             "label": "ETH Address",
             "tooltip": ""
+        },
+        "hash_lock_generator": {
+            "by_wallet": "Use wallet for Secret and HashLock generation",
+            "manually": "Manually enter HashLock"
         }
     },
     "gateway": {
@@ -3157,13 +3161,12 @@
         "create": "Create Withdraw",
         "form": {
             "label": {
-                "currency_to_pay_withdrawal": "Currency to pay withdrawal"
-            },
-            "tooltip": {
-                "currency_to_pay_withdrawal_fee": "Currency to pay withdrawal fee"
+                "currency_to_pay_withdrawal_fee": "Withdrawal fee currency ",
+                "currency_to_pay_transaction_fee": "Transaction fee currency "
             },
             "select": {
-                "withdrawal_fee_currency": "Withdrawal fee currency"
+                "withdrawal_fee_currency": "Withdrawal fee currency",
+                "transaction_fee_currency": "Transaction fee currency"
             }
         },
         "title": "New Withdraw"

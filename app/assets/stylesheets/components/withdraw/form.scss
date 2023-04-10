@@ -19,3 +19,10 @@ body.darkTheme .ant-btn-primary[disabled] {
     color: $white !important;
     opacity: 0.5 !important;
 }
+
+.amount-selector-field--label {
+    display: inline-block;
+}
+.ant-row.ant-form-item.amount-selector-field {
+    margin-bottom: 25px !important;
+}

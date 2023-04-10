@@ -1,4 +1,7 @@
-import {AppError} from "./AppError";
+import {AppError, BlockchainConnectionError, EesConnectionError, UseCaseError} from "./AppError";
+import {DomainError} from "../Domain/DomainError";
+
+type ErrorsType = AppError | DomainError | UseCaseError | BlockchainConnectionError | EesConnectionError;
 
 export type Result<F, S> = Failure<F> | Success<S>;
 
@@ -29,13 +32,13 @@ export class Success<T> {
 }
 
 export class Failure<T> {
-    private readonly _error: AppError;
+    private readonly _error: ErrorsType;
 
-    constructor(value: AppError) {
+    constructor(value: ErrorsType) {
         this._error = value;
     }
 
-    get error(): AppError {
+    get error(): ErrorsType {
         return this._error;
     }
 
@@ -47,7 +50,7 @@ export class Failure<T> {
         return false;
     }
 
-    public static create<T>(error: AppError) {
+    public static create<T>(error: ErrorsType) {
         return new Failure<T>(error);
     }
 }

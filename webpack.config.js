@@ -1,6 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin").default;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var git = require("git-rev-sync");
 require("es6-promise").polyfill();
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -119,10 +119,8 @@ module.exports = function(env) {
             ]
         }),
         new webpack.ProvidePlugin({
+            process: "process",
             Buffer: ["buffer", "Buffer"]
-        }),
-        new webpack.ProvidePlugin({
-            process: ["process", "process"]
         })
     ];
     if (env.prod) {
@@ -482,7 +480,11 @@ module.exports = function(env) {
                 constants: require.resolve("constants-browserify"),
                 stream: require.resolve("stream-browserify"),
                 path: require.resolve("path-browserify"),
-                buffer: require.resolve("buffer")
+                buffer: require.resolve("buffer"),
+                http: require.resolve("stream-http"),
+                https: require.resolve("https-browserify"),
+                os: require.resolve("os-browserify"),
+                url: require.resolve("url")
             }
         },
         plugins: plugins

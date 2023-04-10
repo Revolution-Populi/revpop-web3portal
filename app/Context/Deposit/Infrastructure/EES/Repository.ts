@@ -38,6 +38,19 @@ export default class Repository implements RepositoryInterface {
         }
     }
 
+    public async checkDepositSubmittedToInternalBlockchain(
+        sessionId: string
+    ): Promise<boolean> {
+        const result = await axios.post(
+            EesAPI.BASE + EesAPI.CHECK_DEPOSIT_SUBMITTED_TO_INTERNAL_BLOCKCHAIN,
+            {
+                sessionId: sessionId
+            }
+        );
+
+        return result.data.submitted;
+    }
+
     private ensureHasPrefix(hashLock: string) {
         if ("0x" !== hashLock.substring(0, 2)) {
             hashLock = "0x" + hashLock;

@@ -21,6 +21,8 @@ export default class SubmitWithdrawRequestHandler {
             withdrawRequestId,
             command.revpopAccount,
             command.value,
+            // command.transactionFeeCurrency,
+            // command.withdrawalFeeCurrency,
             command.hashLock,
             command.address
         );

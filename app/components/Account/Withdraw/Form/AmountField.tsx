@@ -3,19 +3,22 @@ import React from "react";
 import counterpart from "counterpart";
 // @ts-ignore
 import {Form, InputNumber, Tooltip, Icon} from "bitshares-ui-style-guide";
+import {ValidationRule} from "antd/lib/form/Form";
 
 interface Props {
     form: any;
     amount: number;
     minAmount: number;
     onChange: (amount: number) => void;
+    validateCallback?: (value: number) => void;
 }
 
 export default function AmountField({
     form,
     amount,
     minAmount,
-    onChange
+    onChange,
+    validateCallback
 }: Props) {
     const {getFieldDecorator} = form;
 
@@ -34,16 +37,24 @@ export default function AmountField({
         </>
     );
 
+    const rules: ValidationRule[] = [
+        {
+            required: true,
+            message: "Please fill deposit amount!"
+        }
+    ];
+
+    if (validateCallback) {
+        rules.push({
+            validator: validateCallback
+        });
+    }
+
     return (
         <Form.Item label={label}>
             {getFieldDecorator("amount", {
                 initialValue: amount,
-                rules: [
-                    {
-                        required: true,
-                        message: "Please fill deposit amount!"
-                    }
-                ]
+                rules: rules
             })(
                 <InputNumber
                     min={minAmount}

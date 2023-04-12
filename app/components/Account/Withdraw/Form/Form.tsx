@@ -7,9 +7,9 @@ import {connect} from "alt-react";
 import Translate from "react-translate-component";
 // @ts-ignore
 import {Form, Button} from "bitshares-ui-style-guide";
-import {Map} from "immutable";
+import Immutable, {Map} from "immutable";
 // @ts-ignore
-import {ChainStore} from "@revolutionpopuli/revpopjs";
+import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
 import AccountSelector from "../../AccountSelector";
 import AccountStore from "../../../../stores/AccountStore";
 import {DepositSettings} from "../../../../Context/Deposit/Domain/EES/RepositoryInterface";
@@ -20,8 +20,10 @@ import {
     submitWithdrawRequestHandler
 } from "../../../../Context/Withdraw";
 import Address from "./Address";
-import Currency from "./Currency";
-import FeeAssetSelector from "../../../Utility/FeeAssetSelector";
+import OldFee from "../../../Utility/FeeAssetSelector";
+import utils from "../../../../lib/common/utils";
+import FeeAssetSelector from "./FeeAssetSelector";
+import assets from "../../../Explorer/Assets";
 
 const formItemLayout = {
     labelCol: {
@@ -39,6 +41,10 @@ interface Props {
     selectedAccountName: string;
 }
 
+interface Totals {
+    [index: string]: number;
+}
+
 //TODO::check existing payment
 function WithdrawForm({settings, form, selectedAccountName}: Props) {
     const history = useHistory();
@@ -48,17 +54,53 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
     const [value, setValue] = useState(minValue);
     const [hashLock, setHashLock] = useState<string>("");
     const [address, setAddress] = useState<string>("");
-    const [withdrawalFeeCurrency, setWithdrawalFeeCurrency] = useState<string>(
-        ""
+    const [withdrawalFeeCurrency, setWithdrawalFeeCurrency] = useState<any>(
+        null
     );
-    const [transactionFeeCurrency, setTransactionFeeCurrency] = useState<
-        string
-    >("");
-    const defaultAssets = ["RVP", "RVETH"];
+    const [transactionFeeCurrency, setTransactionFeeCurrency] = useState<any>(
+        null
+    );
+    const [totals, setTotals] = useState<Totals>({});
+    const [accountBalances, setAccountBalances] = useState<Map<
+        string,
+        any
+    > | null>(null);
 
     useEffect(() => {
         setAccount(ChainStore.getAccount(accountName));
     }, [accountName]);
+
+    useEffect(() => {
+        if (!account) {
+            return;
+        }
+
+        setAccountBalances(
+            account.get("balances").map((x: any) => {
+                const balanceAmount = ChainStore.getObject(x);
+
+                if (!balanceAmount.get("balance")) {
+                    return null;
+                }
+
+                return balanceAmount;
+            })
+        );
+    }, [account]);
+
+    useEffect(() => {
+        if (
+            !accountBalances ||
+            !withdrawalFeeCurrency ||
+            !transactionFeeCurrency
+        ) {
+            return;
+        }
+
+        getTotalsAmounts(accountBalances).then(totals => {
+            setTotals(totals);
+        });
+    }, [account, value, withdrawalFeeCurrency, transactionFeeCurrency]);
 
     async function handleSubmit(event: SubmitEvent) {
         event.preventDefault();
@@ -78,12 +120,42 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
         const command = new SubmitWithdrawRequest(
             accountName,
             Web3.utils.toWei(value.toString()),
+            transactionFeeCurrency,
+            withdrawalFeeCurrency,
             hashLock,
             address
         );
         const sessionId = await submitWithdrawRequestHandler.execute(command);
 
         history.push(`/withdraw/${sessionId}`);
+    }
+
+    async function getTotalsAmounts(accountBalances: any) {
+        const totals: Totals = {};
+
+        for (const key of accountBalances.keys()) {
+            totals[key] = 0;
+
+            if (key == "1.3.1") {
+                totals[key] += value;
+            }
+
+            if (
+                withdrawalFeeCurrency &&
+                withdrawalFeeCurrency.asset_id == key
+            ) {
+                totals[key] += withdrawalFeeCurrency._real_amount;
+            }
+
+            if (
+                transactionFeeCurrency &&
+                transactionFeeCurrency.asset_id == key
+            ) {
+                totals[key] += transactionFeeCurrency._real_amount;
+            }
+        }
+
+        return totals;
     }
 
     function onAccountChangedHandler(account: any) {
@@ -102,12 +174,76 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
         setHashLock(hashLock);
     }
 
-    function onChangeWithdrawalFeeCurrencyHandler(currency: string) {
+    function onChangeWithdrawalFeeCurrencyHandler(currency: any) {
         setWithdrawalFeeCurrency(currency);
     }
 
     function onChangeTransactionFeeCurrencyHandler(currency: string) {
         setTransactionFeeCurrency(currency);
+    }
+
+    function getRealAmount(balance: any): number {
+        let amount = balance.get("balance");
+
+        if (amount || amount == 0) {
+            amount = Number(balance.get("balance"));
+        } else {
+            return 0;
+        }
+
+        let asset = ChainStore.getObject(balance.get("asset_type"));
+        if (asset && asset.toJS) {
+            asset = asset.toJS();
+        }
+
+        const precision = utils.get_asset_precision(asset.precision);
+
+        return amount / precision;
+    }
+
+    function formatAsset(balance: any): string {
+        const value = getRealAmount(balance);
+
+        let asset = ChainStore.getObject(balance.get("asset_type"));
+        if (asset && asset.toJS) {
+            asset = asset.toJS();
+        }
+
+        return value.toString() + " " + asset.symbol;
+    }
+
+    async function validateAmount() {
+        if (!accountBalances) {
+            return;
+        }
+
+        for (const assetId in totals) {
+            const balance = accountBalances.get(assetId);
+
+            if (getRealAmount(balance) < totals[assetId]) {
+                return Promise.reject(
+                    new Error(
+                        "You have only " +
+                            formatAsset(balance) +
+                            " on your balance which is insufficient."
+                    )
+                );
+            }
+        }
+    }
+
+    function getAssets(accountBalances: any) {
+        if (!accountBalances) {
+            return [];
+        }
+
+        const assets: string[] = [];
+
+        for (const asset of accountBalances.keys()) {
+            assets.push(asset);
+        }
+
+        return assets;
     }
 
     if (!account) {
@@ -138,16 +274,24 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
                     Web3.utils.fromWei(settings.minimumValue)
                 )}
                 onChange={onChangeValueHandler}
+                validateCallback={validateAmount}
             />
             <FeeAssetSelector
+                label={"new"}
+                selectedAsset={"RVP"}
+                assets={getAssets(accountBalances)}
+                onChange={() => {}}
+            />
+            {/*
+            <OldFee
                 label={"withdraw.form.label.currency_to_pay_withdrawal_fee"}
                 account={account}
                 transaction={{
                     type: "htlc_create"
                 }}
-                onChange={onChangeTransactionFeeCurrencyHandler}
+                onChange={onChangeWithdrawalFeeCurrencyHandler}
             />
-            <FeeAssetSelector
+            <OldFee
                 label={"withdraw.form.label.currency_to_pay_transaction_fee"}
                 account={account}
                 transaction={{
@@ -156,6 +300,7 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
                 }}
                 onChange={onChangeTransactionFeeCurrencyHandler}
             />
+            */}
             <HashLockField
                 form={form}
                 hashLock={hashLock}

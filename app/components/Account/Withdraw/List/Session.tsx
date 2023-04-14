@@ -5,7 +5,7 @@ import {
     GetSessions,
     getSessionsHandler,
     Session as SessionDomain
-} from "../../../../Context/Deposit";
+} from "../../../../Context/EES";
 
 type Props = {
     session: SessionDomain;

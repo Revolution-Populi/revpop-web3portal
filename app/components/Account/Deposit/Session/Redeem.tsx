@@ -6,9 +6,9 @@ import {Apis} from "@revolutionpopuli/revpopjs-ws";
 // @ts-ignore
 import {ChainStore, FetchChainObjects} from "@revolutionpopuli/revpopjs";
 import {bindToCurrentAccount} from "../../../Utility/BindToCurrentAccount";
-import SessionRepository from "../../../../Context/Deposit/Infrastructure/SessionRepository/IndexedDB";
+import SessionRepository from "../../../../Context/EES/Infrastructure/SessionRepository/IndexedDB";
 import HtlcModal from "../../../Modal/HtlcModal";
-import {Session} from "../../../../Context/Deposit";
+import {Session} from "../../../../Context/EES";
 
 type Params = {
     session: Session;

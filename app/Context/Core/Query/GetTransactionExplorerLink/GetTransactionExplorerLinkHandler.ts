@@ -1,7 +1,7 @@
 import GetTransactionExplorerLink from "./GetTransactionExplorerLink";
-import ExternalBlockchainRepositoryInterface from "../../../Deposit/Domain/ExternalBlockchain/RepositoryInterface";
+import ExternalBlockchainRepositoryInterface from "../../../EES/Domain/ExternalBlockchain/RepositoryInterface";
 import etherscanLink from "@metamask/etherscan-link";
-import Web3Repository from "../../../Deposit/Infrastructure/ExternalBlockchain/Web3Repository";
+import Web3Repository from "../../../EES/Infrastructure/ExternalBlockchain/Web3Repository";
 export default class GetTransactionExplorerLinkHandler {
     constructor(
         private externalBlockchainRepository: ExternalBlockchainRepositoryInterface

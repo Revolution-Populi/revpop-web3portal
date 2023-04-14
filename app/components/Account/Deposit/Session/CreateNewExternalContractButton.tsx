@@ -5,7 +5,7 @@ import {
     MakeDeposit,
     makeDepositHandler,
     Session
-} from "../../../../Context/Deposit";
+} from "../../../../Context/EES";
 // @ts-ignore
 import {Notification} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";

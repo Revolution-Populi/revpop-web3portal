@@ -13,14 +13,14 @@ import {Map} from "immutable";
 import {ChainStore} from "@revolutionpopuli/revpopjs";
 import AccountSelector from "../../AccountSelector";
 import AccountStore from "../../../../stores/AccountStore";
-import {DepositSettings} from "../../../../Context/Deposit/Domain/EES/RepositoryInterface";
+import {EESSettings} from "../../../../Context/EES/Domain/EES/RepositoryInterface";
 import HashLockField from "./SecretHashLock/Index";
 import AmountField from "./AmountField";
 import TimeLock from "./TimeLock";
 import {
     SubmitDepositRequest,
     submitDepositRequestHandler
-} from "../../../../Context/Deposit";
+} from "../../../../Context/EES";
 
 const formItemLayout = {
     labelCol: {
@@ -32,7 +32,7 @@ const formItemLayout = {
 };
 
 interface Props {
-    settings: DepositSettings;
+    settings: EESSettings;
     form: any;
     from: string;
     selectedAccountName: string;

@@ -1,8 +1,8 @@
 import React from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
-import CheckDepositContractCreatedHandler from "../../../../Context/Deposit/Application/Command/CheckDepositContractCreated/CheckDepositContractCreatedHandler";
-import CheckDepositContractCreated from "../../../../Context/Deposit/Application/Command/CheckDepositContractCreated/CheckDepositContractCreated";
+import CheckDepositContractCreatedHandler from "../../../../Context/EES/Application/Command/CheckDepositContractCreated/CheckDepositContractCreatedHandler";
+import CheckDepositContractCreated from "../../../../Context/EES/Application/Command/CheckDepositContractCreated/CheckDepositContractCreated";
 // @ts-ignore
 import {Notification} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";

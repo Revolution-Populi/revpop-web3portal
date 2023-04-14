@@ -12,7 +12,6 @@ import Immutable, {Map} from "immutable";
 import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
 import AccountSelector from "../../AccountSelector";
 import AccountStore from "../../../../stores/AccountStore";
-import {DepositSettings} from "../../../../Context/Deposit/Domain/EES/RepositoryInterface";
 import HashLockField from "./SecretHashLock/Index";
 import AmountField from "./AmountField";
 import {
@@ -20,10 +19,15 @@ import {
     submitWithdrawRequestHandler
 } from "../../../../Context/Withdraw";
 import Address from "./Address";
-import OldFee from "../../../Utility/FeeAssetSelector";
 import utils from "../../../../lib/common/utils";
 import FeeAssetSelector from "./FeeAssetSelector";
-import assets from "../../../Explorer/Assets";
+import Fee from "../../../../Context/Fees/Domain/Fee";
+import {EESSettings} from "../../../../Context/EES/Domain/EES/RepositoryInterface";
+import {
+    CalcWithdrawTransactionFee,
+    calcWithdrawTransactionFee
+} from "../../../../Context/EES";
+import OldFee from "../../../Utility/FeeAssetSelector";
 
 const formItemLayout = {
     labelCol: {
@@ -35,7 +39,7 @@ const formItemLayout = {
 };
 
 interface Props {
-    settings: DepositSettings;
+    settings: EESSettings;
     form: any;
     from: string;
     selectedAccountName: string;
@@ -54,11 +58,11 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
     const [value, setValue] = useState(minValue);
     const [hashLock, setHashLock] = useState<string>("");
     const [address, setAddress] = useState<string>("");
-    const [withdrawalFeeCurrency, setWithdrawalFeeCurrency] = useState<any>(
-        null
+    const [withdrawalFee, setWithdrawalFee] = useState<Fee>(
+        Fee.create("1.3.0", 0)
     );
-    const [transactionFeeCurrency, setTransactionFeeCurrency] = useState<any>(
-        null
+    const [transactionFee, setTransactionFee] = useState<Fee>(
+        Fee.create("1.3.0", 0)
     );
     const [totals, setTotals] = useState<Totals>({});
     const [accountBalances, setAccountBalances] = useState<Map<
@@ -86,21 +90,19 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
                 return balanceAmount;
             })
         );
+        onChangeTransactionFeeCurrencyHandler(transactionFee.code);
+        onChangeWithdrawalFeeCurrencyHandler(withdrawalFee.code);
     }, [account]);
 
     useEffect(() => {
-        if (
-            !accountBalances ||
-            !withdrawalFeeCurrency ||
-            !transactionFeeCurrency
-        ) {
+        if (!accountBalances || !withdrawalFee || !transactionFee) {
             return;
         }
 
         getTotalsAmounts(accountBalances).then(totals => {
             setTotals(totals);
         });
-    }, [account, value, withdrawalFeeCurrency, transactionFeeCurrency]);
+    }, [account, value, withdrawalFee, transactionFee]);
 
     async function handleSubmit(event: SubmitEvent) {
         event.preventDefault();
@@ -120,8 +122,8 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
         const command = new SubmitWithdrawRequest(
             accountName,
             Web3.utils.toWei(value.toString()),
-            transactionFeeCurrency,
-            withdrawalFeeCurrency,
+            transactionFee,
+            withdrawalFee,
             hashLock,
             address
         );
@@ -140,18 +142,12 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
                 totals[key] += value;
             }
 
-            if (
-                withdrawalFeeCurrency &&
-                withdrawalFeeCurrency.asset_id == key
-            ) {
-                totals[key] += withdrawalFeeCurrency._real_amount;
+            if (withdrawalFee && withdrawalFee.code == key) {
+                totals[key] += withdrawalFee.value;
             }
 
-            if (
-                transactionFeeCurrency &&
-                transactionFeeCurrency.asset_id == key
-            ) {
-                totals[key] += transactionFeeCurrency._real_amount;
+            if (transactionFee && transactionFee.code == key) {
+                totals[key] += transactionFee.value;
             }
         }
 
@@ -174,12 +170,35 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
         setHashLock(hashLock);
     }
 
-    function onChangeWithdrawalFeeCurrencyHandler(currency: any) {
-        setWithdrawalFeeCurrency(currency);
+    function onChangeWithdrawalFeeCurrencyHandler(assetId: string) {
+        let fee: number;
+
+        switch (assetId) {
+            case "1.3.0":
+                fee = settings.rvpWithdrawalFee;
+                break;
+            case "1.3.1":
+                fee = settings.rvethWithdrawalFee;
+                break;
+            default:
+                fee = 0;
+        }
+
+        setWithdrawalFee(Fee.create(assetId, fee));
     }
 
-    function onChangeTransactionFeeCurrencyHandler(currency: string) {
-        setTransactionFeeCurrency(currency);
+    async function onChangeTransactionFeeCurrencyHandler(assetId: string) {
+        if (!account) {
+            return;
+        }
+
+        const command = new CalcWithdrawTransactionFee(assetId, account);
+        const fee = Fee.create(
+            assetId,
+            await calcWithdrawTransactionFee.execute(command)
+        );
+
+        setTransactionFee(fee);
     }
 
     function getRealAmount(balance: any): number {
@@ -277,30 +296,19 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
                 validateCallback={validateAmount}
             />
             <FeeAssetSelector
-                label={"new"}
-                selectedAsset={"RVP"}
-                assets={getAssets(accountBalances)}
-                onChange={() => {}}
-            />
-            {/*
-            <OldFee
                 label={"withdraw.form.label.currency_to_pay_withdrawal_fee"}
-                account={account}
-                transaction={{
-                    type: "htlc_create"
-                }}
+                selectedAsset={withdrawalFee.code}
+                value={withdrawalFee.value}
+                assets={getAssets(accountBalances)}
                 onChange={onChangeWithdrawalFeeCurrencyHandler}
             />
-            <OldFee
+            <FeeAssetSelector
                 label={"withdraw.form.label.currency_to_pay_transaction_fee"}
-                account={account}
-                transaction={{
-                    type: "transfer",
-                    options: ["price_per_kbyte"]
-                }}
+                selectedAsset={transactionFee.code}
+                value={transactionFee.value}
+                assets={getAssets(accountBalances)}
                 onChange={onChangeTransactionFeeCurrencyHandler}
             />
-            */}
             <HashLockField
                 form={form}
                 hashLock={hashLock}

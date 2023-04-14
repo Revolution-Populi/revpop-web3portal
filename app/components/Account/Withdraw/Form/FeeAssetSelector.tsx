@@ -2,10 +2,11 @@ import React, {useEffect, useState} from "react";
 // @ts-ignore
 import {Form, Input, Select} from "bitshares-ui-style-guide";
 // @ts-ignore
-import {ChainStore} from "@revolutionpopuli/revpopjs";
+import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
 import {Map} from "immutable";
 import utils from "../../../../lib/common/utils";
 import AssetName from "../../../Utility/AssetName";
+import counterpart from "counterpart";
 
 interface FeeAssetSelectorProps {
     label: string;
@@ -29,7 +30,7 @@ export default function FeeAssetSelector({
         const newAssetsList = [];
 
         for (const asset of assets) {
-            const assetInfo = ChainStore.getObject(asset);
+            const assetInfo = ChainStore.getObject(asset, true);
 
             if (Map.isMap(assetInfo)) {
                 newAssetsList.push(assetInfo);
@@ -40,12 +41,10 @@ export default function FeeAssetSelector({
         setLoading(false);
     }, [assets]);
 
-    console.log("AssetsList", assetsList);
-
     return (
         <div>
             <Form.Item
-                label={label}
+                label={counterpart.translate(label)}
                 style={{margin: "0 0 0 0"}}
                 className="amount-selector-field"
             >
@@ -64,6 +63,7 @@ export default function FeeAssetSelector({
                         disabled={loading}
                         style={{width: "130px"}}
                         selectStyle={{width: "100%"}}
+                        onChange={onChange}
                     >
                         {assetsList.map(asset => {
                             const {

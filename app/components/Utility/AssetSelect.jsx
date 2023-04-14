@@ -21,7 +21,6 @@ const AssetSelectView = ({
     onDropdownVisibleChange,
     ...props
 }) => {
-    console.log("Filtered assets", assets, assets.filter(Map.isMap));
     const disableSelect =
         assets.filter(Map.isMap).length <= 1 && !onDropdownVisibleChange;
     // if onDropdownVisibleChange given we assume that lazy loading takes place

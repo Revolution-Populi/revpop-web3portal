@@ -7,7 +7,7 @@ import {
     GetSessions,
     getSessionsHandler,
     Session
-} from "../../../../Context/Deposit";
+} from "../../../../Context/EES";
 import {Moment} from "moment";
 import Web3 from "web3";
 

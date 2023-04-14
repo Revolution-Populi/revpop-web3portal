@@ -1,9 +1,5 @@
 import {useEffect, useState} from "react";
-import {
-    GetSession,
-    getSessionHandler,
-    Session
-} from "../../../../Context/Deposit";
+import {GetSession, getSessionHandler, Session} from "../../../../Context/EES";
 
 export default function useLoadSession(
     sessionId: string

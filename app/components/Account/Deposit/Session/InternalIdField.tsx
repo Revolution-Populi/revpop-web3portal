@@ -1,7 +1,7 @@
 import React from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
-import Session, {STATUS} from "../../../../Context/Deposit/Domain/Session";
+import Session, {STATUS} from "../../../../Context/EES/Domain/Deposit/Session";
 
 type Params = {
     session: Session;

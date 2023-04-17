@@ -1,15 +1,17 @@
 import {DBSchema, IDBPDatabase, openDB} from "idb";
-import SessionRepositoryInterface from "../../Domain/SessionRepositoryInterface";
-import Session from "../../Domain/Session";
+import WithdrawSessionRepositoryInterface from "../../Domain/Withdraw/WithdrawSessionRepositoryInterface";
+import WithdrawSession from "../../Domain/Withdraw/WithdrawSession";
 import transformer from "./Transformer";
 
 interface DB extends DBSchema {
-    session: {
+    withdraw_session: {
         value: {
             id: string;
             value: string;
             hashLock: string;
-            address: string;
+            withdrawalFeeCurrency: string;
+            transactionFeeCurrency: string;
+            ethereumAddress: string;
         };
         key: string;
     };
@@ -17,18 +19,16 @@ interface DB extends DBSchema {
 
 const DB_NAME = "web3portal";
 const DB_VERSION = 1;
-const SESSION_TABLE = "session";
+const SESSION_TABLE = "withdraw_session";
 
-//This repository has problems because of "indexeddbshim" package
-
-export default class IndexedDB implements SessionRepositoryInterface {
+export default class IndexedDB implements WithdrawSessionRepositoryInterface {
     private db: IDBPDatabase<DB> | null = null;
 
     constructor() {
         this.openDatabase();
     }
 
-    async load(sessionId: string): Promise<Session | null> {
+    async load(sessionId: string): Promise<WithdrawSession | null> {
         if (this.db === null) {
             return null;
         }
@@ -38,7 +38,6 @@ export default class IndexedDB implements SessionRepositoryInterface {
             .objectStore(SESSION_TABLE);
         const request = await store.get(sessionId);
 
-        //TODO::remove indexeddbshim?
         return new Promise((resolve, reject) => {
             // @ts-ignore
             request.onsuccess = () => {
@@ -60,7 +59,7 @@ export default class IndexedDB implements SessionRepositoryInterface {
         });
     }
 
-    async all(): Promise<Session[]> {
+    async all(): Promise<WithdrawSession[]> {
         if (this.db === null) {
             return [];
         }
@@ -70,7 +69,6 @@ export default class IndexedDB implements SessionRepositoryInterface {
             .objectStore(SESSION_TABLE);
         const request = await store.getAll();
 
-        //TODO::remove indexeddbshim?
         return new Promise((resolve, reject) => {
             // @ts-ignore
             request.onsuccess = () => {
@@ -94,7 +92,7 @@ export default class IndexedDB implements SessionRepositoryInterface {
         });
     }
 
-    async save(session: Session): Promise<boolean> {
+    async save(session: WithdrawSession): Promise<boolean> {
         if (this.db === null) {
             return false;
         }

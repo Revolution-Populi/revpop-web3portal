@@ -7,17 +7,13 @@ import {connect} from "alt-react";
 import Translate from "react-translate-component";
 // @ts-ignore
 import {Form, Button} from "bitshares-ui-style-guide";
-import Immutable, {Map} from "immutable";
+import {Map} from "immutable";
 // @ts-ignore
 import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
 import AccountSelector from "../../AccountSelector";
 import AccountStore from "../../../../stores/AccountStore";
 import HashLockField from "./SecretHashLock/Index";
 import AmountField from "./AmountField";
-import {
-    SubmitWithdrawRequest,
-    submitWithdrawRequestHandler
-} from "../../../../Context/Withdraw";
 import Address from "./Address";
 import utils from "../../../../lib/common/utils";
 import FeeAssetSelector from "./FeeAssetSelector";
@@ -25,9 +21,10 @@ import Fee from "../../../../Context/Fees/Domain/Fee";
 import {EESSettings} from "../../../../Context/EES/Domain/EES/RepositoryInterface";
 import {
     CalcWithdrawTransactionFee,
-    calcWithdrawTransactionFee
+    calcWithdrawTransactionFee,
+    SubmitWithdrawRequest,
+    submitWithdrawRequestHandler
 } from "../../../../Context/EES";
-import OldFee from "../../../Utility/FeeAssetSelector";
 
 const formItemLayout = {
     labelCol: {
@@ -122,8 +119,8 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
         const command = new SubmitWithdrawRequest(
             accountName,
             Web3.utils.toWei(value.toString()),
-            transactionFee,
-            withdrawalFee,
+            transactionFee.code,
+            withdrawalFee.code,
             hashLock,
             address
         );

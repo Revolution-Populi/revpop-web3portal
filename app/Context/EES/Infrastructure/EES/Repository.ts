@@ -40,6 +40,25 @@ export default class Repository implements RepositoryInterface {
         }
     }
 
+    public async createWithdrawRequest(
+        internalAccount: string,
+        hashLock: string
+    ): Promise<string> {
+        try {
+            const result = await axios.post(
+                EesAPI.BASE + EesAPI.SUBMIT_WITHDRAW_REQUEST,
+                {
+                    revpopAccount: internalAccount,
+                    hashLock: this.ensureHasPrefix(hashLock)
+                }
+            );
+
+            return result.data.id;
+        } catch (e) {
+            throw new EesErrors.ConnectionError();
+        }
+    }
+
     public async checkDepositSubmittedToInternalBlockchain(
         sessionId: string
     ): Promise<boolean> {

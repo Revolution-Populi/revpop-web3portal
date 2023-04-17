@@ -1,7 +1,6 @@
-import {Moment} from "moment";
-import {SessionWrongStatusError} from "./Errors";
-import ExternalContract from "./ExternalBlockchain/Contract";
-import InternalContract from "./InternalBlockchain/Contract";
+import {SessionWrongStatusError} from "../Errors";
+import ExternalContract from "../ExternalBlockchain/Contract";
+import InternalContract from "../InternalBlockchain/Contract";
 
 export enum STATUS {
     CREATED = 1,
@@ -10,7 +9,7 @@ export enum STATUS {
     REDEEMED = 15
 }
 
-export default class Session {
+export default class WithdrawSession {
     private _status: STATUS;
     private _externalContract: ExternalContract | null = null;
     private _internalContract: InternalContract | null = null;
@@ -20,7 +19,9 @@ export default class Session {
         private _internalAccount: string,
         private _value: string,
         private _hashLock: string,
-        private _address: string
+        private _withdrawalFeeCurrency: string,
+        private _transactionFeeCurrency: string,
+        private _ethereumAddress: string
     ) {
         this._status = STATUS.CREATED;
     }
@@ -41,8 +42,16 @@ export default class Session {
         return this._hashLock;
     }
 
-    get address(): string {
-        return this._address;
+    get withdrawalFeeCurrency(): string {
+        return this._withdrawalFeeCurrency;
+    }
+
+    get transactionFeeCurrency(): string {
+        return this._transactionFeeCurrency;
+    }
+
+    get ethereumAddress(): string {
+        return this._ethereumAddress;
     }
 
     get status(): number {
@@ -97,13 +106,27 @@ export default class Session {
         this._status = STATUS.CREATED_INTERNAL_BLOCKCHAIN;
     }
 
+    redeemed() {
+        this._status = STATUS.REDEEMED;
+    }
+
     static create(
         id: string,
         internalAccount: string,
         value: string,
         hashLock: string,
-        address: string
+        withdrawalFeeCurrency: string,
+        transactionFeeCurrency: string,
+        ethereumAddress: string
     ) {
-        return new Session(id, internalAccount, value, hashLock, address);
+        return new WithdrawSession(
+            id,
+            internalAccount,
+            value,
+            hashLock,
+            withdrawalFeeCurrency,
+            transactionFeeCurrency,
+            ethereumAddress
+        );
     }
 }

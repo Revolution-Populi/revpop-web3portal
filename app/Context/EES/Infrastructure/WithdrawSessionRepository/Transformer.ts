@@ -1,4 +1,5 @@
-import Session, {STATUS} from "../../Domain/Session";
+import moment from "moment";
+import WithdrawSession, {STATUS} from "../../Domain/Withdraw/WithdrawSession";
 import ExternalContract from "../../Domain/ExternalBlockchain/Contract";
 import InternalContract from "../../Domain/InternalBlockchain/Contract";
 
@@ -15,20 +16,24 @@ export interface SessionJson {
     internalAccount: string;
     value: string;
     hashLock: string;
-    address: string;
+    withdrawalFeeCurrency: string;
+    transactionFeeCurrency: string;
+    ethereumAddress: string;
     status: number;
     externalContract?: ExternalContractJson;
     internalContract?: InternalContractJson;
 }
 
 class Transformer {
-    transform(session: Session): SessionJson {
+    transform(session: WithdrawSession): SessionJson {
         const sessionJson: SessionJson = {
             id: session.id,
             internalAccount: session.internalAccount,
             value: session.value,
             hashLock: session.hashLock,
-            address: session.address,
+            withdrawalFeeCurrency: session.withdrawalFeeCurrency,
+            transactionFeeCurrency: session.transactionFeeCurrency,
+            ethereumAddress: session.ethereumAddress,
             status: session.status
         };
 
@@ -66,13 +71,15 @@ class Transformer {
         return sessionJson;
     }
 
-    reverseTransform(sessionJson: SessionJson): Session {
-        const session = Session.create(
+    reverseTransform(sessionJson: SessionJson): WithdrawSession {
+        const session = WithdrawSession.create(
             sessionJson.id,
             sessionJson.internalAccount,
             sessionJson.value,
             sessionJson.hashLock,
-            sessionJson.address
+            sessionJson.withdrawalFeeCurrency,
+            sessionJson.transactionFeeCurrency,
+            sessionJson.ethereumAddress
         );
 
         if (sessionJson.status === STATUS.PAYED) {
@@ -98,22 +105,22 @@ class Transformer {
             session.createdInternalBlockchain(internalContract);
         }
 
-        // if (sessionJson.status === STATUS.REDEEMED) {
-        //     const externalContractJson = sessionJson.externalContract as ExternalContractJson;
-        //     const externalContract = new ExternalContract(
-        //         externalContractJson.txHash
-        //     );
-        //     session.pay(externalContract);
-        //
-        //     const internalContractJson = sessionJson.internalContract as InternalContractJson;
-        //     const internalContract = new InternalContract(
-        //         internalContractJson.id,
-        //         ""
-        //     );
-        //     session.createdInternalBlockchain(internalContract);
-        //
-        //     session.redeemed();
-        // }
+        if (sessionJson.status === STATUS.REDEEMED) {
+            const externalContractJson = sessionJson.externalContract as ExternalContractJson;
+            const externalContract = new ExternalContract(
+                externalContractJson.txHash
+            );
+            session.pay(externalContract);
+
+            const internalContractJson = sessionJson.internalContract as InternalContractJson;
+            const internalContract = new InternalContract(
+                internalContractJson.id,
+                ""
+            );
+            session.createdInternalBlockchain(internalContract);
+
+            session.redeemed();
+        }
 
         return session;
     }

@@ -13,4 +13,8 @@ export default interface RepositoryInterface {
         internalAccount: string,
         hashLock: string
     ) => Promise<string>;
+    createWithdrawRequest: (
+        internalAccount: string,
+        hashLock: string
+    ) => Promise<string>;
 }

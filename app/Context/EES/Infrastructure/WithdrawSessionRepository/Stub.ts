@@ -1,20 +1,20 @@
-import SessionRepositoryInterface from "../../Domain/SessionRepositoryInterface";
-import Session from "../../Domain/Session";
+import WithdrawSessionRepositoryInterface from "../../Domain/Withdraw/WithdrawSessionRepositoryInterface";
+import WithdrawSession from "../../Domain/Withdraw/WithdrawSession";
 
-export default class Stub implements SessionRepositoryInterface {
+export default class Stub implements WithdrawSessionRepositoryInterface {
     private sessions: {
-        [index: string]: Session;
+        [index: string]: WithdrawSession;
     } = {};
 
-    load(sessionId: string): Promise<Session | null> {
+    load(sessionId: string): Promise<WithdrawSession | null> {
         return Promise.resolve(this.sessions[sessionId] ?? null);
     }
 
-    async all(): Promise<Session[]> {
+    async all(): Promise<WithdrawSession[]> {
         return Promise.resolve(Object.values(this.sessions));
     }
 
-    save(session: Session): Promise<boolean> {
+    save(session: WithdrawSession): Promise<boolean> {
         this.sessions[session.id] = session;
 
         return Promise.resolve(true);
@@ -28,7 +28,7 @@ export default class Stub implements SessionRepositoryInterface {
         return Object.keys(this.sessions).length;
     }
 
-    getById(id: string): Session | null {
+    getById(id: string): WithdrawSession | null {
         if (!this.sessions[id]) {
             return null;
         }

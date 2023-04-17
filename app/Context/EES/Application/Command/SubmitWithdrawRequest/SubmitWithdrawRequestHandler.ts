@@ -1,30 +1,28 @@
 import SubmitWithdrawRequest from "./SubmitWithdrawRequest";
 import EesRepositoryInterface from "../../../Domain/EES/RepositoryInterface";
-import SessionRepositoryInterface from "../../../Domain/SessionRepositoryInterface";
-import Session from "../../../Domain/Session";
+import WithdrawSessionRepositoryInterface from "../../../Domain/Withdraw/WithdrawSessionRepositoryInterface";
+import WithdrawSession from "../../../Domain/Withdraw/WithdrawSession";
 
 export default class SubmitWithdrawRequestHandler {
     constructor(
         private eesRepository: EesRepositoryInterface,
-        private sessionRepository: SessionRepositoryInterface
+        private sessionRepository: WithdrawSessionRepositoryInterface
     ) {}
 
     async execute(command: SubmitWithdrawRequest): Promise<string> {
-        let withdrawRequestId: string;
-
-        withdrawRequestId = await this.eesRepository.createWithdrawRequest(
+        const withdrawRequestId = await this.eesRepository.createWithdrawRequest(
             command.revpopAccount,
-            command.address
+            command.hashLock
         );
 
-        const session = Session.create(
+        const session = WithdrawSession.create(
             withdrawRequestId,
             command.revpopAccount,
             command.value,
-            // command.transactionFeeCurrency,
-            // command.withdrawalFeeCurrency,
             command.hashLock,
-            command.address
+            command.withdrawalFeeCurrency,
+            command.transactionFeeCurrency,
+            command.ethereumAddress
         );
 
         await this.sessionRepository.save(session);

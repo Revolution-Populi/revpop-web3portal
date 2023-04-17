@@ -1,13 +1,11 @@
-import Fee from "../../../../Fees/Domain/Fee";
-
 export default class SubmitWithdrawRequest {
     constructor(
         private _revpopAccount: string,
         private _value: string,
-        private _transactionFee: Fee,
-        private _withdrawalFee: Fee,
+        private _withdrawalFeeCurrency: string,
+        private _transactionFeeCurrency: string,
         private _hashLock: string,
-        private _address: string
+        private _ethereumAddress: string
     ) {}
 
     get revpopAccount(): string {
@@ -18,19 +16,19 @@ export default class SubmitWithdrawRequest {
         return this._value;
     }
 
-    get transactionFee(): Fee {
-        return this._transactionFee;
+    get withdrawalFeeCurrency(): string {
+        return this._withdrawalFeeCurrency;
     }
 
-    get withdrawalFee(): Fee {
-        return this._withdrawalFee;
+    get transactionFeeCurrency(): string {
+        return this._transactionFeeCurrency;
     }
 
     get hashLock(): string {
         return this._hashLock;
     }
 
-    get address(): string {
-        return this._address;
+    get ethereumAddress(): string {
+        return this._ethereumAddress;
     }
 }

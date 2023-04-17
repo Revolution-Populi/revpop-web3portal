@@ -161,5 +161,6 @@ export const EesAPI = {
     BASE: "http://localhost:3000",
     DEPOSIT_SETTINGS: "/deposit/settings",
     SUBMIT_DEPOSIT_REQUEST: "/deposit",
+    SUBMIT_WITHDRAW_REQUEST: "/withdraw",
     CHECK_DEPOSIT_SUBMITTED_TO_INTERNAL_BLOCKCHAIN: "/deposit/submitted"
 };

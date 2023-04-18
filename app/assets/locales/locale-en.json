@@ -1118,6 +1118,9 @@
             "modal_title": "Create proposal"
         }
     },
+    "withdraw": {
+        "title": "New Withdraw"
+    },
     "deposit": {
         "title": "New deposit",
         "sub_title": "or current deposit",

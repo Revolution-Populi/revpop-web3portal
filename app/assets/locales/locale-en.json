@@ -1209,8 +1209,7 @@
             "actions": {
                 "create_new_external_contract": "Create new external HTLC contract",
                 "creating_new_external_contract": "Please wait while new external HTLC contract is creating...",
-                "check_deposit_contract_created": "Check deposit contract created",
-                "check_deposit_contract_created_unlock": "Unlock your account"
+                "check_deposit_contract_created": "Check deposit contract created"
             },
             "errors": {
                 "contract_not_found": "Contract not found, please try again later"
@@ -1281,6 +1280,9 @@
     "form": {
         "account": {
             "label": "Account"
+        },
+        "actions": {
+            "check_unlock_account": "Unlock your account"
         },
         "address": {
             "label": "ETH Address",
@@ -3170,6 +3172,56 @@
             "select": {
                 "withdrawal_fee_currency": "Withdrawal fee currency",
                 "transaction_fee_currency": "Transaction fee currency"
+            }
+        },
+        "session": {
+            "actions": {
+                "create_new_withdraw": "Create Withdraw Transaction",
+                "creating_new_withdraw": "Creating Withdraw Transaction"
+            },
+            "title": "Session",
+            "empty": "No sessions",
+            "fields": {
+                "id": {
+                    "label": "ID"
+                },
+                "internal_account": {
+                    "label": "Internal account"
+                },
+                "ethereum_address": {
+                    "label": "Ethereum Address"
+                },
+                "value": {
+                    "label": "Value"
+                },
+                "hash_lock": {
+                    "label": "Hash lock"
+                },
+                "time_lock": {
+                    "label": "Time lock"
+                },
+                "explorer_link": {
+                    "label": "Explorer link"
+                },
+                "internal_htlc_id": {
+                    "label": "Internal HTLC id"
+                },
+                "status": {
+                    "label": "Status",
+                    "list": {
+                        "1": "Created",
+                        "5": "Payed",
+                        "10": "Created in REVPOP blockchain",
+                        "15": "Completed"
+                    }
+                }
+            },
+            "errors": {
+                "contract_not_found": "Contract not found, please try again later"
+            },
+            "warnings": {
+                "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain",
+                "waiting_for_contract_creation_in_internal_blockchain": "Waiting for contract creation in internal blockchain"
             }
         },
         "title": "New Withdraw"

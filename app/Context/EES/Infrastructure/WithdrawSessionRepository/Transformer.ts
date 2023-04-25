@@ -14,10 +14,12 @@ export interface InternalContractJson {
 export interface SessionJson {
     id: string;
     internalAccount: string;
-    value: string;
+    value: number;
     hashLock: string;
     withdrawalFeeCurrency: string;
+    withdrawalFeeAmount: number;
     transactionFeeCurrency: string;
+    transactionFeeAmount: number;
     ethereumAddress: string;
     status: number;
     externalContract?: ExternalContractJson;
@@ -28,11 +30,13 @@ class Transformer {
     transform(session: WithdrawSession): SessionJson {
         const sessionJson: SessionJson = {
             id: session.id,
-            internalAccount: session.internalAccount,
+            internalAccount: session.internalAccountName,
             value: session.value,
             hashLock: session.hashLock,
             withdrawalFeeCurrency: session.withdrawalFeeCurrency,
+            withdrawalFeeAmount: session.withdrawalFeeAmount,
             transactionFeeCurrency: session.transactionFeeCurrency,
+            transactionFeeAmount: session.transactionFeeAmount,
             ethereumAddress: session.ethereumAddress,
             status: session.status
         };
@@ -78,7 +82,9 @@ class Transformer {
             sessionJson.value,
             sessionJson.hashLock,
             sessionJson.withdrawalFeeCurrency,
+            sessionJson.withdrawalFeeAmount,
             sessionJson.transactionFeeCurrency,
+            sessionJson.transactionFeeAmount,
             sessionJson.ethereumAddress
         );
 

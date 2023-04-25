@@ -7,9 +7,8 @@ import * as EesErrors from "../../../EES/Domain/EES/Errors";
 
 export default class Repository implements RepositoryInterface {
     public async loadEESSettings(): Promise<EESSettings> {
-        const settings = (
-            await axios.get(EesAPI.BASE + EesAPI.DEPOSIT_SETTINGS)
-        ).data;
+        const settings = (await axios.get(EesAPI.BASE + EesAPI.EES_SETTINGS))
+            .data;
 
         return {
             contractAddress: settings.contract_address,
@@ -17,7 +16,10 @@ export default class Repository implements RepositoryInterface {
             minimumValue: settings.minimum_deposit,
             minimumTimeLock: settings.minimum_timelock,
             rvpWithdrawalFee: settings.rvp_withdrawal_fee,
-            rvethWithdrawalFee: settings.rveth_withdrawal_fee
+            rvethWithdrawalFee: settings.rveth_withdrawal_fee,
+            revpopCurrency: settings.revpop_asset_symbol,
+            eesAccountName: settings.revpop_ees_account,
+            withdrawTimeLock: settings.withdraw_timelock
         };
     }
 
@@ -42,6 +44,8 @@ export default class Repository implements RepositoryInterface {
 
     public async createWithdrawRequest(
         internalAccount: string,
+        amountToPayInRVETH: number,
+        addressOfUserInEthereum: string,
         hashLock: string
     ): Promise<string> {
         try {
@@ -49,6 +53,8 @@ export default class Repository implements RepositoryInterface {
                 EesAPI.BASE + EesAPI.SUBMIT_WITHDRAW_REQUEST,
                 {
                     revpopAccount: internalAccount,
+                    amountToPayInRVETH: amountToPayInRVETH,
+                    addressOfUserInEthereum: addressOfUserInEthereum,
                     hashLock: this.ensureHasPrefix(hashLock)
                 }
             );

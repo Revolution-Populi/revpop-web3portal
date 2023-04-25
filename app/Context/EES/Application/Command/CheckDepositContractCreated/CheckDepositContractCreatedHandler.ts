@@ -1,7 +1,7 @@
 import InternalBlockchainRepositoryInterface from "../../../Domain/InternalBlockchain/RepositoryInterface";
 import SessionRepositoryInterface from "../../../Domain/Deposit/SessionRepositoryInterface";
 import RevpopRepository from "../../../Infrastructure/InternalBlockchain/Repository/RevpopReposistory";
-import SessionIndexedDBRepository from "../../../Infrastructure/SessionRepository/IndexedDB";
+import SessionIndexedDBRepository from "../../../Infrastructure/SessionRepository/IndexedDBDepositSessionRepository";
 import CheckDepositContractCreated from "./CheckDepositContractCreated";
 import * as Errors from "./Errors";
 import EesRepository from "../../../Infrastructure/EES/Repository";
@@ -56,9 +56,9 @@ export default class CheckDepositContractCreatedHandler {
         return txHash;
     }
 
-    public static create(): CheckDepositContractCreatedHandler {
+    public static async create(): Promise<CheckDepositContractCreatedHandler> {
         const sessionRepository = new SessionIndexedDBRepository();
-        const internalRepository = new RevpopRepository();
+        const internalRepository = RevpopRepository.create();
         const eesRepository = new EesRepository();
         return new CheckDepositContractCreatedHandler(
             sessionRepository,

@@ -13,11 +13,10 @@ type Params = {
     refresh: () => void;
 };
 
-const handler = CheckDepositContractCreatedHandler.create();
-
 function CheckDepositContractCreatedButton({sessionId, refresh}: Params) {
     async function onClick() {
         const query = new CheckDepositContractCreated(sessionId);
+        const handler = await CheckDepositContractCreatedHandler.create();
         const result = await handler.execute(query);
 
         if (result) {

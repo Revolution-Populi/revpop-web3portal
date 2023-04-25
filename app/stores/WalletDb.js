@@ -148,6 +148,7 @@ class WalletDb extends BaseStore {
         return WalletUnlockActions.unlock()
             .then(() => {
                 AccountActions.tryToSetCurrentAccount();
+                debugger;
                 return Promise.all([
                     tr.set_required_fees(),
                     tr.update_head_block()

@@ -4,11 +4,11 @@ import Web3 from "web3";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import {useParams} from "react-router-dom";
-import useLoadSession from "../Hooks/useLoadSession";
+import useLoadWithdrawSession from "../Hooks/useLoadWithdrawSession";
 import InternalIdField from "./InternalIdField";
 import ExternalExplorerField from "./ExternalExplorerField";
-import CreateNewExternalContractButton from "./CreateNewExternalContractButton";
-import CheckDepositContractCreatedButton from "./CheckDepositContractCreatedButton";
+import CreateNewWithdrawButton from "./CreateNewWithdrawButton";
+import CheckWithdrawContractCreatedButton from "./CheckWithdrawContractCreatedButton";
 import Redeem from "./Redeem";
 
 type SelectorParams = {
@@ -17,7 +17,7 @@ type SelectorParams = {
 
 export default function Index() {
     const {sessionId} = useParams<SelectorParams>();
-    const [session, error, refreshSession] = useLoadSession(sessionId);
+    const [session, error, refreshSession] = useLoadWithdrawSession(sessionId);
 
     if (!session) {
         return <p>Can&apos;t load session</p>;
@@ -26,43 +26,43 @@ export default function Index() {
     return (
         <div className="session asset-card">
             <div className="card-divider">
-                <Translate content="deposit.session.title" />
+                <Translate content="withdraw.session.title" />
             </div>
             <table className="table key-value-table">
                 <tbody>
                     <tr>
                         <td>
-                            <Translate content="deposit.session.fields.status.label" />
+                            <Translate content="withdraw.session.fields.status.label" />
                         </td>
                         <td>
                             {counterpart(
-                                `deposit.session.fields.status.list.${session.status}`
+                                `withdraw.session.fields.status.list.${session.status}`
                             )}
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <Translate content="deposit.session.fields.internal_account.label" />
+                            <Translate content="withdraw.session.fields.internal_account.label" />
                         </td>
-                        <td>{session.internalAccount}</td>
+                        <td>{session.internalAccountName}</td>
                     </tr>
                     <tr>
                         <td>
-                            <Translate content="deposit.session.fields.value.label" />
+                            <Translate content="withdraw.session.fields.value.label" />
                         </td>
-                        <td>{Web3.utils.fromWei(session.value)} ETH</td>
+                        <td>{session.value} ETH</td>
                     </tr>
                     <tr>
                         <td>
-                            <Translate content="deposit.session.fields.hash_lock.label" />
+                            <Translate content="withdraw.session.fields.hash_lock.label" />
                         </td>
                         <td>{session.hashLock}</td>
                     </tr>
                     <tr>
                         <td>
-                            <Translate content="deposit.session.fields.time_lock.label" />
+                            <Translate content="withdraw.session.fields.ethereum_address.label" />
                         </td>
-                        <td>{session.address}</td>
+                        <td>{session.ethereumAddress}</td>
                     </tr>
                     <InternalIdField session={session} />
                     <ExternalExplorerField session={session} />
@@ -71,14 +71,14 @@ export default function Index() {
             <div className="actions">
                 {session.isCreated() && (
                     <>
-                        <CreateNewExternalContractButton
+                        <CreateNewWithdrawButton
                             session={session}
                             refresh={refreshSession}
                         />
                     </>
                 )}
                 {session.isPaid() && (
-                    <CheckDepositContractCreatedButton
+                    <CheckWithdrawContractCreatedButton
                         sessionId={session.id}
                         refresh={refreshSession}
                     />

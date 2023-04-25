@@ -4,9 +4,10 @@ import InternalContract from "../InternalBlockchain/Contract";
 
 export enum STATUS {
     CREATED = 1,
-    PAYED = 5,
+    SUBMITTED_TO_INTERNAL_BLOCKCHAIN = 5,
     CREATED_INTERNAL_BLOCKCHAIN = 10,
-    REDEEMED = 15
+    PAYED = 15,
+    REDEEMED = 20
 }
 
 export default class WithdrawSession {
@@ -16,11 +17,13 @@ export default class WithdrawSession {
 
     constructor(
         private _id: string,
-        private _internalAccount: string,
-        private _value: string,
+        private _internalAccountName: string,
+        private _value: number,
         private _hashLock: string,
         private _withdrawalFeeCurrency: string,
+        private _withdrawalFeeAmount: number,
         private _transactionFeeCurrency: string,
+        private _transactionFeeAmount: number,
         private _ethereumAddress: string
     ) {
         this._status = STATUS.CREATED;
@@ -30,11 +33,11 @@ export default class WithdrawSession {
         return this._id;
     }
 
-    get internalAccount(): string {
-        return this._internalAccount;
+    get internalAccountName(): string {
+        return this._internalAccountName;
     }
 
-    get value(): string {
+    get value(): number {
         return this._value;
     }
 
@@ -46,8 +49,16 @@ export default class WithdrawSession {
         return this._withdrawalFeeCurrency;
     }
 
+    get withdrawalFeeAmount(): number {
+        return this._withdrawalFeeAmount;
+    }
+
     get transactionFeeCurrency(): string {
         return this._transactionFeeCurrency;
+    }
+
+    get transactionFeeAmount(): number {
+        return this._transactionFeeAmount;
     }
 
     get ethereumAddress(): string {
@@ -70,28 +81,31 @@ export default class WithdrawSession {
         return this._status === STATUS.CREATED;
     }
 
-    isPaid(): boolean {
-        return this._status === STATUS.PAYED;
+    isSubmitted(): boolean {
+        return this._status === STATUS.SUBMITTED_TO_INTERNAL_BLOCKCHAIN;
     }
 
     isCreatedInternalBlockchain(): boolean {
         return this._status === STATUS.CREATED_INTERNAL_BLOCKCHAIN;
     }
 
+    isPaid(): boolean {
+        return this._status === STATUS.PAYED;
+    }
+
     isRedeemed(): boolean {
         return this._status === STATUS.REDEEMED;
     }
 
-    pay(externalContract: ExternalContract) {
+    submittedInInternalBlockchain() {
         if (!this.isCreated()) {
             throw new SessionWrongStatusError(
                 this._id,
-                "Can't change status to payed."
+                "Can't approve submitted."
             );
         }
 
-        this._externalContract = externalContract;
-        this._status = STATUS.PAYED;
+        this._status = STATUS.SUBMITTED_TO_INTERNAL_BLOCKCHAIN;
     }
 
     createdInternalBlockchain(internalContract: InternalContract) {
@@ -106,6 +120,18 @@ export default class WithdrawSession {
         this._status = STATUS.CREATED_INTERNAL_BLOCKCHAIN;
     }
 
+    pay(externalContract: ExternalContract) {
+        if (!this.isCreated()) {
+            throw new SessionWrongStatusError(
+                this._id,
+                "Can't change status to payed."
+            );
+        }
+
+        this._externalContract = externalContract;
+        this._status = STATUS.PAYED;
+    }
+
     redeemed() {
         this._status = STATUS.REDEEMED;
     }
@@ -113,10 +139,12 @@ export default class WithdrawSession {
     static create(
         id: string,
         internalAccount: string,
-        value: string,
+        value: number,
         hashLock: string,
         withdrawalFeeCurrency: string,
+        withdrawalFeeAmount: number,
         transactionFeeCurrency: string,
+        transactionFeeAmount: number,
         ethereumAddress: string
     ) {
         return new WithdrawSession(
@@ -125,7 +153,9 @@ export default class WithdrawSession {
             value,
             hashLock,
             withdrawalFeeCurrency,
+            withdrawalFeeAmount,
             transactionFeeCurrency,
+            transactionFeeAmount,
             ethereumAddress
         );
     }

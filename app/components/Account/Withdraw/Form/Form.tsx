@@ -118,9 +118,11 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
 
         const command = new SubmitWithdrawRequest(
             accountName,
-            Web3.utils.toWei(value.toString()),
-            transactionFee.code,
+            value,
             withdrawalFee.code,
+            withdrawalFee.value,
+            transactionFee.code,
+            transactionFee.value,
             hashLock,
             address
         );

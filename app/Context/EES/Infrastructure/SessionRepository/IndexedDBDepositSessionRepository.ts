@@ -1,31 +1,15 @@
-import {DBSchema, IDBPDatabase, openDB} from "idb";
+import {IDBPDatabase, openDB} from "idb";
 import SessionRepositoryInterface from "../../Domain/Deposit/SessionRepositoryInterface";
 import Session from "../../Domain/Deposit/Session";
 import transformer from "./Transformer";
+import IndexedDB, {DEPOSIT_SESSION_STORE} from "../IndexedDB/IndexedDB";
 
-interface DB extends DBSchema {
-    session: {
-        value: {
-            id: string;
-            value: string;
-            hashLock: string;
-            timeLock: number;
-        };
-        key: string;
-    };
-}
-
-const DB_NAME = "web3portal";
-const DB_VERSION = 1;
-const SESSION_TABLE = "session";
-
-//This repository has problems because of "indexeddbshim" package
-
-export default class IndexedDB implements SessionRepositoryInterface {
-    private db: IDBPDatabase<DB> | null = null;
+export default class IndexedDBDepositSessionRepository
+    implements SessionRepositoryInterface {
+    private db: IndexedDB;
 
     constructor() {
-        this.openDatabase();
+        this.db = new IndexedDB();
     }
 
     async load(sessionId: string): Promise<Session | null> {
@@ -34,8 +18,8 @@ export default class IndexedDB implements SessionRepositoryInterface {
         }
 
         const store = this.db
-            .transaction(SESSION_TABLE)
-            .objectStore(SESSION_TABLE);
+            .transaction(DEPOSIT_SESSION_STORE)
+            .objectStore(DEPOSIT_SESSION_STORE);
         const request = await store.get(sessionId);
 
         //TODO::remove indexeddbshim?
@@ -66,8 +50,8 @@ export default class IndexedDB implements SessionRepositoryInterface {
         }
 
         const store = this.db
-            .transaction(SESSION_TABLE)
-            .objectStore(SESSION_TABLE);
+            .transaction(DEPOSIT_SESSION_STORE)
+            .objectStore(DEPOSIT_SESSION_STORE);
         const request = await store.getAll();
 
         //TODO::remove indexeddbshim?
@@ -99,20 +83,15 @@ export default class IndexedDB implements SessionRepositoryInterface {
             return false;
         }
 
-        const tx = this.db.transaction(SESSION_TABLE, "readwrite");
-        const store = tx.objectStore(SESSION_TABLE);
+        const tx = this.db.transaction(DEPOSIT_SESSION_STORE, "readwrite");
+        const store = tx.objectStore(DEPOSIT_SESSION_STORE);
+
+        if (store.put === undefined) {
+            return false;
+        }
+
         await Promise.all([store.put(transformer.transform(session)), tx.done]);
 
         return true;
-    }
-
-    private async openDatabase() {
-        this.db = await openDB<DB>(DB_NAME, DB_VERSION, {
-            upgrade: db => {
-                if (!db.objectStoreNames.contains(SESSION_TABLE)) {
-                    db.createObjectStore(SESSION_TABLE, {keyPath: "id"});
-                }
-            }
-        });
     }
 }

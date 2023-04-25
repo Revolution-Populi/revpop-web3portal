@@ -13,11 +13,10 @@ type Params = {
     refresh: () => void;
 };
 
-const handler = CheckDepositContractCreatedHandler.create();
-
-function CheckDepositContractCreatedButton({sessionId, refresh}: Params) {
+function CheckWithdrawContractCreatedButton({sessionId, refresh}: Params) {
     async function onClick() {
         const query = new CheckDepositContractCreated(sessionId);
+        const handler = await CheckDepositContractCreatedHandler.create();
         const result = await handler.execute(query);
 
         if (result) {
@@ -25,7 +24,7 @@ function CheckDepositContractCreatedButton({sessionId, refresh}: Params) {
         } else {
             Notification.error({
                 message: counterpart.translate(
-                    "deposit.session.errors.contract_not_found"
+                    "withdraw.session.errors.contract_not_found"
                 )
             });
         }
@@ -40,4 +39,4 @@ function CheckDepositContractCreatedButton({sessionId, refresh}: Params) {
     );
 }
 
-export default CheckDepositContractCreatedButton;
+export default CheckWithdrawContractCreatedButton;

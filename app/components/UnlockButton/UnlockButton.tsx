@@ -26,7 +26,7 @@ function UnlockButton({walletLocked, children}: Params) {
     if (walletLocked) {
         return (
             <a className="button" onClick={onClickUnlock}>
-                <Translate content="deposit.session.actions.check_deposit_contract_created_unlock" />
+                <Translate content="form.actions.check_unlock_account" />
             </a>
         );
     }

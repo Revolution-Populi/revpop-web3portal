@@ -19,7 +19,6 @@ export default interface RepositoryInterface {
     createWithdrawRequest: (
         internalAccount: string,
         amountToPayInRVETH: number,
-        addressOfUserInEthereum: string,
-        hashLock: string
+        addressOfUserInEthereum: string
     ) => Promise<string>;
 }

@@ -11,7 +11,7 @@ interface DB1 extends DBSchema {
     };
 }
 interface DB2 extends DBSchema {
-    deposit_session: {
+    session: {
         value: {
             id: string;
             value: string;
@@ -41,16 +41,25 @@ export const DEPOSIT_SESSION_STORE = "session";
 export const WITHDRAW_SESSION_STORE = "withdraw_session";
 
 export default class IndexedDB {
+    private static instance: IndexedDB;
+
     private db: IDBPDatabase<DB1 | DB2> | null = null;
 
-    constructor() {
+    private constructor() {
         this.openDatabase();
+    }
+
+    public static getInstance(): IndexedDB {
+        if (!IndexedDB.instance) {
+            IndexedDB.instance = new IndexedDB();
+        }
+
+        return IndexedDB.instance;
     }
 
     private async openDatabase() {
         this.db = await openDB<DB1 | DB2>(DB_NAME, DB_VERSION, {
             upgrade: (db, oldVersion, newVersion, transaction, event) => {
-                debugger;
                 if (oldVersion < 1) {
                     db.createObjectStore(DEPOSIT_SESSION_STORE, {
                         keyPath: "id"

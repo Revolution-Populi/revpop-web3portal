@@ -16,7 +16,7 @@ type Params = {
 function CheckDepositContractCreatedButton({sessionId, refresh}: Params) {
     async function onClick() {
         const query = new CheckDepositContractCreated(sessionId);
-        const handler = await CheckDepositContractCreatedHandler.create();
+        const handler = CheckDepositContractCreatedHandler.create();
         const result = await handler.execute(query);
 
         if (result) {

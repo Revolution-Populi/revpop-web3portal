@@ -11,7 +11,7 @@ export default class Repository implements RepositoryInterface {
             .data;
 
         return {
-            contractAddress: settings.contract_address,
+            contractAddress: settings.deposit_contract_address,
             receiverAddress: settings.receiver_address,
             minimumValue: settings.minimum_deposit,
             minimumTimeLock: settings.minimum_timelock,
@@ -45,8 +45,7 @@ export default class Repository implements RepositoryInterface {
     public async createWithdrawRequest(
         internalAccount: string,
         amountToPayInRVETH: number,
-        addressOfUserInEthereum: string,
-        hashLock: string
+        addressOfUserInEthereum: string
     ): Promise<string> {
         try {
             const result = await axios.post(
@@ -54,8 +53,7 @@ export default class Repository implements RepositoryInterface {
                 {
                     revpopAccount: internalAccount,
                     amountToPayInRVETH: amountToPayInRVETH,
-                    addressOfUserInEthereum: addressOfUserInEthereum,
-                    hashLock: this.ensureHasPrefix(hashLock)
+                    addressOfUserInEthereum: addressOfUserInEthereum
                 }
             );
 

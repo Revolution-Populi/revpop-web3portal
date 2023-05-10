@@ -8,7 +8,7 @@ export default class IndexedDBWithdrawSessionRepository
     private db: IndexedDB;
 
     constructor() {
-        this.db = new IndexedDB();
+        this.db = IndexedDB.getInstance();
     }
 
     async load(sessionId: string): Promise<WithdrawSession | null> {

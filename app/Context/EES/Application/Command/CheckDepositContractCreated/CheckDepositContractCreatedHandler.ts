@@ -56,7 +56,7 @@ export default class CheckDepositContractCreatedHandler {
         return txHash;
     }
 
-    public static async create(): Promise<CheckDepositContractCreatedHandler> {
+    public static create(): CheckDepositContractCreatedHandler {
         const sessionRepository = new SessionIndexedDBRepository();
         const internalRepository = RevpopRepository.create();
         const eesRepository = new EesRepository();

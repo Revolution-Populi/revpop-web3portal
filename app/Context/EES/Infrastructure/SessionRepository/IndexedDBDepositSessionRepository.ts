@@ -1,4 +1,3 @@
-import {IDBPDatabase, openDB} from "idb";
 import SessionRepositoryInterface from "../../Domain/Deposit/SessionRepositoryInterface";
 import Session from "../../Domain/Deposit/Session";
 import transformer from "./Transformer";
@@ -9,14 +8,13 @@ export default class IndexedDBDepositSessionRepository
     private db: IndexedDB;
 
     constructor() {
-        this.db = new IndexedDB();
+        this.db = IndexedDB.getInstance();
     }
 
     async load(sessionId: string): Promise<Session | null> {
         if (this.db === null) {
             return null;
         }
-
         const store = this.db
             .transaction(DEPOSIT_SESSION_STORE)
             .objectStore(DEPOSIT_SESSION_STORE);

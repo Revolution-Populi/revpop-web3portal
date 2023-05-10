@@ -12,7 +12,7 @@ export default class GetEESSettingsHandler {
             .data;
 
         return {
-            contractAddress: settings.contract_address,
+            contractAddress: settings.deposit_contract_address,
             receiverAddress: settings.receiver_address,
             minimumValue: settings.minimum_deposit,
             minimumTimeLock: settings.minimum_timelock,

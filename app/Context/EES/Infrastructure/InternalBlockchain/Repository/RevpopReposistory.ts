@@ -71,14 +71,6 @@ export default class RevpopRepository
                     withdrawalFeeAsset
                 ),
                 asset_id: withdrawalFeeAsset.get("id")
-            },
-            extensions: {
-                memo: this.memo.generate(
-                    session.id,
-                    this.getPrivateKey(internalAccount),
-                    internalAccount,
-                    eesAccount
-                )
             }
         });
 
@@ -98,15 +90,7 @@ export default class RevpopRepository
             },
             preimage_hash: [PREIMAGE_HASH_CIPHER_SHA256, session.hashLock],
             preimage_size: PREIMAGE_LENGTH,
-            claim_period_seconds: settings.withdrawTimeLock,
-            extensions: {
-                memo: this.memo.generate(
-                    session.id,
-                    this.getPrivateKey(internalAccount),
-                    internalAccount,
-                    eesAccount
-                )
-            }
+            claim_period_seconds: settings.withdrawTimeLock
         });
 
         WalletDb.process_transaction(

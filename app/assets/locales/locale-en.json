@@ -1118,9 +1118,6 @@
             "modal_title": "Create proposal"
         }
     },
-    "withdraw": {
-        "title": "New Withdraw"
-    },
     "deposit": {
         "title": "New deposit",
         "sub_title": "or current deposit",
@@ -3177,7 +3174,8 @@
         "session": {
             "actions": {
                 "create_new_withdraw": "Create Withdraw Transaction",
-                "creating_new_withdraw": "Creating Withdraw Transaction"
+                "creating_new_withdraw": "Creating Withdraw Transaction",
+                "check_withdraw_contract_ready_to_sign": "Check Withdraw Contract Ready To Sign"
             },
             "title": "Session",
             "empty": "No sessions",
@@ -3210,8 +3208,8 @@
                     "label": "Status",
                     "list": {
                         "1": "Created",
-                        "5": "Payed",
-                        "10": "Created in REVPOP blockchain",
+                        "5": "Created in REVPOP blockchain",
+                        "10": "Ready for Redeem",
                         "15": "Completed"
                     }
                 }

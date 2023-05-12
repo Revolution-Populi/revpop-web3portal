@@ -1,22 +1,22 @@
 import React from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
-import CheckDepositContractCreatedHandler from "../../../../Context/EES/Application/Command/CheckDepositContractCreated/CheckDepositContractCreatedHandler";
-import CheckDepositContractCreated from "../../../../Context/EES/Application/Command/CheckDepositContractCreated/CheckDepositContractCreated";
 // @ts-ignore
 import {Notification} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import UnlockButton from "../../../UnlockButton/UnlockButton";
+import CheckWithdrawContractReadyToSign from "../../../../Context/EES/Application/Command/CheckWithdrawContractReadyToSign/CheckWithdrawContractReadyToSign";
+import CheckWithdrawContractReadyToSignHandler from "../../../../Context/EES/Application/Command/CheckWithdrawContractReadyToSign/CheckWithdrawContractReadyToSignHandler";
 
 type Params = {
     sessionId: string;
     refresh: () => void;
 };
 
-function CheckWithdrawContractCreatedButton({sessionId, refresh}: Params) {
+function CheckWithdrawContractReadyToSignButton({sessionId, refresh}: Params) {
     async function onClick() {
-        const query = new CheckDepositContractCreated(sessionId);
-        const handler = await CheckDepositContractCreatedHandler.create();
+        const query = new CheckWithdrawContractReadyToSign(sessionId);
+        const handler = await CheckWithdrawContractReadyToSignHandler.create();
         const result = await handler.execute(query);
 
         if (result) {
@@ -33,10 +33,10 @@ function CheckWithdrawContractCreatedButton({sessionId, refresh}: Params) {
     return (
         <UnlockButton>
             <a className="button" onClick={onClick}>
-                <Translate content="deposit.session.actions.check_deposit_contract_created" />
+                <Translate content="withdraw.session.actions.check_withdraw_contract_ready_to_sign" />
             </a>
         </UnlockButton>
     );
 }
 
-export default CheckWithdrawContractCreatedButton;
+export default CheckWithdrawContractReadyToSignButton;

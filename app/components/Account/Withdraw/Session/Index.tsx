@@ -1,5 +1,4 @@
 import React from "react";
-import Web3 from "web3";
 // @ts-ignore
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
@@ -8,8 +7,8 @@ import useLoadWithdrawSession from "../Hooks/useLoadWithdrawSession";
 import InternalIdField from "./InternalIdField";
 import ExternalExplorerField from "./ExternalExplorerField";
 import CreateNewWithdrawButton from "./CreateNewWithdrawButton";
-import CheckWithdrawContractCreatedButton from "./CheckWithdrawContractCreatedButton";
 import Redeem from "./Redeem";
+import CheckWithdrawContractReadyToSignButton from "./CheckWithdrawContractReadyToSignButton";
 
 type SelectorParams = {
     sessionId: string;
@@ -64,7 +63,7 @@ export default function Index() {
                         </td>
                         <td>{session.ethereumAddress}</td>
                     </tr>
-                    <InternalIdField session={session} />
+                    {/*<InternalIdField session={session} />*/}
                     <ExternalExplorerField session={session} />
                 </tbody>
             </table>
@@ -77,13 +76,13 @@ export default function Index() {
                         />
                     </>
                 )}
-                {session.isPaid() && (
-                    <CheckWithdrawContractCreatedButton
+                {session.isSubmitted() && (
+                    <CheckWithdrawContractReadyToSignButton
                         sessionId={session.id}
                         refresh={refreshSession}
                     />
                 )}
-                {session.isCreatedInternalBlockchain() && (
+                {session.isReadyToSignInExternalBlockchain() && (
                     <Redeem session={session} refresh={refreshSession} />
                 )}
             </div>

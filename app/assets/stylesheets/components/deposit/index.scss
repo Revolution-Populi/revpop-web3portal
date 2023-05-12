@@ -1,0 +1,52 @@
+@import "form";
+@import "session";
+@import "add-txhash-manually";
+@import "sessions";
+
+// @import "selector";
+
+.deposit-page {
+    display: flex;
+    flex-direction: column;
+
+    .center-container {
+        border: 1px solid #4b5158;
+        border-radius: 6px;
+        padding: 2rem;
+        width: 400px;
+    }
+
+    @include breakpoint(medium) {
+        .center-container {
+            min-width: 720px;
+            margin-top: 2rem;
+        }
+    }
+
+    .ant-form {
+        .ant-row {
+            .ant-form-item-label {
+                label {
+                    .anticon {
+                        vertical-align: middle;
+                        margin-left: 5px;
+                    }
+                }
+            }
+
+            .ant-form-item-control-wrapper {
+                .ant-input-group {
+                    .ant-input-group-addon {
+                        padding: 0;
+
+                        .ant-btn {
+                            padding: 6px;
+                            height: 30px;
+                            line-height: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

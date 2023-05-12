@@ -190,6 +190,7 @@ import PriceAlertNotifications from "./components/PriceAlertNotifications";
 import SettingsStore from "./stores/SettingsStore";
 import GatewayActions from "./actions/GatewayActions";
 import {allowedGateway} from "./branding";
+import Deposit from "./components/Account/Deposit/Index";
 
 class App extends React.Component {
     constructor() {
@@ -491,6 +492,7 @@ class App extends React.Component {
                                     exact
                                     component={AccountDepositWithdraw}
                                 />
+                                <Route path="/deposit" component={Deposit} />
                                 <Route
                                     path="/create-account"
                                     component={LoginSelector}

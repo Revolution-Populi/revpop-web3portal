@@ -1118,6 +1118,105 @@
             "modal_title": "Create proposal"
         }
     },
+    "deposit": {
+        "title": "New deposit",
+        "sub_title": "or current deposit",
+        "create": "Create deposit",
+        "form": {
+            "account": {
+                "label": "Account"
+            },
+            "amount": {
+                "label": "Amount",
+                "tooltip": "Amount tooltip"
+            },
+            "secret": {
+                "label": "Secret",
+                "tooltip": "The best choice for the Secret is a random string. If your secret can be guessed or is too short, you risk losing your funds. Use the copy button in this row to save the Secret."
+            },
+            "hash_lock": {
+                "label": "HashLock",
+                "tooltip": "The HashLock is calculated from the above Secret using the hashing algorithm. Use the copy button in this row to save the HashLock."
+            },
+            "time_lock": {
+                "label": "TimeLock",
+                "tooltip": "TimeLock tooltip"
+            },
+            "hash_lock_generator": {
+                "by_wallet": "Use wallet for Secret and HashLock generation",
+                "manually": "Manually enter HashLock"
+            }
+        },
+        "metamask": {
+            "title": "Metamask",
+            "not_installed": "Metamask is not installed",
+            "not_connected": "Metamask is not connected",
+            "connect": "Connect metamask"
+        },
+        "manually": {
+            "instructions": {
+                "label": "Pay manually"
+            },
+            "add_transaction": {
+                "label": "Add transaction hash manually",
+                "tx_hash": "Transaction hash",
+                "submit": "Add"
+            }
+        },
+        "html_created": "HTLC contract created",
+        "redeem": {
+            "title": "Redeem",
+            "secret": "Secret"
+        },
+        "session": {
+            "title": "Session",
+            "empty": "No sessions",
+            "fields": {
+                "id": {
+                    "label": "ID"
+                },
+                "internal_account": {
+                    "label": "Internal account"
+                },
+                "value": {
+                    "label": "Value"
+                },
+                "hash_lock": {
+                    "label": "Hash lock"
+                },
+                "time_lock": {
+                    "label": "Time lock"
+                },
+                "explorer_link": {
+                    "label": "Explorer link"
+                },
+                "internal_htlc_id": {
+                    "label": "Internal HTLC id"
+                },
+                "status": {
+                    "label": "Status",
+                    "list": {
+                        "1": "Created",
+                        "5": "Payed",
+                        "10": "Created in REVPOP blockchain",
+                        "15": "Completed"
+                    }
+                }
+            },
+            "actions": {
+                "create_new_external_contract": "Create new external HTLC contract",
+                "creating_new_external_contract": "Please wait while new external HTLC contract is creating...",
+                "check_deposit_contract_created": "Check deposit contract created",
+                "check_deposit_contract_created_unlock": "Unlock your account"
+            },
+            "errors": {
+                "contract_not_found": "Contract not found, please try again later"
+            },
+            "warnings": {
+                "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain"
+            }
+        }
+    },
     "network_parameters": {
         "name": "Name",
         "description": "Description",
@@ -1375,6 +1474,7 @@
         "dashboard": "Portfolio",
         "deposit-withdraw": "Deposit/Withdraw",
         "deposit_legacy": "or Legacy Deposit",
+        "deposit": "Deposit",
         "exchange": "Exchange",
         "explorer": "Explore",
         "help": "Help",
@@ -1702,6 +1802,9 @@
             "takeScreenshot": "Show screenshot",
             "title": "Error report"
         },
+        "reserve": {
+            "from": "From"
+        },
         "save": "save",
         "send": {
             "header": "Send from <span class=\"send-name\">%(fromName)s</span>",
@@ -1815,6 +1918,7 @@
         "htlc_redeem": "{redeemer} request to redeem from HTLC {htlc_id}",
         "htlc_redeemed": "{to} redeemed {amount} from HTLC {htlc_id} of {from}",
         "htlc_refund": "{to} got refund of HTLC {htlc_id}",
+        "asset_reserve": "{account} burned {amount}",
         "lifetime_upgrade_account": "{account} was upgraded to lifetime member",
         "limit_order_buy": "{account} placed order %(order)s to buy {amount} at {price}",
         "limit_order_cancel": "{account} cancelled order #%(order)s",
@@ -2653,6 +2757,7 @@
             "htlc_redeem": "HTLC redeem",
             "htlc_redeemed": "HTLC redeemed",
             "htlc_refund": "HTLC refund",
+            "asset_reserve": "Burn",
             "limit_order_cancel": "Cancel order",
             "limit_order_create": "Place order",
             "liquidity_pool_create": "Create liquidity pool",

@@ -156,3 +156,10 @@ export const settingsAPIs = {
     DEFAULT_FAUCET: getFaucet().url,
     TESTNET_FAUCET: getTestFaucet().url
 };
+
+export const EesAPI = {
+    BASE: "http://localhost:3000",
+    DEPOSIT_SETTINGS: "/deposit/settings",
+    SUBMIT_DEPOSIT_REQUEST: "/deposit",
+    CHECK_DEPOSIT_SUBMITTED_TO_INTERNAL_BLOCKCHAIN: "/deposit/submitted"
+};

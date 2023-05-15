@@ -5,9 +5,9 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 // @ts-ignore
 import {Collapse} from "bitshares-ui-style-guide";
-import {Session} from "../../../../../Context/Deposit";
+import {Session} from "../../../../../Context/EES";
 import Abi from "../../../../../assets/abi/HashedTimelock.json";
-import useLoadDepositSettings from "../../Hooks/useLoadDepositSettings";
+import useLoadEESSettings from "../../../EES/Hooks/useLoadEESSettings";
 
 const formItemLayout = {
     labelCol: {
@@ -23,7 +23,7 @@ interface Params {
 }
 
 export default function Index({session}: Params) {
-    const [settings, error] = useLoadDepositSettings();
+    const [settings, error] = useLoadEESSettings();
 
     if (null === settings) {
         return <div>Loading...</div>;

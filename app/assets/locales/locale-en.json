@@ -1118,6 +1118,9 @@
             "modal_title": "Create proposal"
         }
     },
+    "withdraw": {
+        "title": "New Withdraw"
+    },
     "deposit": {
         "title": "New deposit",
         "sub_title": "or current deposit",
@@ -1274,6 +1277,19 @@
         "title": "%(wallet_name)s",
         "unsynced": "Out of sync",
         "update_available": "UPDATE AVAILABLE"
+    },
+    "form": {
+        "account": {
+            "label": "Account"
+        },
+        "address": {
+            "label": "ETH Address",
+            "tooltip": ""
+        },
+        "hash_lock_generator": {
+            "by_wallet": "Use wallet for Secret and HashLock generation",
+            "manually": "Manually enter HashLock"
+        }
     },
     "gateway": {
         "add_funds": "Quickly and easily add funds to your %(wallet_name)s account <strong>%(account)s</strong>. This service is provided by Openledger.",
@@ -3143,5 +3159,19 @@
         "wif_associated_accounts": "Associated Account(s): ",
         "wif_import_error": "Please enter a valid WIF",
         "wif_length_error": "Incorrect input length"
+    },
+    "withdraw": {
+        "create": "Create Withdraw",
+        "form": {
+            "label": {
+                "currency_to_pay_withdrawal_fee": "Withdrawal fee currency ",
+                "currency_to_pay_transaction_fee": "Transaction fee currency "
+            },
+            "select": {
+                "withdrawal_fee_currency": "Withdrawal fee currency",
+                "transaction_fee_currency": "Transaction fee currency"
+            }
+        },
+        "title": "New Withdraw"
     }
 }

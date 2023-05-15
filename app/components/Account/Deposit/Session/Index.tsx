@@ -4,7 +4,7 @@ import Web3 from "web3";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import {useParams} from "react-router-dom";
-import useLoadSession from "../Hooks/useLoadSession";
+import useLoadSession from "../../Deposit/Hooks/useLoadSession";
 import InternalIdField from "./InternalIdField";
 import ExternalExplorerField from "./ExternalExplorerField";
 import CreateNewExternalContractButton from "./CreateNewExternalContractButton";

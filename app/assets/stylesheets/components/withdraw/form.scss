@@ -1,0 +1,28 @@
+@import "../../themes/dark-theme";
+.withdraw-form {
+    h4 {
+        margin: 0 0 1rem 0;
+    }
+
+    .generator-switcher {
+        margin-top: -20px;
+        margin-bottom: 24px;
+    }
+
+    .htlc-created.asset-card {
+        margin: 0;
+        padding: 0 !important;
+    }
+}
+
+body.darkTheme .ant-btn-primary[disabled] {
+    color: $white !important;
+    opacity: 0.5 !important;
+}
+
+.amount-selector-field--label {
+    display: inline-block;
+}
+.ant-row.ant-form-item.amount-selector-field {
+    margin-bottom: 25px !important;
+}

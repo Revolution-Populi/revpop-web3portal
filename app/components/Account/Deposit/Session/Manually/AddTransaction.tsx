@@ -8,7 +8,7 @@ import {
     AddTransactionManually,
     addTransactionManuallyHandler,
     Session
-} from "../../../../../Context/Deposit";
+} from "../../../../../Context/EES";
 
 interface Params {
     session: Session;

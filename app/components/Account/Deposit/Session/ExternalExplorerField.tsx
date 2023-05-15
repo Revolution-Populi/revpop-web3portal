@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 // @ts-ignore
 import Translate from "react-translate-component";
-import Session, {STATUS} from "../../../../Context/Deposit/Domain/Session";
+import Session, {STATUS} from "../../../../Context/EES/Domain/Deposit/Session";
 import GetTransactionExplorerLinkHandler from "../../../../Context/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLinkHandler";
 import GetTransactionExplorerLink from "../../../../Context/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLink";
 

@@ -59,8 +59,6 @@ export default class CheckDepositContractCreatedHandler {
         const sessionRepository = new SessionIndexedDBRepository();
         const internalRepository = RevpopRepository.create();
         const eesRepository = new EesRepository();
-        const internalRepository = new RevpopRepository();
-        const eesRepository = new EesRepository();
         return new CheckDepositContractCreatedHandler(
             sessionRepository,
             internalRepository,

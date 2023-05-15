@@ -4,9 +4,6 @@ import Translate from "react-translate-component";
 import Session, {STATUS} from "../../../../Context/EES/Domain/Deposit/Session";
 import GetTransactionExplorerLinkHandler from "../../../../Context/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLinkHandler";
 import GetTransactionExplorerLink from "../../../../Context/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLink";
-import Session, {STATUS} from "../../../../Context/Deposit/Domain/Session";
-import GetTransactionExplorerLinkHandler from "../../../../Context/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLinkHandler";
-import GetTransactionExplorerLink from "../../../../Context/Core/Query/GetTransactionExplorerLink/GetTransactionExplorerLink";
 
 type Params = {
     session: Session;

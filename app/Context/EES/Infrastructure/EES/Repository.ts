@@ -76,6 +76,20 @@ export default class Repository implements RepositoryInterface {
         return result.data.submitted;
     }
 
+    public async checkWithdrawReadyToSignInExternalBlockchain(
+        sessionId: string
+    ): Promise<boolean> {
+        const result = await axios.post(
+            EesAPI.BASE +
+                EesAPI.CHECK_WITHDRAW_READY_TO_SIGH_IN_EXTERNAL_BLOCKCHAIN,
+            {
+                sessionId: sessionId
+            }
+        );
+
+        return result.data.readyToSign;
+    }
+
     private ensureHasPrefix(hashLock: string) {
         if ("0x" !== hashLock.substring(0, 2)) {
             hashLock = "0x" + hashLock;

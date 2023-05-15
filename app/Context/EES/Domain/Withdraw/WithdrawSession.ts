@@ -5,7 +5,7 @@ import InternalContract from "../InternalBlockchain/Contract";
 export enum STATUS {
     CREATED = 1,
     SUBMITTED_TO_INTERNAL_BLOCKCHAIN = 5,
-    CREATED_INTERNAL_BLOCKCHAIN = 10,
+    READY_TO_SIGN_IN_EXTERNAL_BLOCKCHAIN = 10,
     PAYED = 15,
     REDEEMED = 20
 }
@@ -85,8 +85,8 @@ export default class WithdrawSession {
         return this._status === STATUS.SUBMITTED_TO_INTERNAL_BLOCKCHAIN;
     }
 
-    isCreatedInternalBlockchain(): boolean {
-        return this._status === STATUS.CREATED_INTERNAL_BLOCKCHAIN;
+    isReadyToSignInExternalBlockchain(): boolean {
+        return this._status === STATUS.READY_TO_SIGN_IN_EXTERNAL_BLOCKCHAIN;
     }
 
     isPaid(): boolean {
@@ -108,16 +108,15 @@ export default class WithdrawSession {
         this._status = STATUS.SUBMITTED_TO_INTERNAL_BLOCKCHAIN;
     }
 
-    createdInternalBlockchain(internalContract: InternalContract) {
-        if (!this.isPaid()) {
+    readyToSignInExternalBlockchain() {
+        if (!this.isSubmitted()) {
             throw new SessionWrongStatusError(
                 this._id,
-                "Can't approve internal contract creation."
+                "Can't approve ready to sign."
             );
         }
 
-        this._internalContract = internalContract;
-        this._status = STATUS.CREATED_INTERNAL_BLOCKCHAIN;
+        this._status = STATUS.READY_TO_SIGN_IN_EXTERNAL_BLOCKCHAIN;
     }
 
     pay(externalContract: ExternalContract) {

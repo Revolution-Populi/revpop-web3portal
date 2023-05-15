@@ -10,7 +10,7 @@ type Params = {
 };
 
 export default function InternalIdField({session}: Params) {
-    if (session.status < STATUS.CREATED_INTERNAL_BLOCKCHAIN) {
+    if (session.status < STATUS.READY_TO_SIGN_IN_EXTERNAL_BLOCKCHAIN) {
         return null;
     }
 

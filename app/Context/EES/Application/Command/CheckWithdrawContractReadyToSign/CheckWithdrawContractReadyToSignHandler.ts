@@ -23,6 +23,7 @@ export default class CheckWithdrawContractReadyToSignHandler {
             )
         ) {
             session.readyToSignInExternalBlockchain();
+            await this.sessionRepository.save(session);
             return true;
         }
 

@@ -1,13 +1,12 @@
 import {SessionWrongStatusError} from "../Errors";
-import ExternalContract from "../ExternalBlockchain/Contract";
+import ExternalContract from "../ExternalBlockchain/WithdrawContract";
 import InternalContract from "../InternalBlockchain/Contract";
 
 export enum STATUS {
     CREATED = 1,
     SUBMITTED_TO_INTERNAL_BLOCKCHAIN = 5,
     READY_TO_SIGN_IN_EXTERNAL_BLOCKCHAIN = 10,
-    PAYED = 15,
-    REDEEMED = 20
+    REDEEMED = 15
 }
 
 export default class WithdrawSession {
@@ -89,10 +88,6 @@ export default class WithdrawSession {
         return this._status === STATUS.READY_TO_SIGN_IN_EXTERNAL_BLOCKCHAIN;
     }
 
-    isPaid(): boolean {
-        return this._status === STATUS.PAYED;
-    }
-
     isRedeemed(): boolean {
         return this._status === STATUS.REDEEMED;
     }
@@ -108,7 +103,7 @@ export default class WithdrawSession {
         this._status = STATUS.SUBMITTED_TO_INTERNAL_BLOCKCHAIN;
     }
 
-    readyToSignInExternalBlockchain() {
+    readyToSignInExternalBlockchain(externalContract: ExternalContract) {
         if (!this.isSubmitted()) {
             throw new SessionWrongStatusError(
                 this._id,
@@ -116,22 +111,15 @@ export default class WithdrawSession {
             );
         }
 
+        this._externalContract = externalContract;
         this._status = STATUS.READY_TO_SIGN_IN_EXTERNAL_BLOCKCHAIN;
     }
 
-    pay(externalContract: ExternalContract) {
-        if (!this.isCreated()) {
-            throw new SessionWrongStatusError(
-                this._id,
-                "Can't change status to payed."
-            );
+    redeem(txHash: string) {
+        if (this._externalContract) {
+            this._externalContract.txHash = txHash;
         }
 
-        this._externalContract = externalContract;
-        this._status = STATUS.PAYED;
-    }
-
-    redeemed() {
         this._status = STATUS.REDEEMED;
     }
 

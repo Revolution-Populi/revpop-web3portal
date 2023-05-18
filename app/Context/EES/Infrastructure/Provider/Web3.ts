@@ -2,7 +2,7 @@ import Web3 from "web3";
 import ProviderInterface from "./ProviderInterface";
 import CreateHtlcResponse from "./CreateHtlcResponse";
 import {provider} from "web3-core";
-import contractAbi from "../../../../assets/abi/HashedTimelock.json";
+import contractAbi from "../../../../assets/abi/DepositHashedTimelock.json";
 import HTLC from "../../Domain/HTLC";
 
 export default class Web3Provider implements ProviderInterface {

@@ -1,6 +1,6 @@
 import moment from "moment";
 import Session, {STATUS} from "../../Domain/Deposit/Session";
-import ExternalContract from "../../Domain/ExternalBlockchain/Contract";
+import ExternalContract from "../../Domain/ExternalBlockchain/DepositContract";
 import InternalContract from "../../Domain/InternalBlockchain/Contract";
 
 export interface ExternalContractJson {

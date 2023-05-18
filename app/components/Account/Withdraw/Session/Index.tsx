@@ -4,7 +4,6 @@ import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import {useParams} from "react-router-dom";
 import useLoadWithdrawSession from "../Hooks/useLoadWithdrawSession";
-import ExternalExplorerField from "./ExternalExplorerField";
 import CreateNewWithdrawButton from "./CreateNewWithdrawButton";
 import Redeem from "./Redeem";
 import CheckWithdrawContractReadyToSignButton from "./CheckWithdrawContractReadyToSignButton";
@@ -63,7 +62,7 @@ export default function Index() {
                         <td>{session.ethereumAddress}</td>
                     </tr>
                     {/*<InternalIdField session={session} />*/}
-                    <ExternalExplorerField session={session} />
+                    {/*<ExternalExplorerField session={session} />*/}
                 </tbody>
             </table>
             <div className="actions">

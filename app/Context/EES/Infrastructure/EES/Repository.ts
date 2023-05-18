@@ -11,7 +11,8 @@ export default class Repository implements RepositoryInterface {
             .data;
 
         return {
-            contractAddress: settings.deposit_contract_address,
+            depositContractAddress: settings.deposit_contract_address,
+            withdrawContractAddress: settings.withdraw_contract_address,
             receiverAddress: settings.receiver_address,
             minimumValue: settings.minimum_deposit,
             minimumTimeLock: settings.minimum_timelock,
@@ -76,18 +77,17 @@ export default class Repository implements RepositoryInterface {
         return result.data.submitted;
     }
 
-    public async checkWithdrawReadyToSignInExternalBlockchain(
+    public async getWithdrawExternalContractId(
         sessionId: string
-    ): Promise<boolean> {
+    ): Promise<string> {
         const result = await axios.post(
-            EesAPI.BASE +
-                EesAPI.CHECK_WITHDRAW_READY_TO_SIGH_IN_EXTERNAL_BLOCKCHAIN,
+            EesAPI.BASE + EesAPI.GET_WITHDRAW_EXTERNAL_CONTRACT_ID,
             {
                 sessionId: sessionId
             }
         );
 
-        return result.data.readyToSign;
+        return result.data.contractId;
     }
 
     private ensureHasPrefix(hashLock: string) {

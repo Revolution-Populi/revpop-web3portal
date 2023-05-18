@@ -1,5 +1,5 @@
 export interface EESSettings {
-    contractAddress: string;
+    depositContractAddress: string;
     receiverAddress: string;
     minimumValue: string;
     minimumTimeLock: number;
@@ -8,6 +8,7 @@ export interface EESSettings {
     revpopCurrency: string;
     eesAccountName: string;
     withdrawTimeLock: number;
+    withdrawContractAddress: string;
 }
 
 export default interface RepositoryInterface {

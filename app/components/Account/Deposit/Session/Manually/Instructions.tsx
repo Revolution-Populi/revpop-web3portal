@@ -6,7 +6,7 @@ import counterpart from "counterpart";
 // @ts-ignore
 import {Collapse} from "bitshares-ui-style-guide";
 import {Session} from "../../../../../Context/EES";
-import Abi from "../../../../../assets/abi/HashedTimelock.json";
+import Abi from "../../../../../assets/abi/DepositHashedTimelock.json";
 import useLoadEESSettings from "../../../EES/Hooks/useLoadEESSettings";
 
 const formItemLayout = {
@@ -55,8 +55,8 @@ export default function Index({session}: Params) {
                     <ul>
                         <li>Select &quot;Interact with contract&quot;</li>
                         <li>
-                            Use &quot;{settings.contractAddress}&quot; as the
-                            contract address
+                            Use &quot;{settings.depositContractAddress}&quot; as
+                            the contract address
                         </li>
                         <li>
                             <a href="#" onClick={onCopyApiHandler}>

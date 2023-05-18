@@ -6,8 +6,8 @@ export class SessionNotFoundError extends UseCaseError {
     }
 }
 
-export class SessionWrongStatus extends UseCaseError {
-    constructor() {
-        super("The session has wrong status.");
+export class InvalidSessionStatusError extends UseCaseError {
+    constructor(id: string) {
+        super(`The session with id ${id} cannot be paid.`);
     }
 }

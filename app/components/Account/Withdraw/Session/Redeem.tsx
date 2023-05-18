@@ -7,11 +7,17 @@ import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {ChainStore, FetchChainObjects} from "@revolutionpopuli/revpopjs";
 import {bindToCurrentAccount} from "../../../Utility/BindToCurrentAccount";
 import SessionRepository from "../../../../Context/EES/Infrastructure/SessionRepository/IndexedDBDepositSessionRepository";
-import HtlcModal from "../../../Modal/HtlcModal";
-import {Session} from "../../../../Context/EES";
+import RedeemFormWrapped from "../Form/Redeem/Index";
+import {WithdrawSession} from "../../../../Context/EES";
+import {
+    Modal,
+    Button
+    // @ts-ignore
+} from "bitshares-ui-style-guide";
+import counterpart from "counterpart";
 
 type Params = {
-    session: Session;
+    session: WithdrawSession;
     currentAccount: any;
     refresh: () => void;
 };
@@ -26,35 +32,7 @@ function Redeem({session, currentAccount, refresh}: Params) {
         setIsModalVisible(false);
     }
 
-    async function afterSuccess() {
-        session.redeemed();
-        await sessionRepository.save(session);
-        refresh();
-    }
-
     async function onShowModalClick() {
-        await FetchChainObjects(
-            ChainStore.getAccount,
-            [session.internalAccount],
-            undefined,
-            {}
-        );
-        await FetchChainObjects(
-            ChainStore.getAccount,
-            ["1.2.70"],
-            undefined,
-            {}
-        );
-        await FetchChainObjects(ChainStore.getAsset, ["1.3.1"]);
-
-        const htlc = await Apis.instance()
-            .db_api()
-            .exec("get_htlc", [session.internalContract?.id]);
-
-        setModalData({
-            type: "redeem",
-            payload: htlc
-        });
         setIsModalVisible(true);
     }
 
@@ -65,13 +43,39 @@ function Redeem({session, currentAccount, refresh}: Params) {
             </a>
 
             {isModalVisible ? (
-                <HtlcModal
-                    isModalVisible={isModalVisible}
-                    hideModal={hideModal}
-                    operation={modalData}
-                    fromAccount={currentAccount}
-                    afterSuccess={afterSuccess}
-                />
+                <Modal
+                    title={counterpart.translate("showcases.htlc.redeem_htlc")}
+                    visible={isModalVisible}
+                    overlay={true}
+                    onCancel={hideModal}
+                    footer={
+                        [
+                            // <UnlockButton key={"send"}>
+                            //     <Button
+                            //         disabled={isSubmitNotValid}
+                            //         onClick={
+                            //             !isSubmitNotValid
+                            //                 ? this.onSubmit.bind(this)
+                            //                 : null
+                            //         }
+                            //     >
+                            //         {sendButtonText}
+                            //     </Button>
+                            // </UnlockButton>,
+                            // <Button key="Cancel" onClick={this.props.hideModal}>
+                            //     <Translate component="span" content="transfer.cancel" />
+                            // </Button>
+                        ]
+                    }
+                >
+                    <RedeemFormWrapped
+                        withdraw={session}
+                        isModalVisible={isModalVisible}
+                        hideModal={hideModal}
+                        operation={modalData}
+                        fromAccount={currentAccount}
+                    />
+                </Modal>
             ) : null}
         </div>
     );

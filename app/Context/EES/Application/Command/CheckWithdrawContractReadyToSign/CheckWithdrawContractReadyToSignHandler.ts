@@ -3,6 +3,7 @@ import * as Errors from "./Errors";
 import EesRepository from "../../../Infrastructure/EES/Repository";
 import WithdrawSessionRepositoryInterface from "../../../Domain/Withdraw/WithdrawSessionRepositoryInterface";
 import IndexedDBWithdrawSessionRepository from "../../../Infrastructure/WithdrawSessionRepository/IndexedDBWithdrawSessionRepository";
+import WithdrawContract from "../../../Domain/ExternalBlockchain/WithdrawContract";
 
 export default class CheckWithdrawContractReadyToSignHandler {
     constructor(
@@ -17,17 +18,18 @@ export default class CheckWithdrawContractReadyToSignHandler {
             throw new Errors.SessionNotFoundError(command.sessionId);
         }
 
-        if (
-            await this.eesRepository.checkWithdrawReadyToSignInExternalBlockchain(
+        try {
+            const externalContractId = await this.eesRepository.getWithdrawExternalContractId(
                 command.sessionId
-            )
-        ) {
-            session.readyToSignInExternalBlockchain();
+            );
+            session.readyToSignInExternalBlockchain(
+                WithdrawContract.create(externalContractId)
+            );
             await this.sessionRepository.save(session);
             return true;
+        } catch (e) {
+            return false;
         }
-
-        return false;
     }
 
     public static create(): CheckWithdrawContractReadyToSignHandler {

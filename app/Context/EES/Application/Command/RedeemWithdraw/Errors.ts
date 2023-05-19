@@ -11,3 +11,5 @@ export class InvalidSessionStatusError extends UseCaseError {
         super(`The session with id ${id} cannot be paid.`);
     }
 }
+
+export class ExternalBlockchainError extends UseCaseError {}

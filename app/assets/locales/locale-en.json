@@ -2875,6 +2875,7 @@
         "phase_out_warning": "We recommend using the new {modal_link} modal as this page will be phased out",
         "see": "SEE MY TRANSFERS",
         "send": "Send",
+        "sending": "Sending",
         "to": "To",
         "total": "Total: ",
         "warn_name_unable_read_memo": "Proposed sender will be unable to read this memo!"
@@ -3217,6 +3218,9 @@
             },
             "errors": {
                 "contract_not_found": "Contract not found, please try again later"
+            },
+            "success": {
+                "contract_ready_to_redeem": "Contract ready to redeem"
             },
             "warnings": {
                 "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain",

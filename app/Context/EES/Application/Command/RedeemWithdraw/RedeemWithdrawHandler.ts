@@ -8,6 +8,7 @@ import * as Errors from "./Errors";
 import SessionRepositoryInterface from "../../../Domain/Withdraw/WithdrawSessionRepositoryInterface";
 import Repository from "../../../Infrastructure/EES/Repository";
 import Web3Repository from "../../../Infrastructure/ExternalBlockchain/Web3Repository";
+import RedeemWithdrawResponse from "../../../Domain/ExternalBlockchain/RedeemWithdrawResponse";
 
 export default class RedeemWithdrawHandler {
     constructor(
@@ -35,9 +36,16 @@ export default class RedeemWithdrawHandler {
             command.receiverAddress
         );
 
-        const redeemWithdrawResponse = await this.web3Repository.redeemWithdraw(
-            request
-        );
+        let redeemWithdrawResponse: RedeemWithdrawResponse;
+
+        try {
+            redeemWithdrawResponse = await this.web3Repository.redeemWithdraw(
+                request
+            );
+        } catch (e) {
+            console.log("Error in Handler", e);
+            throw new Errors.ExternalBlockchainError((e as Error).message);
+        }
 
         if (!redeemWithdrawResponse.success) {
             throw new BlockchainConnectionError();

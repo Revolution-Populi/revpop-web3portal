@@ -4,6 +4,7 @@ import WithdrawContract from "../../Domain/ExternalBlockchain/WithdrawContract";
 
 export interface ExternalContractJson {
     id: string;
+    txHash: string | null;
 }
 
 export interface InternalContractJson {
@@ -48,13 +49,16 @@ class Transformer {
         if (session.isRedeemed()) {
             const externalContract = session.externalContract as WithdrawContract;
             sessionJson.externalContract = {
-                id: externalContract.id
+                id: externalContract.id,
+                txHash: externalContract.txHash
             };
 
-            const internalContract = session.internalContract as InternalContract;
-            sessionJson.internalContract = {
-                id: internalContract.id
-            };
+            if (session.internalContract) {
+                const internalContract = session.internalContract as InternalContract;
+                sessionJson.internalContract = {
+                    id: internalContract.id
+                };
+            }
         }
 
         return sessionJson;
@@ -86,23 +90,15 @@ class Transformer {
             );
         }
 
-        // if (sessionJson.status === STATUS.REDEEMED) {
-        //     const externalContractJson = sessionJson.externalContract as ExternalContractJson;
-        //     const externalContract = new ExternalContract(
-        //         externalContractJson.txHash
-        //     );
-        //     session.pay(externalContract);
-        //
-        //     const internalContractJson = sessionJson.internalContract as InternalContractJson;
-        //     const internalContract = new InternalContract(
-        //         internalContractJson.id,
-        //         ""
-        //     );
-        //     session.createdInternalBlockchain(internalContract);
-        //
-        //     session.redeemed();
-        // }
-        //
+        if (sessionJson.status === STATUS.REDEEMED) {
+            const externalContractJson = sessionJson.externalContract as ExternalContractJson;
+            session.submittedInInternalBlockchain();
+            session.readyToSignInExternalBlockchain(
+                WithdrawContract.create(externalContractJson?.id ?? "")
+            );
+            session.redeem(externalContractJson.txHash ?? "");
+        }
+
         return session;
     }
 
@@ -113,7 +109,8 @@ class Transformer {
         if (session.externalContract) {
             const externalContract = session.externalContract as WithdrawContract;
             sessionJson.externalContract = {
-                id: externalContract.id
+                id: externalContract.id,
+                txHash: externalContract.txHash
             };
         }
         return sessionJson;

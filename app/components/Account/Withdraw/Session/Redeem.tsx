@@ -7,7 +7,7 @@ import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import {ChainStore, FetchChainObjects} from "@revolutionpopuli/revpopjs";
 import {bindToCurrentAccount} from "../../../Utility/BindToCurrentAccount";
 import SessionRepository from "../../../../Context/EES/Infrastructure/SessionRepository/IndexedDBDepositSessionRepository";
-import RedeemFormWrapped from "../Form/Redeem/Index";
+import RedeemForm from "../Form/Redeem/Index";
 import {WithdrawSession} from "../../../../Context/EES";
 import {
     Modal,
@@ -43,39 +43,11 @@ function Redeem({session, currentAccount, refresh}: Params) {
             </a>
 
             {isModalVisible ? (
-                <Modal
-                    title={counterpart.translate("showcases.htlc.redeem_htlc")}
-                    visible={isModalVisible}
-                    overlay={true}
-                    onCancel={hideModal}
-                    footer={
-                        [
-                            // <UnlockButton key={"send"}>
-                            //     <Button
-                            //         disabled={isSubmitNotValid}
-                            //         onClick={
-                            //             !isSubmitNotValid
-                            //                 ? this.onSubmit.bind(this)
-                            //                 : null
-                            //         }
-                            //     >
-                            //         {sendButtonText}
-                            //     </Button>
-                            // </UnlockButton>,
-                            // <Button key="Cancel" onClick={this.props.hideModal}>
-                            //     <Translate component="span" content="transfer.cancel" />
-                            // </Button>
-                        ]
-                    }
-                >
-                    <RedeemFormWrapped
-                        withdraw={session}
-                        isModalVisible={isModalVisible}
-                        hideModal={hideModal}
-                        operation={modalData}
-                        fromAccount={currentAccount}
-                    />
-                </Modal>
+                <RedeemForm
+                    withdraw={session}
+                    hideModal={hideModal}
+                    isModalVisible={isModalVisible}
+                />
             ) : null}
         </div>
     );

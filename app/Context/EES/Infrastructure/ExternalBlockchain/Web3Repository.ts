@@ -99,37 +99,14 @@ export default class Web3Repository
             throw new Errors.CurrentAddressNotSelectedError();
         }
 
-        console.log("Address", currentAddress);
-        console.log("Request", request);
-
         return new Promise((resolve, reject) => {
-            console.log("Send redeem");
             contract.methods
                 .withdraw(
-                    // web3.utils.padLeft("0x123", 64),
-                    // web3.utils.padLeft("0x123", 64)
                     request.contractId,
                     web3.utils.asciiToHex(request.preimage)
                 )
                 .send({
-                    from: currentAddress
-                })
-                .catch((e: unknown) => {
-                    debugger;
-                    console.log("Error:", e);
-
-                    reject(
-                        new RedeemWithdrawResponse(false, (e as Error).message)
-                    );
-                })
-                .on("sending", (payload: any) => {
-                    console.log("Sending: ", payload);
-                })
-                .on("sent", (payload: any) => {
-                    console.log("Sent: ", payload);
-                })
-                .on("receipt", (payload: any) => {
-                    console.log("Receipt: ", payload);
+                    from: request.receiver
                 })
                 .on(
                     "confirmation",
@@ -137,7 +114,6 @@ export default class Web3Repository
                         confirmationNumber: number,
                         receipt: TransactionReceipt
                     ) => {
-                        debugger;
                         if (confirmationNumber === 1) {
                             resolve(
                                 new RedeemWithdrawResponse(
@@ -148,10 +124,9 @@ export default class Web3Repository
                         }
                     }
                 )
-                .on("error", function(error: any, receipt: TransactionReceipt) {
-                    debugger;
-                    console.log("Error in handler:", error);
-                    reject(new RedeemWithdrawResponse(false, ""));
+                .catch((e: unknown) => {
+                    console.log("Error:", e);
+                    reject(e);
                 });
         });
     }

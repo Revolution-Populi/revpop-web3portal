@@ -1,6 +1,8 @@
 import {TransactionReceipt} from "web3-core";
 import CreateNewContractRequest from "./CreateNewContractRequest";
 import CreateNewContractResponse from "./CreateNewContractResponse";
+import RedeemWithdrawRequest from "./RedeemWithdrawRequest";
+import RedeemWithdrawResponse from "./RedeemWithdrawResponse";
 
 export default interface ExternalBlockchainRepositoryInterface {
     create: (
@@ -15,4 +17,7 @@ export default interface ExternalBlockchainRepositoryInterface {
         contractAddress: string
     ) => Promise<any | null>;
     getChainId: () => Promise<number>;
+    redeemWithdraw: (
+        command: RedeemWithdrawRequest
+    ) => Promise<RedeemWithdrawResponse>;
 }

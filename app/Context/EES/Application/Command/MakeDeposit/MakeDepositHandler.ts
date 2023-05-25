@@ -2,7 +2,7 @@ import MakeDeposit from "./MakeDeposit";
 import SessionRepositoryInterface from "../../../Domain/Deposit/SessionRepositoryInterface";
 import EesRepositoryInterface from "../../../Infrastructure/EES/Repository";
 import ExternalBlockchainRepositoryInterface from "../../../Domain/ExternalBlockchain/RepositoryInterface";
-import ExternalContract from "../../../Domain/ExternalBlockchain/Contract";
+import ExternalContract from "../../../Domain/ExternalBlockchain/DepositContract";
 import CreateNewExternalContractRequest from "../../../Domain/ExternalBlockchain/CreateNewContractRequest";
 import * as Errors from "./Errors";
 import {BlockchainConnectionError} from "../../../../Core/Logic/AppError";
@@ -29,7 +29,7 @@ export default class MakeDepositHandler {
 
         const createNewExternalContractRequest = new CreateNewExternalContractRequest(
             command.senderAddress,
-            settings.contractAddress,
+            settings.depositContractAddress,
             settings.receiverAddress,
             session.value,
             this.ensureHasPrefix(session.hashLock),

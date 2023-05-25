@@ -2,6 +2,8 @@ import {TransactionReceipt} from "web3-core";
 import ExternalBlockchainRepositoryInterface from "../../Domain/ExternalBlockchain/RepositoryInterface";
 import CreateNewContractRequest from "../../Domain/ExternalBlockchain/CreateNewContractRequest";
 import CreateNewContractResponse from "../../Domain/ExternalBlockchain/CreateNewContractResponse";
+import RedeemWithdrawRequest from "../../Domain/ExternalBlockchain/RedeemWithdrawRequest";
+import RedeemWithdrawResponse from "../../Domain/ExternalBlockchain/RedeemWithdrawResponse";
 
 export default class StubRepository
     implements ExternalBlockchainRepositoryInterface {
@@ -10,6 +12,7 @@ export default class StubRepository
     private _txHash =
         "0xdefc225669c161c4acc15e261778499ff4154ed69b88cefed3d3a3bf07748405";
     private _chainId = 1;
+    private _redeemWithdrawRequests: RedeemWithdrawRequest[] = [];
 
     async create(
         request: CreateNewContractRequest
@@ -66,5 +69,13 @@ export default class StubRepository
 
     set chainId(value: number) {
         this._chainId = value;
+    }
+
+    async redeemWithdraw(
+        request: RedeemWithdrawRequest
+    ): Promise<RedeemWithdrawResponse> {
+        this._redeemWithdrawRequests.push(request);
+
+        return new RedeemWithdrawResponse(this._status, this._txHash);
     }
 }

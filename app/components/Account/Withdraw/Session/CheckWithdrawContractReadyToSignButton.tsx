@@ -7,6 +7,7 @@ import counterpart from "counterpart";
 import UnlockButton from "../../../UnlockButton/UnlockButton";
 import CheckWithdrawContractReadyToSign from "../../../../Context/EES/Application/Command/CheckWithdrawContractReadyToSign/CheckWithdrawContractReadyToSign";
 import CheckWithdrawContractReadyToSignHandler from "../../../../Context/EES/Application/Command/CheckWithdrawContractReadyToSign/CheckWithdrawContractReadyToSignHandler";
+import messages from "@metamask/providers/dist/messages";
 
 type Params = {
     sessionId: string;
@@ -20,6 +21,11 @@ function CheckWithdrawContractReadyToSignButton({sessionId, refresh}: Params) {
         const result = await handler.execute(query);
 
         if (result) {
+            Notification.success({
+                message: counterpart.translate(
+                    "withdraw.session.success.contract_ready_to_redeem"
+                )
+            });
             refresh();
         } else {
             Notification.error({

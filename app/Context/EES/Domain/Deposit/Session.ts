@@ -1,6 +1,6 @@
 import {Moment} from "moment";
 import {SessionWrongStatusError} from "../Errors";
-import ExternalContract from "../ExternalBlockchain/Contract";
+import ExternalContract from "../ExternalBlockchain/DepositContract";
 import InternalContract from "../InternalBlockchain/Contract";
 
 export enum STATUS {

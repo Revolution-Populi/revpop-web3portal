@@ -2,7 +2,7 @@ import AddTransactionManually from "./AddTransactionManually";
 import SessionRepositoryInterface from "../../../Domain/Deposit/SessionRepositoryInterface";
 import EesRepositoryInterface from "../../../Infrastructure/EES/Repository";
 import ExternalBlockchainRepositoryInterface from "../../../Domain/ExternalBlockchain/RepositoryInterface";
-import ExternalContract from "../../../Domain/ExternalBlockchain/Contract";
+import ExternalContract from "../../../Domain/ExternalBlockchain/DepositContract";
 import * as Errors from "./Errors";
 
 export default class AddTransactionManuallyHandler {
@@ -36,7 +36,7 @@ export default class AddTransactionManuallyHandler {
         const contractId = log["topics"][1];
         const contract = await this.web3Repository.getContract(
             contractId,
-            settings.contractAddress
+            settings.depositContractAddress
         );
         const hashLock = contract.hashlock;
 

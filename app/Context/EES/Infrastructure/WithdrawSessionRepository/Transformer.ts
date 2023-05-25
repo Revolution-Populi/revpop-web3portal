@@ -1,9 +1,10 @@
 import WithdrawSession, {STATUS} from "../../Domain/Withdraw/WithdrawSession";
-import ExternalContract from "../../Domain/ExternalBlockchain/Contract";
 import InternalContract from "../../Domain/InternalBlockchain/Contract";
+import WithdrawContract from "../../Domain/ExternalBlockchain/WithdrawContract";
 
 export interface ExternalContractJson {
-    txHash: string;
+    id: string;
+    txHash: string | null;
 }
 
 export interface InternalContractJson {
@@ -27,7 +28,7 @@ export interface SessionJson {
 
 class Transformer {
     transform(session: WithdrawSession): SessionJson {
-        const sessionJson: SessionJson = {
+        let sessionJson: SessionJson = {
             id: session.id,
             internalAccount: session.internalAccountName,
             value: session.value,
@@ -40,35 +41,24 @@ class Transformer {
             status: session.status
         };
 
-        if (session.isPaid()) {
-            const externalContract = session.externalContract as ExternalContract;
-            sessionJson.externalContract = {
-                txHash: externalContract.txHash
-            };
-        }
-
         if (session.isReadyToSignInExternalBlockchain()) {
-            const externalContract = session.externalContract as ExternalContract;
-            sessionJson.externalContract = {
-                txHash: externalContract.txHash
-            };
-
-            const internalContract = session.internalContract as InternalContract;
-            sessionJson.internalContract = {
-                id: internalContract.id
-            };
+            sessionJson = this.setExternalContract(session, sessionJson);
+            sessionJson = this.setInternalContract(session, sessionJson);
         }
 
         if (session.isRedeemed()) {
-            const externalContract = session.externalContract as ExternalContract;
+            const externalContract = session.externalContract as WithdrawContract;
             sessionJson.externalContract = {
+                id: externalContract.id,
                 txHash: externalContract.txHash
             };
 
-            const internalContract = session.internalContract as InternalContract;
-            sessionJson.internalContract = {
-                id: internalContract.id
-            };
+            if (session.internalContract) {
+                const internalContract = session.internalContract as InternalContract;
+                sessionJson.internalContract = {
+                    id: internalContract.id
+                };
+            }
         }
 
         return sessionJson;
@@ -94,35 +84,49 @@ class Transformer {
         if (
             sessionJson.status === STATUS.READY_TO_SIGN_IN_EXTERNAL_BLOCKCHAIN
         ) {
-            session.readyToSignInExternalBlockchain();
-        }
-
-        if (sessionJson.status === STATUS.PAYED) {
-            const externalContractJson = sessionJson.externalContract as ExternalContractJson;
-            const externalContract = new ExternalContract(
-                externalContractJson.txHash
+            session.submittedInInternalBlockchain();
+            session.readyToSignInExternalBlockchain(
+                WithdrawContract.create(sessionJson.externalContract?.id ?? "")
             );
-            session.pay(externalContract);
         }
 
-        // if (sessionJson.status === STATUS.REDEEMED) {
-        //     const externalContractJson = sessionJson.externalContract as ExternalContractJson;
-        //     const externalContract = new ExternalContract(
-        //         externalContractJson.txHash
-        //     );
-        //     session.pay(externalContract);
-        //
-        //     const internalContractJson = sessionJson.internalContract as InternalContractJson;
-        //     const internalContract = new InternalContract(
-        //         internalContractJson.id,
-        //         ""
-        //     );
-        //     session.createdInternalBlockchain(internalContract);
-        //
-        //     session.redeemed();
-        // }
-        //
+        if (sessionJson.status === STATUS.REDEEMED) {
+            const externalContractJson = sessionJson.externalContract as ExternalContractJson;
+            session.submittedInInternalBlockchain();
+            session.readyToSignInExternalBlockchain(
+                WithdrawContract.create(externalContractJson?.id ?? "")
+            );
+            session.redeem(externalContractJson.txHash ?? "");
+        }
+
         return session;
+    }
+
+    public setExternalContract(
+        session: WithdrawSession,
+        sessionJson: SessionJson
+    ): SessionJson {
+        if (session.externalContract) {
+            const externalContract = session.externalContract as WithdrawContract;
+            sessionJson.externalContract = {
+                id: externalContract.id,
+                txHash: externalContract.txHash
+            };
+        }
+        return sessionJson;
+    }
+
+    public setInternalContract(
+        session: WithdrawSession,
+        sessionJson: SessionJson
+    ): SessionJson {
+        if (session.internalContract) {
+            const internalContract = session.internalContract as InternalContract;
+            sessionJson.internalContract = {
+                id: internalContract.id
+            };
+        }
+        return sessionJson;
     }
 }
 

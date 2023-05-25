@@ -1,19 +1,19 @@
 import {useEffect, useState} from "react";
 import {
-    GetSession,
-    getSessionHandler,
-    Session
-} from "../../../../Context/Withdraw";
+    GetWithdrawSession,
+    getWithdrawSessionHandler,
+    WithdrawSession
+} from "../../../../Context/EES";
 
-export default function useLoadSession(
+export default function useLoadWithdrawSession(
     sessionId: string
-): [Session | null, boolean, () => void] {
-    const [session, setSession] = useState<Session | null>(null);
+): [WithdrawSession | null, boolean, () => void] {
+    const [session, setSession] = useState<WithdrawSession | null>(null);
     const [error, setError] = useState<boolean>(false);
 
     async function loadSession() {
-        const query = new GetSession(sessionId);
-        const sessionOrError = await getSessionHandler.execute(query);
+        const query = new GetWithdrawSession(sessionId);
+        const sessionOrError = await getWithdrawSessionHandler.execute(query);
 
         if (sessionOrError.isFailure()) {
             setError(true);

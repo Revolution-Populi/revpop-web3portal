@@ -1,6 +1,5 @@
 import CalcWithdrawTransactionFee from "./CalcWithdrawTransactionFee";
 import {checkFeeStatusAsync} from "../../../../../lib/common/trxHelper";
-import * as Errors from "./Errors";
 
 export default class CalcWithdrawTransactionFeeHandler {
     public execute(command: CalcWithdrawTransactionFee): Promise<number> {
@@ -17,7 +16,10 @@ export default class CalcWithdrawTransactionFeeHandler {
                         type: "htlc_create",
                         accountID: command.account.get("id"),
                         feeID: command.assetId,
-                        data: {}
+                        data: {
+                            type: "memo",
+                            content: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+                        }
                     })
                         .then(({fee}) => {
                             resolve(

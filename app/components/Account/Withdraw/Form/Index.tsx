@@ -7,9 +7,7 @@ export default function Index() {
     const [settings, error] = useLoadEESSettings();
 
     if (error) {
-        return (
-            <div>Error loading settDepositings, please try again later.</div>
-        );
+        return <div>Error loading settings, please try again later.</div>;
     }
 
     if (null === settings) {

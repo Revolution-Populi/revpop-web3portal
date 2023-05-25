@@ -5,6 +5,9 @@ export interface EESSettings {
     minimumTimeLock: number;
     rvpWithdrawalFee: number;
     rvethWithdrawalFee: number;
+    revpopCurrency: string;
+    eesAccountName: string;
+    withdrawTimeLock: number;
 }
 
 export default interface RepositoryInterface {
@@ -15,6 +18,7 @@ export default interface RepositoryInterface {
     ) => Promise<string>;
     createWithdrawRequest: (
         internalAccount: string,
-        hashLock: string
+        amountToPayInRVETH: number,
+        addressOfUserInEthereum: string
     ) => Promise<string>;
 }

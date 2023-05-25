@@ -1,41 +1,20 @@
-import {DBSchema, IDBPDatabase, openDB} from "idb";
 import WithdrawSessionRepositoryInterface from "../../Domain/Withdraw/WithdrawSessionRepositoryInterface";
 import WithdrawSession from "../../Domain/Withdraw/WithdrawSession";
 import transformer from "./Transformer";
+import IndexedDB, {WITHDRAW_SESSION_STORE} from "../IndexedDB/IndexedDB";
 
-interface DB extends DBSchema {
-    withdraw_session: {
-        value: {
-            id: string;
-            value: string;
-            hashLock: string;
-            withdrawalFeeCurrency: string;
-            transactionFeeCurrency: string;
-            ethereumAddress: string;
-        };
-        key: string;
-    };
-}
-
-const DB_NAME = "web3portal";
-const DB_VERSION = 1;
-const SESSION_TABLE = "withdraw_session";
-
-export default class IndexedDB implements WithdrawSessionRepositoryInterface {
-    private db: IDBPDatabase<DB> | null = null;
+export default class IndexedDBWithdrawSessionRepository
+    implements WithdrawSessionRepositoryInterface {
+    private db: IndexedDB;
 
     constructor() {
-        this.openDatabase();
+        this.db = IndexedDB.getInstance();
     }
 
     async load(sessionId: string): Promise<WithdrawSession | null> {
-        if (this.db === null) {
-            return null;
-        }
-
-        const store = this.db
-            .transaction(SESSION_TABLE)
-            .objectStore(SESSION_TABLE);
+        const store = await this.db
+            .transaction(WITHDRAW_SESSION_STORE)
+            .objectStore(WITHDRAW_SESSION_STORE);
         const request = await store.get(sessionId);
 
         return new Promise((resolve, reject) => {
@@ -60,13 +39,9 @@ export default class IndexedDB implements WithdrawSessionRepositoryInterface {
     }
 
     async all(): Promise<WithdrawSession[]> {
-        if (this.db === null) {
-            return [];
-        }
-
         const store = this.db
-            .transaction(SESSION_TABLE)
-            .objectStore(SESSION_TABLE);
+            .transaction(WITHDRAW_SESSION_STORE)
+            .objectStore(WITHDRAW_SESSION_STORE);
         const request = await store.getAll();
 
         return new Promise((resolve, reject) => {
@@ -93,24 +68,15 @@ export default class IndexedDB implements WithdrawSessionRepositoryInterface {
     }
 
     async save(session: WithdrawSession): Promise<boolean> {
-        if (this.db === null) {
+        const tx = this.db.transaction(WITHDRAW_SESSION_STORE, "readwrite");
+        const store = tx.objectStore(WITHDRAW_SESSION_STORE);
+
+        if (store.put === undefined) {
             return false;
         }
 
-        const tx = this.db.transaction(SESSION_TABLE, "readwrite");
-        const store = tx.objectStore(SESSION_TABLE);
         await Promise.all([store.put(transformer.transform(session)), tx.done]);
 
         return true;
-    }
-
-    private async openDatabase() {
-        this.db = await openDB<DB>(DB_NAME, DB_VERSION, {
-            upgrade: db => {
-                if (!db.objectStoreNames.contains(SESSION_TABLE)) {
-                    db.createObjectStore(SESSION_TABLE, {keyPath: "id"});
-                }
-            }
-        });
     }
 }

@@ -7,17 +7,19 @@ import * as EesErrors from "../../../EES/Domain/EES/Errors";
 
 export default class Repository implements RepositoryInterface {
     public async loadEESSettings(): Promise<EESSettings> {
-        const settings = (
-            await axios.get(EesAPI.BASE + EesAPI.DEPOSIT_SETTINGS)
-        ).data;
+        const settings = (await axios.get(EesAPI.BASE + EesAPI.EES_SETTINGS))
+            .data;
 
         return {
-            contractAddress: settings.contract_address,
+            contractAddress: settings.deposit_contract_address,
             receiverAddress: settings.receiver_address,
             minimumValue: settings.minimum_deposit,
             minimumTimeLock: settings.minimum_timelock,
             rvpWithdrawalFee: settings.rvp_withdrawal_fee,
-            rvethWithdrawalFee: settings.rveth_withdrawal_fee
+            rvethWithdrawalFee: settings.rveth_withdrawal_fee,
+            revpopCurrency: settings.revpop_asset_symbol,
+            eesAccountName: settings.revpop_ees_account,
+            withdrawTimeLock: settings.withdraw_timelock
         };
     }
 
@@ -42,14 +44,16 @@ export default class Repository implements RepositoryInterface {
 
     public async createWithdrawRequest(
         internalAccount: string,
-        hashLock: string
+        amountToPayInRVETH: number,
+        addressOfUserInEthereum: string
     ): Promise<string> {
         try {
             const result = await axios.post(
                 EesAPI.BASE + EesAPI.SUBMIT_WITHDRAW_REQUEST,
                 {
                     revpopAccount: internalAccount,
-                    hashLock: this.ensureHasPrefix(hashLock)
+                    amountToPayInRVETH: amountToPayInRVETH,
+                    addressOfUserInEthereum: addressOfUserInEthereum
                 }
             );
 
@@ -70,6 +74,20 @@ export default class Repository implements RepositoryInterface {
         );
 
         return result.data.submitted;
+    }
+
+    public async checkWithdrawReadyToSignInExternalBlockchain(
+        sessionId: string
+    ): Promise<boolean> {
+        const result = await axios.post(
+            EesAPI.BASE +
+                EesAPI.CHECK_WITHDRAW_READY_TO_SIGH_IN_EXTERNAL_BLOCKCHAIN,
+            {
+                sessionId: sessionId
+            }
+        );
+
+        return result.data.readyToSign;
     }
 
     private ensureHasPrefix(hashLock: string) {

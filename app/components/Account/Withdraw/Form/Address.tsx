@@ -36,13 +36,8 @@ export default function Address({form, value, onChange}: Props) {
                             "Please input your Address of User in Ethereum!"
                     },
                     {
-                        validator: async (value: string) => {
-                            if (!Web3.utils.isAddress(value)) {
-                                return Promise.reject(
-                                    new Error("Invalid ethereum address")
-                                );
-                            }
-                        }
+                        pattern: /^0x[a-fA-F0-9]{40}$/,
+                        message: "Invalid ethereum address"
                     }
                 ]
             })(<Input onChange={onChangeHandler} />)}

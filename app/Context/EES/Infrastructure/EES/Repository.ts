@@ -46,7 +46,9 @@ export default class Repository implements RepositoryInterface {
     public async createWithdrawRequest(
         internalAccount: string,
         amountToPayInRVETH: number,
-        addressOfUserInEthereum: string
+        addressOfUserInEthereum: string,
+        withdrawalFeeAmount: number,
+        withdrawalFeeCurrency: string
     ): Promise<string> {
         try {
             const result = await axios.post(
@@ -54,7 +56,9 @@ export default class Repository implements RepositoryInterface {
                 {
                     revpopAccount: internalAccount,
                     amountToPayInRVETH: amountToPayInRVETH,
-                    addressOfUserInEthereum: addressOfUserInEthereum
+                    addressOfUserInEthereum: addressOfUserInEthereum,
+                    withdrawalFeeAmount: withdrawalFeeAmount,
+                    withdrawalFeeCurrency: withdrawalFeeCurrency
                 }
             );
 

@@ -24,14 +24,18 @@ export default class CheckDepositContractCreatedHandler {
             session.internalAccount
         );
 
-        if (
-            !(await this.eesRepository.checkDepositSubmittedToInternalBlockchain(
+        let result = false;
+        try {
+            result = await this.eesRepository.checkDepositSubmittedToInternalBlockchain(
                 command.sessionId
-            ))
-        ) {
+            );
+        } catch (e) {
             return false;
         }
-        console.log("INTERNAL CONTRACTs", internalContracts);
+
+        if (!result) {
+            return false;
+        }
 
         for (const internalContract of internalContracts) {
             if (

@@ -15,7 +15,7 @@ export default function ExternalExplorerField({session}: Params) {
     useEffect(() => {
         const handler = GetTransactionExplorerLinkHandler.create();
         handler.execute(new GetTransactionExplorerLink(session)).then(setUrl);
-    }, []);
+    }, [session.externalContract?.txHash]);
 
     if (session.status < STATUS.PAYED || !session.externalContract || !url) {
         return null;

@@ -7,7 +7,6 @@ import counterpart from "counterpart";
 import UnlockButton from "../../../UnlockButton/UnlockButton";
 import CheckWithdrawContractReadyToSign from "../../../../Context/EES/Application/Command/CheckWithdrawContractReadyToSign/CheckWithdrawContractReadyToSign";
 import CheckWithdrawContractReadyToSignHandler from "../../../../Context/EES/Application/Command/CheckWithdrawContractReadyToSign/CheckWithdrawContractReadyToSignHandler";
-import messages from "@metamask/providers/dist/messages";
 
 type Params = {
     sessionId: string;
@@ -28,9 +27,9 @@ function CheckWithdrawContractReadyToSignButton({sessionId, refresh}: Params) {
             });
             refresh();
         } else {
-            Notification.error({
+            Notification.warning({
                 message: counterpart.translate(
-                    "withdraw.session.errors.contract_not_found"
+                    "withdraw.session.warnings.transaction_is_pending"
                 )
             });
         }

@@ -22,9 +22,9 @@ function CheckDepositContractCreatedButton({sessionId, refresh}: Params) {
         if (result) {
             refresh();
         } else {
-            Notification.error({
+            Notification.warning({
                 message: counterpart.translate(
-                    "deposit.session.errors.contract_not_found"
+                    "deposit.session.warnings.transaction_is_pending"
                 )
             });
         }

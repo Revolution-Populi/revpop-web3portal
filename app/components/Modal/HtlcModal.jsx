@@ -190,7 +190,9 @@ class Preimage extends React.Component {
             <Form.Item label={label}>
                 <span>
                     {counterpart.translate(
-                        "showcases.htlc.preimage_has_been_created"
+                        this.props.type !== "create"
+                            ? "showcases.htlc.enter_preimage"
+                            : "showcases.htlc.preimage_has_been_created"
                     )}
                 </span>
                 <Input.Group className="content-block transfer-input preimage-row">

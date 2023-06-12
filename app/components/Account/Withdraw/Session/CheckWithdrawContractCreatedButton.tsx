@@ -22,9 +22,9 @@ function CheckWithdrawContractCreatedButton({sessionId, refresh}: Params) {
         if (result) {
             refresh();
         } else {
-            Notification.error({
+            Notification.warning({
                 message: counterpart.translate(
-                    "withdraw.session.errors.contract_not_found"
+                    "withdraw.session.warnings.transaction_is_pending"
                 )
             });
         }

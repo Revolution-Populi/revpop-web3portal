@@ -6,7 +6,7 @@ import {connect} from "alt-react";
 // @ts-ignore
 import Translate from "react-translate-component";
 // @ts-ignore
-import {Form, Button} from "bitshares-ui-style-guide";
+import {Form, Button, Input} from "bitshares-ui-style-guide";
 import {Map} from "immutable";
 // @ts-ignore
 import {ChainStore, FetchChain} from "@revolutionpopuli/revpopjs";
@@ -25,6 +25,7 @@ import {
     SubmitWithdrawRequest,
     submitWithdrawRequestHandler
 } from "../../../../Context/EES";
+import counterpart from "counterpart";
 
 const formItemLayout = {
     labelCol: {
@@ -56,7 +57,7 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
     const [hashLock, setHashLock] = useState<string>("");
     const [address, setAddress] = useState<string>("");
     const [withdrawalFee, setWithdrawalFee] = useState<Fee>(
-        Fee.create("1.3.0", 0)
+        Fee.create("1.3.1", 0)
     );
     const [transactionFee, setTransactionFee] = useState<Fee>(
         Fee.create("1.3.0", 0)
@@ -294,13 +295,33 @@ function WithdrawForm({settings, form, selectedAccountName}: Props) {
                 onChange={onChangeValueHandler}
                 validateCallback={validateAmount}
             />
-            <FeeAssetSelector
-                label={"withdraw.form.label.currency_to_pay_withdrawal_fee"}
-                selectedAsset={withdrawalFee.code}
-                value={withdrawalFee.value}
-                assets={getAssets(accountBalances)}
-                onChange={onChangeWithdrawalFeeCurrencyHandler}
-            />
+            <div>
+                <Form.Item
+                    label={counterpart.translate(
+                        "withdraw.form.label.currency_to_pay_withdrawal_fee"
+                    )}
+                    style={{margin: "0 0 0 0"}}
+                    className="amount-selector-field"
+                >
+                    <Input.Group compact>
+                        <Input
+                            style={{
+                                width: "calc(100% - 130px)"
+                            }}
+                            disabled={true}
+                            value={withdrawalFee.value}
+                        />
+                        <Input
+                            style={{
+                                width: "130px"
+                            }}
+                            disabled={true}
+                            value="RVETH"
+                        />
+                    </Input.Group>
+                </Form.Item>
+            </div>
+
             <FeeAssetSelector
                 label={"withdraw.form.label.currency_to_pay_transaction_fee"}
                 selectedAsset={transactionFee.code}

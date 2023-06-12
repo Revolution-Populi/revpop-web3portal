@@ -1213,7 +1213,8 @@
                 "contract_not_found": "Contract not found, please try again later"
             },
             "warnings": {
-                "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain"
+                "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain",
+                "transaction_is_pending": "Transaction is pending, please wait for some time"
             }
         }
     },
@@ -1515,10 +1516,10 @@
         "claim_period": "Seconds to claim",
         "claim_period_due": "Claimable until",
         "id": "HTLC id",
-        "preimage": "Preimage",
-        "preimage_explanation": "The secret preimage was used to calculate the preimage hash and is required to redeem this HTLC",
-        "preimage_hash": "Preimage hash",
-        "preimage_hash_explanation": "The preimage hash is calculated from the secret preimage and is imperative to HTLCs. With the secret preimage the HTLC can be redeemed. The content you see is: '(<preimage size>, <hash algorithm type>): <preimage hash>'",
+        "preimage": "Secret",
+        "preimage_explanation": "The secret was used to calculate the secret hash and is required to redeem this HTLC",
+        "preimage_hash": "Secret hash",
+        "preimage_hash_explanation": "The secret hash is calculated from the secret and is imperative to HTLCs. With the secret the HTLC can be redeemed. The content you see is: '(<preimage size>, <hash algorithm type>): <preimage hash>'",
         "redeemer": "Redeemer",
         "seconds_to_add": "Add seconds to claim period"
     },
@@ -2426,8 +2427,8 @@
             "amount": "Amount",
             "create_htlc": "Create HTLC",
             "custom": "Custom",
-            "description": "A HTLC locks away funds for given recipient, who can redeem those funds by providing a secret preimage (password) that was used by the sender to create the contract. Disclosing the password happens off-chain.",
-            "enter_secret_preimage": "Enter secret preimage",
+            "description": "A HTLC locks away funds for given recipient, who can redeem those funds by providing a secret (password) that was used by the sender to create the contract. Disclosing the password happens off-chain.",
+            "enter_secret_preimage": "Enter secret",
             "expiration": "Expiration",
             "expiration_date": "Expiration date",
             "expiration_period": {
@@ -2441,8 +2442,9 @@
             "first_stage": "1st stage",
             "from": "From",
             "hash": "Hash",
-            "preimage": "Preimage",
-            "preimage_has_been_created": "A random preimage has been created and filled in automatically below.",
+            "preimage": "Secret",
+            "enter_preimage": "Enter the secret that you have obtained before.",
+            "preimage_has_been_created": "A random secret has been created and filled in automatically below.",
             "recipient": "Recipient",
             "redeem": "Redeem",
             "redeem_htlc": "Redeem HTLC",
@@ -2453,13 +2455,13 @@
             "title_short": "HTLC",
             "to": "To",
             "tooltip": {
-                "enter_preimage": "Enter the secret preimage that you have obtained from the sender",
+                "enter_preimage": "Enter the secret that you have obtained before.",
                 "new_random": "Roll the dice and create a new random string.",
-                "preimage_button": "Please click to enter secret preimage",
-                "preimage_hash": "The Preimage hash is calculated from the above Preimage using the indicated hashing algorithm. Use the copy button in this row to save the Preimage hash and Preimage size.",
-                "preimage_input": "Field requires a secret preimage",
-                "preimage_random": "The best choice for the secret is a random string. If your secret can be guessed or is too short, you risk losing your funds. Use the copy button in this row to save the Preimage and hashing algorithm.",
-                "preimage_size": "The Preimage size is the length of the above Preimage. This value will also be written to the chain. Use the copy button in this row to save the Preimage hash and Preimage size."
+                "preimage_button": "Please click to enter Secret",
+                "preimage_hash": "The Secret Hash is calculated from the above Secret using the indicated hashing algorithm. Use the copy button in this row to save the Secret hash and Secret size.",
+                "preimage_input": "Field requires a secret",
+                "preimage_random": "The best choice for the secret is a random string. If your secret can be guessed or is too short, you risk losing your funds. Use the copy button in this row to save the Secret and hashing algorithm.",
+                "preimage_size": "The Secret size is the length of the above Secret. This value will also be written to the chain. Use the copy button in this row to save the Secret hash and Secret size."
             }
         },
         "instant_trade": {
@@ -3216,15 +3218,16 @@
                     }
                 }
             },
-            "errors": {
-                "contract_not_found": "Contract not found, please try again later"
+            "info": {
+                "contract_not_found": "Transaction is pending, please wait for some time."
             },
             "success": {
                 "contract_ready_to_redeem": "Contract ready to redeem"
             },
             "warnings": {
                 "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain",
-                "waiting_for_contract_creation_in_internal_blockchain": "Waiting for contract creation in internal blockchain"
+                "waiting_for_contract_creation_in_internal_blockchain": "Waiting for contract creation in internal blockchain",
+                "transaction_is_pending": "Transaction is pending, please wait for some time."
             }
         },
         "title": "New Withdraw"

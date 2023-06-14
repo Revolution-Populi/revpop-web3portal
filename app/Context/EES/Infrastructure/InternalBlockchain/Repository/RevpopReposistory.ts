@@ -58,10 +58,14 @@ export default class RevpopRepository
             session.withdrawalFeeCurrency
         );
 
+        const transactionFeeAsset = await this.getAsset(
+            session.transactionFeeCurrency
+        );
+
         transactionBuilder.add_type_operation("transfer", {
             fee: {
                 amount: 0,
-                asset_id: withdrawalFeeAsset.get("id")
+                asset_id: transactionFeeAsset.get("id")
             },
             from: internalAccount.get("id"),
             to: eesAccount.get("id"),
@@ -73,10 +77,6 @@ export default class RevpopRepository
                 asset_id: withdrawalFeeAsset.get("id")
             }
         });
-
-        const transactionFeeAsset = await this.getAsset(
-            session.transactionFeeCurrency
-        );
         transactionBuilder.add_type_operation("htlc_create", {
             from: internalAccount.get("id"),
             to: eesAccount.get("id"),

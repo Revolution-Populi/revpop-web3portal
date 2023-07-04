@@ -165,3 +165,8 @@ export const EesAPI = {
     CHECK_DEPOSIT_SUBMITTED_TO_INTERNAL_BLOCKCHAIN: "/deposit/submitted",
     GET_WITHDRAW_EXTERNAL_CONTRACT_ID: "/withdraw/get-external-contract-id"
 };
+
+export const RegistrationServiceAPI = {
+    BASE: "http://localhost:3001",
+    ACCOUNTS_ENDPOINT: "/api/accounts"
+};

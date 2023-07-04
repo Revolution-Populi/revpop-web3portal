@@ -6,6 +6,7 @@ import {TransactionBuilder, FetchChain} from "@revolutionpopuli/revpopjs";
 import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import alt from "alt-instance";
 import SettingsStore from "stores/SettingsStore";
+import RegistrationService from "../Context/RegistrationService/RegistrationService";
 
 class WalletActions {
     /** Restore and make active a new wallet_object. */
@@ -194,16 +195,14 @@ class WalletActions {
             return p.catch(() => transaction.abort());
         };
 
-        let create_account = () => {
-            return ApplicationApi.create_account(
+        let create_account = async () => {
+            return RegistrationService.createAccount(
                 owner_private.private_key.toPublicKey().toPublicKeyString(),
                 active_private.private_key.toPublicKey().toPublicKeyString(),
                 memo_private.private_key.toPublicKey().toPublicKeyString(),
                 account_name,
                 registrar, //registrar_id,
-                referrer, //referrer_id,
-                referrer_percent, //referrer_percent,
-                true //broadcast
+                referrer //referrer_id,
             ).then(() => updateWallet());
         };
 
@@ -260,10 +259,10 @@ class WalletActions {
                 })
                 .catch(error => {
                     /*
-                * Since the account creation failed, we need to decrement the
-                * sequence used to generate private keys from the brainkey. Three
-                * keys were generated, so we decrement three times.
-                */
+                     * Since the account creation failed, we need to decrement the
+                     * sequence used to generate private keys from the brainkey. Three
+                     * keys were generated, so we decrement three times.
+                     */
                     WalletDb.decrementBrainKeySequence();
                     WalletDb.decrementBrainKeySequence();
                     WalletDb.decrementBrainKeySequence();

@@ -18,7 +18,14 @@ export default class IndexedDBDepositSessionRepository
         const store = this.db
             .transaction(DEPOSIT_SESSION_STORE)
             .objectStore(DEPOSIT_SESSION_STORE);
+
         const request = await store.get(sessionId);
+
+        // eslint-disable-next-line no-prototype-builtins
+        if (request.hasOwnProperty("id") && request.id === sessionId) {
+            // for Firefox
+            return transformer.reverseTransform(request);
+        }
 
         //TODO::remove indexeddbshim?
         return new Promise((resolve, reject) => {

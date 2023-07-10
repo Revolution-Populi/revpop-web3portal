@@ -8,7 +8,6 @@ import {
     getSessionsHandler,
     Session
 } from "../../../../Context/EES";
-import {Moment} from "moment";
 import Web3 from "web3";
 
 const columns = [

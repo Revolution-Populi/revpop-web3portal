@@ -1214,7 +1214,7 @@
             },
             "warnings": {
                 "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain",
-                "transaction_is_pending": "Transaction is pending, please wait for some time"
+                "transaction_is_pending": "Transaction is pending, please wait."
             }
         }
     },
@@ -3219,7 +3219,7 @@
                 }
             },
             "info": {
-                "contract_not_found": "Transaction is pending, please wait for some time."
+                "contract_not_found": "Transaction is pending, please wait."
             },
             "success": {
                 "contract_ready_to_redeem": "Contract ready to redeem"
@@ -3227,7 +3227,7 @@
             "warnings": {
                 "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain",
                 "waiting_for_contract_creation_in_internal_blockchain": "Waiting for contract creation in internal blockchain",
-                "transaction_is_pending": "Transaction is pending, please wait for some time."
+                "transaction_is_pending": "Transaction is pending, please wait."
             }
         },
         "title": "New Withdraw"

@@ -157,12 +157,18 @@ class CreateAccount extends React.Component {
                             "ERROR AccountActions.createAccount",
                             error
                         );
-                        let error_msg =
+                        let error_msg = "unknown error";
+
+                        if (
                             error.base &&
                             error.base.length &&
                             error.base.length > 0
-                                ? error.base[0]
-                                : "unknown error";
+                        ) {
+                            error_msg = error.base[0];
+                        }
+                        if (error.response && error.response.status === 429) {
+                            error_msg = error.response.statusText;
+                        }
                         if (error.remote_ip) error_msg = error.remote_ip[0];
                         Notification.error({
                             message: counterpart.translate(

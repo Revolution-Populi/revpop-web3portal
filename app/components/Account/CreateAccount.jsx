@@ -21,8 +21,8 @@ import SettingsActions from "actions/SettingsActions";
 import counterpart from "counterpart";
 import {withRouter} from "react-router-dom";
 import {scroller} from "react-scroll";
-import {getWalletName} from "branding";
 import {Notification} from "bitshares-ui-style-guide";
+import {withGoogleReCaptcha} from "react-google-recaptcha-v3";
 
 class CreateAccount extends React.Component {
     constructor() {
@@ -38,9 +38,7 @@ class CreateAccount extends React.Component {
             step: 1
         };
         this.onFinishConfirm = this.onFinishConfirm.bind(this);
-
         this.accountNameInput = null;
-
         this.scrollToInput = this.scrollToInput.bind(this);
     }
 
@@ -104,7 +102,7 @@ class CreateAccount extends React.Component {
     }
 
     scrollToInput() {
-        scroller.scrollTo(`scrollToInput`, {
+        scroller.scrollTo("scrollToInput", {
             duration: 1500,
             delay: 100,
             smooth: true,
@@ -112,7 +110,7 @@ class CreateAccount extends React.Component {
         });
     }
 
-    createAccount(name) {
+    createAccount(name, token) {
         let refcode = this.refs.refcode ? this.refs.refcode.value() : null;
         let referralAccount = AccountStore.getState().referralAccount;
         WalletUnlockActions.unlock()
@@ -124,7 +122,8 @@ class CreateAccount extends React.Component {
                     this.state.registrar_account,
                     referralAccount || this.state.registrar_account,
                     0,
-                    refcode
+                    refcode,
+                    token
                 )
                     .then(() => {
                         // User registering his own account
@@ -208,16 +207,26 @@ class CreateAccount extends React.Component {
             });
     }
 
-    onSubmit(e) {
+    async onSubmit(e) {
         e.preventDefault();
         if (!this.isValid()) return;
+
+        const {executeRecaptcha} = this.props.googleReCaptchaProps;
+
+        if (!executeRecaptcha) {
+            console.log("Recaptcha has not been loaded");
+            return;
+        }
+
+        const token = await executeRecaptcha("CreateAccount");
+
         let account_name = this.accountNameInput.getValue();
         if (WalletDb.getWallet()) {
-            this.createAccount(account_name);
+            this.createAccount(account_name, token);
         } else {
             let password = this.refs.password.value();
             this.createWallet(password).then(() =>
-                this.createAccount(account_name)
+                this.createAccount(account_name, token)
             );
         }
     }
@@ -545,6 +554,7 @@ class CreateAccount extends React.Component {
 
     render() {
         let {step} = this.state;
+        console.log("render");
 
         return (
             <div
@@ -592,7 +602,7 @@ class CreateAccount extends React.Component {
     }
 }
 
-CreateAccount = withRouter(CreateAccount);
+CreateAccount = withRouter(withGoogleReCaptcha(CreateAccount));
 
 export default connect(CreateAccount, {
     listenTo() {

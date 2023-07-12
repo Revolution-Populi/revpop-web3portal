@@ -8,7 +8,8 @@ const RegistrationService = {
         memo_pubkey,
         new_account_name,
         registrar,
-        referrer
+        referrer,
+        token
     ) {
         await axios.post(
             RegistrationServiceAPI.BASE +
@@ -20,7 +21,8 @@ const RegistrationService = {
                     name: new_account_name,
                     owner_key: owner_pubkey,
                     refcode: null,
-                    referrer: referrer
+                    referrer: referrer,
+                    token: token
                 }
             }
         );

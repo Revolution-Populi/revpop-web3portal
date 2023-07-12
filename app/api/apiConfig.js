@@ -168,5 +168,6 @@ export const EesAPI = {
 
 export const RegistrationServiceAPI = {
     BASE: "http://localhost:3001",
-    ACCOUNTS_ENDPOINT: "/api/accounts"
+    ACCOUNTS_ENDPOINT: "/api/accounts",
+    ReCAPTCHA_KEY: "6LcwThAnAAAAAFjpt7MprW8DGyY8_jdV6yAIm0Du"
 };

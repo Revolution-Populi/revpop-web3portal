@@ -175,7 +175,8 @@ class WalletActions {
         registrar,
         referrer,
         referrer_percent,
-        refcode
+        refcode,
+        token
     ) {
         if (WalletDb.isLocked()) {
             let error = "wallet locked";
@@ -202,7 +203,8 @@ class WalletActions {
                 memo_private.private_key.toPublicKey().toPublicKeyString(),
                 account_name,
                 registrar, //registrar_id,
-                referrer //referrer_id,
+                referrer, //referrer_id,
+                token
             ).then(() => updateWallet());
         };
 

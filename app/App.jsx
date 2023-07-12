@@ -22,7 +22,6 @@ import {BodyClassName, Notification} from "bitshares-ui-style-guide";
 import {DEFAULT_NOTIFICATION_DURATION} from "services/Notification";
 import Loadable from "react-loadable";
 import NewsHeadline from "components/Layout/NewsHeadline";
-
 import {Route, Switch, Redirect} from "react-router-dom";
 
 // Nested route components
@@ -192,6 +191,8 @@ import GatewayActions from "./actions/GatewayActions";
 import {allowedGateway} from "./branding";
 import Deposit from "./components/Account/Deposit/Index";
 import Withdraw from "./components/Account/Withdraw/Index";
+import {RegistrationServiceAPI} from "./api/apiConfig";
+import {GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 
 class App extends React.Component {
     constructor() {
@@ -457,158 +458,181 @@ class App extends React.Component {
                     : "committee-account";
             content = (
                 <div className="grid-frame vertical">
-                    <NewsHeadline />
-                    <Header height={this.state.height} {...others} />
-                    <div id="mainContainer" className="grid-block">
-                        <div className="grid-block vertical">
-                            <Switch>
-                                <Route
-                                    path="/"
-                                    exact
-                                    component={DashboardPage}
-                                />
-                                <Route
-                                    path="/account/:account_name"
-                                    component={AccountPage}
-                                />
-                                <Route
-                                    path="/accounts"
-                                    component={DashboardAccountsOnly}
-                                />
-                                <Route
-                                    path="/market/:marketID"
-                                    component={Exchange}
-                                />
-                                <Route
-                                    path="/settings/:tab"
-                                    component={Settings}
-                                />
-                                <Route path="/settings" component={Settings} />
-                                <Route
-                                    path="/invoice/:data"
-                                    component={Invoice}
-                                />
-                                <Route
-                                    path="/deposit-withdraw"
-                                    exact
-                                    component={AccountDepositWithdraw}
-                                />
-                                <Route path="/withdraw" component={Withdraw} />
-                                <Route path="/deposit" component={Deposit} />
-                                <Route path="/withdraw" component={Withdraw} />
-                                <Route
-                                    path="/deposit"
-                                    exact
-                                    component={Deposit}
-                                />
-                                <Route
-                                    path="/create-account"
-                                    component={LoginSelector}
-                                />
-                                <Redirect
-                                    path={"/voting"}
-                                    to={{
-                                        pathname: `/account/${accountName}/voting`
-                                    }}
-                                />
-                                {/* Explorer routes */}
-                                <Route
-                                    path="/explorer/:tab"
-                                    component={Explorer}
-                                />
-                                <Route path="/explorer" component={Explorer} />
-                                <Route
-                                    path="/asset/:symbol"
-                                    component={Asset}
-                                />
-                                <Route
-                                    exact
-                                    path="/block/:height"
-                                    component={Block}
-                                />
-                                <Route
-                                    exact
-                                    path="/block/:height/:txIndex"
-                                    component={Block}
-                                />
-                                <Route path="/borrow" component={Borrow} />
+                    <GoogleReCaptchaProvider
+                        reCaptchaKey={RegistrationServiceAPI.ReCAPTCHA_KEY}
+                    >
+                        <NewsHeadline />
+                        <Header height={this.state.height} {...others} />
+                        <div id="mainContainer" className="grid-block">
+                            <div className="grid-block vertical">
+                                <Switch>
+                                    <Route
+                                        path="/"
+                                        exact
+                                        component={DashboardPage}
+                                    />
+                                    <Route
+                                        path="/account/:account_name"
+                                        component={AccountPage}
+                                    />
+                                    <Route
+                                        path="/accounts"
+                                        component={DashboardAccountsOnly}
+                                    />
+                                    <Route
+                                        path="/market/:marketID"
+                                        component={Exchange}
+                                    />
+                                    <Route
+                                        path="/settings/:tab"
+                                        component={Settings}
+                                    />
+                                    <Route
+                                        path="/settings"
+                                        component={Settings}
+                                    />
+                                    <Route
+                                        path="/invoice/:data"
+                                        component={Invoice}
+                                    />
+                                    <Route
+                                        path="/deposit-withdraw"
+                                        exact
+                                        component={AccountDepositWithdraw}
+                                    />
+                                    <Route
+                                        path="/withdraw"
+                                        component={Withdraw}
+                                    />
+                                    <Route
+                                        path="/deposit"
+                                        component={Deposit}
+                                    />
+                                    <Route
+                                        path="/withdraw"
+                                        component={Withdraw}
+                                    />
+                                    <Route
+                                        path="/deposit"
+                                        exact
+                                        component={Deposit}
+                                    />
+                                    <Route
+                                        path="/create-account"
+                                        component={LoginSelector}
+                                    />
+                                    <Redirect
+                                        path={"/voting"}
+                                        to={{
+                                            pathname: `/account/${accountName}/voting`
+                                        }}
+                                    />
+                                    {/* Explorer routes */}
+                                    <Route
+                                        path="/explorer/:tab"
+                                        component={Explorer}
+                                    />
+                                    <Route
+                                        path="/explorer"
+                                        component={Explorer}
+                                    />
+                                    <Route
+                                        path="/asset/:symbol"
+                                        component={Asset}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/block/:height"
+                                        component={Block}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/block/:height/:txIndex"
+                                        component={Block}
+                                    />
+                                    <Route path="/borrow" component={Borrow} />
 
-                                <Route path="/barter" component={Barter} />
-                                <Route
-                                    path="/direct-debit"
-                                    component={DirectDebit}
-                                />
+                                    <Route path="/barter" component={Barter} />
+                                    <Route
+                                        path="/direct-debit"
+                                        component={DirectDebit}
+                                    />
 
-                                <Route
-                                    path="/spotlight"
-                                    component={ShowcaseGrid}
-                                />
+                                    <Route
+                                        path="/spotlight"
+                                        component={ShowcaseGrid}
+                                    />
 
-                                {/* Wallet backup/restore routes */}
-                                <Route
-                                    path="/wallet"
-                                    component={WalletManager}
-                                />
-                                <Route
-                                    path="/create-wallet-brainkey"
-                                    component={CreateWalletFromBrainkey}
-                                />
-                                <Route
-                                    path="/existing-account"
-                                    component={ExistingAccount}
-                                />
+                                    {/* Wallet backup/restore routes */}
+                                    <Route
+                                        path="/wallet"
+                                        component={WalletManager}
+                                    />
+                                    <Route
+                                        path="/create-wallet-brainkey"
+                                        component={CreateWalletFromBrainkey}
+                                    />
+                                    <Route
+                                        path="/existing-account"
+                                        component={ExistingAccount}
+                                    />
 
-                                <Route
-                                    path="/create-worker"
-                                    component={CreateWorker}
-                                />
+                                    <Route
+                                        path="/create-worker"
+                                        component={CreateWorker}
+                                    />
 
-                                {/* Help routes */}
-                                <Route exact path="/help" component={Help} />
-                                <Route
-                                    exact
-                                    path="/help/:path1"
-                                    component={Help}
-                                />
-                                <Route
-                                    exact
-                                    path="/help/:path1/:path2"
-                                    component={Help}
-                                />
-                                <Route
-                                    exact
-                                    path="/help/:path1/:path2/:path3"
-                                    component={Help}
-                                />
-                                <Route path="/htlc" component={Htlc} />
-                                <Route
-                                    path="/prediction"
-                                    component={PredictionMarketsPage}
-                                />
-                                <Route
-                                    exact
-                                    path="/instant-trade"
-                                    component={QuickTrade}
-                                />
-                                <Route
-                                    exact
-                                    path="/instant-trade/:marketID"
-                                    component={QuickTrade}
-                                />
-                                <Route path="*" component={Page404} />
-                            </Switch>
+                                    {/* Help routes */}
+                                    <Route
+                                        exact
+                                        path="/help"
+                                        component={Help}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/help/:path1"
+                                        component={Help}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/help/:path1/:path2"
+                                        component={Help}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/help/:path1/:path2/:path3"
+                                        component={Help}
+                                    />
+                                    <Route path="/htlc" component={Htlc} />
+                                    <Route
+                                        path="/prediction"
+                                        component={PredictionMarketsPage}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/instant-trade"
+                                        component={QuickTrade}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/instant-trade/:marketID"
+                                        component={QuickTrade}
+                                    />
+                                    <Route path="*" component={Page404} />
+                                </Switch>
+                            </div>
                         </div>
-                    </div>
-                    <Footer
-                        synced={this.state.synced}
-                        history={this.props.history}
-                    />
-                    <ReactTooltip
-                        ref="tooltip"
-                        place="top"
-                        type={theme === "lightTheme" ? "dark" : "light"}
-                        effect="solid"
-                    />
+                        <Footer
+                            synced={this.state.synced}
+                            history={this.props.history}
+                        />
+                        <ReactTooltip
+                            ref="tooltip"
+                            place="top"
+                            type={theme === "lightTheme" ? "dark" : "light"}
+                            effect="solid"
+                        />
+                    </GoogleReCaptchaProvider>
                 </div>
             );
         }

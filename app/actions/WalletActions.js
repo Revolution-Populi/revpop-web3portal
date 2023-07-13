@@ -197,15 +197,32 @@ class WalletActions {
         };
 
         let create_account = async () => {
-            return RegistrationService.createAccount(
-                owner_private.private_key.toPublicKey().toPublicKeyString(),
-                active_private.private_key.toPublicKey().toPublicKeyString(),
-                memo_private.private_key.toPublicKey().toPublicKeyString(),
-                account_name,
-                registrar, //registrar_id,
-                referrer, //referrer_id,
-                token
-            ).then(() => updateWallet());
+            if (token !== null) {
+                return RegistrationService.createAccount(
+                    owner_private.private_key.toPublicKey().toPublicKeyString(),
+                    active_private.private_key
+                        .toPublicKey()
+                        .toPublicKeyString(),
+                    memo_private.private_key.toPublicKey().toPublicKeyString(),
+                    account_name,
+                    registrar, //registrar_id,
+                    referrer, //referrer_id,
+                    token
+                ).then(() => updateWallet());
+            } else {
+                return ApplicationApi.create_account(
+                    owner_private.private_key.toPublicKey().toPublicKeyString(),
+                    active_private.private_key
+                        .toPublicKey()
+                        .toPublicKeyString(),
+                    memo_private.private_key.toPublicKey().toPublicKeyString(),
+                    account_name,
+                    registrar, //registrar_id,
+                    referrer, //referrer_id,
+                    referrer_percent, //referrer_percent,
+                    true //broadcast
+                ).then(() => updateWallet());
+            }
         };
 
         if (registrar) {

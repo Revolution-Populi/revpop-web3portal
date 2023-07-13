@@ -218,7 +218,10 @@ class CreateAccount extends React.Component {
             return;
         }
 
-        const token = await executeRecaptcha("CreateAccount");
+        let token = null;
+        if (this._isFirstAccount()) {
+            token = await executeRecaptcha("CreateAccount");
+        }
 
         let account_name = this.accountNameInput.getValue();
         if (WalletDb.getWallet()) {
@@ -240,11 +243,16 @@ class CreateAccount extends React.Component {
     //     this.setState({hide_refcode: false});
     // }
 
+    _isFirstAccount() {
+        const my_accounts = AccountStore.getMyAccounts();
+        return my_accounts.length === 0;
+    }
+
     _renderAccountCreateForm() {
         let {registrar_account} = this.state;
 
         let my_accounts = AccountStore.getMyAccounts();
-        let firstAccount = my_accounts.length === 0;
+        let firstAccount = this._isFirstAccount();
         let hasWallet = WalletDb.getWallet();
         let valid = this.isValid();
         let isLTM = false;

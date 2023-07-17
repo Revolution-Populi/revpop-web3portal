@@ -5,7 +5,7 @@ import InternalContract from "../InternalBlockchain/Contract";
 
 export enum STATUS {
     CREATED = 1,
-    PAYED = 5,
+    PAID = 5,
     CREATED_INTERNAL_BLOCKCHAIN = 10,
     REDEEMED = 15
 }
@@ -62,7 +62,7 @@ export default class Session {
     }
 
     isPaid(): boolean {
-        return this._status === STATUS.PAYED;
+        return this._status === STATUS.PAID;
     }
 
     isCreatedInternalBlockchain(): boolean {
@@ -77,12 +77,12 @@ export default class Session {
         if (!this.isCreated()) {
             throw new SessionWrongStatusError(
                 this._id,
-                "Can't change status to payed."
+                "Can't change status to paid."
             );
         }
 
         this._externalContract = externalContract;
-        this._status = STATUS.PAYED;
+        this._status = STATUS.PAID;
     }
 
     createdInternalBlockchain(internalContract: InternalContract) {

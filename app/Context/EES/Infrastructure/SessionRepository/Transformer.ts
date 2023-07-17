@@ -76,7 +76,7 @@ class Transformer {
             moment.unix(sessionJson.timeLock)
         );
 
-        if (sessionJson.status === STATUS.PAYED) {
+        if (sessionJson.status === STATUS.PAID) {
             const externalContractJson = sessionJson.externalContract as ExternalContractJson;
             const externalContract = new ExternalContract(
                 externalContractJson.txHash

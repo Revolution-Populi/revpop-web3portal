@@ -17,7 +17,7 @@ export default function ExternalExplorerField({session}: Params) {
         handler.execute(new GetTransactionExplorerLink(session)).then(setUrl);
     }, [session.externalContract?.txHash]);
 
-    if (session.status < STATUS.PAYED || !session.externalContract || !url) {
+    if (session.status < STATUS.PAID || !session.externalContract || !url) {
         return null;
     }
 

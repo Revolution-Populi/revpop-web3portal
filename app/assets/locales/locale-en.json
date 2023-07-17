@@ -1197,7 +1197,7 @@
                     "label": "Status",
                     "list": {
                         "1": "Created",
-                        "5": "Payed",
+                        "5": "Paid",
                         "10": "Created in REVPOP blockchain",
                         "15": "Completed"
                     }

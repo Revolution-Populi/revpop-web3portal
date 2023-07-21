@@ -1214,7 +1214,8 @@
             },
             "warnings": {
                 "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain",
-                "transaction_is_pending": "Transaction is pending, please wait."
+                "transaction_is_pending": "Transaction is pending, please wait.",
+                "error_creating_external_contract": "Error creating external contract, please try again."
             }
         }
     },

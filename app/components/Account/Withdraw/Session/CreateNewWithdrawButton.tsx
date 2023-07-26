@@ -10,6 +10,7 @@ import {
 import {Notification} from "bitshares-ui-style-guide";
 import counterpart from "counterpart";
 import UnlockButton from "../../../UnlockButton/UnlockButton";
+import {useHistory} from "react-router-dom";
 
 interface Params {
     session: WithdrawSession;
@@ -18,22 +19,28 @@ interface Params {
 
 export default function CreateNewWithdrawButton({session, refresh}: Params) {
     const [isCreating, setIsCreating] = useState(false);
+    const history = useHistory();
 
     async function onClick() {
         const query = new MakeWithdraw(session.id);
         try {
-            Notification.info({
-                message: counterpart.translate(
-                    "withdraw.session.warnings.waiting_for_contract_creation_in_internal_blockchain"
-                ),
-                duration: 10
-            });
             setIsCreating(true);
             const result = await makeWithdrawHandler.execute(query);
+
             if (result) {
+                Notification.info({
+                    message: counterpart.translate(
+                        "withdraw.session.warnings.waiting_for_contract_creation_in_internal_blockchain"
+                    ),
+                    duration: 10
+                });
                 refresh();
+            } else {
+                history.push("/withdraw/new");
+                setIsCreating(false);
             }
         } catch (e) {
+            setIsCreating(false);
             console.log("Create new external contract error");
         }
     }

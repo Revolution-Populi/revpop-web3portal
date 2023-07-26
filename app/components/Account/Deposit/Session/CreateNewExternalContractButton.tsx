@@ -66,6 +66,13 @@ export default function CreateNewExternalContractButton({
                 refresh();
             }
         } catch (e) {
+            setIsCreating(false);
+            Notification.warning({
+                message: counterpart.translate(
+                    "deposit.session.warnings.error_creating_external_contract"
+                ),
+                duration: 10
+            });
             console.log("Create new external contract error");
         }
     }

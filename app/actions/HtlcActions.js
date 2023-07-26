@@ -1,8 +1,7 @@
 import alt from "alt-instance";
-import {Apis} from "@revolutionpopuli/revpopjs-ws";
 import WalletApi from "api/WalletApi";
 import WalletDb from "stores/WalletDb";
-import {ChainStore, hash, FetchChainObjects} from "@revolutionpopuli/revpopjs";
+import {hash} from "@revolutionpopuli/revpopjs";
 
 const calculateHash = (cipher, preimage) => {
     let preimage_hash_calculated = null;
@@ -122,14 +121,19 @@ class HtlcActions {
         return dispatch => {
             return WalletDb.process_transaction(tr, null, true)
                 .then(() => {
-                    dispatch(true);
+                    if (tr.ref_block_num === 0) {
+                        throw new Error("Error processing redeem");
+                    }
+
+                    dispatch(tr.ref_block_num > 0);
                 })
                 .catch(error => {
                     console.log(
                         "[HtlcActions.js:98] ----- htlc redeem error ----->",
                         error
                     );
-                    dispatch(false);
+
+                    throw new Error("Error processing redeem");
                 });
         };
     }

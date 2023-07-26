@@ -1214,7 +1214,8 @@
             },
             "warnings": {
                 "waiting_for_contract_creation_in_external_blockchain": "Waiting for contract creation in external blockchain",
-                "transaction_is_pending": "Transaction is pending, please wait."
+                "transaction_is_pending": "Transaction is pending, please wait.",
+                "error_creating_external_contract": "Error creating external contract, please try again."
             }
         }
     },
@@ -2444,6 +2445,7 @@
             "hash": "Hash",
             "preimage": "Secret",
             "enter_preimage": "Enter the secret that you have obtained before.",
+            "label_enter_preimage": "Enter the Secret that you have obtained before",
             "preimage_has_been_created": "A random secret has been created and filled in automatically below.",
             "recipient": "Recipient",
             "redeem": "Redeem",
@@ -2716,6 +2718,7 @@
         "paid": "paid",
         "publisher": "Publisher",
         "received": "received",
+        "transaction_canceled": "Transaction was canceled.",
         "seller": "Seller",
         "sent": "sent",
         "settlement_date": "Settlement date",

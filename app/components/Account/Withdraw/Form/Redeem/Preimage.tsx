@@ -4,11 +4,8 @@ import counterpart from "counterpart";
 // @ts-ignore
 import {
     Form,
-    Button,
     Input,
-    Tooltip,
-    Modal,
-    Notification
+    Tooltip
     // @ts-ignore
 } from "bitshares-ui-style-guide";
 
@@ -37,7 +34,9 @@ function Preimage({preimageHash, onAction}: PreimageProps) {
     }
 
     return (
-        <Form.Item label={counterpart.translate("htlc.preimage")}>
+        <Form.Item
+            label={counterpart.translate("showcases.htlc.label_enter_preimage")}
+        >
             <Input.Group className="content-block transfer-input preimage-row">
                 <Tooltip
                     title={counterpart.translate(
@@ -47,7 +46,7 @@ function Preimage({preimageHash, onAction}: PreimageProps) {
                 >
                     <Input
                         style={{
-                            width: "60%",
+                            width: "100%",
                             color:
                                 hashMatch == null
                                     ? undefined
@@ -75,7 +74,7 @@ function Preimage({preimageHash, onAction}: PreimageProps) {
                     mouseEnterDelay={0.5}
                 >
                     <Input
-                        style={{width: "78%"}}
+                        style={{width: "100%"}}
                         name="hash"
                         id="hash"
                         type="text"

@@ -417,14 +417,14 @@ class HtlcModal extends React.Component {
                 preimage: preimage
             })
                 .then(result => {
-                    this.props.hideModal();
+                    this.props.hideModal(true);
 
                     if (typeof this.props.afterSuccess === "function") {
                         this.props.afterSuccess();
                     }
                 })
                 .catch(err => {
-                    // todo: visualize error somewhere
+                    this.props.hideModal(false);
                     console.error(err);
                 });
         } else if (operationType === "extend") {

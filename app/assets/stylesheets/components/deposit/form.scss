@@ -19,3 +19,7 @@ body.darkTheme .ant-btn-primary[disabled] {
     color: $white !important;
     opacity: 0.5 !important;
 }
+
+.redeem button.button {
+    text-transform: uppercase;
+}

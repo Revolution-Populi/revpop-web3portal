@@ -3,8 +3,7 @@ import SessionRepositoryInterface from "../../../Domain/Withdraw/WithdrawSession
 import EesRepositoryInterface from "../../../Infrastructure/EES/Repository";
 import * as Errors from "./Errors";
 import InternalBlockchainRepositoryInterface from "../../../Domain/InternalBlockchain/RepositoryInterface";
-// @ts-ignore
-import {FetchChain} from "@revolutionpopuli/revpopjs/es";
+import TransactionConfirmStore from "../../../../../stores/TransactionConfirmStore";
 
 export default class MakeWithdrawHandler {
     constructor(
@@ -25,19 +24,28 @@ export default class MakeWithdrawHandler {
         }
 
         const settings = await this.eesRepository.loadEESSettings();
-        this.internalRepository.withdraw(settings, session);
+        let isError = false;
+        const onFinishConfirm = async (confirm_store_state: any) => {
+            if (confirm_store_state.error) {
+                isError = true;
+            }
+            if (
+                confirm_store_state.error ||
+                (confirm_store_state.included &&
+                    confirm_store_state.broadcasted_transaction)
+            ) {
+                TransactionConfirmStore.unlisten(onFinishConfirm);
+                TransactionConfirmStore.reset();
+            }
+        };
 
-        session.submittedInInternalBlockchain();
-        await this.sessionRepository.save(session);
-
-        return true;
-    }
-
-    private ensureHasPrefix(hashLock: string) {
-        if ("0x" !== hashLock.substring(0, 2)) {
-            hashLock = "0x" + hashLock;
+        TransactionConfirmStore.listen(onFinishConfirm);
+        await this.internalRepository.withdraw(settings, session);
+        if (!isError) {
+            session.submittedInInternalBlockchain();
+            await this.sessionRepository.save(session);
         }
 
-        return hashLock;
+        return !isError;
     }
 }

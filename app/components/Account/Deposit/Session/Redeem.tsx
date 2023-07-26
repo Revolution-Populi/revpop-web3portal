@@ -60,9 +60,13 @@ function Redeem({session, currentAccount, refresh}: Params) {
 
     return (
         <div className="redeem">
-            <a className="button" onClick={onShowModalClick}>
+            <button
+                className="button"
+                onClick={onShowModalClick}
+                disabled={isModalVisible}
+            >
                 <Translate content="showcases.htlc.redeem" />
-            </a>
+            </button>
 
             {isModalVisible ? (
                 <HtlcModal

@@ -92,6 +92,17 @@ export default class WithdrawSession {
         return this._status === STATUS.REDEEMED;
     }
 
+    failedSubmittedInInternalBlockchain() {
+        if (!this.isSubmitted()) {
+            throw new SessionWrongStatusError(
+                this._id,
+                "Can't restore created status."
+            );
+        }
+
+        this._status = STATUS.CREATED;
+    }
+
     submittedInInternalBlockchain() {
         if (!this.isCreated()) {
             throw new SessionWrongStatusError(

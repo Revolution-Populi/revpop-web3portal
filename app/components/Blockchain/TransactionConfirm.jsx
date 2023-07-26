@@ -18,10 +18,8 @@ import {
     Button,
     Icon as AIcon,
     Alert,
-    Switch,
-    Input
+    Switch
 } from "bitshares-ui-style-guide";
-
 class TransactionConfirm extends React.Component {
     constructor(props) {
         super(props);
@@ -106,6 +104,17 @@ class TransactionConfirm extends React.Component {
 
     onCloseClick(e) {
         e.preventDefault();
+        notify.addNotification.defer({
+            children: (
+                <div>
+                    <p>
+                        <Translate content="transaction.transaction_canceled" />
+                    </p>
+                </div>
+            ),
+            level: "warning",
+            autoDismiss: 10
+        });
         TransactionConfirmActions.close(this.props.reject);
     }
 

@@ -35,7 +35,7 @@ export default class RevpopRepository
 
         for (const contract of revpopContracts) {
             // Try to remove this dependency. Use only revpopjs package and Aes library from it. Method: decrypt_with_checksum
-            const {text, isMine} = PrivateKeyStore.decodeMemo(contract.memo);
+            const {text} = PrivateKeyStore.decodeMemo(contract.memo);
             contracts.push(new Contract(contract.id, text));
         }
 
@@ -93,11 +93,15 @@ export default class RevpopRepository
             claim_period_seconds: settings.withdrawTimeLock
         });
 
-        WalletDb.process_transaction(
+        await WalletDb.process_transaction(
             transactionBuilder,
             null, //signer_private_keys,
             true
         );
+
+        if (transactionBuilder.ref_block_num === 0) {
+            throw new Error("Error creating withdraw contract.");
+        }
     }
 
     private getPrivateKey(account: Map<string, any>) {

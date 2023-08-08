@@ -120,6 +120,7 @@ class MenuDataStructure {
             allItems.transfer,
             allItems.deposit,
             allItems.withdraw,
+            allItems.token_distribution,
             allItems.settings,
             allItems.settings_mobile,
             allItems.help,
@@ -246,6 +247,12 @@ class MenuDataStructure {
                 text: "header.deposit-withdraw",
                 inHeaderBehavior: MenuItemType.Dynamic,
                 inDropdownBehavior: MenuItemType.Never
+            }),
+            token_distribution: state => ({
+                target: "/token-distribution/new",
+                icon: "barter",
+                text: "token_distribution.title",
+                inDropdownBehavior: MenuItemType.WhenAccount
             }),
             settings: state => ({
                 includePattern: "/settings",

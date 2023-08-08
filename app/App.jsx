@@ -191,6 +191,7 @@ import GatewayActions from "./actions/GatewayActions";
 import {allowedGateway} from "./branding";
 import Deposit from "./components/Account/Deposit/Index";
 import Withdraw from "./components/Account/Withdraw/Index";
+import TokenDistribution from "./components/Account/TokenDistribution/Index";
 import {RegistrationServiceAPI} from "./api/apiConfig";
 import {GoogleReCaptchaProvider} from "react-google-recaptcha-v3";
 
@@ -516,6 +517,10 @@ class App extends React.Component {
                                         path="/deposit"
                                         exact
                                         component={Deposit}
+                                    />
+                                    <Route
+                                        path="/token-distribution"
+                                        component={TokenDistribution}
                                     />
                                     <Route
                                         path="/create-account"

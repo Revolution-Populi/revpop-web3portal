@@ -517,6 +517,9 @@
         "money_received_title": "Transfer from %(from)s"
     },
     "cancel": "Cancel",
+    "cookies": {
+        "we_use_cookies": "We use cookies to ensure you get the best experience on our website. By continuing to browse our website, you agree to our cookie <a href=\"https://revolutionpopuli.com/privacy-policy/\", target=\"_blank\">policy</a>."
+    },
     "connection": {
         "automatic_reconnect": " After %(reconnect_in_seconds)s seconds a reconnection attempt will be made automatically.",
         "manual_ping": "Go to ping nodes",
@@ -2537,6 +2540,9 @@
         "sub_text_2": "Once you've synchronized your clock, please refresh this page.<br/><br/>If your clock is already correct, the API server you're using could be out of sync. In that case, please try a different server from the list below.",
         "title": "Failed to sync with the API server"
     },
+    "token_distribution": {
+        "title": "Token distribution"
+    },
     "tooltip": {
         "add_memo_field": "Add memo text field",
         "borrow": "Borrow %(asset)s from the network. This creates a smart contract that locks your collateral until you either modify the position or a margin call is required.",
@@ -3026,6 +3032,7 @@
         "create_account_password_text": "The keys for this new account will be derived using your password. <strong>Nothing is stored in the browser or in a central server, so you will need to ensure you remember this password!!</strong> Store it using a password manager or by writing it down manually.",
         "create_account_text": "When you create your first RevPop account, a RevPop local wallet will be automatically created as well and stored in your browser. This local wallet is encrypted with your password, and will contain any private keys belonging to your accounts.",
         "create_account_text_2": "You should take the time and make a backup file once you create your account. This file can be used along with your password to get back into your account if you clear the data from your browser. You can also create a paper wallet and/or access and write down your private key under Permissions once you create your account. <b>Since your wallet is on your browser locally, if you clear the data from your browser (or log in on a new browser) and don’t have your password and backup file, or your paper wallet or private key, you won’t be able to get back into your account.</b>",
+        "create_account_you_agree_that_had_read": "I certify that I am 18 years of age or older, I agree to the <a href=\"https://revolutionpopuli.com/user-agreement\" target=\"_blank\">User Agreement</a>, and I have read the <a href=\"https://revolutionpopuli.com/privacy-policy, target=\"_blank\">Privacy Policy</a>.",
         "create_backup": "Create Backup",
         "create_backup_of": "Create backup now",
         "create_importkeys_text": "In order to import keys, you first need to create a local wallet to contain the keys. Complete the dialog below to create a new local wallet.",

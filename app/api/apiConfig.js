@@ -171,3 +171,9 @@ export const RegistrationServiceAPI = {
     ACCOUNTS_ENDPOINT: "/api/accounts",
     ReCAPTCHA_KEY: "6LcwThAnAAAAAFjpt7MprW8DGyY8_jdV6yAIm0Du"
 };
+
+export const TokenDistributionAPI = {
+    BASE: "http://localhost:3002",
+    REQUEST: "/api/request",
+    PHRASE: "HELLO WORLD"
+};

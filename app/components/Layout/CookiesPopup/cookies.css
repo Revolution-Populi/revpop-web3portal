@@ -1,0 +1,18 @@
+.cookie-law-info-bar {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-family: inherit;
+    margin: 0 auto;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.cookie-law-info-bar span {
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.cookie-law-info-bar button {
+    padding: 3px 15px;
+}

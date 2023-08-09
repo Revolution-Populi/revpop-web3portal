@@ -22,6 +22,7 @@ import {ChainStore} from "@revolutionpopuli/revpopjs";
 import ifvisible from "ifvisible";
 import {getWalletName} from "branding";
 import {Tooltip} from "bitshares-ui-style-guide";
+import CookiesPopup from "./CookiesPopup/CookiesPopup";
 
 class Footer extends React.Component {
     static propTypes = {
@@ -446,6 +447,7 @@ class Footer extends React.Component {
                         )}
                     </div>
                 </ChoiceModal>
+                <CookiesPopup></CookiesPopup>
                 <div className="show-for-medium grid-block shrink footer">
                     <div className="align-justify grid-block">
                         <div className="grid-block">

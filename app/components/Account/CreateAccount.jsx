@@ -35,7 +35,8 @@ class CreateAccount extends React.Component {
             loading: false,
             hide_refcode: true,
             show_identicon: false,
-            step: 1
+            step: 1,
+            userAgreement: false
         };
         this.onFinishConfirm = this.onFinishConfirm.bind(this);
         this.accountNameInput = null;
@@ -67,6 +68,9 @@ class CreateAccount extends React.Component {
         if (!firstAccount) {
             valid = valid && this.state.registrar_account;
         }
+        if (!this.state.userAgreement) {
+            valid = false;
+        }
         return valid;
     }
 
@@ -80,6 +84,10 @@ class CreateAccount extends React.Component {
 
     onPasswordChange(e) {
         this.setState({validPassword: e.valid});
+    }
+
+    onUserAgreementChange(e) {
+        this.setState({userAgreement: e.target.checked});
     }
 
     onFinishConfirm(confirm_store_state) {
@@ -334,8 +342,6 @@ class CreateAccount extends React.Component {
                     </div>
                 )}
 
-                <div className="divider" />
-
                 {/* Submit button */}
                 {this.state.loading ? (
                     <LoadingIndicator type="three-bounce" />
@@ -345,11 +351,38 @@ class CreateAccount extends React.Component {
                     </button>
                 )}
 
-                <div style={{paddingTop: 40}}>
-                    <p style={{marginBottom: 0}}>
-                        <Translate unsafe content="account.privacy_agreement" />
-                    </p>
+                <div style={{paddingTop: "0.5rem"}}>
+                    <label style={{margin: "3px 0 0", width: "fit-content"}}>
+                        <input
+                            style={{
+                                position: "relative",
+                                top: 3,
+                                display: "block",
+                                float: "left"
+                            }}
+                            className="no-margin"
+                            type="checkbox"
+                            checked={this.state.userAgreement}
+                            onChange={this.onUserAgreementChange.bind(this)}
+                        />
+
+                        <p
+                            style={{
+                                paddingLeft: "0.4rem",
+                                fontSize: "1rem",
+                                textIndent: 3,
+                                lineHeight: 1.6,
+                                textTransform: "none"
+                            }}
+                        >
+                            <Translate
+                                unsafe
+                                content="wallet.create_account_you_agree_that_had_read"
+                            />
+                        </p>
+                    </label>
                 </div>
+                <div className="divider" />
 
                 {/* Backup restore option */}
                 <div style={{paddingTop: 40}}>

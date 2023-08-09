@@ -376,7 +376,7 @@ class AccountPermissions extends React.Component {
                         >
                             <Tab title="account.perm.active">
                                 <HelpContent path="components/AccountPermActive" />
-                                <form className="threshold">
+                                {/*<form className="threshold">
                                     <label className="horizontal">
                                         <Translate content="account.perm.threshold" />{" "}
                                         &nbsp; &nbsp;
@@ -394,6 +394,7 @@ class AccountPermissions extends React.Component {
                                         />
                                     </label>
                                 </form>
+                                */}
                                 <AccountPermissionsList
                                     label="account.perm.add_permission_label"
                                     accounts={active_accounts}
@@ -427,6 +428,7 @@ class AccountPermissions extends React.Component {
 
                             <Tab title="account.perm.owner">
                                 <HelpContent path="components/AccountPermOwner" />
+                                {/*
                                 <form className="threshold">
                                     <label className="horizontal">
                                         <Translate content="account.perm.threshold" />{" "}
@@ -445,6 +447,7 @@ class AccountPermissions extends React.Component {
                                         />
                                     </label>
                                 </form>
+                                */}
                                 <AccountPermissionsList
                                     label="account.perm.add_permission_label"
                                     accounts={owner_accounts}

@@ -233,6 +233,7 @@ class AccountPermissionsList extends React.Component {
 
         return (
             <div>
+                {/*
                 <AccountSelector
                     label={this.props.label}
                     error={error}
@@ -261,6 +262,7 @@ class AccountPermissionsList extends React.Component {
                         tabIndex={this.props.tabIndex + 1}
                     />
                 </AccountSelector>
+            */}
 
                 <div style={{paddingTop: "2rem"}}>
                     <table className="table">
